@@ -12,7 +12,7 @@ function ConfigProviderAntd({ children }) {
                {children}
           </ConfigProvider>
 
-     );
+     )
 }
 
 export default ConfigProviderAntd;
