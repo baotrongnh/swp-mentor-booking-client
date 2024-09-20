@@ -1,4 +1,4 @@
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { createContext, useState } from "react";
 
 export const AuthContext = createContext({});
@@ -17,5 +17,5 @@ export const AuthProvider = ({ children }) => {
 }
 
 AuthProvider.propTypes = {
-     children: propTypes.node
+     children: PropTypes.node
 }

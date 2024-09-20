@@ -1,4 +1,4 @@
-import { Login } from "../Pages";
+import { Login, MentorListPage } from "../Pages";
 import PrivateRouteAuth from "./PrivateRoutesAuth";
 
 const publicRoutes = [
@@ -6,7 +6,7 @@ const publicRoutes = [
 ]
 
 const privateRoutes = [
-     {}
+     { path: '/mentorlist', element: MentorListPage }
 ]
 
 export { publicRoutes, privateRoutes, PrivateRouteAuth }
