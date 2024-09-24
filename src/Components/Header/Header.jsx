@@ -2,10 +2,14 @@ import { Row, Col, Input, Dropdown, Space } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import './Header.scss';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { AppContext } from '../../Contexts/AppContext';
 
 function Header() {
+     const { setFilterMentor, filterMentor } = useContext(AppContext);
+
      const onSearch = (value) => {
-          console.log(value);
+          setFilterMentor({ ...filterMentor, search: value });
      }
 
      const items = [

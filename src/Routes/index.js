@@ -2,7 +2,7 @@ import { Login, MentorListPage } from "../Pages";
 import PrivateRouteAuth from "./PrivateRoutesAuth";
 
 const publicRoutes = [
-     { path: '/login', element: Login, layout: null },
+     { path: '/', element: Login, layout: null },
 ]
 
 const privateRoutes = [

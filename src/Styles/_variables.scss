@@ -6,6 +6,7 @@
           --bg-primary: #faf8fc;
           --bg-secondary: #EEEEEE;
           --accent-primary: #fb923c;
+          --border: #817d7d34;
      }
 
      &.dark-theme {
@@ -15,6 +16,7 @@
           --bg-primary: #050307;
           --bg-secondary: #EEEEEE;
           --accent-primary: #fb923c;
+          --border: #fff;
      }
 }
 
@@ -24,6 +26,7 @@ $theme-color-secondary: var(--theme-color-secondary);
 $bg-primary: var(--bg-primary);
 $bg-secondary: var(--bg-secondary);
 $accent-primary: var(--accent-primary);
+$border: var(--border);
 
 //$text-secondary:
 //$text-muted:

@@ -7,11 +7,14 @@ export const AppContext = createContext({});
 
 export const AppProvider = ({ children }) => {
      const [theme, setTheme] = useState('');
+     const [filterMentor, setFilterMentor] = useState({ search: '', skills: '', star: '' });
 
      return <AppContext.Provider
           value={{
                theme,
-               setTheme
+               setTheme,
+               filterMentor,
+               setFilterMentor
           }}
      >
           {children}
