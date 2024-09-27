@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import './MentorCard.scss';
 import { Link } from 'react-router-dom';
 
-function MentorCard({ avatar, name, rating, description, skills, numReviews, semester }) {
+function MentorCard({ id, avatar, name, rating, description, skills, numReviews, semester }) {
      return (
           <div className="mentor-card">
                <Row className="infor-block">
@@ -43,7 +43,7 @@ function MentorCard({ avatar, name, rating, description, skills, numReviews, sem
                </Row>
 
                <Row className='btn-block'>
-                    <Link><Button size='large' className='btn'>View Profile</Button></Link>
+                    <Link to={`/mentorprofile/${id}`}><Button size='large' className='btn'>View Profile</Button></Link>
                     <Link><Button size='large' className='btn' type="primary">Booking</Button></Link>
                </Row>    
           </div>
@@ -53,6 +53,7 @@ function MentorCard({ avatar, name, rating, description, skills, numReviews, sem
 export default MentorCard;
 
 MentorCard.propTypes = {
+     id: PropTypes.string,
      avatar: PropTypes.string,
      name: PropTypes.string,
      rating: PropTypes.number,

@@ -11,11 +11,11 @@ function MentorListPage() {
           console.log(filterMentor);
      }, [filterMentor]);
 
-     const onChangeTime = (date) => {
-          console.log(date);
+     const onChangeTime = (date, dateString) => {
+          console.log(dateString);
      }
-
-     return (
+      
+     return ( 
           <div className="mentor-list-page">
                <div className="container">
                     <Row>
@@ -43,7 +43,7 @@ function MentorListPage() {
                                    <h1 className="title-filter-date" style={{ margin: '20px 0', fontSize: '2.2rem', fontWeight: '500' }}>Date</h1>
                                    <DatePicker
                                         multiple
-                                        onChange={date => onChangeTime(date)}
+                                        onChange={onChangeTime}
                                         maxTagCount="responsive"
                                         size="large"
                                         format='DD-MM-YYYY'
@@ -55,6 +55,7 @@ function MentorListPage() {
                               <Row gutter={15}>
                                    <Col xs={24} xl={12}>
                                         <MentorCard
+                                             id='1'
                                              avatar='https://vcdn1-sohoa.vnecdn.net/2024/09/14/mark-zuckerberg-7-jpg-4371-1726298974.png?w=460&h=0&q=100&dpr=2&fit=crop&s=xXAQsxxPWM3vQUez83PRPQ'
                                              name='Mark Zuckerberg'
                                              semester={7}
@@ -66,6 +67,7 @@ function MentorListPage() {
 
                                    <Col xs={24} xl={12}>
                                         <MentorCard
+                                             id='2'
                                              avatar='https://vcdn1-sohoa.vnecdn.net/2024/09/14/mark-zuckerberg-7-jpg-4371-1726298974.png?w=460&h=0&q=100&dpr=2&fit=crop&s=xXAQsxxPWM3vQUez83PRPQ'
                                              name='Mark Zuckerberg'
                                              rating={4.9}
@@ -76,6 +78,7 @@ function MentorListPage() {
 
                                    <Col xs={24} xl={12}>
                                         <MentorCard
+                                             id='3'
                                              avatar='https://vcdn1-sohoa.vnecdn.net/2024/09/14/mark-zuckerberg-7-jpg-4371-1726298974.png?w=460&h=0&q=100&dpr=2&fit=crop&s=xXAQsxxPWM3vQUez83PRPQ'
                                              name='Mark Zuckerberg'
                                              rating={4.9}
