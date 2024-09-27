@@ -31,7 +31,7 @@ function Login() {
                setIsValidate(false)
                console.log(isValidate)
           }
-     }, [formData])
+     }, [formData, isValidate])
 
      const handleLogin = (e) => {
           e.preventDefault()
@@ -88,7 +88,7 @@ function Login() {
                               {/* <form className='login-form' onSubmit={handleLogin}> */}
                               <form className='login-form' onSubmit={handleLogin} >
                                    <h1 className='title'>Welcome Back!</h1>
-                                   <p className='welcome-content'>We're glad to see you back.</p>
+                                   <p className='welcome-content'>We are glad to see you back.</p>
                                    <div className='input-block'>
                                         <input
                                              type="text"
@@ -148,7 +148,7 @@ function Login() {
                                    </a>
                                    <p className='login-text'>
                                         {/* <Link className='login-link' to='/signup'>Sign up</Link> */}
-                                        Don't have an account? <span className='login-link'>Sign up</span>
+                                        Do not have an account? <span className='login-link'>Sign up</span>
                                    </p>
                               </form>
                          </Col>
