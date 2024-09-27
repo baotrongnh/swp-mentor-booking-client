@@ -1,14 +1,18 @@
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
+import { Header } from '../Components';
 
 function DefaultLayout({ children }) {
      return (
-          children
+          <>
+               <Header />
+               {children}
+          </>
      )
 }
 
 export default DefaultLayout;
 
 DefaultLayout.propTypes = {
-     children: propTypes.any
+     children: PropTypes.any
 }
 

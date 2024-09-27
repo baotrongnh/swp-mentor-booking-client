@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import DefaultLayout from "./Layouts/DefaultLayout";
-import { publicRoutes } from "./Routes";
+import { PrivateRouteAuth, privateRoutes, publicRoutes } from "./Routes";
 
 function App() {
 
@@ -19,6 +19,23 @@ function App() {
             }
             return (
               <Route key={index} path={route.path} element={<Layout> <Page /> </Layout>} />
+            )
+          })}
+
+          {privateRoutes.map((route, index) => {
+            let Page = route.element;
+            let Layout = DefaultLayout;
+            if (route.layout === null) {
+              Layout = Fragment;
+            } else if (route.layout) {
+              Layout = route.layout;
+            }
+            return (
+              <Route
+                key={index}
+                path={route.path}
+                element={<PrivateRouteAuth> <Layout> <Page /> </Layout> </PrivateRouteAuth>}
+              />
             )
           })}
         </Routes>

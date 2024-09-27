@@ -6,7 +6,9 @@ function ConfigProviderAntd({ children }) {
      return (
           <ConfigProvider theme={{
                token: {
-                    fontFamily: 'Segoe UI, Arial, sans-serif'
+                    fontFamily: 'Segoe UI, Arial, sans-serif',
+                    fontSize: 16,
+                    // colorPrimary: '#00DD73',
                }
           }}>
                {children}

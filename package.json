@@ -11,7 +11,11 @@
   },
   "dependencies": {
     "antd": "^5.20.5",
+<<<<<<< HEAD
     "classnames": "^2.5.1",
+=======
+    "axios": "^1.7.7",
+>>>>>>> dc3795a44c512ddee8339023efd0595b0eb82f5d
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

@@ -1,0 +1,25 @@
+.header {
+     position: sticky;
+     border-bottom: 1px solid grey;
+
+     .header-block {
+          display: flex;
+          align-items: center;
+          height: 80px;
+          .logo-block {
+
+          }
+
+          .search-block {
+               display: flex;
+               justify-content: center;
+               align-items: center;
+          }
+
+          .btn-block {
+               padding-left: 50px;
+               display: flex;
+               justify-content: space-between;
+          }
+     }
+}
