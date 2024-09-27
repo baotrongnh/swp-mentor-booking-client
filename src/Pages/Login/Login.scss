@@ -10,20 +10,20 @@
   justify-content: center;
   min-height: 100vh;
 
-  & * {
-    color: var(--text-primary);
-  }
-
   .container {
-    background-color: var(--theme-color-primary);
     width: 65%;
     padding: 0;
     border-radius: 1rem;
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 10px 10px rgba(0, 0, 0, 0.15);
+    margin: 0;
+    height: auto;
+    min-height: 75vh;
 
     .side-information {
       position: relative;
       overflow: hidden;
+      height: auto;
+      min-height: 75vh;
 
       img {
         width: 100%;
@@ -32,7 +32,8 @@
         border-top-left-radius: 1rem;
         border-bottom-left-radius: 1rem;
         object-position: center;
-        filter: brightness(70%);
+        filter: brightness(50%);
+        overflow: hidden;
       }
 
       .animation-container {
@@ -43,7 +44,7 @@
         width: 90%;
         max-width: 600px;
         padding: 2rem;
-        cursor: alias;
+        cursor: default;
 
         span {
           display: block;
@@ -64,12 +65,17 @@
     }
 
     .login-form {
-      background-color: var(--bg-primary);
-      align-items: center;
+      display: flex;
+      flex-direction: column;
+      background-color: $bg-primary;
       justify-content: center;
-      padding: 7rem 5rem 7rem 4rem;
+      padding: 5rem 5rem 7rem 5rem;
       border-top-right-radius: 1rem;
       border-bottom-right-radius: 1rem;
+      margin-bottom: 0;
+      height: auto;
+      min-height: 75vh;
+      outline: none;
 
       .title {
         font-size: 2.8rem;
@@ -77,40 +83,52 @@
         margin-bottom: 1rem;
         text-align: start;
         letter-spacing: 0.08rem;
-        color: var(--text-primary);
+        color: $text-primary;
       }
       .welcome-content {
         font-size: 1.4rem;
         font-weight: 700;
-        margin-bottom: 3.5rem;
+        margin-bottom: 5rem;
         text-align: start;
-        color: var(--text-primary);
+        color: $text-primary;
         opacity: 60%;
       }
 
+      .input-block:first-of-type {
+        margin-bottom: 3rem;
+        outline: none;
+      }
+
       .input-block {
-        margin-bottom: 1.5rem;
+        margin-bottom: 2rem;
         display: flex;
         flex-direction: column;
         align-items: start;
         position: relative;
+        outline: none;
 
         .label {
-          font-size: 1.5rem;
-          font-weight: 500;
-          margin-right: 1rem;
+          font: {
+            size: 1.2rem;
+            weight: 600;
+          }
+          position: absolute;
+          top: 50%;
+          left: 7%;
+          transform: translate(-7%, -50%);
           width: 12rem;
           margin-bottom: 0.5rem;
-          flex-shrink: 0;
           color: var(--text-primary);
-          opacity: 70%;
+          opacity: 35%;
+          letter-spacing: 0.18rem;
+          transition: all 0.3s ease;
         }
 
         .input {
           flex-grow: 1;
           padding: 1rem;
           background-color: rgba(196, 222, 241, 0.352);
-          border: 1px solid var(--bg-secondary);
+          border: 1px solid $bg-secondary;
           border-radius: 0.5rem;
           font-size: 1.5rem;
           transition: all 0.3s ease;
@@ -118,10 +136,22 @@
           display: flex;
           align-items: center;
           justify-content: space-between;
+          outline: none;
 
           &:focus {
             outline: none;
-            border-color: var(--theme-color-secondary);
+            border-color: $theme-color-secondary;
+          }
+
+          &:placeholder-shown + .label {
+            display: block; // Ensure the label is displayed when input is empty
+            color: $text-primary; // Optional: Set color for the label when input is empty
+          }
+
+          &:focus + .label,
+          &:not(:placeholder-shown) + .label {
+            transform: translate(-20%, -310%);
+            color: $theme-color-secondary;
           }
         }
 
@@ -129,9 +159,9 @@
           font-size: 1.8rem;
           cursor: pointer;
           position: absolute;
-          top: 70%;
+          top: 50%;
           right: 4%;
-          transform: translateY(-50%);
+          transform: translateY(-50%) translateX(-4%);
           user-select: none;
         }
         .hide {
@@ -148,12 +178,13 @@
         background-color: $theme-color-primary;
         border: 1px solid $theme-color-primary;
         border-radius: 0.5rem;
-        color: var(--bg-primary);
+        color: $bg-primary;
         font-size: 1.6rem;
         font-weight: 600;
         cursor: pointer;
         transition: background-color 0.3s ease;
-        margin: 1rem auto; // Added to center the button
+        margin: 1rem auto;
+        text-overflow: ellipsis;
 
         &:hover {
           background-color: $theme-color-primary;
@@ -165,9 +196,9 @@
       .line {
         width: 80%;
         height: 1px;
-        background-color: var(--accent-primary);
-        margin: 0 auto;
-        margin-top: 1.2rem;
+        background-color: $text-primary;
+        opacity: 40%;
+        margin: 1.2rem auto 0 auto;
       }
 
       .text-or {
@@ -175,7 +206,7 @@
         font-weight: 600;
         margin-top: 1rem;
         text-align: center;
-        color: var(--text-primary);
+        color: $text-primary;
       }
 
       .button-google {
@@ -184,8 +215,8 @@
         justify-content: center;
         width: 70%;
         padding: 1rem;
-        background-color: var(--bg-primary);
-        border: 1px solid var(--theme-color-secondary);
+        background-color: $bg-primary;
+        border: 1px solid $theme-color-secondary;
         border-radius: 0.5rem;
         cursor: pointer;
         margin: 2rem auto;
@@ -195,11 +226,7 @@
         overflow: hidden;
 
         &:hover {
-          background-color: var(--bg-secondary);
-          border: 1px solid var(--accent-primary);
-        }
-        &:hover span {
-          color: var(--accent-primary);
+          opacity: 70%;
         }
 
         .icon-google {
@@ -215,7 +242,8 @@
         span {
           font-size: 1.4rem;
           font-weight: 600;
-          color: var(--text-primary);
+          padding: 0.3rem;
+          color: $text-primary;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -227,21 +255,31 @@
         font-weight: 600;
         margin-top: 1rem;
         text-align: center;
-        color: var(--text-primary);
+        color: $text-primary;
 
         .login-link {
-          color: var(--theme-color-secondary);
+          color: $theme-color-secondary;
           text-decoration: none;
           transition: all 0.3s ease;
           cursor: pointer;
 
           &:hover {
-            color: var(--accent-primary);
+            opacity: 70%;
             text-decoration: none;
           }
         }
       }
     }
+  }
+}
+
+@media (min-width: 1600px) {
+  .login-page .container .login-form .input-block .label {
+    // Increased specificity
+    position: absolute;
+    top: 50%;
+    left: 5%;
+    transform: translate(-5%, -50%);
   }
 }
 
@@ -286,10 +324,19 @@
           .label {
             width: 100%;
             margin-bottom: 0.5rem;
+            top: 50%;
+            left: 10%;
+            transform: translate(-5%, -50%);
           }
 
           .input {
             width: 100%;
+
+            &:focus + .label,
+            &:not(:placeholder-shown) + .label {
+              transform: translate(-10%, -310%);
+              color: $theme-color-secondary;
+            }
           }
         }
 
@@ -331,6 +378,7 @@
       width: 85%;
       border-radius: 1rem;
       overflow: hidden;
+      min-height: 60vh;
 
       .side-information {
         display: none;
@@ -339,6 +387,7 @@
       .login-form {
         border-radius: 1rem;
         padding: 3rem 2.5rem;
+        min-height: 60vh;
 
         .title {
           font-size: 2.6rem;
@@ -347,20 +396,30 @@
 
         .welcome-content {
           font-size: 1.3rem;
-          margin-bottom: 2.5rem;
+          margin-bottom: 3.5rem;
         }
 
         .input-block {
           margin-bottom: 1.5rem;
 
           .label {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             margin-bottom: 0.8rem;
+            position: absolute;
+            top: 50%;
+            left: 18%;
+            transform: translate(-15%, -50%);
+            width: 100%;
           }
 
           .input {
             font-size: 1.3rem;
             padding: 0.8rem 1rem;
+            &:focus + .label,
+            &:not(:placeholder-shown) + .label {
+              transform: translate(-18%, -280%);
+              color: $theme-color-secondary;
+            }
           }
         }
 

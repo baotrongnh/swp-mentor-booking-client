@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react';
 import { Col, Row } from 'antd';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TypeAnimation } from 'react-type-animation';
 import loginImage from '../../assets/Photos/background/login-img2.jpg';
 import './Login.scss';
@@ -21,19 +21,29 @@ function Login() {
      }
 
      useEffect(() => {
-          if (formData.username !== '' && formData.username !== '') {
+          if (formData.username !== '' && formData.password !== '') {
                setIsValidate(true)
+               console.log(isValidate)
+               document.getElementById('info').innerHTML = ''
+               document.getElementById('username').style.borderColor = '';
+               document.getElementById('password').style.borderColor = '';
           } else {
                setIsValidate(false)
+               console.log(isValidate)
           }
      }, [formData])
 
      const handleLogin = (e) => {
           e.preventDefault()
           if (isValidate) {
-
+               console.log('Form Data:', formData);
           } else {
-
+               if (formData.username === '') {
+                    document.getElementById('username').style.borderColor = 'red';
+               }
+               if (formData.password === '') {
+                    document.getElementById('password').style.borderColor = 'red';
+               }
           }
      }
 
@@ -80,7 +90,6 @@ function Login() {
                                    <h1 className='title'>Welcome Back!</h1>
                                    <p className='welcome-content'>We're glad to see you back.</p>
                                    <div className='input-block'>
-                                        <label htmlFor="username" className='label username'>Username <span id="input-username-error" style={{ color: 'red' }}></span></label>
                                         <input
                                              type="text"
                                              className="input username"
@@ -88,12 +97,13 @@ function Login() {
                                              // value={formData.username}
                                              name='username'
                                              onChange={(e) => handleChangeInput(e)}
+                                             placeholder=" "
 
                                         />
+                                        <label htmlFor="username" className='label username'>Username <span id="input-username-error" style={{ color: 'red' }}></span></label>
                                    </div>
 
                                    <div className='input-block'>
-                                        <label htmlFor="password" className='label password'>Password <span id="input-password-error" style={{ color: 'red' }}></span></label>
                                         <input
                                              // type={showPassword ? "text" : "password"}
                                              className="input password"
@@ -102,7 +112,9 @@ function Login() {
                                              name='password'
                                              onChange={(e) => handleChangeInput(e)}
                                              type={showPassword ? 'text' : 'password'}
+                                             placeholder=" "
                                         />
+                                        <label htmlFor="password" className='label password'>Password <span id="input-password-error" style={{ color: 'red' }}></span></label>
                                         {showPassword ? (
                                              <Icon
                                                   id='icon1'
@@ -120,23 +132,20 @@ function Login() {
                                                   title='Show Password'
                                              />
                                         )}
+
                                    </div>
                                    <div id='info' style={{ color: 'red', textAlign: 'center', fontWeight: 700 }}></div>
 
-
-
                                    <button className='button-login'>Log in</button>
-
-
 
                                    <div id="info"></div>
                                    <div className="line"></div>
                                    <p className='text-or'>or</p>
 
-                                   <button className="button-google" onClick={handleGoogleLogin}>
+                                   <a className="button-google" onClick={handleGoogleLogin}>
                                         <Icon className='icon-google' icon="logos:google-icon" />
                                         <span>Log in with Google</span>
-                                   </button>
+                                   </a>
                                    <p className='login-text'>
                                         {/* <Link className='login-link' to='/signup'>Sign up</Link> */}
                                         Don't have an account? <span className='login-link'>Sign up</span>
