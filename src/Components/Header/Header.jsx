@@ -4,6 +4,7 @@ import './Header.scss';
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { AppContext } from '../../Contexts/AppContext';
+import { Icon } from '@iconify/react/dist/iconify.js';
 
 function Header() {
      const { setFilterMentor, filterMentor } = useContext(AppContext);
@@ -16,7 +17,7 @@ function Header() {
           {
                label: (
                     <Link>
-                         Thêm thành viên
+                         Add member
                     </Link>
                ),
                key: '0',
@@ -24,7 +25,7 @@ function Header() {
           {
                label: (
                     <Link >
-                         Lịch sử
+                         History
                     </Link>
                ),
                key: '1',
@@ -39,6 +40,34 @@ function Header() {
           },
      ];
 
+     const accountSubMenu = [
+          {
+               label: (
+                    <Link to="/profile">
+                         Profile
+                    </Link>
+               ),
+               key: '0',
+          },
+          {
+               label: (
+                    <Link to="/settings">
+                         Point wallet
+                    </Link>
+               ),
+               key: '1',
+          },
+          {
+               type: 'divider',
+          },
+          {
+               label: (
+                    <Link style={{color: 'red'}}>Logout</Link>
+               ),
+               key: '3',
+          },
+     ];
+
      return (
           <div className="header">
                <div className="container">
@@ -49,7 +78,7 @@ function Header() {
 
                          <Col className='search-block' md={9}>
                               <Input.Search
-                                   placeholder="Tìm kiếm mentor"
+                                   placeholder="Find mentors"
                                    onSearch={onSearch}
                                    style={{
                                         width: '100%',
@@ -60,21 +89,32 @@ function Header() {
                          </Col>
 
                          <Col md={9} className='btn-block'>
-                              <Link>Lịch trình</Link>
-                              <Link>Nạp tiền</Link>
+                              <Link className='navbar-link'>Schedule</Link>
+                              <Link className='navbar-link'>Deposit</Link>
                               <Dropdown
                                    menu={{
                                         items,
                                    }}
+                                   placement='bottom'
                               >
-                                   <Link onClick={(e) => e.preventDefault()}>
+                                   <Link className='navbar-link' onClick={(e) => e.preventDefault()}>
                                         <Space>
-                                             Thêm
+                                             More
                                              <DownOutlined />
                                         </Space>
                                    </Link>
                               </Dropdown>
-                              <Link>Tài khoản</Link>
+
+                              <Dropdown
+                                   menu={{
+                                        items: accountSubMenu
+                                   }}
+                                   placement='bottomRight'
+                              >
+                                   <Link to='/profile' className='navbar-link account'>
+                                        <Icon className='icon' icon="material-symbols-light:account-circle" />
+                                   </Link>
+                              </Dropdown>
                          </Col>
                     </Row>
                </div>

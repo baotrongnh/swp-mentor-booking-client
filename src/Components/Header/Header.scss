@@ -1,14 +1,15 @@
+@import '../../Styles/variables';
+
 .header {
      position: sticky;
-     border-bottom: 1px solid grey;
+     border-bottom: 1px solid rgba(128, 128, 128, 0.211);
 
      .header-block {
           display: flex;
           align-items: center;
-          height: 80px;
-          .logo-block {
+          height: 70px;
 
-          }
+          .logo-block {}
 
           .search-block {
                display: flex;
@@ -20,6 +21,23 @@
                padding-left: 50px;
                display: flex;
                justify-content: space-between;
+               align-items: center;
+               color: $text-primary;
+
+               .navbar-link {
+                    color: $text-primary;
+                    font-weight: 500;
+                    transition: 0.3s;
+
+                    &:hover {
+                         opacity: 80%;
+                    }
+
+                    .icon {
+                         font-size: 4rem;
+                    }
+               }
           }
      }
+
 }

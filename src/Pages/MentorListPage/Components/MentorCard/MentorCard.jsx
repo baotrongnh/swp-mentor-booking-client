@@ -32,6 +32,7 @@ function MentorCard({ id, avatar, name, rating, description, skills, numReviews,
                               <Rate disabled allowHalf defaultValue={rating} />
                               <p><Typography.Text strong>{`${rating || 'No reviews yet'}`}</Typography.Text> {`(${numReviews || 0} reviews)`}</p>
                          </div>
+                         
                          <p className="description">{description}</p>
 
                          <div className="skill-tag-block">
@@ -44,7 +45,7 @@ function MentorCard({ id, avatar, name, rating, description, skills, numReviews,
 
                <Row className='btn-block'>
                     <Link to={`/mentorprofile/${id}`}><Button size='large' className='btn'>View Profile</Button></Link>
-                    <Link><Button size='large' className='btn' type="primary">Booking</Button></Link>
+                    <Link><Button size='large' className='btn' type="primary">Book</Button></Link>
                </Row>    
           </div>
      );

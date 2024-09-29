@@ -3,6 +3,7 @@ import './MentorListPage.scss';
 import { Col, DatePicker, Input, Pagination, Row } from 'antd';
 import { AppContext } from '../../Contexts/AppContext';
 import { CheckboxSkill, MentorCard, RatingSelect } from './Components';
+import { DownOutlined } from '@ant-design/icons';
 
 function MentorListPage() {
      const { filterMentor } = useContext(AppContext);
@@ -31,7 +32,7 @@ function MentorListPage() {
                                         <CheckboxSkill id='3' skillName='Java' numberMentor={1} />
                                         <CheckboxSkill id='4' skillName='.NET' numberMentor={3} />
                                         <CheckboxSkill id='5' skillName='HTML/CSS' numberMentor={99} />
-                                        <p className='show-more-text'>Show more</p>
+                                        <p className='show-more-text'>Show more <DownOutlined /></p>
                                    </div>
                               </div>
 
@@ -91,6 +92,7 @@ function MentorListPage() {
                                    className='pagination'
                                    onChange={(page) => console.log(page)}
                                    align="center"
+                                   defaultPageSize={6}
                                    defaultCurrent={1}
                                    total={70}
                                    showSizeChanger={false}
