@@ -1,3 +1,4 @@
 import Header from "./Header/Header";
+import SkillItem from './SkillItem/SkillItem';
 
-export { Header }
+export { Header, SkillItem }

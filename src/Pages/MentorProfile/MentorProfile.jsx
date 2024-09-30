@@ -1,54 +1,48 @@
-import { Col, Image, Rate, Row, Typography } from "antd";
+import { Menu } from "antd";
+import { useState } from "react";
 import './MentorProfile.scss';
-import SkillItem from "../../Components/SkillItem/SkillItem";
+import { AboutMentor, MentorInfor, Skills } from "./components";
+import { StarOutlined, UnorderedListOutlined, UserOutlined } from '@ant-design/icons'
 
 function MentorProfile() {
-     const rating = 5;
+
+     const items = [
+          {
+               label: 'About mentor',
+               key: 'about',
+               icon: <UserOutlined />,
+          },
+          {
+               label: 'Skills',
+               key: 'skills',
+               icon: <UnorderedListOutlined />,
+          },
+          {
+               label: 'Rating',
+               key: 'rating',
+               icon: <StarOutlined />,
+          },
+     ];
+
+     const [currentTab, setCurrentTab] = useState('about');
+     const onClick = (e) => {
+          setCurrentTab(e.key);
+     };
+
+     const renderContent = () => {
+          switch (currentTab) {
+               case 'about': return <AboutMentor />
+               case 'skills': return <Skills />
+          }
+     }
 
      return (
           <div className="mentor-profile">
+               <MentorInfor />
+
                <div className="container">
-                    <Row>
-                         <Col md={8} className="avatar-block">
-                              <Image
-                                   className="img"
-                                   width='100%'
-                                   src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-                              />
-                         </Col>
-
-                         <Col md={16} className="info-block">
-                              <h1 className="name">Mentor name here</h1>
-                              <p className="semester"><b>Semester:</b> 7</p>
-                              <div className="rating-block">
-                                   <Rate disabled allowHalf defaultValue={rating} />
-                                   <p><Typography.Text strong>{`${rating || 'No reviews yet'}`}</Typography.Text> {`(${rating || 0} reviews)`}</p>
-                              </div>
-                              <p className="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse dolorem placeat animi dolores! Rem perspiciatis, quas, nulla doloremque, odio esse quod aperiam error necessitatibus tempore perferendis laborum veniam nam voluptates.</p>
-
-                              <div className="skill-block">
-                                   <h1 className="title">Top skills</h1>
-{/*                                    
-                                   <SkillItem
-                                        skillName='ReactJS'
-                                        icon='logos:react'
-                                        percent={75}
-                                   />
-
-                                   <SkillItem
-                                        skillName='NodeJS'
-                                        icon='logos:nodejs'
-                                        percent={40}
-                                   />
-
-                                   <SkillItem
-                                        skillName='Html'
-                                        icon='logos:html-5'
-                                        percent={85}
-                                   /> */}
-                              </div>
-                         </Col>
-                    </Row>
+                    <Menu onClick={onClick} selectedKeys={[currentTab]} mode="horizontal" items={items} />
+                    {renderContent()}
                </div>
           </div>
 

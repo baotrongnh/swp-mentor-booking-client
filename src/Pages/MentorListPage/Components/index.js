@@ -1,5 +1,5 @@
-import CheckboxSkill from "./CheckboxSkill/CheckboxSkill";
 import MentorCard from "./MentorCard/MentorCard";
 import RatingSelect from "./RatingSelect/RatingSelect";
+import CheckboxSkill from './CheckboxSkill/CheckboxSkill';
 
-export { CheckboxSkill, MentorCard, RatingSelect }
+export { MentorCard, RatingSelect, CheckboxSkill }
