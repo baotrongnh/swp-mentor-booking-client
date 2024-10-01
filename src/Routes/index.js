@@ -1,7 +1,7 @@
 import { Login, MentorListPage, MentorProfile, StudentProfile } from "../Pages";
 import PrivateRouteAuth from "./PrivateRoutesAuth";
 
-const publicRoutes = [{ path: "/", element: Login, layout: null }];
+const publicRoutes = [{ path: "/login", element: Login, layout: null }];
 
 const privateRoutes = [
   { path: "/mentorlist", element: MentorListPage },
