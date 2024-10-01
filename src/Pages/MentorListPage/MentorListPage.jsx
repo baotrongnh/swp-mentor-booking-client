@@ -1,22 +1,38 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import './MentorListPage.scss';
 import { Col, DatePicker, Input, Pagination, Row } from 'antd';
 import { AppContext } from '../../Contexts/AppContext';
 import { CheckboxSkill, MentorCard, RatingSelect } from './Components';
 import { DownOutlined } from '@ant-design/icons';
+import { searchMentor } from '../../apis/mentor';
 
 function MentorListPage() {
-     const { filterMentor } = useContext(AppContext);
+     const { filterMentor, setFilterMentor } = useContext(AppContext);
+     const [listMentor, setListMentor] = useState([]);
+     const [totalMentors, setTotalMentors] = useState(0);
+
+     const handleChangePage = (page) => {
+          setFilterMentor({ ...filterMentor, page });
+     }
 
      useEffect(() => {
-          console.log(filterMentor);
+          const fetchData = async () => {
+               const { data } = await searchMentor(filterMentor);
+               if (data.error_code == 0) {
+                    console.log(data);
+                    setTotalMentors(data.totalMentors);
+                    setListMentor(data.mentors);
+               }
+          }
+
+          fetchData();
      }, [filterMentor]);
 
      const onChangeTime = (date, dateString) => {
           console.log(dateString);
      }
-      
-     return ( 
+
+     return (
           <div className="mentor-list-page">
                <div className="container">
                     <Row>
@@ -54,48 +70,29 @@ function MentorListPage() {
 
                          <Col xs={24} md={17} lg={19} className='mentor-block'>
                               <Row gutter={15}>
-                                   <Col xs={24} xl={12}>
-                                        <MentorCard
-                                             id='1'
-                                             avatar='https://vcdn1-sohoa.vnecdn.net/2024/09/14/mark-zuckerberg-7-jpg-4371-1726298974.png?w=460&h=0&q=100&dpr=2&fit=crop&s=xXAQsxxPWM3vQUez83PRPQ'
-                                             name='Mark Zuckerberg'
-                                             semester={7}
-                                             rating={4.9}
-                                             description='Hello, I am passionate Frontend Engineer at Coinbase with a deep love for mentoring engineers and guiding them through their'
-                                             skills={['ReactJS', 'NodeJS', 'HTML/CSS', 'PHP', 'Python']}
-                                        />
-                                   </Col>
-
-                                   <Col xs={24} xl={12}>
-                                        <MentorCard
-                                             id='2'
-                                             avatar='https://vcdn1-sohoa.vnecdn.net/2024/09/14/mark-zuckerberg-7-jpg-4371-1726298974.png?w=460&h=0&q=100&dpr=2&fit=crop&s=xXAQsxxPWM3vQUez83PRPQ'
-                                             name='Mark Zuckerberg'
-                                             rating={4.9}
-                                             description='Hi there~ Nice to meet you! Currently a senior engineering manager at Carousell, formerly a lead engineer at Yahoo along with two startups experience'
-                                             skills={['ReactJS', 'NodeJS', 'HTML/CSS']}
-                                        />
-                                   </Col>
-
-                                   <Col xs={24} xl={12}>
-                                        <MentorCard
-                                             id='3'
-                                             avatar='https://vcdn1-sohoa.vnecdn.net/2024/09/14/mark-zuckerberg-7-jpg-4371-1726298974.png?w=460&h=0&q=100&dpr=2&fit=crop&s=xXAQsxxPWM3vQUez83PRPQ'
-                                             name='Mark Zuckerberg'
-                                             rating={4.9}
-                                             description='Hi there~ Nice to meet you! Currently a senior engineering manager at Carousell, formerly a lead engineer at Yahoo along with two startups experience'
-                                             skills={['ReactJS', 'NodeJS', 'HTML/CSS']}
-                                        />
-                                   </Col>
+                                   {listMentor.map((mentor) => (
+                                        <Col xs={24} xl={12} key={mentor.id}>
+                                             <MentorCard
+                                                  id={mentor.id}
+                                                  avatar='https://vcdn1-sohoa.vnecdn.net/2024/09/14/mark-zuckerberg-7-jpg-4371-1726298974.png?w=460&h=0&q=100&dpr=2&fit=crop&s=xXAQsxxPWM3vQUez83PRPQ'
+                                                  name={mentor.full_name}
+                                                  semester={7}
+                                                  rating={4.9}
+                                                  description='Hello, I am passionate Frontend Engineer at Coinbase with a deep love for mentoring engineers and guiding them through their'
+                                                  skills={['ReactJS', 'NodeJS', 'HTML/CSS', 'PHP', 'Python']}
+                                             />
+                                        </Col>
+                                   ))}
                               </Row>
                               <Pagination
                                    className='pagination'
-                                   onChange={(page) => console.log(page)}
+                                   onChange={(page) => handleChangePage(page)}
                                    align="center"
-                                   defaultPageSize={6}
+                                   defaultPageSize={10}
                                    defaultCurrent={1}
-                                   total={70}
+                                   total={totalMentors}
                                    showSizeChanger={false}
+                                   hideOnSinglePage={true}
                               />
                          </Col>
                     </Row>

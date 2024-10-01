@@ -9,8 +9,6 @@ function CheckboxSkill({ skillName, numberMentor, id }) {
      const { filterMentor, setFilterMentor } = useContext(AppContext);
 
      const onChange = (e) => {
-          // console.log(`checked = ${e.target.checked}`);
-          console.log(e.target.id);
           if (e.target.checked) {
                setFilterMentor({ ...filterMentor, skills: [...filterMentor.skills, e.target.id] });
           } else {

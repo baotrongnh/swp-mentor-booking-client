@@ -3,8 +3,11 @@ import { useState } from "react";
 import './MentorProfile.scss';
 import { AboutMentor, MentorInfor, Skills } from "./components";
 import { StarOutlined, UnorderedListOutlined, UserOutlined } from '@ant-design/icons'
+import { BookMentorModal, ModalCenter } from "../../Components";
 
 function MentorProfile() {
+
+     const [modalOpen, setModalOpen] = useState(false);
 
      const items = [
           {
@@ -38,14 +41,21 @@ function MentorProfile() {
 
      return (
           <div className="mentor-profile">
-               <MentorInfor />
+               <MentorInfor setModalOpen={setModalOpen} />
 
                <div className="container">
                     <Menu onClick={onClick} selectedKeys={[currentTab]} mode="horizontal" items={items} />
                     {renderContent()}
                </div>
-          </div>
 
+               <ModalCenter
+                    modalOpen={modalOpen}
+                    setModalOpen={setModalOpen}
+                    ComponentRender={BookMentorModal}
+                    okText='Book'
+                    title='Book mentor'
+               />
+          </div>
      );
 }
 

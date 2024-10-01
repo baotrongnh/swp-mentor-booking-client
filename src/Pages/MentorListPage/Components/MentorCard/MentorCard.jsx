@@ -9,12 +9,10 @@ function MentorCard({ id, avatar, name, rating, description, skills, numReviews,
           <div className="mentor-card">
                <Row className="infor-block">
                     <Col xs={24} sm={5} md={5} className="avatar-block">
-                         {/* <img className="avatar-img" src={avatar} alt="" /> */}  
                          <Image
                               className="avatar-img"
                               src={avatar}
                          />
-
                     </Col>
 
                     <Col sm={19} md={19} className="text-block">
@@ -54,7 +52,7 @@ function MentorCard({ id, avatar, name, rating, description, skills, numReviews,
 export default MentorCard;
 
 MentorCard.propTypes = {
-     id: PropTypes.string,
+     id: PropTypes.number,
      avatar: PropTypes.string,
      name: PropTypes.string,
      rating: PropTypes.number,

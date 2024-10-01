@@ -2,7 +2,7 @@ import { Button, Col, Image, Rate, Row, Tag, Typography } from "antd";
 import { useEffect, useRef, useState } from "react";
 import './MentorInfor.scss';
 
-function MentorInfor() {
+function MentorInfor({ setModalOpen }) {
      const rating = 5;
      const skills = ['ReactJS', 'NodeJS'];
      const descriptionRef = useRef(null);
@@ -25,6 +25,10 @@ function MentorInfor() {
                setIsShowMore(isOverflow);
           }
      }, [width]);
+
+     const handleOpenModal = () => {
+          setModalOpen(true);
+     }
 
      return (
           <div className="mentor-infor">
@@ -59,7 +63,7 @@ function MentorInfor() {
                               <a className={`read-more ${isShowMore ? 'show' : ''}`}>Read more</a>
 
                               <div className="btn-block">
-                                   <Button style={{ width: '40%' }} size="large" type="primary">Book Now</Button>
+                                   <Button style={{ width: '40%' }} size="large" type="primary" onClick={handleOpenModal} >Book Now</Button>
                                    <Button style={{ width: '40%' }} size="large">Contact</Button>
                               </div>
                          </Col>
