@@ -31,7 +31,7 @@ function Login() {
                setIsValidate(false)
                console.log(isValidate)
           }
-     }, [formData, isValidate])
+     }, [formData])
 
      const handleLogin = (e) => {
           e.preventDefault()
