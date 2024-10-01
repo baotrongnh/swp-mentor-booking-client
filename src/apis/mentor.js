@@ -1,8 +1,9 @@
+import { getToken } from "../utils/storageUtils";
 import axiosClient from "./axiosClient";
 
 export const searchMentor = async ({ skills, search, page }) => {
      try {
-          return await axiosClient.get('/mentor/search', {
+          return await axiosClient(getToken()).get('/mentor/search', {
                params: {
                     skill: skills,
                     name: search,
@@ -15,9 +16,13 @@ export const searchMentor = async ({ skills, search, page }) => {
 }
 
 export const getProfileMentor = async (id) => {
-     return await axiosClient.get('/mentor', {
-          params: {
-               id
-          }
-     })
+     try {
+          return await axiosClient(getToken()).get('/mentor', {
+               params: {
+                    id
+               }
+          })
+     } catch (error) {
+          console.log(error);
+     }
 }
