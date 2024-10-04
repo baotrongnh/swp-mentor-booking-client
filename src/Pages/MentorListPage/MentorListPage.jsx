@@ -11,6 +11,8 @@ function MentorListPage() {
      const [listMentor, setListMentor] = useState([]);
      const [totalMentors, setTotalMentors] = useState(0);
 
+     console.log(listMentor);
+
      const handleChangePage = (page) => {
           setFilterMentor({ ...filterMentor, page });
      }
@@ -19,7 +21,6 @@ function MentorListPage() {
           const fetchData = async () => {
                const { data } = await searchMentor(filterMentor);
                if (data.error_code == 0) {
-                    console.log(data);
                     setTotalMentors(data.totalMentors);
                     setListMentor(data.mentors);
                }
@@ -27,6 +28,8 @@ function MentorListPage() {
 
           fetchData();
      }, [filterMentor]);
+
+     console.log(listMentor);
 
      const onChangeTime = (date, dateString) => {
           console.log(dateString);
@@ -74,10 +77,11 @@ function MentorListPage() {
                                         <Col xs={24} xl={12} key={mentor.id}>
                                              <MentorCard
                                                   id={mentor.id}
-                                                  avatar='https://vcdn1-sohoa.vnecdn.net/2024/09/14/mark-zuckerberg-7-jpg-4371-1726298974.png?w=460&h=0&q=100&dpr=2&fit=crop&s=xXAQsxxPWM3vQUez83PRPQ'
-                                                  name={mentor.full_name}
+                                                  avatar={mentor.imgPat || 'https://www.strasys.uk/wp-content/uploads/2022/02/Depositphotos_484354208_S.jpg'}
+                                                  name={mentor.fullName}
                                                   semester={7}
-                                                  rating={4.9}
+                                                  ratingCount={mentor.ratingCount}
+                                                  rating={mentor.averageRating}
                                                   description='Hello, I am passionate Frontend Engineer at Coinbase with a deep love for mentoring engineers and guiding them through their'
                                                   skills={['ReactJS', 'NodeJS', 'HTML/CSS', 'PHP', 'Python']}
                                              />

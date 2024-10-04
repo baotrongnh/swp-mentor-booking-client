@@ -9,6 +9,8 @@ function RatingSelect() {
      const handleChange = (e) => {
           if (e.target.checked) {
                setFilterMentor({ ...filterMentor, star: e.target.id });
+          } else {
+               setFilterMentor({ ...filterMentor, star: '' });
           }
      }
 

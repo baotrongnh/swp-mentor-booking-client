@@ -17,7 +17,7 @@ export const searchMentor = async ({ skills, search, page }) => {
 
 export const getProfileMentor = async (id) => {
      try {
-          return await axiosClient(getToken()).get('/mentor', {
+          return await axiosClient(getToken()).get('/mentor/profile', {
                params: {
                     id
                }

@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 import './MentorCard.scss';
 import { Link } from 'react-router-dom';
 
-function MentorCard({ id, avatar, name, rating, description, skills, numReviews, semester }) {
+function MentorCard({ id, avatar, name, rating, description, skills, ratingCount, semester }) {
+
      return (
           <div className="mentor-card">
                <Row className="infor-block">
@@ -27,10 +28,14 @@ function MentorCard({ id, avatar, name, rating, description, skills, numReviews,
                          <p className='position'>{`Semester: ${semester || 'No data'} `}</p>
 
                          <div className="rating-block">
-                              <Rate disabled allowHalf defaultValue={rating} />
-                              <p><Typography.Text strong>{`${rating || 'No reviews yet'}`}</Typography.Text> {`(${numReviews || 0} reviews)`}</p>
+                              {rating > 0
+                                   ? <Rate disabled allowHalf defaultValue={0} value={rating} />
+                                   : ''
+                              }
+
+                              <p><Typography.Text strong>{`${rating || 'No reviews yet'}`}</Typography.Text> {`(${ratingCount || 0} reviews)`}</p>
                          </div>
-                         
+
                          <p className="description">{description}</p>
 
                          <div className="skill-tag-block">
@@ -44,7 +49,7 @@ function MentorCard({ id, avatar, name, rating, description, skills, numReviews,
                <Row className='btn-block'>
                     <Link to={`/mentorprofile/${id}`}><Button size='large' className='btn'>View Profile</Button></Link>
                     <Link><Button size='large' className='btn' type="primary">Book</Button></Link>
-               </Row>    
+               </Row>
           </div>
      );
 }
@@ -58,6 +63,6 @@ MentorCard.propTypes = {
      rating: PropTypes.number,
      description: PropTypes.string,
      skills: PropTypes.array,
-     numReviews: PropTypes.number,
+     ratingCount: PropTypes.number,
      semester: PropTypes.number
 }

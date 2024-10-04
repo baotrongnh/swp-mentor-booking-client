@@ -1,13 +1,17 @@
 import { Menu } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import './MentorProfile.scss';
-import { AboutMentor, MentorInfor, Skills } from "./components";
+import { AboutMentor, MentorInfor, RatingView, Skills } from "./components";
 import { StarOutlined, UnorderedListOutlined, UserOutlined } from '@ant-design/icons'
 import { BookMentorModal, ModalCenter } from "../../Components";
+import { useParams } from "react-router-dom";
+import { getProfileMentor } from "../../apis/mentor";
 
 function MentorProfile() {
 
      const [modalOpen, setModalOpen] = useState(false);
+     const [profileMentor, setProfileMentor] = useState({});
+     const { id } = useParams('id');
 
      const items = [
           {
@@ -36,12 +40,30 @@ function MentorProfile() {
           switch (currentTab) {
                case 'about': return <AboutMentor />
                case 'skills': return <Skills />
+               case 'rating': return <RatingView />
           }
      }
 
+     useEffect(() => {
+          const fetchProfileMentor = async (id) => {
+               const { data } = await getProfileMentor(id);
+               if (data.error_code == 0) {
+                    setProfileMentor(data.mentor);
+               }
+          }
+
+          if (id) {
+               fetchProfileMentor(id);
+          }
+     }, [id]);
+
      return (
           <div className="mentor-profile">
-               <MentorInfor setModalOpen={setModalOpen} />
+               <MentorInfor
+                    id={id}
+                    setModalOpen={setModalOpen}
+                    profile={profileMentor}
+               />
 
                <div className="container">
                     <Menu onClick={onClick} selectedKeys={[currentTab]} mode="horizontal" items={items} />

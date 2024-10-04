@@ -1,0 +1,40 @@
+.about-mentor {
+     padding: 30px 0;
+
+     .description-block {
+          .title {
+               font-size: 3rem;
+               font-weight: 600;
+               margin-bottom: 20px;
+          }
+
+          .description {
+               font-size: 2rem;
+               text-align: justify;
+               line-height: 1.6;
+          }
+     }
+
+     .contact-block {
+          .title {
+               font-size: 3rem;
+               font-weight: 600;
+               margin-bottom: 20px;
+          }
+
+          .contact-item {
+               display: flex;
+               gap: 10px;
+               align-items: center;
+               opacity: 90%;
+
+               .icon {
+                    font-size: 3rem;
+               }
+
+               .text {
+                    font-size: 2rem;
+               }
+          }
+     }
+}
