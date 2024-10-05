@@ -5,31 +5,26 @@ import { AppContext } from '../../Contexts/AppContext';
 import { CheckboxSkill, MentorCard, RatingSelect } from './Components';
 import { DownOutlined } from '@ant-design/icons';
 import { searchMentor } from '../../apis/mentor';
+import { useQuery } from '@tanstack/react-query';
+import { Loading } from '../../Components';
 
 function MentorListPage() {
      const { filterMentor, setFilterMentor } = useContext(AppContext);
      const [listMentor, setListMentor] = useState([]);
-     const [totalMentors, setTotalMentors] = useState(0);
 
-     console.log(listMentor);
+     const { data, isLoading } = useQuery({ queryKey: ['listMentor', filterMentor], queryFn: () => searchMentor(filterMentor), keepPreviousData: true });
+
+     console.log(data);
+
+     useEffect(() => {
+          if (data) {
+               setListMentor(data.mentors);
+          }
+     }, [data]);
 
      const handleChangePage = (page) => {
           setFilterMentor({ ...filterMentor, page });
      }
-
-     useEffect(() => {
-          const fetchData = async () => {
-               const { data } = await searchMentor(filterMentor);
-               if (data.error_code == 0) {
-                    setTotalMentors(data.totalMentors);
-                    setListMentor(data.mentors);
-               }
-          }
-
-          fetchData();
-     }, [filterMentor]);
-
-     console.log(listMentor);
 
      const onChangeTime = (date, dateString) => {
           console.log(dateString);
@@ -37,6 +32,8 @@ function MentorListPage() {
 
      return (
           <div className="mentor-list-page">
+               {isLoading && <Loading />}
+               
                <div className="container">
                     <Row>
                          <Col xs={0} md={7} lg={5} className='left-sidebar'>
@@ -94,7 +91,7 @@ function MentorListPage() {
                                    align="center"
                                    defaultPageSize={10}
                                    defaultCurrent={1}
-                                   total={totalMentors}
+                                   total={data?.totalMentors}
                                    showSizeChanger={false}
                                    hideOnSinglePage={true}
                               />

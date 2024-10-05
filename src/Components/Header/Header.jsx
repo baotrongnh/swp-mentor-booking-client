@@ -1,16 +1,28 @@
 import { Row, Col, Input, Dropdown, Space } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import './Header.scss';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { AppContext } from '../../Contexts/AppContext';
 import { Icon } from '@iconify/react/dist/iconify.js';
 
 function Header() {
      const { setFilterMentor, filterMentor } = useContext(AppContext);
+     const location = useLocation();
+     const navigate = useNavigate();
 
      const onSearch = (value) => {
+          const url = '/mentorlist'
+          if (location.pathname !== url) {
+               navigate(url);
+          }
           setFilterMentor({ ...filterMentor, search: value });
+     }
+
+     const handleChange = (e) => {
+          if (e.target.value === '') {
+               setFilterMentor({ ...filterMentor, search: e.target.value });
+          }
      }
 
      const items = [
@@ -62,7 +74,7 @@ function Header() {
           },
           {
                label: (
-                    <Link style={{color: 'red'}}>Logout</Link>
+                    <Link style={{ color: 'red' }}>Logout</Link>
                ),
                key: '3',
           },
@@ -85,6 +97,8 @@ function Header() {
                                    }}
                                    size='large'
                                    allowClear
+                                   onClear={() => setFilterMentor({ ...filterMentor, search: '' })}
+                                   onChange={e => handleChange(e)}
                               />
                          </Col>
 

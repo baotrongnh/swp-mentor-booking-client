@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import './MentorInfor.scss';
 import PropTypes from "prop-types";
 
-function MentorInfor({ setModalOpen, profile }) {
+function MentorInfor({ setModalOpen, profile, setCurrentTab }) {
      const rating = 5;
      const skills = ['ReactJS', 'NodeJS'];
      const descriptionRef = useRef(null);
@@ -39,16 +39,16 @@ function MentorInfor({ setModalOpen, profile }) {
                               <Image
                                    className="img"
                                    width='100%'
-                                   src={profile.imgPath || 'https://www.strasys.uk/wp-content/uploads/2022/02/Depositphotos_484354208_S.jpg'}
+                                   src={profile?.imgPath || 'https://www.strasys.uk/wp-content/uploads/2022/02/Depositphotos_484354208_S.jpg'}
                               />
                          </Col>
 
                          <Col md={13} lg={16} xl={17} className="info-block">
-                              <h1 className="name">{profile.fullName}</h1>
+                              <h1 className="name">{profile?.fullName}</h1>
                               <p className="semester"><b>Semester:</b> 7</p>
-                              <div className="rating-block">
-                                   <Rate disabled allowHalf defaultValue={0} value={profile.averageRating} />
-                                   <p><Typography.Text strong>{`${rating || 'No reviews yet'}`}</Typography.Text> {`(${rating || 0} reviews)`}</p>
+                              <div className="rating-block" onClick={() => setCurrentTab('rating')}>
+                                   <Rate disabled allowHalf defaultValue={0} value={profile?.averageRating} />
+                                   <p className="rating-text"><Typography.Text strong>{`${rating || 'No reviews yet'}`}</Typography.Text> {`(${rating || 0} reviews)`}</p>
                               </div>
 
                               <div className="skill-block">
@@ -79,4 +79,5 @@ export default MentorInfor;
 MentorInfor.propTypes = {
      setModalOpen: PropTypes.func,
      profile: PropTypes.object,
+     setCurrentTab: PropTypes.func
 }

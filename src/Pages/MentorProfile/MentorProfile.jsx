@@ -1,16 +1,16 @@
 import { Menu } from "antd";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import './MentorProfile.scss';
 import { AboutMentor, MentorInfor, RatingView, Skills } from "./components";
 import { StarOutlined, UnorderedListOutlined, UserOutlined } from '@ant-design/icons'
-import { BookMentorModal, ModalCenter } from "../../Components";
+import { BookMentorModal, Loading, ModalCenter } from "../../Components";
 import { useParams } from "react-router-dom";
 import { getProfileMentor } from "../../apis/mentor";
+import { useQuery } from "@tanstack/react-query";
 
 function MentorProfile() {
 
      const [modalOpen, setModalOpen] = useState(false);
-     const [profileMentor, setProfileMentor] = useState({});
      const { id } = useParams('id');
 
      const items = [
@@ -44,25 +44,17 @@ function MentorProfile() {
           }
      }
 
-     useEffect(() => {
-          const fetchProfileMentor = async (id) => {
-               const { data } = await getProfileMentor(id);
-               if (data.error_code == 0) {
-                    setProfileMentor(data.mentor);
-               }
-          }
-
-          if (id) {
-               fetchProfileMentor(id);
-          }
-     }, [id]);
+     const { data, isLoading } = useQuery({ queryKey: ['mentorProfile', id], queryFn: () => getProfileMentor(id) })
 
      return (
           <div className="mentor-profile">
+               {isLoading && <Loading />}
+
                <MentorInfor
                     id={id}
                     setModalOpen={setModalOpen}
-                    profile={profileMentor}
+                    profile={data?.mentor}
+                    setCurrentTab={setCurrentTab}
                />
 
                <div className="container">
@@ -75,7 +67,7 @@ function MentorProfile() {
                     setModalOpen={setModalOpen}
                     ComponentRender={BookMentorModal}
                     okText='Book'
-                    title='Book mentor'
+                    title='Book this mentor?'
                />
           </div>
      );
