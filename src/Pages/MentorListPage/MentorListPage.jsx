@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import './MentorListPage.scss';
 import { Col, DatePicker, Input, Pagination, Row } from 'antd';
 import { AppContext } from '../../Contexts/AppContext';
@@ -10,17 +10,9 @@ import { Loading } from '../../Components';
 
 function MentorListPage() {
      const { filterMentor, setFilterMentor } = useContext(AppContext);
-     const [listMentor, setListMentor] = useState([]);
-
      const { data, isLoading } = useQuery({ queryKey: ['listMentor', filterMentor], queryFn: () => searchMentor(filterMentor), keepPreviousData: true });
 
      console.log(data);
-
-     useEffect(() => {
-          if (data) {
-               setListMentor(data.mentors);
-          }
-     }, [data]);
 
      const handleChangePage = (page) => {
           setFilterMentor({ ...filterMentor, page });
@@ -33,7 +25,7 @@ function MentorListPage() {
      return (
           <div className="mentor-list-page">
                {isLoading && <Loading />}
-               
+
                <div className="container">
                     <Row>
                          <Col xs={0} md={7} lg={5} className='left-sidebar'>
@@ -70,7 +62,7 @@ function MentorListPage() {
 
                          <Col xs={24} md={17} lg={19} className='mentor-block'>
                               <Row gutter={15}>
-                                   {listMentor.map((mentor) => (
+                                   {data?.mentors.map((mentor) => (
                                         <Col xs={24} xl={12} key={mentor.id}>
                                              <MentorCard
                                                   id={mentor.id}

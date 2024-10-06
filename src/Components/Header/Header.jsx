@@ -2,14 +2,17 @@ import { Row, Col, Input, Dropdown, Space } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import './Header.scss';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../Contexts/AppContext';
 import { Icon } from '@iconify/react/dist/iconify.js';
+import useDebounce from '../../hooks/useDebounce';
 
 function Header() {
      const { setFilterMentor, filterMentor } = useContext(AppContext);
+     const [searchValue, setSearchValue] = useState(null);
      const location = useLocation();
      const navigate = useNavigate();
+     const debounceSearchValue = useDebounce(searchValue, 800);
 
      const onSearch = (value) => {
           const url = '/mentorlist'
@@ -20,10 +23,14 @@ function Header() {
      }
 
      const handleChange = (e) => {
-          if (e.target.value === '') {
-               setFilterMentor({ ...filterMentor, search: e.target.value });
-          }
+          setSearchValue(e.target.value);
      }
+
+     useEffect(() => {
+          if (debounceSearchValue !== null) {
+               setFilterMentor({ ...filterMentor, search: debounceSearchValue });
+          }
+     }, [debounceSearchValue]);
 
      const items = [
           {

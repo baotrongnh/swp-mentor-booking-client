@@ -44,11 +44,23 @@ function MentorProfile() {
           }
      }
 
-     const { data, isLoading } = useQuery({ queryKey: ['mentorProfile', id], queryFn: () => getProfileMentor(id) })
+     const { data, isLoading, isError, refetch } = useQuery({ queryKey: ['mentorProfile', id], queryFn: () => getProfileMentor(id) })
+     
+     if (isLoading) {
+          return <Loading />
+     }
 
+     if (isError) {
+          return (
+               <>
+                    <h1>Đã xãy ra lỗi</h1>
+                    <button onClick={() => refetch()}>try again</button>
+               </>
+          )
+     }
      return (
           <div className="mentor-profile">
-               {isLoading && <Loading />}
+               {/* {isLoading && <Loading />} */}
 
                <MentorInfor
                     id={id}
