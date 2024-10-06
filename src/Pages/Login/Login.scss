@@ -1,7 +1,7 @@
 @import "../../Styles/variables.scss";
 
 .login-page {
-  background-image: url("../../assets/Photos/background/stacked-waves-haikei.svg");
+  background-image: url("../../assets/Photos/background/stacked-waves-haikei2.svg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -32,7 +32,7 @@
         border-top-left-radius: 1rem;
         border-bottom-left-radius: 1rem;
         object-position: center;
-        filter: brightness(50%);
+        filter: brightness(90%);
         overflow: hidden;
       }
 
@@ -88,7 +88,7 @@
       .welcome-content {
         font-size: 1.4rem;
         font-weight: 700;
-        margin-bottom: 5rem;
+        margin-bottom: 4.5rem;
         text-align: start;
         color: $text-primary;
         opacity: 60%;
@@ -118,10 +118,11 @@
           transform: translate(-7%, -50%);
           width: 12rem;
           margin-bottom: 0.5rem;
-          color: var(--text-primary);
+          color: $text-primary;
           opacity: 35%;
           letter-spacing: 0.18rem;
           transition: all 0.3s ease;
+          cursor: text;
         }
 
         .input {
@@ -152,6 +153,8 @@
           &:not(:placeholder-shown) + .label {
             transform: translate(-20%, -310%);
             color: $theme-color-secondary;
+            cursor: default;
+            opacity: 80%;
           }
         }
 

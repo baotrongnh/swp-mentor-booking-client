@@ -1,14 +1,17 @@
 import { Icon } from '@iconify/react';
 import { Col, Row } from 'antd';
 import { useEffect, useState } from 'react';
-import { TypeAnimation } from 'react-type-animation';
-import loginImage from '../../assets/Photos/background/login-img2.jpg';
+// import { TypeAnimation } from 'react-type-animation';
+import loginImage from '../../assets/Photos/background/logo-color.svg';
+import { getUserInformation } from '../../apis/authentication';
 import './Login.scss';
+import { useNavigate } from "react-router-dom";
 
 function Login() {
      const [isValidate, setIsValidate] = useState(false);
      const [formData, setFormData] = useState({ username: '', password: '' });
      const [showPassword, setShowPassword] = useState(false)
+     const navigate = useNavigate();
 
      const handleShowPassword = () => {
           setShowPassword(prev => !prev);
@@ -51,12 +54,19 @@ function Login() {
           window.open('http://localhost:3000/auth/google', '_self');
      }
 
+     // const checkUserData = async (token) => {
+     //      localStorage.setItem('token', token);
+     //      const { data } = await getUserInformation();
+     //      sessionStorage.setItem('userLogin', JSON.stringify(data.user));
+     // }
 
      useEffect(() => {
           const params = new URLSearchParams(window.location.search);
           const token = params.get('token');
           if (token) {
                localStorage.setItem('token', token);
+               console.log(token);
+               navigate('/profile')
           }
      }, []);
 
@@ -66,7 +76,7 @@ function Login() {
                     <Row align='center' className="login-block">
                          <Col xs={0} md={12} className='side-information'>
                               <img src={loginImage} alt="login-image" />
-                              <div className="animation-container">
+                              {/* <div className="animation-container">
                                    <TypeAnimation
                                         sequence={[
                                              'Welcome to MentorMatch!',
@@ -82,7 +92,7 @@ function Login() {
                                         speed={40}
                                         repeat={Infinity}
                                    />
-                              </div>
+                              </div> */}
                          </Col>
                          <Col xs={24} md={12}>
                               {/* <form className='login-form' onSubmit={handleLogin}> */}
