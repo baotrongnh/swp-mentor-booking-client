@@ -213,10 +213,75 @@
 }
 
 // Responsive sizes
+
 @media (max-width: 575px) {
   .avatar .ant-image {
-    width: 45px;
-    height: 45px;
+    width: 80px;
+    height: 80px;
+  }
+
+  .user-profile {
+    .container {
+      .title {
+        font-size: 2.5rem !important;
+        margin-left: 4rem;
+      }
+    }
+
+    .content {
+      width: 90% !important;
+    }
+
+    .student-information {
+      h2 {
+        font-size: 2.5rem !important;
+        margin-top: 2rem !important;
+      }
+
+      p {
+        font-size: 1.5rem !important;
+        margin-left: 0 !important;
+      }
+
+      .edit-profile {
+        h1.edit-profile-title {
+          font-size: 2rem !important;
+          margin-bottom: 1rem !important;
+          margin-left: 0 !important;
+        }
+
+        .edit-form {
+          .input-block {
+            .label {
+              font-size: 1.2rem;
+            }
+
+            .input {
+              padding: 0.8rem;
+              font-size: 1.2rem;
+            }
+          }
+
+          .edit-profile-btn {
+            .btn {
+              width: 20%; // Adjusted button width
+            }
+          }
+        }
+      }
+
+      .bio-information {
+        .top-bio-information {
+          h1 {
+            font-size: 2rem; // Reduced font size
+          }
+        }
+
+        p {
+          font-size: 1.2rem; // Reduced font size
+        }
+      }
+    }
   }
 }
 

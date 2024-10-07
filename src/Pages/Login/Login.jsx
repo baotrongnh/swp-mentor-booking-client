@@ -3,9 +3,10 @@ import { Col, Row } from 'antd';
 import { useEffect, useState } from 'react';
 // import { TypeAnimation } from 'react-type-animation';
 import loginImage from '../../assets/Photos/background/login-img2.jpg';
-//import { getUserInformation } from '../../apis/authentication';
+import { getUserInformation } from '../../apis/authentication';
 import './Login.scss';
 import { useNavigate } from "react-router-dom";
+import { getToken } from '../../utils/storageUtils';
 
 function Login() {
      const [isValidate, setIsValidate] = useState(false);
@@ -32,7 +33,6 @@ function Login() {
                document.getElementById('password').style.borderColor = '';
           } else {
                setIsValidate(false)
-               console.log(isValidate)
           }
      }, [formData])
 
@@ -54,19 +54,27 @@ function Login() {
           window.open('http://localhost:3000/auth/google', '_self');
      }
 
-     // const checkUserData = async (token) => {
-     //      localStorage.setItem('token', token);
-     //      const { data } = await getUserInformation();
-     //      sessionStorage.setItem('userLogin', JSON.stringify(data.user));
-     // }
+     const checkUserData = async (token) => {
+          const { data } = await getUserInformation(token);
+          console.log(data);
+          sessionStorage.setItem('userLogin', JSON.stringify(data.user));
+     }
 
      useEffect(() => {
           const params = new URLSearchParams(window.location.search);
           const token = params.get('token');
           if (token) {
                localStorage.setItem('token', token);
-               console.log(token);
+               checkUserData(token)
                navigate('/profile')
+          }
+     }, []);
+
+     useEffect(() => {
+          const token = getToken();
+          if (token) {
+               checkUserData();
+               navigate('/profile');
           }
      }, []);
 

@@ -25,7 +25,7 @@ function EditProfile({ visible, onClose }) {
     return (
         visible && (
             <div className="edit-profile">
-                <h1>Edit Profile</h1>
+                <h1 className="edit-profile-title" >Edit Profile</h1>
                 <div className="edit-form">
                     <div className='input-block'>
                         <label htmlFor="name" className='label name'>
@@ -79,7 +79,7 @@ function StudentProfile() {
     return (
         <div className="user-profile">
             <div className="container">
-                <h1>User Profile</h1>
+                <h1 className='title' >User Profile</h1>
                 <div className="content">
                     <Row align='center' className="top-information">
                         <Col flex={1} className='avatar' align='center'>
