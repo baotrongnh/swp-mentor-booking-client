@@ -1,23 +1,23 @@
 .App {
-     &.light-theme {
-          --text-primary: #333333;
-          --theme-color-primary: #7ed4fc;
-          --theme-color-secondary: #3c83f6;
-          --bg-primary: #faf8fc;
-          --bg-secondary: #EEEEEE;
-          --accent-primary: #fb923c;
-          --border: #817d7d34;
-     }
+  &.light-theme {
+    --text-primary: #333333;
+    --theme-color-primary: #7ed4fc;
+    --theme-color-secondary: #3c83f6;
+    --bg-primary: #faf8fc;
+    --bg-secondary: #eeeeee;
+    --accent-primary: #fb923c;
+    --border: #817d7d34;
+  }
 
-     &.dark-theme {
-          --text-primary: #cccccc;
-          --theme-color-primary: #035981;
-          --theme-color-secondary: #0950c3;
-          --bg-primary: #050307;
-          --bg-secondary: #EEEEEE;
-          --accent-primary: #fb923c;
-          --border: #fff;
-     }
+  &.dark-theme {
+    --text-primary: #cccccc;
+    --theme-color-primary: #035981;
+    --theme-color-secondary: #0950c3;
+    --bg-primary: #050307;
+    --bg-secondary: #eeeeee;
+    --accent-primary: #020101;
+    --border: #fff;
+  }
 }
 
 $text-primary: var(--text-primary);

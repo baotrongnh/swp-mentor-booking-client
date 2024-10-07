@@ -1,14 +1,18 @@
 import { Icon } from '@iconify/react';
 import { Col, Row } from 'antd';
 import { useEffect, useState } from 'react';
-import { TypeAnimation } from 'react-type-animation';
+// import { TypeAnimation } from 'react-type-animation';
 import loginImage from '../../assets/Photos/background/login-img2.jpg';
+import { getUserInformation } from '../../apis/authentication';
 import './Login.scss';
+import { useNavigate } from "react-router-dom";
+import { getToken } from '../../utils/storageUtils';
 
 function Login() {
      const [isValidate, setIsValidate] = useState(false);
      const [formData, setFormData] = useState({ username: '', password: '' });
      const [showPassword, setShowPassword] = useState(false)
+     const navigate = useNavigate();
 
      const handleShowPassword = () => {
           setShowPassword(prev => !prev);
@@ -29,7 +33,6 @@ function Login() {
                document.getElementById('password').style.borderColor = '';
           } else {
                setIsValidate(false)
-               console.log(isValidate)
           }
      }, [formData])
 
@@ -51,12 +54,27 @@ function Login() {
           window.open('http://localhost:3000/auth/google', '_self');
      }
 
+     const checkUserData = async (token) => {
+          const { data } = await getUserInformation(token);
+          console.log(data);
+          sessionStorage.setItem('userLogin', JSON.stringify(data.user));
+     }
 
      useEffect(() => {
           const params = new URLSearchParams(window.location.search);
           const token = params.get('token');
           if (token) {
                localStorage.setItem('token', token);
+               checkUserData(token)
+               navigate('/profile')
+          }
+     }, []);
+
+     useEffect(() => {
+          const token = getToken();
+          if (token) {
+               checkUserData();
+               navigate('/profile');
           }
      }, []);
 
@@ -64,9 +82,9 @@ function Login() {
           <div className="login-page">
                <div className="container">
                     <Row align='center' className="login-block">
-                         <Col xs={0} md={12} className='side-information'>
+                         <Col xs={0} md={0} lg={12} className='side-information'>
                               <img src={loginImage} alt="login-image" />
-                              <div className="animation-container">
+                              {/* <div className="animation-container">
                                    <TypeAnimation
                                         sequence={[
                                              'Welcome to MentorMatch!',
@@ -82,9 +100,9 @@ function Login() {
                                         speed={40}
                                         repeat={Infinity}
                                    />
-                              </div>
+                              </div> */}
                          </Col>
-                         <Col xs={24} md={12}>
+                         <Col xs={24} md={18} lg={12}>
                               {/* <form className='login-form' onSubmit={handleLogin}> */}
                               <form className='login-form' onSubmit={handleLogin} >
                                    <h1 className='title'>Welcome Back!</h1>

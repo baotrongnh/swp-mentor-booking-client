@@ -1,0 +1,321 @@
+@import "../../Styles/variables.scss";
+
+.user-profile {
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+
+    h1 {
+      margin-top: 2.5rem;
+      width: 100%;
+      font-size: 4rem;
+      font-weight: 700;
+      text-shadow: 3px 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    .content {
+      width: 100%;
+      border-radius: 20px;
+      margin: 3rem auto;
+      border: 1px solid $border;
+      padding: 3rem;
+      background-color: $bg-primary;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      .top-information {
+        display: flex;
+        align-items: center;
+
+        .avatar {
+          .ant-image {
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .ant-image-img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              object-position: center;
+            }
+
+            .ant-image-mask {
+              border-radius: 50%;
+              overflow: hidden;
+
+              .ant-image-mask-info {
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: rgba(0, 0, 0, 0.5);
+
+                .anticon-eye {
+                  margin-right: 8px;
+                }
+
+                .ant-image-mask-info-content {
+                  color: white;
+                  font-size: 16px;
+                }
+              }
+            }
+          }
+        }
+
+        .student-information {
+          background-color: $bg-primary;
+          padding-left: 2rem;
+          text-align: start;
+
+          h2 {
+            margin-bottom: 0.5rem;
+            color: $text-primary;
+            font: {
+              size: 3.5rem;
+              weight: 600;
+            }
+            margin-bottom: 2rem;
+          }
+
+          p {
+            opacity: 70%;
+            margin-left: 0.5rem;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            strong {
+              font-weight: 500;
+            }
+          }
+        }
+      }
+      .edit-profile {
+        background-color: $bg-primary;
+        margin: 0 auto;
+        margin-top: 4rem;
+        border: 1px solid $border;
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);
+        width: 98%;
+        margin-bottom: 2rem;
+
+        h1 {
+          margin-top: 0;
+          font-size: 2.5rem;
+          text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
+          margin-bottom: 2rem;
+        }
+
+        .edit-form {
+          .input-block:first-of-type {
+            margin-bottom: 2rem;
+          }
+
+          .input-block {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 3rem;
+
+            .label {
+              font: {
+                size: 1.5rem;
+                weight: 600;
+              }
+
+              width: 12rem;
+              margin-bottom: 0.6rem;
+              margin-left: 0.5rem;
+              opacity: 80%;
+              color: $text-primary;
+              letter-spacing: 0.18rem;
+              transition: all 0.3s ease;
+              cursor: text;
+            }
+
+            .input {
+              flex-grow: 1;
+              padding: 1rem;
+              background-color: rgba(196, 222, 241, 0.352);
+              border: 1px solid $bg-secondary;
+              border-radius: 0.5rem;
+              font-size: 1.5rem;
+              transition: all 0.3s ease;
+              width: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              outline: none;
+
+              &:focus {
+                outline: none;
+                border-color: $theme-color-secondary;
+              }
+            }
+          }
+
+          .edit-profile-btn {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            border-radius: 5px;
+            font-weight: 600;
+
+            .btn {
+              width: 10%;
+            }
+          }
+        }
+      }
+      .bio-information {
+        background-color: $bg-primary;
+        margin: 0 auto;
+        margin-top: 4rem;
+        border: 1px solid $border;
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);
+        width: 98%;
+        margin-bottom: 2rem;
+
+        .top-bio-information {
+          display: flex;
+          flex-direction: row;
+          width: 100%;
+          padding: 0;
+          justify-content: space-between;
+          padding-right: 2rem;
+          margin-bottom: 1.5rem;
+          h1 {
+            margin-top: 0;
+            font-size: 2.5rem;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
+          }
+          .edit-bio-btn {
+            border-radius: 5px;
+            font-weight: 600;
+          }
+        }
+
+        p {
+          font-size: 1.5rem;
+          line-height: 1.6;
+          color: $text-primary;
+          text-align: justify;
+          margin-bottom: 1rem;
+        }
+      }
+    }
+  }
+}
+
+// Responsive sizes
+
+@media (max-width: 575px) {
+  .avatar .ant-image {
+    width: 80px;
+    height: 80px;
+  }
+
+  .user-profile {
+    .container {
+      .title {
+        font-size: 2.5rem !important;
+        margin-left: 4rem;
+      }
+    }
+
+    .content {
+      width: 90% !important;
+    }
+
+    .student-information {
+      h2 {
+        font-size: 2.5rem !important;
+        margin-top: 2rem !important;
+      }
+
+      p {
+        font-size: 1.5rem !important;
+        margin-left: 0 !important;
+      }
+
+      .edit-profile {
+        h1.edit-profile-title {
+          font-size: 2rem !important;
+          margin-bottom: 1rem !important;
+          margin-left: 0 !important;
+        }
+
+        .edit-form {
+          .input-block {
+            .label {
+              font-size: 1.2rem;
+            }
+
+            .input {
+              padding: 0.8rem;
+              font-size: 1.2rem;
+            }
+          }
+
+          .edit-profile-btn {
+            .btn {
+              width: 20%; // Adjusted button width
+            }
+          }
+        }
+      }
+
+      .bio-information {
+        .top-bio-information {
+          h1 {
+            font-size: 2rem; // Reduced font size
+          }
+        }
+
+        p {
+          font-size: 1.2rem; // Reduced font size
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+  .avatar .ant-image {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .avatar .ant-image {
+    width: 75px;
+    height: 75px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .avatar .ant-image {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1599px) {
+  .avatar .ant-image {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .avatar .ant-image {
+    width: 188px;
+    height: 188px;
+  }
+}

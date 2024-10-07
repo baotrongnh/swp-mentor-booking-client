@@ -3,7 +3,7 @@ import axiosClient from "./axiosClient";
 import axios from 'axios';
 const baseURL = import.meta.env.VITE_APP_API_URL;
 
-export const login = async ({username, password}) => {
+export const login = async ({ username, password }) => {
      try {
           const url = `${baseURL}/login/validate`;
           return await axios.post(url, { username, password });
