@@ -30,6 +30,7 @@ function Header() {
           if (debounceSearchValue !== null) {
                setFilterMentor({ ...filterMentor, search: debounceSearchValue });
           }
+     // eslint-disable-next-line react-hooks/exhaustive-deps
      }, [debounceSearchValue]);
 
      const items = [

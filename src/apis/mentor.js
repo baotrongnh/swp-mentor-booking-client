@@ -34,7 +34,7 @@ export const getSkillMentor = async (id) => {
 
 export const getFeedback = async (id) => {
      try {
-          return await axiosClient(getToken).get('mentor/feedback', {
+          return await axiosClient(getToken()).get('mentor/feedback', {
                params: {
                     id
                }

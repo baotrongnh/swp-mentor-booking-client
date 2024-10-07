@@ -7,15 +7,16 @@ import { DownOutlined } from '@ant-design/icons';
 import { searchMentor } from '../../apis/mentor';
 import { useQuery } from '@tanstack/react-query';
 import { Loading } from '../../Components';
+import useScrollToTop from '../../hooks/useScrollToTop';
 
 function MentorListPage() {
      const { filterMentor, setFilterMentor } = useContext(AppContext);
      const { data, isLoading } = useQuery({ queryKey: ['listMentor', filterMentor], queryFn: () => searchMentor(filterMentor), keepPreviousData: true });
-
-     console.log(data);
+     useScrollToTop();
 
      const handleChangePage = (page) => {
           setFilterMentor({ ...filterMentor, page });
+     
      }
 
      const onChangeTime = (date, dateString) => {
@@ -25,7 +26,6 @@ function MentorListPage() {
      return (
           <div className="mentor-list-page">
                {isLoading && <Loading />}
-
                <div className="container">
                     <Row>
                          <Col xs={0} md={7} lg={5} className='left-sidebar'>
