@@ -2,8 +2,8 @@ import { Icon } from '@iconify/react';
 import { Col, Row } from 'antd';
 import { useEffect, useState } from 'react';
 // import { TypeAnimation } from 'react-type-animation';
-import loginImage from '../../assets/Photos/background/logo-color.svg';
-import { getUserInformation } from '../../apis/authentication';
+import loginImage from '../../assets/Photos/background/login-img2.jpg';
+//import { getUserInformation } from '../../apis/authentication';
 import './Login.scss';
 import { useNavigate } from "react-router-dom";
 
@@ -74,7 +74,7 @@ function Login() {
           <div className="login-page">
                <div className="container">
                     <Row align='center' className="login-block">
-                         <Col xs={0} md={12} className='side-information'>
+                         <Col xs={0} md={0} lg={12} className='side-information'>
                               <img src={loginImage} alt="login-image" />
                               {/* <div className="animation-container">
                                    <TypeAnimation
@@ -94,7 +94,7 @@ function Login() {
                                    />
                               </div> */}
                          </Col>
-                         <Col xs={24} md={12}>
+                         <Col xs={24} md={18} lg={12}>
                               {/* <form className='login-form' onSubmit={handleLogin}> */}
                               <form className='login-form' onSubmit={handleLogin} >
                                    <h1 className='title'>Welcome Back!</h1>
