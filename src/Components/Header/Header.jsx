@@ -1,17 +1,36 @@
 import { Row, Col, Input, Dropdown, Space } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import './Header.scss';
-import { Link } from 'react-router-dom';
-import { useContext } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../Contexts/AppContext';
 import { Icon } from '@iconify/react/dist/iconify.js';
+import useDebounce from '../../hooks/useDebounce';
 
 function Header() {
      const { setFilterMentor, filterMentor } = useContext(AppContext);
+     const [searchValue, setSearchValue] = useState(null);
+     const location = useLocation();
+     const navigate = useNavigate();
+     const debounceSearchValue = useDebounce(searchValue, 800);
 
      const onSearch = (value) => {
+          const url = '/mentorlist'
+          if (location.pathname !== url) {
+               navigate(url);
+          }
           setFilterMentor({ ...filterMentor, search: value });
      }
+
+     const handleChange = (e) => {
+          setSearchValue(e.target.value);
+     }
+
+     useEffect(() => {
+          if (debounceSearchValue !== null) {
+               setFilterMentor({ ...filterMentor, search: debounceSearchValue });
+          }
+     }, [debounceSearchValue]);
 
      const items = [
           {
@@ -62,7 +81,7 @@ function Header() {
           },
           {
                label: (
-                    <Link style={{color: 'red'}}>Logout</Link>
+                    <Link style={{ color: 'red' }}>Logout</Link>
                ),
                key: '3',
           },
@@ -85,6 +104,8 @@ function Header() {
                                    }}
                                    size='large'
                                    allowClear
+                                   onClear={() => setFilterMentor({ ...filterMentor, search: '' })}
+                                   onChange={e => handleChange(e)}
                               />
                          </Col>
 

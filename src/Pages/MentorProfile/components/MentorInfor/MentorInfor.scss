@@ -34,11 +34,15 @@
                     display: flex;
                     align-items: center;
                     gap: 10px;
+                    cursor: pointer;
+
+                    &:hover {
+                         opacity: 80%;
+                    }
                }
 
                .skill-block {
                     margin-top: 15px;
-                    // min-height: 150px;
                }
 
                .description {
