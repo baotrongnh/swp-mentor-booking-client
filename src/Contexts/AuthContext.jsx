@@ -1,36 +1,32 @@
+import { useQuery } from '@tanstack/react-query';
 import PropTypes from 'prop-types';
-import { createContext, useState } from "react";
-// import { getUserInformation } from '../apis/authentication';
-// import { getToken } from '../utils/storageUtils';
+import { createContext, useLayoutEffect, useState } from "react";
+import { getUserInformation } from '../apis/authentication';
 
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
      const [currentUser, setCurrentUser] = useState({});
+     const { data } = useQuery({ queryKey: ['currentUser'], queryFn: getUserInformation });
 
-     // useLayoutEffect(() => {
-     //      const fetchUserData = async () => {
-     //           const { data } = await getUserInformation();
-     //           if (data.user) {
-     //                sessionStorage.setItem('currentUser', data.user);
-     //                setCurrentUser(data.user);
-     //           }
-     //      }
+     useLayoutEffect(() => {
+          if (data && data.student) {
+               setCurrentUser(data.student);
+          }
+     }, [data]);
 
-     //      if (getToken()) {
-     //           console.log(getToken());
-     //           fetchUserData();
-     //      }
-     // }, []);
+     console.log(currentUser);
 
-     return <AuthContext.Provider
-          value={{
-               currentUser,
-               setCurrentUser
-          }}
-     >
-          {children}
-     </AuthContext.Provider>
+     return (
+          <AuthContext.Provider
+               value={{
+                    currentUser,
+                    setCurrentUser
+               }}
+          >
+               {children}
+          </AuthContext.Provider>
+     )
 }
 
 AuthProvider.propTypes = {

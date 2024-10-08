@@ -6,9 +6,12 @@ import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../Contexts/AppContext';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import useDebounce from '../../hooks/useDebounce';
+import { AuthContext } from '../../Contexts/AuthContext';
+import { deleteToken } from '../../utils/storageUtils';
 
 function Header() {
      const { setFilterMentor, filterMentor } = useContext(AppContext);
+     const { currentUser, setCurrentUser } = useContext(AuthContext);
      const [searchValue, setSearchValue] = useState(null);
      const location = useLocation();
      const navigate = useNavigate();
@@ -26,11 +29,16 @@ function Header() {
           setSearchValue(e.target.value);
      }
 
+     const handleLogout = () => {
+          setCurrentUser(null);
+          deleteToken();
+     }
+
      useEffect(() => {
           if (debounceSearchValue !== null) {
                setFilterMentor({ ...filterMentor, search: debounceSearchValue });
           }
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+          // eslint-disable-next-line react-hooks/exhaustive-deps
      }, [debounceSearchValue]);
 
      const items = [
@@ -62,6 +70,13 @@ function Header() {
 
      const accountSubMenu = [
           {
+               label: 'hi',
+               disabled: true
+          },
+          {
+               type: 'divider'
+          },
+          {
                label: (
                     <Link to="/profile">
                          Profile
@@ -82,9 +97,10 @@ function Header() {
           },
           {
                label: (
-                    <Link style={{ color: 'red' }}>Logout</Link>
+                    <div onClick={handleLogout}>Logout</div>
                ),
                key: '3',
+               danger: true
           },
      ];
 
@@ -134,7 +150,10 @@ function Header() {
                                    placement='bottomRight'
                               >
                                    <Link to='/profile' className='navbar-link account'>
-                                        <Icon className='icon' icon="material-symbols-light:account-circle" />
+                                        {currentUser.imgPath
+                                             ? <img className='avatar' src={currentUser.imgPath} alt="" />
+                                             : <Icon className='icon' icon="material-symbols-light:account-circle" />
+                                        }
                                    </Link>
                               </Dropdown>
                          </Col>

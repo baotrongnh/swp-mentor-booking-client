@@ -14,8 +14,6 @@ function MentorListPage() {
      const { data, isLoading } = useQuery({ queryKey: ['listMentor', filterMentor], queryFn: () => searchMentor(filterMentor), keepPreviousData: true });
      const { data: listSkills } = useQuery({ queryKey: ['listSkill'], queryFn: () => loadAllSkills() });
      const [numberSkills, setNumberSkills] = useState(5);
-
-     console.log(data?.mentors);
      
      useScrollToTop();
 
