@@ -29,5 +29,5 @@ export default CheckboxSkill;
 CheckboxSkill.propTypes = {
      skillName: PropTypes.string,
      numberMentor: PropTypes.number,
-     id: PropTypes.string
+     id: PropTypes.number
 }

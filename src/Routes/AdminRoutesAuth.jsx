@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import PropTypes from 'prop-types';
 
-function PrivateRoutesAuth({ children }) {
+function AdminRouteAuth({ children }) {
      let isAuthenticated = true;
 
      return (
@@ -9,8 +9,8 @@ function PrivateRoutesAuth({ children }) {
      )
 }
 
-export default PrivateRoutesAuth
+export default AdminRouteAuth
 
-PrivateRoutesAuth.propTypes = {
+AdminRouteAuth.propTypes = {
      children: PropTypes.any
 }

@@ -1,19 +1,21 @@
 import { getToken } from "../utils/storageUtils";
 import axiosClient from "./axiosClient";
 
-export const searchMentor = async ({ skills, search, page }) => {
-
-     return await axiosClient(getToken()).get('/mentor/search', {
+export const searchMentor = async ({ skills, search, star, page }) => {
+     const token = getToken();
+     return await axiosClient(token).get('/mentor/search', {
           params: {
                skill: skills,
                name: search,
-               page
+               page,
+               rating: star
           }
-     })
+     });
 }
 
 export const getProfileMentor = async (id) => {
-     return await axiosClient(getToken()).get('/mentor/profile', {
+     const token = getToken();
+     return await axiosClient(token).get('/mentor/profile', {
           params: {
                id
           }
@@ -21,33 +23,24 @@ export const getProfileMentor = async (id) => {
 }
 
 export const getSkillMentor = async (id) => {
-     try {
-          return await axiosClient(getToken()).get('/mentor/skills', {
-               params: {
-                    id
-               }
-          });
-     } catch (error) {
-          console.log(`Error at getSkillMentor (mentor.js): ${error}`);
-     }
+     const token = getToken();
+     return await axiosClient(token).get('/mentor/skills', {
+          params: {
+               id
+          }
+     });
 }
 
 export const getFeedback = async (id) => {
-     try {
-          return await axiosClient(getToken()).get('mentor/feedback', {
-               params: {
-                    id
-               }
-          })
-     } catch (error) {
-          console.log(`Error at getFeedback (mentor.js): ${error}`);
-     }
+     const token = getToken();
+     return await axiosClient(token).get('mentor/feedback', {
+          params: {
+               id
+          }
+     });
 }
 
 export const loadAllSkills = async () => {
-     try {
-          return await axiosClient(getToken()).get('/mentor/loadskills');
-     } catch (error) {
-          console.log(`Error at loadAllSkills (mentor.js): ${error}`);
-     }
+     const token = getToken();
+     return await axiosClient(token).get('/mentor/loadskills');
 }

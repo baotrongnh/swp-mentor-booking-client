@@ -12,6 +12,7 @@ function MentorProfile() {
 
      const [modalOpen, setModalOpen] = useState(false);
      const { id } = useParams('id');
+     const { data, isLoading, isError, refetch } = useQuery({ queryKey: ['mentorProfile', id], queryFn: () => getProfileMentor(id) });
 
      const items = [
           {
@@ -32,6 +33,7 @@ function MentorProfile() {
      ];
 
      const [currentTab, setCurrentTab] = useState('about');
+     
      const onClick = (e) => {
           setCurrentTab(e.key);
      };
@@ -44,15 +46,11 @@ function MentorProfile() {
           }
      }
 
-     const { data, isLoading, isError, refetch, error } = useQuery({ queryKey: ['mentorProfile', id], queryFn: () => getProfileMentor(id) });
-     
      if (isLoading) {
           return <Loading />
      }
 
      if (isError) {
-          console.log(error);
-
           return (
                <>
                     <h1>Đã xãy ra lỗi</h1>
@@ -60,11 +58,9 @@ function MentorProfile() {
                </>
           )
      }
-     
+
      return (
           <div className="mentor-profile">
-               {/* {isLoading && <Loading />} */}
-               
                <MentorInfor
                     id={id}
                     setModalOpen={setModalOpen}

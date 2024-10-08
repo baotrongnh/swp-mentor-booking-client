@@ -8,10 +8,9 @@ const axiosClient = (token) => {
           }
      });
 
-     // Add a response interceptor
      instance.interceptors.response.use(
-          response => response.data,  // Return only the data from the response
-          error => Promise.reject(error)  // Handle errors
+          response => response.data,
+          error => Promise.reject(error)
      );
 
      return instance;

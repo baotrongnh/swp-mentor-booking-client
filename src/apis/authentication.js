@@ -14,7 +14,8 @@ export const login = async ({ username, password }) => {
 
 export const getUserInformation = async () => {
      try {
-          return await axiosClient(getToken()).get(`/user/valid`);
+          const token = getToken();
+          return await axiosClient(token).post(`/student/valid`);
      } catch (error) {
           console.log(`Error at getUserInformation(authentication.js): ${error}`);
      }
