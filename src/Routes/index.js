@@ -1,8 +1,8 @@
 import AdminLayout from "../Layouts/AdminLayout";
 import { Login, MentorListPage, MentorProfile, StudentProfile } from "../Pages";
-import ManagerMentor from "../Pages/Admin/ManagerMentor/ManagerMentor";
 import PrivateRoutesAuth from "./PrivateRoutesAuth";
 import AdminRoutesAuth from './AdminRoutesAuth';
+import { ManagerMentor, ManagerStudent } from "../Pages/Admin";
 
 const publicRoutes = [{ path: "/login", element: Login, layout: null }];
 
@@ -13,7 +13,8 @@ const privateRoutes = [
 ];
 
 const adminRoutes = [
-  { path: "/admin/mentor", element: ManagerMentor, layout: AdminLayout }
+  { path: "/admin/mentor", element: ManagerMentor, layout: AdminLayout },
+  { path: "/admin/student", element: ManagerStudent, layout: AdminLayout }
 ];
 
 export { publicRoutes, privateRoutes, PrivateRoutesAuth, adminRoutes, AdminRoutesAuth };
