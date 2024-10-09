@@ -10,8 +10,8 @@ export const AuthProvider = ({ children }) => {
      const { data } = useQuery({ queryKey: ['currentUser'], queryFn: getUserInformation });
 
      useLayoutEffect(() => {
-          if (data && data.student) {
-               setCurrentUser(data.student);
+          if (data && data.user) {
+               setCurrentUser(data.user);
           }
      }, [data]);
 
