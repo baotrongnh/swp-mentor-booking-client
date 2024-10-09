@@ -71,10 +71,6 @@ function Header() {
 
      const accountSubMenu = [
           {
-               label: 'hi',
-               disabled: true
-          },
-          {
                type: 'divider'
           },
           {
@@ -109,11 +105,11 @@ function Header() {
           <div className="header">
                <div className="container">
                     <Row className='header-block'>
-                         <Col className='logo-block' md={6}>
-                              <h1>SWP Mentor Booking Logo</h1>
+                         <Col className='logo-block' xs={3} mg={6}>
+                              <h1>Logo</h1>
                          </Col>
 
-                         <Col className='search-block' md={9}>
+                         <Col className='search-block' xs={18} lg={9}>
                               <Input.Search
                                    placeholder="Find mentors"
                                    onSearch={onSearch}
@@ -127,36 +123,42 @@ function Header() {
                               />
                          </Col>
 
-                         <Col md={9} className='btn-block'>
-                              <Link className='navbar-link'>Schedule</Link>
-                              <Link className='navbar-link'>Deposit</Link>
-                              <Dropdown
-                                   menu={{
-                                        items,
-                                   }}
-                                   placement='bottom'
-                              >
-                                   <Link className='navbar-link' onClick={(e) => e.preventDefault()}>
-                                        <Space>
-                                             More
-                                             <DownOutlined />
-                                        </Space>
-                                   </Link>
-                              </Dropdown>
+                         <Col xs={0} md={0} lg={9}>
+                              <div className='btn-block'>
+                                   <Link className='navbar-link'>Schedule</Link>
+                                   <Link className='navbar-link'>Deposit</Link>
+                                   <Dropdown
+                                        menu={{
+                                             items,
+                                        }}
+                                        placement='bottom'
+                                   >
+                                        <Link className='navbar-link' onClick={(e) => e.preventDefault()}>
+                                             <Space>
+                                                  More
+                                                  <DownOutlined />
+                                             </Space>
+                                        </Link>
+                                   </Dropdown>
 
-                              <Dropdown
-                                   menu={{
-                                        items: accountSubMenu
-                                   }}
-                                   placement='bottomRight'
-                              >
-                                   <Link to='/profile' className='navbar-link account'>
-                                        {currentUser.imgPath
-                                             ? <img className='avatar' src={currentUser.imgPath} alt="" onError={(e) => e.target.src = defaultAvatar} />
-                                             : <Icon className='icon' icon="material-symbols-light:account-circle" />
-                                        }
-                                   </Link>
-                              </Dropdown>
+                                   <Dropdown
+                                        menu={{
+                                             items: accountSubMenu
+                                        }}
+                                        placement='bottomRight'
+                                   >
+                                        <Link to='/profile' className='navbar-link account'>
+                                             {currentUser.imgPath
+                                                  ? <img className='avatar' src={currentUser.imgPath} alt="" onError={(e) => e.target.src = defaultAvatar} />
+                                                  : <Icon className='icon' icon="material-symbols-light:account-circle" />
+                                             }
+                                        </Link>
+                                   </Dropdown>
+                              </div>
+                         </Col>
+
+                         <Col xs={3} lg={0} className='btn-navbar-mobile'>
+                              <h1>mobile</h1>
                          </Col>
                     </Row>
                </div>

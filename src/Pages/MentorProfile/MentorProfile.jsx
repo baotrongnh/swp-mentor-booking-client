@@ -1,15 +1,15 @@
+import { StarOutlined, UnorderedListOutlined, UserOutlined } from '@ant-design/icons';
+import { useQuery } from "@tanstack/react-query";
 import { Menu } from "antd";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { Loading } from "../../Components";
+import { getProfileMentor } from "../../apis/mentor";
 import './MentorProfile.scss';
 import { AboutMentor, MentorInfor, RatingView, Skills } from "./components";
-import { StarOutlined, UnorderedListOutlined, UserOutlined } from '@ant-design/icons'
-import { BookMentorModal, Loading, ModalCenter } from "../../Components";
-import { useParams } from "react-router-dom";
-import { getProfileMentor } from "../../apis/mentor";
-import { useQuery } from "@tanstack/react-query";
+import { ModalBookMentor } from '../../Components/Modal';
 
 function MentorProfile() {
-
      const [modalOpen, setModalOpen] = useState(false);
      const { id } = useParams('id');
      const { data, isLoading, isError, refetch } = useQuery({ queryKey: ['mentorProfile', id], queryFn: () => getProfileMentor(id) });
@@ -33,7 +33,7 @@ function MentorProfile() {
      ];
 
      const [currentTab, setCurrentTab] = useState('about');
-     
+
      const onClick = (e) => {
           setCurrentTab(e.key);
      };
@@ -73,13 +73,7 @@ function MentorProfile() {
                     {renderContent()}
                </div>
 
-               <ModalCenter
-                    modalOpen={modalOpen}
-                    setModalOpen={setModalOpen}
-                    ComponentRender={BookMentorModal}
-                    okText='Book'
-                    title='Book this mentor?'
-               />
+               <ModalBookMentor modalOpen={modalOpen} setModalOpen={setModalOpen} currentIdMentor={id} />
           </div>
      );
 }

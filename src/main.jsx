@@ -1,11 +1,10 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
-import ConfigProviderAntd from './Styles/ConfigProviderAntd.jsx'
 import { AppProvider } from './Contexts/AppContext.jsx'
 import { AuthProvider } from './Contexts/AuthContext.jsx'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
+import ConfigProviderAntd from './Styles/ConfigProviderAntd.jsx'
 
 const queryClient = new QueryClient();
 

@@ -1,0 +1,44 @@
+.inside-modal-book {
+     .ant-tabs-nav-wrap {
+          display: flex;
+          justify-content: center;
+     }
+
+     .select-time-block {
+
+          .available-block {}
+
+          .custom-block {
+               .title {
+                    font-size: 1.8rem;
+                    font-weight: 600;
+                    margin: 10px 0;
+               }
+
+               .time-view {
+                    opacity: 90%;
+
+                    b {
+                         font-weight: 500;
+                    }
+               }
+
+               .select-block {
+                    padding: 20px 0;
+                    text-align: center;
+
+                    .pick-date,
+                    .pick-time {
+                         margin: 0 20px;
+                    }
+               }
+          }
+     }
+
+     .btn-block {
+          margin-top: 30px;
+          display: flex;
+          gap: 10px;
+          justify-content: flex-end;
+     }
+}
