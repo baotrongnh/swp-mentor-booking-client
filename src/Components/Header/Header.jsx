@@ -8,6 +8,7 @@ import { Icon } from '@iconify/react/dist/iconify.js';
 import useDebounce from '../../hooks/useDebounce';
 import { AuthContext } from '../../Contexts/AuthContext';
 import { deleteToken } from '../../utils/storageUtils';
+import defaultAvatar from '../../assets/Photos/avatar/default_avatar.jpg';
 
 function Header() {
      const { setFilterMentor, filterMentor } = useContext(AppContext);
@@ -151,7 +152,7 @@ function Header() {
                               >
                                    <Link to='/profile' className='navbar-link account'>
                                         {currentUser.imgPath
-                                             ? <img className='avatar' src={currentUser.imgPath} alt="" />
+                                             ? <img className='avatar' src={currentUser.imgPath} alt="" onError={(e) => e.target.src = defaultAvatar} />
                                              : <Icon className='icon' icon="material-symbols-light:account-circle" />
                                         }
                                    </Link>
