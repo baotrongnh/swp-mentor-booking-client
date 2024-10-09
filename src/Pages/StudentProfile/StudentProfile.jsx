@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Col, Row, Image, Button } from 'antd';
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
+import { AuthContext } from "../../Contexts/AuthContext"
 import './StudentProfile.scss';
 
 function EditProfile({ visible, onClose }) {
@@ -67,6 +68,7 @@ function EditProfile({ visible, onClose }) {
 
 function StudentProfile() {
     const [isEditing, setIsEditing] = useState(false);
+    const { currentUser } = useContext(AuthContext);
 
     const handleToggle = () => {
         setIsEditing(prev => !prev);
@@ -84,7 +86,7 @@ function StudentProfile() {
                     <Row align='center' className="top-information">
                         <Col flex={1} className='avatar' align='center'>
                             <Image
-                                src="https://i.pinimg.com/736x/36/9d/20/369d203e4ff156c303ec66e890b45364.jpg"
+                                src={currentUser.imgPath}
                                 preview={{
                                     src: "https://i.pinimg.com/736x/36/9d/20/369d203e4ff156c303ec66e890b45364.jpg",
                                     mask: <div className="preview-mask"><Icon icon="weui:eyes-on-outlined" style={{ width: '3rem', height: '3rem' }} /></div>
