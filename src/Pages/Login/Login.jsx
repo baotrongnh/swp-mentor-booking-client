@@ -2,17 +2,18 @@ import { Icon } from '@iconify/react';
 import { Col, Row } from 'antd';
 import { useEffect, useState } from 'react';
 // import { TypeAnimation } from 'react-type-animation';
-import loginImage from '../../assets/Photos/background/login-img2.jpg';
-import { getUserInformation } from '../../apis/authentication';
-import './Login.scss';
 import { useNavigate } from "react-router-dom";
+import { getUserInformation } from '../../apis/authentication';
+import loginImage from '../../assets/Photos/background/login-img2.jpg';
 import { getToken } from '../../utils/storageUtils';
+import './Login.scss';
 
 function Login() {
      const [isValidate, setIsValidate] = useState(false);
      const [formData, setFormData] = useState({ username: '', password: '' });
      const [showPassword, setShowPassword] = useState(false)
      const navigate = useNavigate();
+
 
      const handleShowPassword = () => {
           setShowPassword(prev => !prev);
@@ -57,7 +58,6 @@ function Login() {
      const checkUserData = async (token) => {
           const { data } = await getUserInformation(token);
           console.log(data);
-          sessionStorage.setItem('userLogin', JSON.stringify(data.user));
      }
 
      useEffect(() => {
@@ -103,7 +103,6 @@ function Login() {
                               </div> */}
                          </Col>
                          <Col xs={24} md={18} lg={12}>
-                              {/* <form className='login-form' onSubmit={handleLogin}> */}
                               <form className='login-form' onSubmit={handleLogin} >
                                    <h1 className='title'>Welcome Back!</h1>
                                    <p className='welcome-content'>We are glad to see you back.</p>
@@ -112,7 +111,7 @@ function Login() {
                                              type="text"
                                              className="input username"
                                              id='username'
-                                             // value={formData.username}
+                                             value={formData.username}
                                              name='username'
                                              onChange={(e) => handleChangeInput(e)}
                                              placeholder=" "
@@ -123,10 +122,9 @@ function Login() {
 
                                    <div className='input-block'>
                                         <input
-                                             // type={showPassword ? "text" : "password"}
                                              className="input password"
                                              id='password'
-                                             // value={formData.password}
+                                             value={formData.password}
                                              name='password'
                                              onChange={(e) => handleChangeInput(e)}
                                              type={showPassword ? 'text' : 'password'}
@@ -154,7 +152,7 @@ function Login() {
                                    </div>
                                    <div id='info' style={{ color: 'red', textAlign: 'center', fontWeight: 700 }}></div>
 
-                                   <button className='button-login'>Log in</button>
+                                   <button className='button-login' type='submit'>Log in</button>
 
                                    <div id="info"></div>
                                    <div className="line"></div>
