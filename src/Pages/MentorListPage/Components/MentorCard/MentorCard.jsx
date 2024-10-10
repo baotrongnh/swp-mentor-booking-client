@@ -7,8 +7,6 @@ import './MentorCard.scss';
 
 function MentorCard({ mentor, setModalOpen, setCurrentIdMentor }) {
 
-     console.log(mentor);
-
      const handleBook = () => {
           setCurrentIdMentor(mentor.id);
           setModalOpen(true);

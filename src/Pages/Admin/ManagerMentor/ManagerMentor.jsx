@@ -33,21 +33,21 @@ function ManagerMentor() {
 
      return (
           <div className="manager-mentor">
-               <header className="header">
+               <div className="head-table">
                     <Row>
                          <Col md={16}>
                               <Menu onClick={onClick} selectedKeys={[currentTab]} mode="horizontal" items={items} />
                          </Col>
                          <Col md={8}>
                               <Search
-                                   placeholder="input search text"
+                                   placeholder="Find mentors..."
                                    allowClear
                                    onSearch={onSearch}
                                    className='search-input'
                               />
                          </Col>
                     </Row>
-               </header>
+               </div>
 
                {currentTab === 'all' && <AllMentor />}
                {currentTab === 'top' && <TopMentor />}

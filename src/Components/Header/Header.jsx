@@ -128,7 +128,7 @@ function Header() {
 
                          <Col xs={0} md={0} lg={11}>
                               <div className='btn-block'>
-                                   <Link className='navbar-link'>Schedule</Link>
+                                   <Link to={`/schedule/${currentUser.id}`} className='navbar-link'>Schedule</Link>
                                    <Link className='navbar-link'>Deposit</Link>
                                    <Dropdown
                                         menu={{

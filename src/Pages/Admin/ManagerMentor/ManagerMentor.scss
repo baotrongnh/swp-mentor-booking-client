@@ -1,8 +1,10 @@
 .manager-mentor {
      max-width: 100%;
 
-     .header {
-
+     .head-table {
+          position: sticky;
+          top: 60px;
+          z-index: 10;
           .search-input {
                // width: 300px;
           }

@@ -1,8 +1,16 @@
 .sidebar-admin {
-     height: 100vh;
-     overflow-y: scroll;
+     // height: 100vh;
+     position: sticky;
+     top: 0;
 
      .logo-block {
-          height: 50px;
+          height: 80px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          .logo-img {
+               width: 50%;
+          }
      }
 }

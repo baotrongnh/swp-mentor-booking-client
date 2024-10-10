@@ -1,6 +1,6 @@
 import { Col, Row } from "antd";
 import { PropTypes } from "prop-types";
-import { SidebarAdmin } from "../Components";
+import { HeaderAdmin, SidebarAdmin } from "../Components";
 
 function AdminLayout({ children }) {
      return (
@@ -10,6 +10,7 @@ function AdminLayout({ children }) {
                </Col>
 
                <Col xs={24} md={17} lg={18} xl={19} xxl={21}>
+                    <HeaderAdmin />
                     {children}
                </Col>
           </Row>
