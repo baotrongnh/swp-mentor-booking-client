@@ -1,15 +1,15 @@
 import { Col, Row } from "antd";
-import { SidebarAdmin } from "../Components";
 import { PropTypes } from "prop-types";
+import { SidebarAdmin } from "../Components";
 
 function AdminLayout({ children }) {
      return (
-          <Row>
-               <Col flex='300px'>
+          <Row wrap={false}>
+               <Col xs={0} md={7} lg={6} xl={5} xxl={3}>
                     <SidebarAdmin />
                </Col>
 
-               <Col flex='auto'>
+               <Col xs={24} md={17} lg={18} xl={19} xxl={21}>
                     {children}
                </Col>
           </Row>

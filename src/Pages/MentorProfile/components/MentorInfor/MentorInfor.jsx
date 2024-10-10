@@ -2,6 +2,7 @@ import { Button, Col, Image, Rate, Row, Tag, Typography } from "antd";
 import { useEffect, useRef, useState } from "react";
 import './MentorInfor.scss';
 import PropTypes from "prop-types";
+import defaultAvatar2 from '../../../../assets/Photos/avatar/default_avatar_2.jpg';
 
 function MentorInfor({ setModalOpen, profile, setCurrentTab }) {
      const rating = 5;
@@ -40,6 +41,7 @@ function MentorInfor({ setModalOpen, profile, setCurrentTab }) {
                                    className="img"
                                    width='100%'
                                    src={profile?.imgPath || 'https://www.strasys.uk/wp-content/uploads/2022/02/Depositphotos_484354208_S.jpg'}
+                                   onError={e => e.target.src = defaultAvatar2}
                               />
                          </Col>
 
