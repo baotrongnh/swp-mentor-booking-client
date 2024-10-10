@@ -32,7 +32,7 @@ function Header() {
      }
 
      const handleLogout = () => {
-          setCurrentUser(null);
+          setCurrentUser(undefined);
           deleteToken();
      }
 

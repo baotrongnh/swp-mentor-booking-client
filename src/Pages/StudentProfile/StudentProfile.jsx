@@ -87,6 +87,10 @@ function StudentProfile() {
                         <Col flex={1} className='avatar' align='center'>
                             <Image
                                 src={currentUser.imgPath}
+                                src={currentUser.imgPath
+                                    ? <img className='avatar' src={currentUser.imgPath} alt="" />
+                                    : <Icon className='icon' icon="material-symbols-light:account-circle" />
+                                }
                                 preview={{
                                     src: "https://i.pinimg.com/736x/36/9d/20/369d203e4ff156c303ec66e890b45364.jpg",
                                     mask: <div className="preview-mask"><Icon icon="weui:eyes-on-outlined" style={{ width: '3rem', height: '3rem' }} /></div>
