@@ -1,0 +1,85 @@
+import { Icon } from "@iconify/react/dist/iconify.js";
+import { Button, Table, Tag } from "antd";
+import { useState } from "react";
+
+function DisableMentor() {
+     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+
+     const dataSource = Array.from({
+          length: 20,
+     }).map((_, i) => ({
+          key: i,
+          name: `Mentor Name FPT ${i}`,
+          email: 'abcxys12345@.edu.vn',
+          point: 123,
+          rating: 4.5,
+          skills: ['ReactJS', 'NodeJS', 'C#', 'Java']
+     }));
+
+     const columns = [
+          {
+               title: 'Name',
+               dataIndex: 'name',
+          },
+          {
+               title: 'Email',
+               dataIndex: 'email',
+          },
+          {
+               title: 'Point',
+               dataIndex: 'point',
+          },
+          {
+               title: 'Rating',
+               dataIndex: 'rating',
+          },
+          {
+               title: 'Skills',
+               key: 'tags',
+               dataIndex: 'skills',
+               render: (skills) => (
+                    <>
+                         {skills.map((skill) => {
+                              return (
+                                   <Tag color='cyan' key={skill}>
+                                        {skill}
+                                   </Tag>
+                              );
+                         })}
+                    </>
+               )
+          },
+          {
+               title: 'Enable',
+               key: 'action',
+               render: (text) => (
+                    <Button type="text" onClick={() => console.log(text)}>Enable</Button>
+               )
+          },
+          {
+               title: 'Edit',
+               key: 'action',
+               render: (text) => (
+                    <Button type='text' onClick={() => console.log(text)}><Icon icon="iconamoon:edit" /></Button>
+               )
+          }
+     ];
+
+     const onSelectChange = (newSelectedRowKeys) => {
+          console.log('selectedRowKeys changed: ', newSelectedRowKeys);
+          setSelectedRowKeys(newSelectedRowKeys);
+     };
+
+     const rowSelection = {
+          selectedRowKeys,
+          onChange: onSelectChange,
+     };
+
+     return (
+          <div className="disable-mentors">
+               <Table pagination={true} rowSelection={rowSelection} columns={columns} dataSource={dataSource} />
+          </div>
+     );
+}
+
+export default DisableMentor;

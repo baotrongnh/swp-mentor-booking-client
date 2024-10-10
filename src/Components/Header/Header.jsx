@@ -9,6 +9,7 @@ import useDebounce from '../../hooks/useDebounce';
 import { AuthContext } from '../../Contexts/AuthContext';
 import { deleteToken } from '../../utils/storageUtils';
 import defaultAvatar from '../../assets/Photos/avatar/default_avatar.jpg';
+import logo from '../../assets/Photos/logo/logo.png';
 
 function Header() {
      const { setFilterMentor, filterMentor } = useContext(AppContext);
@@ -105,11 +106,13 @@ function Header() {
           <div className="header">
                <div className="container">
                     <Row className='header-block'>
-                         <Col className='logo-block' xs={3} mg={6}>
-                              <h1>Logo</h1>
+                         <Col className='logo-block' xs={3} lg={5}>
+                              <Link>
+                                   <img className='logo-img' src={logo} alt="" />
+                              </Link>
                          </Col>
 
-                         <Col className='search-block' xs={18} lg={9}>
+                         <Col className='search-block' xs={18} lg={8}>
                               <Input.Search
                                    placeholder="Find mentors"
                                    onSearch={onSearch}
@@ -123,7 +126,7 @@ function Header() {
                               />
                          </Col>
 
-                         <Col xs={0} md={0} lg={9}>
+                         <Col xs={0} md={0} lg={11}>
                               <div className='btn-block'>
                                    <Link className='navbar-link'>Schedule</Link>
                                    <Link className='navbar-link'>Deposit</Link>

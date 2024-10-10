@@ -9,7 +9,11 @@
           display: flex;
           align-items: center;
 
-          .logo-block {}
+          .logo-block {
+               .logo-img {
+                    width: 100px;
+               }
+          }
 
           .search-block {
                display: flex;
