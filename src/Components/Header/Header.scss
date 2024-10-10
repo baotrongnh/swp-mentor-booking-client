@@ -1,52 +1,51 @@
-@import '../../Styles/variables';
+@import "../../Styles/variables";
 
 .header {
-     position: sticky;
-     border-bottom: 1px solid rgba(128, 128, 128, 0.211);
+  position: sticky;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.211);
 
-     .header-block {
-          height: 70px;
-          display: flex;
-          align-items: center;
+  .header-block {
+    height: 70px;
+    display: flex;
+    align-items: center;
 
-          .logo-block {
-               .logo-img {
-                    width: 100px;
-               }
-          }
+    .logo-block {
+      .logo-img {
+        width: 100px;
+      }
+    }
 
-          .search-block {
-               display: flex;
-               justify-content: center;
-               align-items: center;
-          }
+    .search-block {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-          .btn-block {
-               padding-left: 50px;
-               display: flex;
-               justify-content: space-between;
-               align-items: center;
-               color: $text-primary;
+    .btn-block {
+      padding-left: 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: $text-primary;
 
-               .navbar-link {
-                    color: $text-primary;
-                    font-weight: 500;
-                    transition: 0.3s;
+      .navbar-link {
+        color: $text-primary;
+        font-weight: 500;
+        transition: 0.3s;
 
-                    &:hover {
-                         opacity: 80%;
-                    }
+        &:hover {
+          opacity: 80%;
+        }
 
-                    .icon {
-                         font-size: 4rem;
-                    }
+        .icon {
+          font-size: 4rem;
+        }
 
-                    .avatar {
-                         border-radius: 50%;
-                         width: 35px;
-                    }
-               }
-          }
-     }
-
+        .avatar {
+          border-radius: 50%;
+          width: 35px;
+        }
+      }
+    }
+  }
 }
