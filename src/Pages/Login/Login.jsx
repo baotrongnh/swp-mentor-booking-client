@@ -10,20 +10,21 @@ import './Login.scss';
 
 function Login() {
      const [isValidate, setIsValidate] = useState(false);
-     const [formData, setFormData] = useState({ username: '', password: '' });
-     const [showPassword, setShowPassword] = useState(false)
+     // const [formData, setFormData] = useState({ username: '', password: '' });
+     const [formData] = useState({ username: '', password: '' });
+     // const [showPassword, setShowPassword] = useState(false)
      const navigate = useNavigate();
 
 
-     const handleShowPassword = () => {
-          setShowPassword(prev => !prev);
+     // const handleShowPassword = () => {
+     //      setShowPassword(prev => !prev);
 
-     }
+     // }
 
-     const handleChangeInput = (e) => {
-          console.log(e.target.value)
-          setFormData({ ...formData, [e.target.name]: e.target.value })
-     }
+     // const handleChangeInput = (e) => {
+     //      console.log(e.target.value)
+     //      setFormData({ ...formData, [e.target.name]: e.target.value })
+     // }
 
      useEffect(() => {
           if (formData.username !== '' && formData.password !== '') {
@@ -106,7 +107,7 @@ function Login() {
                               <form className='login-form' onSubmit={handleLogin} >
                                    <h1 className='title'>Welcome Back!</h1>
                                    <p className='welcome-content'>We are glad to see you back.</p>
-                                   <div className='input-block'>
+                                   {/* <div className='input-block'>
                                         <input
                                              type="text"
                                              className="input username"
@@ -156,16 +157,15 @@ function Login() {
 
                                    <div id="info"></div>
                                    <div className="line"></div>
-                                   <p className='text-or'>or</p>
+                                   <p className='text-or'>or</p> */}
 
                                    <a className="button-google" onClick={handleGoogleLogin}>
                                         <Icon className='icon-google' icon="logos:google-icon" />
                                         <span>Log in with Google</span>
                                    </a>
-                                   <p className='login-text'>
-                                        {/* <Link className='login-link' to='/signup'>Sign up</Link> */}
+                                   {/* <p className='login-text'>
                                         Do not have an account? <span className='login-link'>Sign up</span>
-                                   </p>
+                                   </p> */}
                               </form>
                          </Col>
                     </Row>
