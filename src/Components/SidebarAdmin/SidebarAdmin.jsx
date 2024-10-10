@@ -2,6 +2,7 @@ import { Menu } from 'antd';
 import './SidebarAdmin.scss';
 import { LineChartOutlined, ScheduleOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import logo from '../../assets/Photos/logo/logo.png';
 
 function SidebarAdmin() {
      const items = [
@@ -31,7 +32,7 @@ function SidebarAdmin() {
                children: [
                     {
                          key: 'viewStudent',
-                         label: <Link to='/admin/students'>View All Students</Link>,
+                         label: <Link to='/admin/student'>View All Students</Link>,
                     }
                ],
           },
@@ -86,22 +87,7 @@ function SidebarAdmin() {
                          label: <Link to='/admin/analytics/mentors'>Booking Analytics</Link>
                     }
                ]
-          },
-          {
-               key: 'grp',
-               label: 'Group',
-               type: 'group',
-               children: [
-                    {
-                         key: '13',
-                         label: 'Option 13',
-                    },
-                    {
-                         key: '14',
-                         label: 'Option 14',
-                    },
-               ],
-          },
+          }
      ];
 
      const onClick = (e) => {
@@ -112,15 +98,11 @@ function SidebarAdmin() {
           <div className="sidebar-admin">
 
                <div className="logo-block">
-                    <h1>logo here</h1>
+                    <img className='logo-img' src={logo} alt="" />
                </div>
 
                <Menu
                     onClick={onClick}
-                    style={{
-                         // width: '200px',
-                         height: '100vh'
-                    }}
                     defaultSelectedKeys={['1']}
                     defaultOpenKeys={['sub1']}
                     mode="inline"
