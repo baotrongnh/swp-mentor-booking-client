@@ -2,11 +2,12 @@ import AdminLayout from "../Layouts/AdminLayout";
 import { Login, MentorListPage, MentorProfile, PageNotFound, Schedule, StudentProfile } from "../Pages";
 import PrivateRoutesAuth from "./PrivateRoutesAuth";
 import AdminRoutesAuth from './AdminRoutesAuth';
-import { ManagerMentor, ManagerStudent } from "../Pages/Admin";
+import { LoginAdmin, ManagerMentor, ManagerStudent } from "../Pages/Admin";
 
 const publicRoutes = [
   { path: '/*', element: PageNotFound, layout: null },
   { path: "/login", element: Login, layout: null },
+  { path: '/login/admin', element: LoginAdmin, layout: null }
 ];
 
 const privateRoutes = [

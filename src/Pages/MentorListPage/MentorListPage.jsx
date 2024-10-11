@@ -10,10 +10,12 @@ import './MentorListPage.scss';
 
 function MentorListPage() {
      const { filterMentor, setFilterMentor } = useContext(AppContext);
-     const { data, isLoading } = useQuery({ queryKey: ['listMentor', filterMentor], queryFn: () => searchMentor(filterMentor), keepPreviousData: true });
-
      const [modalOpen, setModalOpen] = useState(false);
      const [currentIdMentor, setCurrentIdMentor] = useState('');
+     const { data: listMentor, isLoading } = useQuery({
+          queryKey: ['listMentor', filterMentor],
+          queryFn: () => searchMentor(filterMentor),
+     });
 
      const handleChangePage = (page) => {
           setFilterMentor({ ...filterMentor, page });
@@ -53,9 +55,8 @@ function MentorListPage() {
                          </Col>
 
                          <Col xs={24} md={17} lg={19} className='mentor-block'>
-
                               <Row gutter={15}>
-                                   {data?.mentors.map((mentor) => (
+                                   {listMentor?.mentors.map((mentor) => (
                                         <Col xs={24} xl={12} key={mentor.id}>
                                              <MentorCard
                                                   mentor={mentor}
@@ -72,7 +73,7 @@ function MentorListPage() {
                                    align="center"
                                    defaultPageSize={10}
                                    defaultCurrent={1}
-                                   total={data?.totalMentors}
+                                   total={listMentor?.totalMentors}
                                    showSizeChanger={false}
                                    hideOnSinglePage={true}
                               />

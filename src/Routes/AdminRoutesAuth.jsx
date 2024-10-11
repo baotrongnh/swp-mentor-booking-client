@@ -9,7 +9,7 @@ function AdminRouteAuth({ children }) {
      )
 }
 
-export default AdminRouteAuth
+export default AdminRouteAuth;
 
 AdminRouteAuth.propTypes = {
      children: PropTypes.any

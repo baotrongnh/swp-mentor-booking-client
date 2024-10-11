@@ -1,0 +1,95 @@
+.rating-view {
+     hr {
+          opacity: 20%;
+     }
+
+     .title {
+          font-size: 3rem;
+          font-weight: 600;
+          padding: 20px 0;
+          margin-bottom: 30px;
+     }
+
+     .overview {
+          padding: 35px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          position: sticky;
+          top: 0;
+          border: 1px solid rgba(128, 128, 128, 0.329);
+          border-radius: 7px;
+
+          .number-rating {
+               font-size: 4.5rem;
+               font-weight: 700;
+               padding: 20px;
+          }
+
+          .total-rating {
+               padding: 10px;
+               opacity: 70%;
+          }
+
+          .write-feedback {
+               .title-write-feedback {
+                    font-size: 2rem;
+                    font-weight: 600;
+               }
+
+               .description {
+                    margin: 20px 0;
+                    opacity: 80%;
+               }
+          }
+     }
+
+     .review-block {
+          .review-item {
+               border: 1px solid rgba(128, 128, 128, 0.208);
+               border-radius: 7px;
+               padding: 30px;
+               margin-bottom: 20px;
+
+               .top-block {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    flex-wrap: wrap;
+
+                    .info-block {
+                         display: flex;
+                         align-items: center;
+                         gap: 10px;
+
+                         .avatar {
+                              width: 50px;
+                         }
+
+                         .text-block {
+                              opacity: 90%;
+
+                              .name {
+                                   font-size: 2rem;
+                                   font-weight: 700;
+                                   margin-bottom: 5px;
+                              }
+                         }
+                    }
+               }
+          }
+
+          .comment {
+               margin-top: 20px;
+               line-height: 1.6;
+               font-size: 1.8rem;
+               text-align: justify;
+               opacity: 75%;
+               height: 70px;
+               overflow: hidden;
+               text-overflow: ellipsis;
+               white-space: normal
+          }
+     }
+}

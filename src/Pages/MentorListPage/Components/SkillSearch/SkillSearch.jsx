@@ -1,9 +1,9 @@
+import { DownOutlined } from '@ant-design/icons';
 import { useQuery } from "@tanstack/react-query";
+import { Input } from "antd";
 import { useState } from "react";
 import { loadAllSkills } from "../../../../apis/mentor";
-import { Input } from "antd";
 import CheckboxSkill from "../CheckboxSkill/CheckboxSkill";
-import { DownOutlined } from '@ant-design/icons';
 import './SkillSearch.scss';
 
 function SkillSearch() {

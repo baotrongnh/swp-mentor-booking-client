@@ -1,19 +1,22 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { Button, Table, Tag } from "antd";
+import { useQuery } from "@tanstack/react-query";
+import { Button, Popconfirm, Table, Tag } from "antd";
 import { useState } from "react";
+import { getListMentor } from "../../../../../apis/admin";
+import { QuestionCircleOutlined } from '@ant-design/icons';
+import { loadAllSkills } from "../../../../../apis/mentor";
 
 function AllMentor() {
      const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-
-     const dataSource = Array.from({
-          length: 20,
-     }).map((_, i) => ({
-          key: i,
-          name: `Mentor Name FPT ${i}`,
-          email: 'abcxys12345@.edu.vn',
-          point: 123,
-          rating: 4.5,
-          skills: ['ReactJS', 'NodeJS', 'C#', 'Java']
+     const { data: listSkills } = useQuery({ queryKey: ['list-skills'], queryFn: loadAllSkills });
+     const { data, isLoading } = useQuery({ queryKey: ['list-mentors-admin'], queryFn: getListMentor });
+     const dataSource = data?.mentorList.map((mentor) => ({
+          key: mentor.id,
+          name: mentor.fullName,
+          email: mentor.email,
+          point: mentor.point || 'null',
+          rating: mentor.averageRating || '#',
+          skills: ['ReactJS']
      }));
 
      const columns = [
@@ -28,15 +31,21 @@ function AllMentor() {
           {
                title: 'Point',
                dataIndex: 'point',
+               align: 'center',
+               // defaultSortOrder: 'descend',
+               sorter: (a, b) => a.point - b.point,
           },
           {
                title: 'Rating',
                dataIndex: 'rating',
+               align: 'center',
+               sorter: (a, b) => a.point - b.point,
           },
           {
                title: 'Skills',
                key: 'tags',
                dataIndex: 'skills',
+               align: 'center',
                render: (skills) => (
                     <>
                          {skills.map((skill) => {
@@ -47,18 +56,31 @@ function AllMentor() {
                               );
                          })}
                     </>
-               )
+               ),
+               filters: listSkills?.map(skill => (
+                    {
+                         text: skill.name,
+                         value: skill.name,
+                    }
+               )),
+               onFilter: (value, record) => record.skills.some((skill) => skill.indexOf(value) === 0),
           },
           {
                title: 'Delete',
                key: 'action',
+               align: 'center',
                render: (text) => (
-                    <Button type="text" danger onClick={() => console.log(text)}>Delete</Button>
+                    <Popconfirm okText='Delete' title="Sure to delete?"
+                         onConfirm={() => console.log(text)}
+                         icon={<QuestionCircleOutlined style={{ color: 'red' }} />}>
+                         <Button type="text" danger>Delete</Button>
+                    </Popconfirm>
                )
           },
           {
                title: 'Edit',
                key: 'action',
+               align: 'center',
                render: (text) => (
                     <Button type='text' onClick={() => console.log(text)}><Icon icon="iconamoon:edit" /></Button>
                )
@@ -73,11 +95,19 @@ function AllMentor() {
      const rowSelection = {
           selectedRowKeys,
           onChange: onSelectChange,
+          align: 'center'
      };
+
+     if (isLoading) {
+          return (
+               <h1>Loading</h1>
+          )
+     }
 
      return (
           <div className="all-mentors">
-               <Table pagination={true} rowSelection={rowSelection} columns={columns} dataSource={dataSource} />
+               <Table scroll={{ y: '76vh' }} pagination={{ position: ['bottomCenter'] }} rowSelection={rowSelection} columns={columns} dataSource={dataSource}
+               />
           </div>
      );
 }

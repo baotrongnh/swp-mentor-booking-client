@@ -28,13 +28,11 @@ function MentorCard({ mentor, setModalOpen, setCurrentIdMentor }) {
                               <h1 className="name">{mentor.fullName}</h1>
                          </Link>
 
-                         {mentor?.point > 180
-                              &&
+                         {mentor?.point > 180 &&
                               <div className="status-user">
                                    <Icon className='icon' icon="mingcute:user-star-fill" />
                                    <p className='text-status'>Top Mentor</p>
-                              </div>
-                         }
+                              </div>}
 
                          <div className="rating-block">
                               {mentor.averageRating > 0
@@ -59,13 +57,9 @@ function MentorCard({ mentor, setModalOpen, setCurrentIdMentor }) {
 
                          <div className="time-block">
                               <Icon className='icon' icon="tdesign:time" />
-                              
-
                          </div>
 
                          <p className="description">{mentor.description || 'No description'}</p>
-
-
                     </Col>
                </Row>
 

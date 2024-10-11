@@ -7,10 +7,11 @@ import { Loading } from "../../Components";
 import { getProfileMentor } from "../../apis/mentor";
 import './MentorProfile.scss';
 import { AboutMentor, MentorInfor, RatingView, Skills } from "./components";
-import { ModalBookMentor } from '../../Components/Modal';
+import { ModalBookMentor, ModalRatingMentor } from '../../Components/Modal';
 
 function MentorProfile() {
-     const [modalOpen, setModalOpen] = useState(false);
+     const [modalBookingOpen, setModalBookingOpen] = useState(false);
+     const [modalRatingOpen, setModalRatingOpen] = useState(false);
      const { id } = useParams('id');
      const { data, isLoading, isError, refetch } = useQuery({ queryKey: ['mentorProfile', id], queryFn: () => getProfileMentor(id) });
 
@@ -32,7 +33,7 @@ function MentorProfile() {
           },
      ];
 
-     const [currentTab, setCurrentTab] = useState('about');
+     const [currentTab, setCurrentTab] = useState('rating');
 
      const onClick = (e) => {
           setCurrentTab(e.key);
@@ -41,8 +42,8 @@ function MentorProfile() {
      const renderContent = () => {
           switch (currentTab) {
                case 'about': return <AboutMentor />
-               case 'skills': return <Skills />
-               case 'rating': return <RatingView />
+               case 'skills': return <Skills id={id} />
+               case 'rating': return <RatingView id={id} setModalRatingOpen={setModalRatingOpen} />
           }
      }
 
@@ -63,7 +64,7 @@ function MentorProfile() {
           <div className="mentor-profile">
                <MentorInfor
                     id={id}
-                    setModalOpen={setModalOpen}
+                    setModalOpen={setModalBookingOpen}
                     profile={data?.mentor}
                     setCurrentTab={setCurrentTab}
                />
@@ -73,7 +74,8 @@ function MentorProfile() {
                     {renderContent()}
                </div>
 
-               <ModalBookMentor modalOpen={modalOpen} setModalOpen={setModalOpen} currentIdMentor={id} />
+               <ModalBookMentor modalOpen={modalBookingOpen} setModalOpen={setModalBookingOpen} currentIdMentor={id} />
+               <ModalRatingMentor modalOpen={modalRatingOpen} setModalOpen={setModalRatingOpen} id={id} />
           </div>
      );
 }

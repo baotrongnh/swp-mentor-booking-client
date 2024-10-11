@@ -1,19 +1,20 @@
+import { QuestionCircleOutlined } from '@ant-design/icons';
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { Button, Table, Tag } from "antd";
+import { useQuery } from "@tanstack/react-query";
+import { Button, Popconfirm, Table, Tag } from "antd";
 import { useState } from "react";
+import { getListDisableMentor } from "../../../../../apis/admin";
 
-function DisableMentor() {
+function AllMentor() {
      const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-
-     const dataSource = Array.from({
-          length: 20,
-     }).map((_, i) => ({
-          key: i,
-          name: `Mentor Name FPT ${i}`,
-          email: 'abcxys12345@.edu.vn',
-          point: 123,
-          rating: 4.5,
-          skills: ['ReactJS', 'NodeJS', 'C#', 'Java']
+     const { data } = useQuery({ queryKey: ['list-mentors-disable-admin'], queryFn: getListDisableMentor });
+     const dataSource = data?.mentorList.map((mentor) => ({
+          key: mentor.id,
+          name: mentor.fullName,
+          email: mentor.email,
+          point: mentor.point || 'null',
+          rating: mentor.averageRating || '#',
+          skills: ['ReactJS']
      }));
 
      const columns = [
@@ -28,15 +29,21 @@ function DisableMentor() {
           {
                title: 'Point',
                dataIndex: 'point',
+               align: 'center',
+               // defaultSortOrder: 'descend',
+               sorter: (a, b) => a.point - b.point,
           },
           {
                title: 'Rating',
                dataIndex: 'rating',
+               align: 'center',
+               sorter: (a, b) => a.point - b.point,
           },
           {
                title: 'Skills',
                key: 'tags',
                dataIndex: 'skills',
+               align: 'center',
                render: (skills) => (
                     <>
                          {skills.map((skill) => {
@@ -47,18 +54,35 @@ function DisableMentor() {
                               );
                          })}
                     </>
-               )
+               ),
+               filters: [
+                    {
+                         text: 'ReactJS',
+                         value: 'ReactJS',
+                    },
+                    {
+                         text: 'NodeJS',
+                         value: 'NodeJS',
+                    },
+               ],
+               onFilter: (value, record) => record.skills.some((skill) => skill.indexOf(value) === 0),
           },
           {
-               title: 'Enable',
+               title: 'Delete',
                key: 'action',
+               align: 'center',
                render: (text) => (
-                    <Button type="text" onClick={() => console.log(text)}>Enable</Button>
+                    <Popconfirm okText='Delete' title="Sure to delete?"
+                         onConfirm={() => console.log(text)}
+                         icon={<QuestionCircleOutlined style={{ color: 'red' }} />}>
+                         <Button type="text" danger>Delete</Button>
+                    </Popconfirm>
                )
           },
           {
                title: 'Edit',
                key: 'action',
+               align: 'center',
                render: (text) => (
                     <Button type='text' onClick={() => console.log(text)}><Icon icon="iconamoon:edit" /></Button>
                )
@@ -73,13 +97,15 @@ function DisableMentor() {
      const rowSelection = {
           selectedRowKeys,
           onChange: onSelectChange,
+          align: 'center'
      };
 
      return (
-          <div className="disable-mentors">
-               <Table pagination={true} rowSelection={rowSelection} columns={columns} dataSource={dataSource} />
+          <div className="all-mentors">
+               <Table scroll={{ y: '76vh' }} pagination={{ position: ['bottomCenter'] }} rowSelection={rowSelection} columns={columns} dataSource={dataSource}
+               />
           </div>
      );
 }
 
-export default DisableMentor;
+export default AllMentor;

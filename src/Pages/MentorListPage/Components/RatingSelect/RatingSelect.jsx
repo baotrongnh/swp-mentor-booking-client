@@ -32,7 +32,6 @@ function RatingSelect() {
                          <Rate style={{ marginLeft: '10px' }} disabled defaultValue={star} />
                     </div>
                ))}
-
           </div>
      );
 }
