@@ -1,0 +1,110 @@
+@import "../../Styles/variables.scss";
+
+.edit-profile {
+  background-color: $bg-primary;
+  margin: 0 auto;
+  margin-top: 4rem;
+  border: 1px solid $border;
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);
+  width: 98%;
+  margin-bottom: 2rem;
+
+  .edit-profile-title {
+    margin-top: 0 !important;
+    font-size: 2.5rem !important;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1) !important;
+    margin-bottom: 2rem;
+  }
+
+  .edit-form {
+    .input-block:first-of-type {
+      margin-bottom: 2rem;
+    }
+
+    .input-block {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 3rem;
+
+      .label {
+        font: {
+          size: 1.5rem;
+          weight: 600;
+        }
+
+        width: 12rem;
+        margin-bottom: 0.6rem;
+        margin-left: 0.5rem;
+        opacity: 80%;
+        color: $text-primary;
+        letter-spacing: 0.18rem;
+        transition: all 0.3s ease;
+        cursor: text;
+      }
+
+      .input {
+        flex-grow: 1;
+        padding: 1rem;
+        background-color: rgba(196, 222, 241, 0.352);
+        border: 1px solid $bg-secondary;
+        border-radius: 0.5rem;
+        font-size: 1.5rem;
+        transition: all 0.3s ease;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        outline: none;
+
+        &:focus {
+          outline: none;
+          border-color: $theme-color-secondary;
+        }
+      }
+    }
+
+    .edit-profile-btn {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      border-radius: 5px;
+      font-weight: 600;
+
+      .btn {
+        width: 10%;
+      }
+    }
+  }
+}
+
+@media (max-width: 575px) {
+  .edit-profile {
+    h1.edit-profile-title {
+      font-size: 2rem !important;
+      margin-bottom: 1rem !important;
+      margin-left: 0 !important;
+    }
+
+    .edit-form {
+      .input-block {
+        .label {
+          font-size: 1.2rem;
+        }
+
+        .input {
+          padding: 0.8rem;
+          font-size: 1.2rem;
+        }
+      }
+
+      .edit-profile-btn {
+        .btn {
+          width: 20%; // Adjusted button width
+        }
+      }
+    }
+  }
+}
