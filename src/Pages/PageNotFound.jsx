@@ -1,4 +1,4 @@
-import { Button, Result } from "antd";
+import { Button, Flex, Result } from "antd";
 import { useNavigate } from "react-router-dom";
 
 function PageNotFound() {
@@ -7,12 +7,14 @@ function PageNotFound() {
           navigate(-1);
      }
      return (
-          <Result
-               status="404"
-               title="404"
-               subTitle="Sorry, the page you visited does not exist."
-               extra={<Button onClick={handleBack} type="primary">Back Home</Button>}
-          />
+          <Flex style={{ height: '100vh', width: '100vw' }} justify="center" align="center">
+               <Result
+                    status="404"
+                    title="404"
+                    subTitle="Sorry, the page you visited does not exist."
+                    extra={<Button onClick={handleBack} type="primary">Back</Button>}
+               />
+          </Flex>
      );
 }
 

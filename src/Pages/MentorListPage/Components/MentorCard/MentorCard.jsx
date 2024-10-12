@@ -36,16 +36,19 @@ function MentorCard({ mentor, setModalOpen, setCurrentIdMentor }) {
 
                          <div className="rating-block">
                               {mentor.averageRating > 0
-                                   ? <Rate
+                                   &&
+                                   <Rate
                                         disabled
                                         allowHalf
                                         defaultValue={0}
                                         value={mentor.averageRating}
-                                   />
-                                   : ''}
+                                   />}
 
                               <div>
-                                   <Typography.Text strong>{`${mentor.averageRating || 'No reviews yet'}`}</Typography.Text> {`(${mentor.ratingCount || 0} reviews)`}
+                                   <Typography.Text strong>
+                                        {`${mentor.averageRating || 'No reviews yet'}`}
+                                   </Typography.Text>
+                                   {` (${mentor.ratingCount || 0} reviews)`}
                               </div>
                          </div>
 
@@ -64,8 +67,12 @@ function MentorCard({ mentor, setModalOpen, setCurrentIdMentor }) {
                </Row>
 
                <Row className='btn-block'>
-                    <Link to={`/mentorprofile/${mentor.id}`}><Button size='large' className='btn'>View Profile</Button></Link>
-                    <Link><Button onClick={handleBook} size='large' className='btn' type="primary">Book</Button></Link>
+                    <Link to={`/mentor/${mentor.id}`}>
+                         <Button size='large' className='btn'>View Profile</Button>
+                    </Link>
+                    <Link>
+                         <Button onClick={handleBook} size='large' className='btn' type="primary">Book</Button>
+                    </Link>
                </Row>
           </div>
      );

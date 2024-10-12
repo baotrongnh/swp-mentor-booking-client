@@ -9,7 +9,12 @@ function ConfigProviderAntd({ children }) {
                     fontFamily: 'Segoe UI, Arial, sans-serif',
                     fontSize: 16,
                     // colorPrimary: '#00DD73',
-               }
+               },
+               components: {
+                    Dropdown: {
+                         paddingBlock: 10
+                    },
+               },
           }}>
                {children}
           </ConfigProvider>

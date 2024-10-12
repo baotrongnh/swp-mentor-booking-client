@@ -9,19 +9,33 @@ import './SkillSearch.scss';
 function SkillSearch() {
      const { data: listSkills } = useQuery({ queryKey: ['listSkill'], queryFn: loadAllSkills });
      const [numberSkills, setNumberSkills] = useState(5);
+     const [searchSkillValue, setSearchSkillValue] = useState('');
+
+     const listSkillsSearch = listSkills?.filter(skill => searchSkillValue === '' || skill.name.toLowerCase().includes(searchSkillValue.toLowerCase()));
+
+     const handleChangeSearch = (e) => {
+          setSearchSkillValue(e.target.value);
+     }
 
      return (
           <div className="skill-search">
                <h1 className='title-skill'>Skills</h1>
-               <Input className='input-search' placeholder="Search for skills" size='large' style={{ fontSize: 16 }} />
+               <Input
+                    onChange={handleChangeSearch}
+                    className='input-search'
+                    placeholder="Search for skills"
+                    size='large'
+                    style={{ fontSize: 16 }}
+               />
                <p className='sub-text-found'>100+ mentors found</p>
-
                <div className="skill-block">
-                    {listSkills?.slice(0, numberSkills).map((skill) => (
+                    {listSkillsSearch?.slice(0, numberSkills).map((skill) => (
                          <CheckboxSkill key={skill.id} id={skill.id} skillName={skill.name} numberMentor={99} />
                     ))}
-
-                    <p onClick={() => setNumberSkills(numberSkills === 5 ? listSkills.length : 5)} className='show-more-text'>Show more <DownOutlined /></p>
+                    <p onClick={() => setNumberSkills(numberSkills === 5 ? listSkills.length : 5)} className='show-more-text'>
+                         Show more
+                         <DownOutlined />
+                    </p>
                </div>
           </div>
      );

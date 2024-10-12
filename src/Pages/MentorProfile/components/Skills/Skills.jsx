@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { getSkillMentor } from "../../../../apis/mentor";
 import PropTypes from "prop-types";
+import { getSkillMentor } from "../../../../apis/mentor";
 
 function Skills({ id }) {
      const { data: listSkill } = useQuery({ queryKey: ['list-skill-profile', id], queryFn: () => getSkillMentor(id) });

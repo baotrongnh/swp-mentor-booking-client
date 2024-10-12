@@ -27,7 +27,6 @@ function RatingView({ id, setModalRatingOpen }) {
                                    <Button onClick={() => setModalRatingOpen(true)} type='primary' size='large'>Submit Reviews</Button>
                               </div>
                          </div>
-
                     </Col>
 
                     <Col md={12}>
@@ -74,7 +73,6 @@ function RatingView({ id, setModalRatingOpen }) {
                                         <p className="comment">{feedback.text}</p>
                                    </div>
                               ))}
-
                          </div>
                     </Col>
                </Row>

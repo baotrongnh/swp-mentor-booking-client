@@ -1,6 +1,6 @@
+import { Icon } from '@iconify/react/dist/iconify.js';
 import { Col, Row } from 'antd';
 import './AboutMentor.scss';
-import { Icon } from '@iconify/react/dist/iconify.js';
 
 function AboutMentor() {
      return (

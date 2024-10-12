@@ -1,10 +1,10 @@
 import { Button, Col, Image, Rate, Row, Tag, Typography } from "antd";
-import { useEffect, useRef, useState } from "react";
-import './MentorInfor.scss';
 import PropTypes from "prop-types";
+import { useEffect, useRef, useState } from "react";
 import defaultAvatar2 from '../../../../assets/Photos/avatar/default_avatar_2.jpg';
+import './MentorInfor.scss';
 
-function MentorInfor({ setModalOpen, profile, setCurrentTab }) {
+function MentorInfor({ setModalOpen, mentorInfor, setCurrentTab }) {
      const rating = 5;
      const skills = ['ReactJS', 'NodeJS'];
      const descriptionRef = useRef(null);
@@ -40,16 +40,16 @@ function MentorInfor({ setModalOpen, profile, setCurrentTab }) {
                               <Image
                                    className="img"
                                    width='100%'
-                                   src={profile?.imgPath || 'https://www.strasys.uk/wp-content/uploads/2022/02/Depositphotos_484354208_S.jpg'}
+                                   src={mentorInfor?.imgPath || 'https://www.strasys.uk/wp-content/uploads/2022/02/Depositphotos_484354208_S.jpg'}
                                    onError={e => e.target.src = defaultAvatar2}
                               />
                          </Col>
 
                          <Col md={13} lg={16} xl={17} className="info-block">
-                              <h1 className="name">{profile?.fullName}</h1>
+                              <h1 className="name">{mentorInfor?.fullName}</h1>
                               <p className="semester"><b>Semester:</b> 7</p>
                               <div className="rating-block" onClick={() => setCurrentTab('rating')}>
-                                   <Rate disabled allowHalf defaultValue={0} value={profile?.averageRating} />
+                                   <Rate disabled allowHalf defaultValue={0} value={mentorInfor?.averageRating} />
                                    <p className="rating-text"><Typography.Text strong>{`${rating || 'No reviews yet'}`}</Typography.Text> {`(${rating || 0} reviews)`}</p>
                               </div>
 
@@ -80,6 +80,6 @@ export default MentorInfor;
 
 MentorInfor.propTypes = {
      setModalOpen: PropTypes.func,
-     profile: PropTypes.object,
+     mentorInfor: PropTypes.object,
      setCurrentTab: PropTypes.func
 }

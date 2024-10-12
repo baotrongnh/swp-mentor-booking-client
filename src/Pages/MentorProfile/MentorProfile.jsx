@@ -1,19 +1,19 @@
 import { StarOutlined, UnorderedListOutlined, UserOutlined } from '@ant-design/icons';
 import { useQuery } from "@tanstack/react-query";
-import { Menu } from "antd";
+import { Breadcrumb, Menu } from "antd";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Loading } from "../../Components";
+import { ModalBookMentor, ModalRatingMentor } from '../../Components/Modal';
 import { getProfileMentor } from "../../apis/mentor";
 import './MentorProfile.scss';
 import { AboutMentor, MentorInfor, RatingView, Skills } from "./components";
-import { ModalBookMentor, ModalRatingMentor } from '../../Components/Modal';
 
 function MentorProfile() {
      const [modalBookingOpen, setModalBookingOpen] = useState(false);
      const [modalRatingOpen, setModalRatingOpen] = useState(false);
      const { id } = useParams('id');
-     const { data, isLoading, isError, refetch } = useQuery({ queryKey: ['mentorProfile', id], queryFn: () => getProfileMentor(id) });
+     const { data: mentorInfor, isLoading, isError, refetch } = useQuery({ queryKey: ['mentorProfile', id], queryFn: () => getProfileMentor(id) });
 
      const items = [
           {
@@ -62,10 +62,19 @@ function MentorProfile() {
 
      return (
           <div className="mentor-profile">
+               <div className="container" style={{ padding: '20px 0' }}>
+                    <Breadcrumb
+                         items={[
+                              { title: <Link to='/mentor'>Home</Link>, },
+                              { title: 'View Profile Mentor', },
+                         ]}
+                    />
+               </div>
+
                <MentorInfor
                     id={id}
                     setModalOpen={setModalBookingOpen}
-                    profile={data?.mentor}
+                    profile={mentorInfor?.mentor}
                     setCurrentTab={setCurrentTab}
                />
 
@@ -74,8 +83,17 @@ function MentorProfile() {
                     {renderContent()}
                </div>
 
-               <ModalBookMentor modalOpen={modalBookingOpen} setModalOpen={setModalBookingOpen} currentIdMentor={id} />
-               <ModalRatingMentor modalOpen={modalRatingOpen} setModalOpen={setModalRatingOpen} id={id} />
+               <ModalBookMentor
+                    modalOpen={modalBookingOpen}
+                    setModalOpen={setModalBookingOpen}
+                    currentIdMentor={id}
+               />
+
+               <ModalRatingMentor
+                    modalOpen={modalRatingOpen}
+                    setModalOpen={setModalRatingOpen}
+                    id={id}
+               />
           </div>
      );
 }

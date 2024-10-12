@@ -1,9 +1,8 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useQuery } from "@tanstack/react-query";
-import { Button, Popconfirm, Table, Tag } from "antd";
+import { Button, Dropdown, Table, Tag } from "antd";
 import { useState } from "react";
 import { getListMentor } from "../../../../../apis/admin";
-import { QuestionCircleOutlined } from '@ant-design/icons';
 import { loadAllSkills } from "../../../../../apis/mentor";
 
 function AllMentor() {
@@ -19,6 +18,21 @@ function AllMentor() {
           skills: ['ReactJS']
      }));
 
+     const getDropDownItems = (text) => ([
+          {
+               label: 'Edit',
+               key: '0',
+               icon: <Icon icon="iconamoon:edit-bold" />
+          },
+          {
+               label: 'Delete',
+               key: '3',
+               danger: true,
+               icon: <Icon icon="weui:delete-outlined" />,
+               onClick: () => console.log(text)
+          },
+     ]);
+
      const columns = [
           {
                title: 'Name',
@@ -32,7 +46,6 @@ function AllMentor() {
                title: 'Point',
                dataIndex: 'point',
                align: 'center',
-               // defaultSortOrder: 'descend',
                sorter: (a, b) => a.point - b.point,
           },
           {
@@ -66,23 +79,18 @@ function AllMentor() {
                onFilter: (value, record) => record.skills.some((skill) => skill.indexOf(value) === 0),
           },
           {
-               title: 'Delete',
+               title: '',
                key: 'action',
                align: 'center',
                render: (text) => (
-                    <Popconfirm okText='Delete' title="Sure to delete?"
-                         onConfirm={() => console.log(text)}
-                         icon={<QuestionCircleOutlined style={{ color: 'red' }} />}>
-                         <Button type="text" danger>Delete</Button>
-                    </Popconfirm>
-               )
-          },
-          {
-               title: 'Edit',
-               key: 'action',
-               align: 'center',
-               render: (text) => (
-                    <Button type='text' onClick={() => console.log(text)}><Icon icon="iconamoon:edit" /></Button>
+                    <Dropdown
+                         menu={{
+                              items: getDropDownItems(text),
+                         }}
+                         trigger={['click']}
+                    >
+                         <Button type="text"><Icon icon="lsicon:more-outline" /></Button>
+                    </Dropdown>
                )
           }
      ];
@@ -95,7 +103,8 @@ function AllMentor() {
      const rowSelection = {
           selectedRowKeys,
           onChange: onSelectChange,
-          align: 'center'
+          align: 'center',
+          onSelect: (record, seleted) => console.log(seleted)
      };
 
      if (isLoading) {
@@ -106,7 +115,12 @@ function AllMentor() {
 
      return (
           <div className="all-mentors">
-               <Table scroll={{ y: '76vh' }} pagination={{ position: ['bottomCenter'] }} rowSelection={rowSelection} columns={columns} dataSource={dataSource}
+               <Table
+                    scroll={{ y: '76vh' }}
+                    pagination={{ position: ['bottomCenter'] }}
+                    rowSelection={rowSelection}
+                    columns={columns}
+                    dataSource={dataSource}
                />
           </div>
      );
