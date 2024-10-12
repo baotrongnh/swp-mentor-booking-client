@@ -118,7 +118,7 @@ function Header() {
                                    <Link to='/mentor' className='navbar-link'>Browser mentors</Link>
                                    <Link to={`/schedule/${currentUser.id}`} className='navbar-link'>Schedule</Link>
                                    <Dropdown
-                                        menu={{ moreMenuDropDown }}
+                                        menu={{ items: moreMenuDropDown }}
                                         placement='bottom'
                                         trigger={['click']}
                                    >
