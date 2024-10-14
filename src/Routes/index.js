@@ -19,7 +19,7 @@ const privateRoutes = [
 
 const adminRoutes = [
   { path: "/admin/mentor", element: ManagerMentor, layout: AdminLayout },
-  { path: "/admin/student", element: ManagerStudent, layout: AdminLayout }
+  { path: "/admin/student", element: ManagerStudent, layout: AdminLayout },
 ];
 
 export { adminRoutes, AdminRoutesAuth, privateRoutes, PrivateRoutesAuth, publicRoutes };
