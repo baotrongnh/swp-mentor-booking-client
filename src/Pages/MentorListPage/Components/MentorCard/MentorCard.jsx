@@ -67,7 +67,7 @@ function MentorCard({ mentor, setModalOpen, setCurrentIdMentor }) {
                </Row>
 
                <Row className='btn-block'>
-                    <Link to={`/mentor/${mentor.id}`}>
+                    <Link to={`/mentor/profile/${mentor.id}`}>
                          <Button size='large' className='btn'>View Profile</Button>
                     </Link>
                     <Link>

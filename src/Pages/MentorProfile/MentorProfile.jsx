@@ -65,7 +65,7 @@ function MentorProfile() {
                <div className="container" style={{ padding: '20px 0' }}>
                     <Breadcrumb
                          items={[
-                              { title: <Link to='/mentor'>Home</Link>, },
+                              { title: <Link to='/mentor'>Browser mentors</Link>, },
                               { title: 'View Profile Mentor', },
                          ]}
                     />
@@ -74,7 +74,7 @@ function MentorProfile() {
                <MentorInfor
                     id={id}
                     setModalOpen={setModalBookingOpen}
-                    profile={mentorInfor?.mentor}
+                    mentorInfor={mentorInfor?.mentor}
                     setCurrentTab={setCurrentTab}
                />
 

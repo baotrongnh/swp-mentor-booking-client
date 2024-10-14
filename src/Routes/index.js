@@ -12,7 +12,7 @@ const publicRoutes = [
 
 const privateRoutes = [
   { path: "/mentor", element: MentorListPage },
-  { path: "/mentor/:id", element: MentorProfile },
+  { path: "/mentor/profile/:id", element: MentorProfile },
   { path: "/profile", element: StudentProfile },
   { path: "/schedule/:id", element: Schedule }
 ];

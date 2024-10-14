@@ -5,7 +5,6 @@ import defaultAvatar2 from '../../../../assets/Photos/avatar/default_avatar_2.jp
 import './MentorInfor.scss';
 
 function MentorInfor({ setModalOpen, mentorInfor, setCurrentTab }) {
-     const rating = 5;
      const skills = ['ReactJS', 'NodeJS'];
      const descriptionRef = useRef(null);
      const [width, setWidth] = useState(window.innerWidth);
@@ -50,7 +49,7 @@ function MentorInfor({ setModalOpen, mentorInfor, setCurrentTab }) {
                               <p className="semester"><b>Semester:</b> 7</p>
                               <div className="rating-block" onClick={() => setCurrentTab('rating')}>
                                    <Rate disabled allowHalf defaultValue={0} value={mentorInfor?.averageRating} />
-                                   <p className="rating-text"><Typography.Text strong>{`${rating || 'No reviews yet'}`}</Typography.Text> {`(${rating || 0} reviews)`}</p>
+                                   <p className="rating-text"><Typography.Text strong>{`${mentorInfor?.averageRating || 'No reviews yet'}`}</Typography.Text> {`(${mentorInfor?.numberReviews || 0} reviews)`}</p>
                               </div>
 
                               <div className="skill-block">

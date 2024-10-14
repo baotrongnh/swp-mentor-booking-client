@@ -1,6 +1,6 @@
 import { DownOutlined } from '@ant-design/icons';
 import { Icon } from '@iconify/react/dist/iconify.js';
-import { Col, Dropdown, Flex, Input, Row, Space } from 'antd';
+import { Button, Col, Drawer, Dropdown, Flex, Input, Row, Space } from 'antd';
 import { useContext, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import defaultAvatar from '../../assets/Photos/avatar/default_avatar.jpg';
@@ -18,6 +18,7 @@ function Header() {
      const location = useLocation();
      const navigate = useNavigate();
      const debounceSearchValue = useDebounce(searchValue, 800);
+     const [openDrawer, setOpenDrawer] = useState(false);
 
      const onSearch = (value) => {
           const url = '/mentor'
@@ -72,15 +73,15 @@ function Header() {
 
      const accountMenuDropDown = [
           {
-               label: (<Link to="/profile">Profile</Link>),
+               label: (<Link to="/student/profile">Profile</Link>),
                key: '0',
           },
           {
-               label: (<Link to="/settings">Wallet</Link>),
+               label: (<Link>Wallet: 99 point</Link>),
                key: '1',
           },
           {
-               label: (<Link to="/settings">Become a mentor</Link>),
+               label: (<Link to="/mentor/register">Become a mentor</Link>),
                key: '2',
           },
           { type: 'divider' },
@@ -95,13 +96,17 @@ function Header() {
           <div className="header">
                <div className="container">
                     <Row className='header-block'>
-                         <Col className='logo-block' xs={6} sm={5} md={4} lg={5}>
+                         <Col className='logo-block' xs={12} sm={5} md={4} lg={5}>
                               <Link>
                                    <img className='logo-img' src={logo} alt="" />
                               </Link>
                          </Col>
 
-                         <Col className='search-block' xs={15} sm={16} md={17} lg={8}>
+                         <Col xs={12} sm={0} className='btn-navbar-mobile'>
+                              <Button onClick={() => setOpenDrawer(true)} type='text'><Icon className='icon' icon="ic:round-menu" /></Button>
+                         </Col>
+
+                         <Col className='search-block' xs={24} sm={16} md={17} lg={8}>
                               <Input.Search
                                    placeholder="Find mentors"
                                    onSearch={onSearch}
@@ -111,6 +116,10 @@ function Header() {
                                    onClear={() => setFilterMentor({ ...filterMentor, search: '' })}
                                    onChange={e => handleChange(e)}
                               />
+                         </Col>
+
+                         <Col xs={0} sm={3} md={3} lg={0} className='btn-navbar-mobile'>
+                              <Button onClick={() => setOpenDrawer(true)} type='text'><Icon className='icon' icon="ic:round-menu" /></Button>
                          </Col>
 
                          <Col xs={0} md={0} lg={11}>
@@ -133,7 +142,7 @@ function Header() {
 
                                    <div >
                                         <Flex align='center'>
-                                             <Link to='/profile' className='navbar-link account'>
+                                             <Link to='/student/profile' className='navbar-link account'>
                                                   {currentUser.imgPath
                                                        ? <img className='avatar' src={currentUser.imgPath} alt="" onError={(e) => e.target.src = defaultAvatar} />
                                                        : <Icon className='icon' icon="material-symbols-light:account-circle" />
@@ -151,12 +160,18 @@ function Header() {
                                    </div>
                               </div>
                          </Col>
-
-                         <Col xs={3} lg={0} className='btn-navbar-mobile'>
-                              <h1>mobile</h1>
-                         </Col>
                     </Row>
                </div>
+
+               <Drawer className='navbar-drawer' placement='right' width={350} title="Basic Drawer" onClose={() => setOpenDrawer(false)} open={openDrawer}>
+                    <div className="navbar-mobile-block">
+                         <Link onClick={() => setOpenDrawer(false)} to='/mentor' className='link-item'>Browser mentors</Link>
+                         <Link onClick={() => setOpenDrawer(false)} to={`/schedule/${currentUser.id}`} className='link-item'>Schedule</Link>
+                         <Link onClick={() => setOpenDrawer(false)} className='link-item'>Wallet</Link>
+                         <Link onClick={() => setOpenDrawer(false)} to='/mentor/register' className='link-item'>Become a mentor</Link>
+                         <Link onClick={() => setOpenDrawer(false)} to='/profile' className='link-item'>Your profile</Link>
+                    </div>
+               </Drawer>
           </div>
      )
 }

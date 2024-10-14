@@ -32,8 +32,8 @@ function MentorListPage() {
                <ModalBookMentor currentIdMentor={currentIdMentor} modalOpen={modalOpen} setModalOpen={setModalOpen} />
 
                <div className="container">
-                    <Row>
-                         <Col xs={0} md={7} lg={5} className='left-sidebar'>
+                    <Row gutter={50}>
+                         <Col xs={0} md={7} lg={6} className='left-sidebar'>
                               <div className='skill-search-block'>
                                    <SkillSearch />
                               </div>
@@ -54,7 +54,7 @@ function MentorListPage() {
                               </div>
                          </Col>
 
-                         <Col xs={24} md={17} lg={19} className='mentor-block'>
+                         <Col xs={24} md={17} lg={18} className='mentor-block'>
                               <Row gutter={15}>
                                    {listMentor?.mentors.map((mentor) => (
                                         <Col xs={24} xl={12} key={mentor.id}>
