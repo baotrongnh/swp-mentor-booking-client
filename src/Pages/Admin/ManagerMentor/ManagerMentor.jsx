@@ -3,16 +3,13 @@ import Search from 'antd/es/transfer/search';
 import { useState } from 'react';
 import AllMentor from './Components/AllMentors/AllMentors';
 import DisableMentor from './Components/DisableMentor/DisableMentor';
-import TopMentor from './Components/TopMentors/TopMentors';
 import './ManagerMentor.scss';
 
 function ManagerMentor() {
-
-     const onSearch = (value, _e, info) => console.log(info?.source, value);
+     const onSearch = (value) => console.log(value);
 
      const [currentTab, setCurrentTab] = useState('all');
      const onClick = (e) => {
-          console.log('click ', e);
           setCurrentTab(e.key);
      };
 
@@ -20,10 +17,6 @@ function ManagerMentor() {
           {
                label: 'All Mentors',
                key: 'all',
-          },
-          {
-               label: 'Top 10 Mentors',
-               key: 'top',
           },
           {
                label: 'Disable',
@@ -50,7 +43,6 @@ function ManagerMentor() {
                </div>
 
                {currentTab === 'all' && <AllMentor />}
-               {currentTab === 'top' && <TopMentor />}
                {currentTab === 'disable' && <DisableMentor />}
           </div>
      );

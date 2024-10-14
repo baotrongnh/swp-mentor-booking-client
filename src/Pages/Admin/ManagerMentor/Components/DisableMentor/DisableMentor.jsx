@@ -8,7 +8,8 @@ import { getListDisableMentor } from "../../../../../apis/admin";
 function AllMentor() {
      const [selectedRowKeys, setSelectedRowKeys] = useState([]);
      const { data } = useQuery({ queryKey: ['list-mentors-disable-admin'], queryFn: getListDisableMentor });
-     const dataSource = data?.mentorList.map((mentor) => ({
+     console.log(data);
+     const dataSource = data?.mentors.map((mentor) => ({
           key: mentor.id,
           name: mentor.fullName,
           email: mentor.email,

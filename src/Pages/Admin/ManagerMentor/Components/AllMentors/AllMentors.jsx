@@ -1,37 +1,57 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useQuery } from "@tanstack/react-query";
 import { Button, Dropdown, Table, Tag } from "antd";
-import { useState } from "react";
-import { getListMentor } from "../../../../../apis/admin";
+import { useEffect, useState } from "react";
+import { disableMentor, getListMentor } from "../../../../../apis/admin";
 import { loadAllSkills } from "../../../../../apis/mentor";
+import { Loading } from "../../../../../Components";
 
 function AllMentor() {
      const [selectedRowKeys, setSelectedRowKeys] = useState([]);
      const { data: listSkills } = useQuery({ queryKey: ['list-skills'], queryFn: loadAllSkills });
-     const { data, isLoading } = useQuery({ queryKey: ['list-mentors-admin'], queryFn: getListMentor });
-     const dataSource = data?.mentorList.map((mentor) => ({
-          key: mentor.id,
-          name: mentor.fullName,
-          email: mentor.email,
-          point: mentor.point || 'null',
-          rating: mentor.averageRating || '#',
-          skills: ['ReactJS']
-     }));
+     const { data: dataMentors, isLoading } = useQuery({ queryKey: ['list-mentors-admin'], queryFn: getListMentor });
+     const [dataSource, setDataSource] = useState([]);
 
-     const getDropDownItems = (text) => ([
+     useEffect(() => {
+          if (dataMentors) {
+               setDataSource(
+                    dataMentors?.mentorList.map((mentor) => ({
+                         key: mentor.id,
+                         id: mentor.id,
+                         name: mentor.fullName,
+                         email: mentor.email,
+                         point: mentor.point || 'null',
+                         rating: mentor.averageRating || '#',
+                         skills: ['ReactJS'],
+                    }))
+               );
+          }
+     }, [dataMentors]);
+
+     const handleDisableMentor = async (mentor) => {
+          console.log(mentor);
+          const res = await disableMentor(mentor.id);
+          if (res.error_code === 0) {
+               const newData = dataSource.filter((item) => item.key !== mentor.key);
+               setDataSource(newData);
+          }
+     }
+
+     const getDropDownItems = (text, record) => ([
           {
                label: 'Edit',
                key: '0',
-               icon: <Icon icon="iconamoon:edit-bold" />
+               icon: <Icon icon="iconamoon:edit-bold" />,
+               onClick: () => handleDisableMentor(record)
           },
           {
                label: 'Delete',
                key: '3',
                danger: true,
                icon: <Icon icon="weui:delete-outlined" />,
-               onClick: () => console.log(text)
+               onClick: () => handleDisableMentor(record)
           },
-     ]);
+     ])
 
      const columns = [
           {
@@ -62,11 +82,7 @@ function AllMentor() {
                render: (skills) => (
                     <>
                          {skills.map((skill) => {
-                              return (
-                                   <Tag color='cyan' key={skill}>
-                                        {skill}
-                                   </Tag>
-                              );
+                              return <Tag color='cyan' key={skill}>{skill}</Tag>;
                          })}
                     </>
                ),
@@ -82,40 +98,34 @@ function AllMentor() {
                title: '',
                key: 'action',
                align: 'center',
-               render: (text) => (
+               render: (text, record) => (
                     <Dropdown
-                         menu={{
-                              items: getDropDownItems(text),
-                         }}
+                         menu={{ items: getDropDownItems(text, record) }}
                          trigger={['click']}
                     >
                          <Button type="text"><Icon icon="lsicon:more-outline" /></Button>
                     </Dropdown>
                )
           }
-     ];
+     ]
 
      const onSelectChange = (newSelectedRowKeys) => {
-          console.log('selectedRowKeys changed: ', newSelectedRowKeys);
-          setSelectedRowKeys(newSelectedRowKeys);
-     };
+          setSelectedRowKeys(newSelectedRowKeys)
+     }
 
      const rowSelection = {
           selectedRowKeys,
           onChange: onSelectChange,
           align: 'center',
           onSelect: (record, seleted) => console.log(seleted)
-     };
-
-     if (isLoading) {
-          return (
-               <h1>Loading</h1>
-          )
      }
+
+     if (isLoading) return (<Loading />);
 
      return (
           <div className="all-mentors">
                <Table
+               
                     scroll={{ y: '76vh' }}
                     pagination={{ position: ['bottomCenter'] }}
                     rowSelection={rowSelection}
