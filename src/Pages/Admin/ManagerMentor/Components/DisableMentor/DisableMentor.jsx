@@ -1,22 +1,56 @@
-import { QuestionCircleOutlined } from '@ant-design/icons';
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { useQuery } from "@tanstack/react-query";
-import { Button, Popconfirm, Table, Tag } from "antd";
-import { useState } from "react";
-import { getListDisableMentor } from "../../../../../apis/admin";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { Button, Dropdown, Table, Tag } from "antd";
+import { useEffect, useState } from "react";
+import { activeMentor, getListDisableMentor } from "../../../../../apis/admin";
+import { loadAllSkills } from "../../../../../apis/mentor";
+import { Loading } from "../../../../../Components";
 
-function AllMentor() {
+function DisableMentor() {
      const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-     const { data } = useQuery({ queryKey: ['list-mentors-disable-admin'], queryFn: getListDisableMentor });
-     console.log(data);
-     const dataSource = data?.mentors.map((mentor) => ({
-          key: mentor.id,
-          name: mentor.fullName,
-          email: mentor.email,
-          point: mentor.point || 'null',
-          rating: mentor.averageRating || '#',
-          skills: ['ReactJS']
-     }));
+     const { data: listSkills } = useQuery({ queryKey: ['list-skills'], queryFn: loadAllSkills });
+     const { data: dataMentors, isLoading } = useQuery({ queryKey: ['list-mentors-disable-admin'], queryFn: getListDisableMentor });
+     const [dataSource, setDataSource] = useState([]);
+     const mutation = useMutation({ mutationFn: (mentorId) => activeMentor(mentorId) });
+     useEffect(() => {
+          if (dataMentors) {
+               setDataSource(
+                    dataMentors?.mentors.map((mentor) => ({
+                         key: mentor.id,
+                         id: mentor.id,
+                         name: mentor.fullName,
+                         email: mentor.email,
+                         point: mentor.point || 'null',
+                         rating: mentor.averageRating || '#',
+                         skills: ['ReactJS'],
+                    }))
+               );
+          }
+     }, [dataMentors]);
+
+     const handleActiveMentor = async (mentor) => {
+          const data = await mutation.mutateAsync(mentor.id);
+          console.log(data);
+          if (data.error_code === 0) {
+               const newData = dataSource.filter((item) => item.key !== mentor.key);
+               setDataSource(newData);
+          }
+     }
+
+     const getDropDownItems = (text, record) => ([
+          {
+               label: 'Edit',
+               key: '0',
+               icon: <Icon icon="iconamoon:edit-bold" />,
+               onClick: () => handleActiveMentor(record)
+          },
+          {
+               label: 'Restore',
+               key: '3',
+               icon: <Icon icon="weui:delete-outlined" />,
+               onClick: () => handleActiveMentor(record)
+          },
+     ])
 
      const columns = [
           {
@@ -31,7 +65,6 @@ function AllMentor() {
                title: 'Point',
                dataIndex: 'point',
                align: 'center',
-               // defaultSortOrder: 'descend',
                sorter: (a, b) => a.point - b.point,
           },
           {
@@ -48,65 +81,57 @@ function AllMentor() {
                render: (skills) => (
                     <>
                          {skills.map((skill) => {
-                              return (
-                                   <Tag color='cyan' key={skill}>
-                                        {skill}
-                                   </Tag>
-                              );
+                              return <Tag color='cyan' key={skill}>{skill}</Tag>;
                          })}
                     </>
                ),
-               filters: [
+               filters: listSkills?.map(skill => (
                     {
-                         text: 'ReactJS',
-                         value: 'ReactJS',
-                    },
-                    {
-                         text: 'NodeJS',
-                         value: 'NodeJS',
-                    },
-               ],
+                         text: skill.name,
+                         value: skill.name,
+                    }
+               )),
                onFilter: (value, record) => record.skills.some((skill) => skill.indexOf(value) === 0),
           },
           {
-               title: 'Delete',
+               title: '',
                key: 'action',
                align: 'center',
-               render: (text) => (
-                    <Popconfirm okText='Delete' title="Sure to delete?"
-                         onConfirm={() => console.log(text)}
-                         icon={<QuestionCircleOutlined style={{ color: 'red' }} />}>
-                         <Button type="text" danger>Delete</Button>
-                    </Popconfirm>
-               )
-          },
-          {
-               title: 'Edit',
-               key: 'action',
-               align: 'center',
-               render: (text) => (
-                    <Button type='text' onClick={() => console.log(text)}><Icon icon="iconamoon:edit" /></Button>
+               render: (text, record) => (
+                    <Dropdown
+                         menu={{ items: getDropDownItems(text, record) }}
+                         trigger={['click']}
+                    >
+                         <Button type="text"><Icon icon="lsicon:more-outline" /></Button>
+                    </Dropdown>
                )
           }
-     ];
+     ]
 
      const onSelectChange = (newSelectedRowKeys) => {
-          console.log('selectedRowKeys changed: ', newSelectedRowKeys);
           setSelectedRowKeys(newSelectedRowKeys);
-     };
+     }
 
      const rowSelection = {
           selectedRowKeys,
           onChange: onSelectChange,
-          align: 'center'
-     };
+          align: 'center',
+          onSelect: (record, seleted) => console.log(seleted)
+     }
+
+     if (isLoading) return (<Loading />);
 
      return (
           <div className="all-mentors">
-               <Table scroll={{ y: '76vh' }} pagination={{ position: ['bottomCenter'] }} rowSelection={rowSelection} columns={columns} dataSource={dataSource}
+               <Table
+                    scroll={{ y: '76vh' }}
+                    pagination={{ position: ['bottomCenter'] }}
+                    rowSelection={rowSelection}
+                    columns={columns}
+                    dataSource={dataSource}
                />
           </div>
      );
 }
 
-export default AllMentor;
+export default DisableMentor;

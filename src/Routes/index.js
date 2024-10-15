@@ -18,7 +18,7 @@ const privateRoutes = [
 ];
 
 const adminRoutes = [
-  { path: "/admin/mentor", element: ManagerMentor, layout: AdminLayout },
+  { path: "/admin/mentor/:tab", element: ManagerMentor, layout: AdminLayout },
   { path: "/admin/student", element: ManagerStudent, layout: AdminLayout },
 ];
 

@@ -92,7 +92,7 @@ function MentorProfile() {
                <ModalRatingMentor
                     modalOpen={modalRatingOpen}
                     setModalOpen={setModalRatingOpen}
-                    id={id}
+                    mentorId={id}
                />
           </div>
      );

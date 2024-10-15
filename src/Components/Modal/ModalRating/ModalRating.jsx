@@ -1,27 +1,32 @@
+import { useMutation } from "@tanstack/react-query";
 import { Flex, Modal, Rate } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { ratingMentor } from "../../../apis/mentor";
+import { AuthContext } from "../../../Contexts/AuthContext";
 
-function ModalRatingMentor({ id, modalOpen, setModalOpen }) {
-     const [confirmLoading, setConfirmLoading] = useState(false);
-     const [feedback, setFeedback] = useState({ id, rating: '', comment: '' });
+function ModalRatingMentor({ mentorId, modalOpen, setModalOpen }) {
+     const { currentUser } = useContext(AuthContext);
+     const [feedback, setFeedback] = useState({ studentId: '', mentorId, rating: '', text: '' });
+     const mutation = useMutation({ mutationFn: () => ratingMentor(feedback) });
+
+     useEffect(() => {
+          setFeedback({ ...feedback, studentId: currentUser?.id });
+     }, [currentUser]);
 
      const handleOk = () => {
-          setConfirmLoading(true);
+          mutation.mutateAsync()
           console.log(feedback);
-          setTimeout(() => {
-               setModalOpen(false);
-               setConfirmLoading(false);
-          }, 2000);
+          setModalOpen(false);
      };
 
      const onChangeFeedback = (e) => {
-          setFeedback({ ...feedback, comment: e.target.value });
+          setFeedback({ ...feedback, text: e.target.value });
      }
 
      const onChangeRating = (value) => {
-          setFeedback({ ...feedback, rating: value })
+          setFeedback({ ...feedback, rating: value });
      }
 
      return (
@@ -33,7 +38,7 @@ function ModalRatingMentor({ id, modalOpen, setModalOpen }) {
                     open={modalOpen}
                     onOk={handleOk}
                     onCancel={() => setModalOpen(false)}
-                    confirmLoading={confirmLoading}
+                    confirmLoading={mutation.isPending}
                >
                     <Flex vertical align="center" className="rating-block">
                          <Rate style={{ padding: '20px', fontSize: '3rem' }} allowClear onChange={onChangeRating} />
@@ -58,7 +63,8 @@ function ModalRatingMentor({ id, modalOpen, setModalOpen }) {
 export default ModalRatingMentor;
 
 ModalRatingMentor.propTypes = {
-     id: PropTypes.any,
+     studentId: PropTypes.any,
+     mentorId: PropTypes.any,
      modalOpen: PropTypes.any,
      setModalOpen: PropTypes.any
 }

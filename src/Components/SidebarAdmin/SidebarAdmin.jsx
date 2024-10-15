@@ -16,7 +16,7 @@ function SidebarAdmin() {
                children: [
                     {
                          key: 'viewMentor',
-                         label: <Link to='/admin/mentor'>View All Mentor</Link>,
+                         label: <Link to='/admin/mentor/all'>View All Mentor</Link>,
                     },
                     {
                          key: 'pendingMentor',

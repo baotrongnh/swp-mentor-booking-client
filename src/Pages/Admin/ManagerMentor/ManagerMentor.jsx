@@ -1,25 +1,21 @@
 import { Col, Menu, Row } from 'antd';
 import Search from 'antd/es/transfer/search';
-import { useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import AllMentor from './Components/AllMentors/AllMentors';
 import DisableMentor from './Components/DisableMentor/DisableMentor';
 import './ManagerMentor.scss';
 
 function ManagerMentor() {
      const onSearch = (value) => console.log(value);
-
-     const [currentTab, setCurrentTab] = useState('all');
-     const onClick = (e) => {
-          setCurrentTab(e.key);
-     };
+     const { tab: currentTab } = useParams();
 
      const items = [
           {
-               label: 'All Mentors',
+               label: <Link to='/admin/mentor/all'>All Mentors</Link>,
                key: 'all',
           },
           {
-               label: 'Disable',
+               label: <Link to='/admin/mentor/disable'>Disable</Link>,
                key: 'disable',
           }
      ];
@@ -29,7 +25,7 @@ function ManagerMentor() {
                <div className="head-table">
                     <Row>
                          <Col md={16}>
-                              <Menu onClick={onClick} selectedKeys={[currentTab]} mode="horizontal" items={items} />
+                              <Menu selectedKeys={currentTab} mode="horizontal" items={items} />
                          </Col>
                          <Col md={8}>
                               <Search

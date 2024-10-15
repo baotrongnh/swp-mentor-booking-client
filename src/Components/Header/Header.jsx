@@ -125,7 +125,7 @@ function Header() {
                          <Col xs={0} md={0} lg={11}>
                               <div className='btn-block'>
                                    <Link to='/mentor' className='navbar-link'>Browser mentors</Link>
-                                   <Link to={`/schedule/${currentUser.id}`} className='navbar-link'>Schedule</Link>
+                                   <Link to={`/schedule/${currentUser?.id}`} className='navbar-link'>Schedule</Link>
                                    <Dropdown
                                         menu={{ items: moreMenuDropDown }}
                                         placement='bottom'
@@ -143,8 +143,8 @@ function Header() {
                                    <div >
                                         <Flex align='center'>
                                              <Link to='/student/profile' className='navbar-link account'>
-                                                  {currentUser.imgPath
-                                                       ? <img className='avatar' src={currentUser.imgPath} alt="" onError={(e) => e.target.src = defaultAvatar} />
+                                                  {currentUser?.imgPath
+                                                       ? <img className='avatar' src={currentUser?.imgPath} alt="" onError={(e) => e.target.src = defaultAvatar} />
                                                        : <Icon className='icon' icon="material-symbols-light:account-circle" />
                                                   }
                                              </Link>
@@ -166,7 +166,7 @@ function Header() {
                <Drawer className='navbar-drawer' placement='right' width={350} title="Basic Drawer" onClose={() => setOpenDrawer(false)} open={openDrawer}>
                     <div className="navbar-mobile-block">
                          <Link onClick={() => setOpenDrawer(false)} to='/mentor' className='link-item'>Browser mentors</Link>
-                         <Link onClick={() => setOpenDrawer(false)} to={`/schedule/${currentUser.id}`} className='link-item'>Schedule</Link>
+                         <Link onClick={() => setOpenDrawer(false)} to={`/schedule/${currentUser?.id}`} className='link-item'>Schedule</Link>
                          <Link onClick={() => setOpenDrawer(false)} className='link-item'>Wallet</Link>
                          <Link onClick={() => setOpenDrawer(false)} to='/mentor/register' className='link-item'>Become a mentor</Link>
                          <Link onClick={() => setOpenDrawer(false)} to='/profile' className='link-item'>Your profile</Link>
