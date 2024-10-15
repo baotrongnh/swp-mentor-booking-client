@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { getUserInformation } from '../../apis/authentication';
 import loginImage from '../../assets/Photos/background/login-img2.jpg';
 import { getToken } from '../../utils/storageUtils';
+import logo from '../../assets/Photos/logo/logo.png'
 import './Login.scss';
 
 function Login() {
@@ -67,7 +68,7 @@ function Login() {
           if (token) {
                localStorage.setItem('token', token);
                checkUserData(token)
-               navigate('/profile')
+               navigate('/student/profile')
           }
      }, []);
 
@@ -75,7 +76,7 @@ function Login() {
           const token = getToken();
           if (token) {
                checkUserData();
-               navigate('/profile');
+               navigate('/student/profile');
           }
      }, []);
 
@@ -105,6 +106,8 @@ function Login() {
                          </Col>
                          <Col xs={24} md={18} lg={12}>
                               <form className='login-form' onSubmit={handleLogin} >
+                                   <img src={logo} alt="logo" className='logo' />
+                                   <div className="line"></div>
                                    <h1 className='title'>Welcome Back!</h1>
                                    <p className='welcome-content'>We are glad to see you back.</p>
                                    {/* <div className='input-block'>

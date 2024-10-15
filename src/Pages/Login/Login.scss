@@ -79,6 +79,21 @@
       outline: none;
       box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 10px 10px rgba(0, 0, 0, 0.15);
 
+      .logo {
+        width: 25%;
+        margin: 0 auto;
+        padding-bottom: 0;
+        margin-bottom: 12rem;
+      }
+
+      // .line {
+      //   width: 80%;
+      //   height: 1px;
+      //   background-color: $text-primary;
+      //   opacity: 40%;
+      //   margin: 1.2rem auto 0 auto;
+      // }
+
       .title {
         font-size: 2.8rem;
         font-weight: 700;
@@ -87,6 +102,7 @@
         letter-spacing: 0.08rem;
         color: $text-primary;
       }
+
       .welcome-content {
         font-size: 1.4rem;
         font-weight: 700;
@@ -114,6 +130,7 @@
             size: 1.2rem;
             weight: 600;
           }
+
           position: absolute;
           top: 50%;
           left: 7%;
@@ -146,13 +163,13 @@
             border-color: $theme-color-secondary;
           }
 
-          &:placeholder-shown + .label {
+          &:placeholder-shown+.label {
             display: block; // Ensure the label is displayed when input is empty
             color: $text-primary; // Optional: Set color for the label when input is empty
           }
 
-          &:focus + .label,
-          &:not(:placeholder-shown) + .label {
+          &:focus+.label,
+          &:not(:placeholder-shown)+.label {
             transform: translate(-20%, -310%);
             color: $theme-color-secondary;
             cursor: default;
@@ -169,6 +186,7 @@
           transform: translateY(-50%) translateX(-4%);
           user-select: none;
         }
+
         .hide {
           display: none;
         }
@@ -191,6 +209,7 @@
         margin: 1rem auto;
         text-overflow: ellipsis;
 
+
         &:hover {
           background-color: $theme-color-primary;
           border: 1px solid $theme-color-primary;
@@ -198,13 +217,7 @@
         }
       }
 
-      .line {
-        width: 80%;
-        height: 1px;
-        background-color: $text-primary;
-        opacity: 40%;
-        margin: 1.2rem auto 0 auto;
-      }
+
 
       .text-or {
         font-size: 1.4rem;
@@ -229,6 +242,7 @@
         transition: all 0.3s ease;
         white-space: nowrap;
         overflow: hidden;
+        margin-bottom: 10rem;
 
         &:hover {
           opacity: 70%;
@@ -318,10 +332,13 @@
   .login-page {
     .container {
       width: 90%;
+      min-height: 60vh;
 
       .login-form {
         padding: 5rem 3rem;
         box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 10px 10px rgba(0, 0, 0, 0.15);
+        min-height: 60vh;
+
 
         .input-block {
           flex-direction: column;
@@ -338,8 +355,8 @@
           .input {
             width: 100%;
 
-            &:focus + .label,
-            &:not(:placeholder-shown) + .label {
+            &:focus+.label,
+            &:not(:placeholder-shown)+.label {
               transform: translate(-10%, -310%);
               color: $theme-color-secondary;
             }
@@ -353,6 +370,7 @@
           display: flex;
           justify-content: center;
           align-items: center;
+          margin-bottom: 10rem;
         }
 
         .button-google {
@@ -396,6 +414,10 @@
         min-height: 60vh;
         box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 10px 10px rgba(0, 0, 0, 0.15) !important;
 
+        .logo {
+          margin-top: 4rem;
+        }
+
         .title {
           font-size: 2.6rem;
           margin-bottom: 1rem;
@@ -422,8 +444,9 @@
           .input {
             font-size: 1.3rem;
             padding: 0.8rem 1rem;
-            &:focus + .label,
-            &:not(:placeholder-shown) + .label {
+
+            &:focus+.label,
+            &:not(:placeholder-shown)+.label {
               transform: translate(-18%, -280%);
               color: $theme-color-secondary;
             }
@@ -439,6 +462,7 @@
           display: flex;
           justify-content: center;
           align-items: center;
+          margin-bottom: 10rem;
         }
 
         .button-google {
