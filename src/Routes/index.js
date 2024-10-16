@@ -15,7 +15,6 @@ const privateRoutes = [
   { path: "/mentor/profile/:id", element: MentorProfile },
   { path: "/student/profile", element: StudentProfile },
   { path: "/schedule/:id", element: Schedule },
-  {path: ""}
 ];
 
 const adminRoutes = [
