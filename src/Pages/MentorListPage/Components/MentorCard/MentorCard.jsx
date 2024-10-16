@@ -6,6 +6,7 @@ import defaultAvatar2 from '../../../../assets/Photos/avatar/default_avatar_2.jp
 import './MentorCard.scss';
 
 function MentorCard({ mentor, setModalOpen, setCurrentIdMentor }) {
+     const urlProfileMentor = `/mentor/profile/${mentor.id}`;
 
      const handleBook = () => {
           setCurrentIdMentor(mentor.id);
@@ -24,7 +25,7 @@ function MentorCard({ mentor, setModalOpen, setCurrentIdMentor }) {
                     </Col>
 
                     <Col sm={19} md={19} className="text-block">
-                         <Link className='name-link' to={`/mentorprofile/${mentor.id}`}>
+                         <Link className='name-link' to={urlProfileMentor}>
                               <h1 className="name">{mentor.fullName}</h1>
                          </Link>
 
@@ -67,7 +68,7 @@ function MentorCard({ mentor, setModalOpen, setCurrentIdMentor }) {
                </Row>
 
                <Row className='btn-block'>
-                    <Link to={`/mentor/profile/${mentor.id}`}>
+                    <Link to={urlProfileMentor}>
                          <Button size='large' className='btn'>View Profile</Button>
                     </Link>
                     <Link>

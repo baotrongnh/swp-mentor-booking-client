@@ -85,3 +85,8 @@ export const disableMentor = async (id) => {
           console.log(`Error at promoteMentor (admin.js): ${error}`);
      }
 }
+
+export const activeMentor = async (id) => {
+     const token = getToken();
+     return await axiosClient(token).get(`admin/activate-mentor/${id}`);
+}

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import defaultAvatar2 from '../../../../assets/Photos/avatar/default_avatar_2.jpg';
 import './MentorInfor.scss';
 
-function MentorInfor({ setModalOpen, mentorInfor, setCurrentTab }) {
+function MentorInfor({ setModalOpen, mentorInfor, setCurrentTab, isCurrentUser }) {
      const skills = ['ReactJS', 'NodeJS'];
      const descriptionRef = useRef(null);
      const [width, setWidth] = useState(window.innerWidth);
@@ -65,8 +65,12 @@ function MentorInfor({ setModalOpen, mentorInfor, setCurrentTab }) {
                               <a className={`read-more ${isShowMore ? 'show' : ''}`}>Read more</a>
 
                               <div className="btn-block">
-                                   <Button style={{ width: '40%' }} size="large" type="primary" onClick={handleOpenModal} >Book Now</Button>
-                                   <Button style={{ width: '40%' }} size="large">Contact</Button>
+                                   {isCurrentUser
+                                        ? <Button style={{ width: '40%' }} size="large">Edit Profile</Button>
+                                        : <>
+                                             <Button style={{ width: '40%' }} size="large" type="primary" onClick={handleOpenModal} >Book Now</Button>
+                                             <Button style={{ width: '40%' }} size="large">Contact</Button>
+                                        </>}
                               </div>
                          </Col>
                     </Row>
@@ -80,5 +84,6 @@ export default MentorInfor;
 MentorInfor.propTypes = {
      setModalOpen: PropTypes.func,
      mentorInfor: PropTypes.object,
-     setCurrentTab: PropTypes.func
+     setCurrentTab: PropTypes.func,
+     isCurrentUser: PropTypes.bool
 }

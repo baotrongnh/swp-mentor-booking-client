@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { Button, Dropdown, Table, Tag } from "antd";
 import { useEffect, useState } from "react";
 import { disableMentor, getListMentor } from "../../../../../apis/admin";
@@ -11,6 +11,7 @@ function AllMentor() {
      const { data: listSkills } = useQuery({ queryKey: ['list-skills'], queryFn: loadAllSkills });
      const { data: dataMentors, isLoading } = useQuery({ queryKey: ['list-mentors-admin'], queryFn: getListMentor });
      const [dataSource, setDataSource] = useState([]);
+     const mutation = useMutation({ mutationFn: (mentorId) => disableMentor(mentorId) });
 
      useEffect(() => {
           if (dataMentors) {
@@ -29,9 +30,9 @@ function AllMentor() {
      }, [dataMentors]);
 
      const handleDisableMentor = async (mentor) => {
-          console.log(mentor);
-          const res = await disableMentor(mentor.id);
-          if (res.error_code === 0) {
+          const data = await mutation.mutateAsync(mentor.id);
+          console.log(data);
+          if (data.error_code === 0) {
                const newData = dataSource.filter((item) => item.key !== mentor.key);
                setDataSource(newData);
           }
@@ -110,7 +111,7 @@ function AllMentor() {
      ]
 
      const onSelectChange = (newSelectedRowKeys) => {
-          setSelectedRowKeys(newSelectedRowKeys)
+          setSelectedRowKeys(newSelectedRowKeys);
      }
 
      const rowSelection = {
@@ -125,7 +126,6 @@ function AllMentor() {
      return (
           <div className="all-mentors">
                <Table
-               
                     scroll={{ y: '76vh' }}
                     pagination={{ position: ['bottomCenter'] }}
                     rowSelection={rowSelection}

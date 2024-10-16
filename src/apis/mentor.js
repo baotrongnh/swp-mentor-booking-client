@@ -3,65 +3,52 @@ import axiosClient from "./axiosClient";
 
 export const searchMentor = async ({ skills, search, star, page }) => {
      const token = getToken();
-     try {
-          return await axiosClient(token).get('/mentor/search', {
-               params: {
-                    skill: skills,
-                    name: search,
-                    page,
-                    rating: star
-               }
-          });
-     } catch (error) {
-          console.log(`Error at searchMentor (mentor.js): ${error}`);
-     }
+     return await axiosClient(token).get('/mentor/search', {
+          params: {
+               skill: skills,
+               name: search,
+               page,
+               rating: star
+          }
+     });
 }
 
 export const getProfileMentor = async (id) => {
      const token = getToken();
-     try {
-          return await axiosClient(token).get('/mentor/profile', {
-               params: {
-                    id
-               }
-          });
-     } catch (error) {
-          console.log(`Error at getProfileMentor(mentor.js): ${error}`);
-     }
+     return await axiosClient(token).get('/mentor/profile', {
+          params: {
+               id
+          }
+     });
 }
 
 export const getSkillMentor = async (id) => {
      const token = getToken();
-     try {
-          return await axiosClient(token).get('/mentor/skills', {
-               params: {
-                    id
-               }
-          });
-     } catch (error) {
-          console.log(`Error at getSkillMentor (mentor.js): ${error}`);
-     }
+     return await axiosClient(token).get('/mentor/skills', {
+          params: {
+               id
+          }
+     });
 }
 
 export const getFeedback = async (id) => {
      const token = getToken();
-     try {
-          return await axiosClient(token).get('mentor/feedback', {
-               params: {
-                    id
-               }
-          });
-     } catch (error) {
-          console.log(`Error at getFeedback (mentor.js): ${error}`);
-     }
+     return await axiosClient(token).get('mentor/feedback', {
+          params: {
+               id
+          }
+     });
 }
 
 export const loadAllSkills = async () => {
      const token = getToken();
-     try {
-          return await axiosClient(token).get('/mentor/loadskills');
-     } catch (error) {
-          console.log(`Error at loadAllSkills (mentor.js): ${error}`);
-     }
+     return await axiosClient(token).get('/mentor/loadskills');
 }
 
+export const ratingMentor = async ({studentId, mentorId, rating, text}) => {
+     const token = getToken();
+     console.log(studentId, mentorId, rating, text);
+     return await axiosClient(token).post('/mentor/rating', {
+          studentId, mentorId, rating, text
+     });
+}

@@ -81,7 +81,7 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
 
                          <div className="btn-block">
                               <Button onClick={() => setModalOpen(false)}>Cancel</Button>
-                              <Button type="primary" disabled={currentUser.point < 10} onClick={handleBookMentor}>Book</Button>
+                              <Button type="primary" disabled={currentUser?.point < 10} onClick={handleBookMentor}>Book</Button>
                          </div>
                     </div>
                </Modal>
