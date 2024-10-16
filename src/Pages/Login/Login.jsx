@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react';
 import { Col, Row } from 'antd';
-import { useEffect, useState } from 'react';
-// import { TypeAnimation } from 'react-type-animation';
+import { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { getUserInformation } from '../../apis/authentication';
 import loginImage from '../../assets/Photos/background/login-img2.jpg';
@@ -10,9 +9,9 @@ import logo from '../../assets/Photos/logo/logo.png'
 import './Login.scss';
 
 function Login() {
-     const [isValidate, setIsValidate] = useState(false);
+     // const [isValidate, setIsValidate] = useState(false);
      // const [formData, setFormData] = useState({ username: '', password: '' });
-     const [formData] = useState({ username: '', password: '' });
+     // const [formData] = useState({ username: '', password: '' });
      // const [showPassword, setShowPassword] = useState(false)
      const navigate = useNavigate();
 
@@ -27,31 +26,31 @@ function Login() {
      //      setFormData({ ...formData, [e.target.name]: e.target.value })
      // }
 
-     useEffect(() => {
-          if (formData.username !== '' && formData.password !== '') {
-               setIsValidate(true)
-               console.log(isValidate)
-               document.getElementById('info').innerHTML = ''
-               document.getElementById('username').style.borderColor = '';
-               document.getElementById('password').style.borderColor = '';
-          } else {
-               setIsValidate(false)
-          }
-     }, [formData])
+     // useEffect(() => {
+     //      if (formData.username !== '' && formData.password !== '') {
+     //           setIsValidate(true)
+     //           console.log(isValidate)
+     //           document.getElementById('info').innerHTML = ''
+     //           document.getElementById('username').style.borderColor = '';
+     //           document.getElementById('password').style.borderColor = '';
+     //      } else {
+     //           setIsValidate(false)
+     //      }
+     // }, [formData])
 
-     const handleLogin = (e) => {
-          e.preventDefault()
-          if (isValidate) {
-               console.log('Form Data:', formData);
-          } else {
-               if (formData.username === '') {
-                    document.getElementById('username').style.borderColor = 'red';
-               }
-               if (formData.password === '') {
-                    document.getElementById('password').style.borderColor = 'red';
-               }
-          }
-     }
+     // const handleLogin = (e) => {
+     //      e.preventDefault()
+     //      if (isValidate) {
+     //           console.log('Form Data:', formData);
+     //      } else {
+     //           if (formData.username === '') {
+     //                document.getElementById('username').style.borderColor = 'red';
+     //           }
+     //           if (formData.password === '') {
+     //                document.getElementById('password').style.borderColor = 'red';
+     //           }
+     //      }
+     // }
 
      const handleGoogleLogin = () => {
           window.open('http://localhost:3000/auth/google', '_self');
@@ -105,7 +104,7 @@ function Login() {
                               </div> */}
                          </Col>
                          <Col xs={24} md={18} lg={12}>
-                              <form className='login-form' onSubmit={handleLogin} >
+                              <form className='login-form'  >
                                    <img src={logo} alt="logo" className='logo' />
                                    <div className="line"></div>
                                    <h1 className='title'>Welcome Back!</h1>
