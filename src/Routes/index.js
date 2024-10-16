@@ -7,14 +7,15 @@ import PrivateRoutesAuth from "./PrivateRoutesAuth";
 const publicRoutes = [
   { path: '/*', element: PageNotFound, layout: null },
   { path: "/login", element: Login, layout: null },
-  { path: '/login/admin', element: LoginAdmin, layout: null }
+  { path: '/login/admin ', element: LoginAdmin, layout: null }
 ];
 
 const privateRoutes = [
-  { path: "/mentor", element: MentorListPage },
+  { path: "browser-mentors", element: MentorListPage },
   { path: "/mentor/profile/:id", element: MentorProfile },
   { path: "/student/profile", element: StudentProfile },
-  { path: "/schedule/:id", element: Schedule }
+  { path: "/schedule/:id", element: Schedule },
+  {path: ""}
 ];
 
 const adminRoutes = [

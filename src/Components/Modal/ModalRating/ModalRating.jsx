@@ -16,9 +16,13 @@ function ModalRatingMentor({ mentorId, modalOpen, setModalOpen }) {
      }, [currentUser]);
 
      const handleOk = () => {
-          mutation.mutateAsync()
-          console.log(feedback);
-          setModalOpen(false);
+          if (feedback.rating == '') {
+               console.log('isValidate?');
+          } else {
+               mutation.mutateAsync();
+               console.log(feedback);
+               setModalOpen(false);
+          }
      };
 
      const onChangeFeedback = (e) => {
@@ -39,6 +43,7 @@ function ModalRatingMentor({ mentorId, modalOpen, setModalOpen }) {
                     onOk={handleOk}
                     onCancel={() => setModalOpen(false)}
                     confirmLoading={mutation.isPending}
+                    okButtonProps={{ disabled: feedback.rating == '' }}
                >
                     <Flex vertical align="center" className="rating-block">
                          <Rate style={{ padding: '20px', fontSize: '3rem' }} allowClear onChange={onChangeRating} />

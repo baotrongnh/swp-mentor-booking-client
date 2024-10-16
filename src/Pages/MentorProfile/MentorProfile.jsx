@@ -1,19 +1,30 @@
 import { StarOutlined, UnorderedListOutlined, UserOutlined } from '@ant-design/icons';
 import { useQuery } from "@tanstack/react-query";
 import { Breadcrumb, Menu } from "antd";
-import { useState } from "react";
+import { useContext, useLayoutEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Loading } from "../../Components";
 import { ModalBookMentor, ModalRatingMentor } from '../../Components/Modal';
+import { AuthContext } from '../../Contexts/AuthContext';
 import { getProfileMentor } from "../../apis/mentor";
 import './MentorProfile.scss';
 import { AboutMentor, MentorInfor, RatingView, Skills } from "./components";
 
 function MentorProfile() {
+     const { currentUser } = useContext(AuthContext);
      const [modalBookingOpen, setModalBookingOpen] = useState(false);
      const [modalRatingOpen, setModalRatingOpen] = useState(false);
      const { id } = useParams('id');
      const { data: mentorInfor, isLoading, isError, refetch } = useQuery({ queryKey: ['mentorProfile', id], queryFn: () => getProfileMentor(id) });
+     const [isCurrentUser, setIsCurrentUser] = useState(false);
+ 
+     useLayoutEffect(() => {
+          if (id == currentUser?.id) {
+               setIsCurrentUser(true);
+          } else {
+               setIsCurrentUser(false);
+          }
+     }, [currentUser, id]);
 
      const items = [
           {
@@ -76,6 +87,7 @@ function MentorProfile() {
                     setModalOpen={setModalBookingOpen}
                     mentorInfor={mentorInfor?.mentor}
                     setCurrentTab={setCurrentTab}
+                    isCurrentUser={isCurrentUser}
                />
 
                <div className="container">
