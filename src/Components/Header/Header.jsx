@@ -21,7 +21,7 @@ function Header() {
      const [openDrawer, setOpenDrawer] = useState(false);
 
      const onSearch = (value) => {
-          const url = '/mentor'
+          const url = '/browser-mentors'
           if (location.pathname !== url) {
                navigate(url);
           }
@@ -165,7 +165,7 @@ function Header() {
 
                <Drawer className='navbar-drawer' placement='right' width={350} title="Basic Drawer" onClose={() => setOpenDrawer(false)} open={openDrawer}>
                     <div className="navbar-mobile-block">
-                         <Link onClick={() => setOpenDrawer(false)} to='/mentor' className='link-item'>Browser mentors</Link>
+                         <Link onClick={() => setOpenDrawer(false)} to='/browser-mentors' className='link-item'>Browser mentors</Link>
                          <Link onClick={() => setOpenDrawer(false)} to={`/schedule/${currentUser?.id}`} className='link-item'>Schedule</Link>
                          <Link onClick={() => setOpenDrawer(false)} className='link-item'>Wallet</Link>
                          <Link onClick={() => setOpenDrawer(false)} to='/mentor/register' className='link-item'>Become a mentor</Link>

@@ -1,10 +1,11 @@
 import { Button, DatePicker, Modal, Tabs } from "antd";
 import PropTypes from "prop-types";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../Contexts/AuthContext";
 import './ModalBookMentor.scss';
 
 function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
+     const [isValidate, setIsValidate] = useState(false);
      const [tab, setTab] = useState('2');
      const [dateCustom, setDateCustom] = useState({ date: '0000-00-00', time: '00:00:00' });
      const [displayDate, setDisplayDate] = useState({ date: 'DD-MM-YYYY', time: '00:00' });
@@ -12,7 +13,20 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
 
      const onChangeTabs = (key) => {
           setTab(key);
+          setDateCustom({ date: '0000-00-00', time: '00:00:00' });
      };
+
+     useEffect(() => {
+          if (tab === '2') {
+               if (dateCustom.date !== '0000-00-00' && dateCustom.time !== '00:00:00') {
+                    setIsValidate(true);
+               } else {
+                    setIsValidate(false);
+               }
+          } else {
+               setIsValidate(false)
+          }
+     }, [dateCustom, tab]);
 
      const handleDatePick = (date, dateString) => {
           setDisplayDate({ ...displayDate, date: dateString });
@@ -81,7 +95,7 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
 
                          <div className="btn-block">
                               <Button onClick={() => setModalOpen(false)}>Cancel</Button>
-                              <Button type="primary" disabled={currentUser?.point < 10} onClick={handleBookMentor}>Book</Button>
+                              <Button type="primary" disabled={currentUser?.point < 10 || !isValidate} onClick={handleBookMentor}>Book</Button>
                          </div>
                     </div>
                </Modal>
