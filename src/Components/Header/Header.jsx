@@ -35,6 +35,7 @@ function Header() {
      const handleLogout = () => {
           setCurrentUser(undefined);
           deleteToken();
+          sessionStorage.removeItem('currentUser');
      }
 
      useEffect(() => {
@@ -77,7 +78,7 @@ function Header() {
                key: '0',
           },
           {
-               label: (<Link>Wallet: 99 point</Link>),
+               label: (<Link to='/wallet'>Wallet: 99 point</Link>),
                key: '1',
           },
           {
@@ -86,7 +87,7 @@ function Header() {
           },
           { type: 'divider' },
           {
-               label: (<div onClick={handleLogout}>Logout</div>),
+               label: (<Link onClick={handleLogout}>Logout</Link>),
                key: '3',
                danger: true
           },
@@ -97,7 +98,7 @@ function Header() {
                <div className="container">
                     <Row className='header-block'>
                          <Col className='logo-block' xs={12} sm={5} md={4} lg={5}>
-                              <Link>
+                              <Link to='/'>
                                    <img className='logo-img' src={logo} alt="" />
                               </Link>
                          </Col>

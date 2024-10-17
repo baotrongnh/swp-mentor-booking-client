@@ -1,0 +1,51 @@
+@import '../../Styles/variables';
+
+.wallet {
+     .balance-block {
+          background-color: $theme-color-primary;
+          height: 150px;
+          border-radius: 7px;
+          padding: 20px 40px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          background-color: #e5e5f7;
+          background-image: radial-gradient(circle at top right, #444df79b, #e5e5f7), repeating-radial-gradient(circle at top right, #444df756, #444df766, 32px, transparent 64px, transparent 32px);
+          box-shadow: 0 0 20px 1px rgba(128, 128, 128, 0.163);
+
+          .title {
+               font-size: 1.7rem;
+          }
+
+          .number-balance-block {
+               display: flex;
+               align-items: center;
+               opacity: 90%;
+               gap: 10px;
+
+               .icon {
+                    font-size: 3.5rem;
+               }
+
+               .number {
+                    font-size: 5.5rem;
+                    font-weight: 700;
+                    padding-bottom: 8px;
+               }
+          }
+     }
+
+     .transition-history {
+          margin-top: 20px;
+          padding: 30px 0;
+          border-radius: 10px;
+          padding: 20px;
+          box-shadow: 0 0 20px 1px rgba(128, 128, 128, 0.163);
+
+          .title {
+               font-size: 2.8rem;
+               font-weight: 600;
+               padding-bottom: 20px;
+          }
+     }
+}

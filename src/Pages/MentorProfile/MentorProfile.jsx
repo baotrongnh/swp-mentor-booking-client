@@ -16,13 +16,13 @@ function MentorProfile() {
      const [modalRatingOpen, setModalRatingOpen] = useState(false);
      const { id } = useParams('id');
      const { data: mentorInfor, isLoading, isError, refetch } = useQuery({ queryKey: ['mentorProfile', id], queryFn: () => getProfileMentor(id) });
-     const [isCurrentUser, setIsCurrentUser] = useState(false);
+     const [isCurrentUser, setIsCurrentUser] = useState(true);
  
      useLayoutEffect(() => {
           if (id == currentUser?.id) {
                setIsCurrentUser(true);
           } else {
-               setIsCurrentUser(false);
+               setIsCurrentUser(true);
           }
      }, [currentUser, id]);
 
@@ -54,7 +54,7 @@ function MentorProfile() {
           switch (currentTab) {
                case 'about': return <AboutMentor />
                case 'skills': return <Skills id={id} />
-               case 'rating': return <RatingView id={id} setModalRatingOpen={setModalRatingOpen} />
+               case 'rating': return <RatingView id={id} setModalRatingOpen={setModalRatingOpen} isCurrentUser={isCurrentUser} />
           }
      }
 

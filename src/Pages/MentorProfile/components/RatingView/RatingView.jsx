@@ -5,7 +5,7 @@ import { getFeedback } from '../../../../apis/mentor';
 import defaultAvatar from '../../../../assets/Photos/avatar/default_avatar.jpg';
 import './RatingView.scss';
 
-function RatingView({ id, setModalRatingOpen }) {
+function RatingView({ id, setModalRatingOpen, isCurrentUser }) {
      const { data, isLoading } = useQuery({ queryKey: ['skill-mentor', id], queryFn: () => getFeedback(id) });
 
      if (isLoading) {
@@ -21,11 +21,13 @@ function RatingView({ id, setModalRatingOpen }) {
                               <p className="number-rating">{data?.averageRating === 5 ? `${data?.averageRating}.0` : data?.averageRating}</p>
                               <Rate style={{ fontSize: '4rem' }} disabled defaultValue={0} value={data?.averageRating} allowHalf />
                               <p className='total-rating'>{`(${data?.feedbacks.length} Reviews)`}</p>
-                              <div className="write-feedback">
-                                   <h1 className="title-write-feedback">Write your Review</h1>
-                                   <p className="description">Share your feedback and help create a better booking experience for everyone.</p>
-                                   <Button onClick={() => setModalRatingOpen(true)} type='primary' size='large'>Submit Reviews</Button>
-                              </div>
+                              {!isCurrentUser && 
+                                   <div className="write-feedback">
+                                        <h1 className="title-write-feedback">Write your Review</h1>
+                                        <p className="description">Share your feedback and help create a better booking experience for everyone.</p>
+                                        <Button onClick={() => setModalRatingOpen(true)} type='primary' size='large'>Submit Reviews</Button>
+                                   </div>
+                              }
                          </div>
                     </Col>
 
@@ -84,5 +86,6 @@ export default RatingView;
 
 RatingView.propTypes = {
      id: PropTypes.any,
-     setModalRatingOpen: PropTypes.any
+     setModalRatingOpen: PropTypes.any,
+     isCurrentUser: PropTypes.bool
 }

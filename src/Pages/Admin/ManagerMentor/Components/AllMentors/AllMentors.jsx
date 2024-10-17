@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button, Dropdown, Table, Tag } from "antd";
 import { useEffect, useState } from "react";
 import { disableMentor, getListMentor } from "../../../../../apis/admin";
@@ -8,6 +8,7 @@ import { Loading } from "../../../../../Components";
 
 function AllMentor() {
      const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+     const queryClient = useQueryClient();
      const { data: listSkills } = useQuery({ queryKey: ['list-skills'], queryFn: loadAllSkills });
      const { data: dataMentors, isLoading } = useQuery({ queryKey: ['list-mentors-admin'], queryFn: getListMentor });
      const [dataSource, setDataSource] = useState([]);
@@ -33,8 +34,7 @@ function AllMentor() {
           const data = await mutation.mutateAsync(mentor.id);
           console.log(data);
           if (data.error_code === 0) {
-               const newData = dataSource.filter((item) => item.key !== mentor.key);
-               setDataSource(newData);
+               queryClient.invalidateQueries({ queryKey: ['list-mentors-admin'] });
           }
      }
 

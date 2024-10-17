@@ -1,25 +1,25 @@
-import { useQuery } from '@tanstack/react-query';
-import { Col, DatePicker, Pagination, Row, Skeleton } from 'antd';
-import { useContext, useState } from 'react';
-import { searchMentor } from '../../apis/mentor';
-import { ModalBookMentor } from '../../Components/Modal';
-import { AppContext } from '../../Contexts/AppContext';
-import { MentorCard, RatingSelect, SkillSearch } from './Components';
-import './MentorListPage.scss';
+import { useQuery } from '@tanstack/react-query'
+import { Col, DatePicker, Pagination, Row, Skeleton } from 'antd'
+import { useContext, useState } from 'react'
+import { searchMentor } from '../../apis/mentor'
+import { ModalBookMentor } from '../../Components/Modal'
+import { AppContext } from '../../Contexts/AppContext'
+import { MentorCard, RatingSelect, SkillSearch } from './Components'
+import './MentorListPage.scss'
 
 function MentorListPage() {
-     const { filterMentor, setFilterMentor } = useContext(AppContext);
-     const [modalOpen, setModalOpen] = useState(false);
-     const [currentIdMentor, setCurrentIdMentor] = useState('');
+     const { filterMentor, setFilterMentor } = useContext(AppContext)
+     const [modalOpen, setModalOpen] = useState(false)
+     const [currentIdMentor, setCurrentIdMentor] = useState('')
      const { data: listMentor, isPending } = useQuery({
           queryKey: ['listMentor', filterMentor],
           queryFn: () => searchMentor(filterMentor),
-     });
+     })
 
      const onChangeTime = (date, dateString) => {
-          console.log(dateString);
+          console.log(dateString)
      }
- 
+
      return (
           <div className="mentor-list-page">
                <ModalBookMentor currentIdMentor={currentIdMentor} modalOpen={modalOpen} setModalOpen={setModalOpen} />
@@ -79,7 +79,7 @@ function MentorListPage() {
                     </Row>
                </div>
           </div>
-     );
+     )
 }
 
-export default MentorListPage;
+export default MentorListPage
