@@ -2,7 +2,7 @@ import { DownOutlined } from '@ant-design/icons';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { Button, Col, Drawer, Dropdown, Flex, Input, Row, Space } from 'antd';
 import { useContext, useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import defaultAvatar from '../../assets/Photos/avatar/default_avatar.jpg';
 import logo from '../../assets/Photos/logo/logo.png';
 import { AppContext } from '../../Contexts/AppContext';
@@ -10,6 +10,7 @@ import { AuthContext } from '../../Contexts/AuthContext';
 import useDebounce from '../../hooks/useDebounce';
 import { deleteToken } from '../../utils/storageUtils';
 import './Header.scss';
+import { ModalBecomeMentor } from '../Modal';
 
 function Header() {
      const { setFilterMentor, filterMentor } = useContext(AppContext);
@@ -19,6 +20,7 @@ function Header() {
      const navigate = useNavigate();
      const debounceSearchValue = useDebounce(searchValue, 800);
      const [openDrawer, setOpenDrawer] = useState(false);
+     const [openModalBeMentor, setOpenModalBeMentor] = useState(true);
 
      const onSearch = (value) => {
           const url = '/browser-mentors'
@@ -78,11 +80,11 @@ function Header() {
                key: '0',
           },
           {
-               label: (<Link to='/wallet'>Wallet: 99 point</Link>),
+               label: (<Link to='/wallet'><Flex gap='small' align='center'>Wallet: <Icon icon="twemoji:coin" /><p> 99</p></Flex></Link>),
                key: '1',
           },
           {
-               label: (<Link to="/mentor/register">Become a mentor</Link>),
+               label: (<Link onClick={() => setOpenModalBeMentor(true)}>Become a mentor</Link>),
                key: '2',
           },
           { type: 'divider' },
@@ -125,8 +127,8 @@ function Header() {
 
                          <Col xs={0} md={0} lg={11}>
                               <div className='btn-block'>
-                                   <Link to='/browser-mentors' className='navbar-link'>Browser mentors</Link>
-                                   <Link to={`/schedule/${currentUser?.id}`} className='navbar-link'>Schedule</Link>
+                                   <NavLink to='/browser-mentors' className='navbar-link'>Browser mentors</NavLink>
+                                   <NavLink to={`/schedule/${currentUser?.id}`} className='navbar-link'>Schedule</NavLink>
                                    <Dropdown
                                         menu={{ items: moreMenuDropDown }}
                                         placement='bottom'
@@ -173,6 +175,8 @@ function Header() {
                          <Link onClick={() => setOpenDrawer(false)} to='/profile' className='link-item'>Your profile</Link>
                     </div>
                </Drawer>
+
+               <ModalBecomeMentor modalOpen={openModalBeMentor} setModalOpen={setOpenModalBeMentor} />
           </div>
      )
 }

@@ -4,7 +4,7 @@
   position: sticky;
   top: 0;
   background-color: #fff;
-  z-index: 10;
+  z-index: 20;
   border-bottom: 1px solid rgba(128, 128, 128, 0.211);
 
   .header-block {
@@ -34,9 +34,15 @@
         color: $text-primary;
         font-weight: 500;
         transition: 0.3s;
+        padding: 10px;
+        border-radius: 7px;
 
         &:hover {
           opacity: 80%;
+        }
+
+        &.active {
+          background-color: rgba(176, 175, 175, 0.167);
         }
 
         .icon {

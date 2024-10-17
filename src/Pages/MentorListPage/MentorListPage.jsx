@@ -25,7 +25,7 @@ function MentorListPage() {
                <ModalBookMentor currentIdMentor={currentIdMentor} modalOpen={modalOpen} setModalOpen={setModalOpen} />
 
                <div className="container">
-                    <Row gutter={50}>
+                    <Row>
                          <Col xs={0} md={7} lg={6} className='left-sidebar'>
                               <div className='skill-search-block'>
                                    <SkillSearch />

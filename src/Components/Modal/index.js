@@ -1,4 +1,5 @@
-import ModalBookMentor from "./ModalBookMentor/ModalBookMentor";
-import ModalRatingMentor from "./ModalRating/ModalRating";
+import ModalBookMentor from "./ModalBookMentor/ModalBookMentor"
+import ModalRatingMentor from "./ModalRating/ModalRating"
+import ModalBecomeMentor from "./ModalBecomeMentor/ModalBecomeMentor"
 
-export { ModalBookMentor, ModalRatingMentor }
+export { ModalBookMentor, ModalRatingMentor, ModalBecomeMentor }
