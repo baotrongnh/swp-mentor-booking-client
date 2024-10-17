@@ -1,9 +1,14 @@
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import DefaultLayout from "./Layouts/DefaultLayout";
 import { adminRoutes, AdminRoutesAuth, privateRoutes, PrivateRoutesAuth, publicRoutes } from "./Routes";
+import { AuthContext } from "./Contexts/AuthContext";
+import { Loading } from "./Components";
 
 function App() {
+  const { isFetchData } = useContext(AuthContext);
+
+  if (isFetchData) return <Loading />;
 
   return (
     <div className='App light-theme'>

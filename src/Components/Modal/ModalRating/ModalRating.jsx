@@ -2,18 +2,14 @@ import { useMutation } from "@tanstack/react-query";
 import { Flex, Modal, Rate } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import PropTypes from "prop-types";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { ratingMentor } from "../../../apis/mentor";
 import { AuthContext } from "../../../Contexts/AuthContext";
 
 function ModalRatingMentor({ mentorId, modalOpen, setModalOpen }) {
      const { currentUser } = useContext(AuthContext);
-     const [feedback, setFeedback] = useState({ studentId: '', mentorId, rating: '', text: '' });
+     const [feedback, setFeedback] = useState({ studentId: currentUser?.id, mentorId, rating: '', text: '' });
      const mutation = useMutation({ mutationFn: () => ratingMentor(feedback) });
-
-     useEffect(() => {
-          setFeedback({ ...feedback, studentId: currentUser?.id });
-     }, [currentUser]);
 
      const handleOk = () => {
           if (feedback.rating == '') {
