@@ -4,14 +4,16 @@ import DefaultLayout from "./Layouts/DefaultLayout";
 import { adminRoutes, AdminRoutesAuth, privateRoutes, PrivateRoutesAuth, publicRoutes } from "./Routes";
 import { AuthContext } from "./Contexts/AuthContext";
 import { Loading } from "./Components";
+import { AppContext } from "./Contexts/AppContext";
 
 function App() {
-  const { isFetchData } = useContext(AuthContext);
+  const { isFetchData } = useContext(AuthContext)
+  const { theme } = useContext(AppContext)
 
   if (isFetchData) return <Loading />;
 
   return (
-    <div className='App light-theme'>
+    <div className={`App ${theme}`}>
       <Router>
         <Routes>
           {publicRoutes.map((route, index) => {

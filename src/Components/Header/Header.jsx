@@ -1,99 +1,139 @@
-import { DownOutlined } from '@ant-design/icons';
-import { Icon } from '@iconify/react/dist/iconify.js';
-import { Button, Col, Drawer, Dropdown, Flex, Input, Row, Space } from 'antd';
-import { useContext, useEffect, useState } from 'react';
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
-import defaultAvatar from '../../assets/Photos/avatar/default_avatar.jpg';
-import logo from '../../assets/Photos/logo/logo.png';
-import { AppContext } from '../../Contexts/AppContext';
-import { AuthContext } from '../../Contexts/AuthContext';
-import useDebounce from '../../hooks/useDebounce';
-import { deleteToken } from '../../utils/storageUtils';
-import './Header.scss';
-import { ModalBecomeMentor } from '../Modal';
+import { DownOutlined } from '@ant-design/icons'
+import { Icon } from '@iconify/react/dist/iconify.js'
+import { Button, Col, Drawer, Dropdown, Flex, Input, Row, Select, Switch } from 'antd'
+import { useContext, useEffect, useState } from 'react'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
+import defaultAvatar from '../../assets/Photos/avatar/default_avatar.jpg'
+import logo from '../../assets/Photos/logo/logo.png'
+import { AppContext } from '../../Contexts/AppContext'
+import { AuthContext } from '../../Contexts/AuthContext'
+import useDebounce from '../../hooks/useDebounce'
+import { deleteToken } from '../../utils/storageUtils'
+import { ModalBecomeMentor } from '../Modal'
+import './Header.scss'
 
 function Header() {
-     const { setFilterMentor, filterMentor } = useContext(AppContext);
-     const { currentUser, setCurrentUser } = useContext(AuthContext);
-     const [searchValue, setSearchValue] = useState(null);
-     const location = useLocation();
-     const navigate = useNavigate();
-     const debounceSearchValue = useDebounce(searchValue, 800);
-     const [openDrawer, setOpenDrawer] = useState(false);
-     const [openModalBeMentor, setOpenModalBeMentor] = useState(true);
+     const location = useLocation()
+     const navigate = useNavigate()
+     const { setFilterMentor, filterMentor, setTheme, theme } = useContext(AppContext)
+     const { currentUser, setCurrentUser } = useContext(AuthContext)
+     const [searchValue, setSearchValue] = useState(null)
+     const debounceSearchValue = useDebounce(searchValue, 800)
+     const [openModalBeMentor, setOpenModalBeMentor] = useState(false)
+     const [openDrawer, setOpenDrawer] = useState(false)
+     const [openDropDownAccount, setOpenDropDownAccount] = useState(false)
+
+     const handleMenuAccountClick = (e) => {
+          if (e.key !== '4' && e.key !== '5') {
+               setOpenDropDownAccount(false)
+          }
+     }
+
+     const handleOpenAccountChange = (nextOpen, info) => {
+          if (info.source === 'trigger' || nextOpen) {
+               setOpenDropDownAccount(nextOpen)
+          }
+     }
 
      const onSearch = (value) => {
           const url = '/browser-mentors'
           if (location.pathname !== url) {
-               navigate(url);
+               navigate(url)
           }
-          setFilterMentor({ ...filterMentor, search: value });
+          setFilterMentor({ ...filterMentor, search: value })
      }
 
      const handleChange = (e) => {
-          setSearchValue(e.target.value);
+          setSearchValue(e.target.value)
      }
 
      const handleLogout = () => {
-          setCurrentUser(undefined);
-          deleteToken();
-          sessionStorage.removeItem('currentUser');
+          setCurrentUser(undefined)
+          deleteToken()
+          sessionStorage.removeItem('currentUser')
+     }
+
+     const handleChangeTheme = (status) => {
+          if (status) {
+               setTheme('dark-theme')
+               localStorage.setItem('theme', 'dark-theme')
+          } else {
+               setTheme('light-theme')
+               localStorage.setItem('theme', 'light-theme')
+          }
+     }
+
+     const handleChangeLanguage = (value) => {
+          console.log('change lang: ' + value);
      }
 
      useEffect(() => {
           if (debounceSearchValue !== null) {
-               setFilterMentor({ ...filterMentor, search: debounceSearchValue });
+               setFilterMentor({ ...filterMentor, search: debounceSearchValue })
           }
-          // eslint-disable-next-line react-hooks/exhaustive-deps
-     }, [debounceSearchValue]);
+     }, [debounceSearchValue])
 
      const moreMenuDropDown = [
           {
-               label: (
-                    <Link>
-                         Add member
-                    </Link>
-               ),
+               label: <Link>Add member</Link>,
                key: '0',
           },
           {
-               label: (
-                    <Link >
-                         History
-                    </Link>
-               ),
+               label: <Link >History</Link>,
                key: '1',
-          },
-          {
-               type: 'divider',
-          },
-          {
-               label: '3rd menu item（disabled）',
-               key: '3',
-               disabled: true,
-          },
-     ];
+          }
+     ]
 
      const accountMenuDropDown = [
           {
-               label: (<Link to="/student/profile">Profile</Link>),
+               label: <Link to="/student/profile">Profile</Link>,
                key: '0',
           },
           {
-               label: (<Link to='/wallet'><Flex gap='small' align='center'>Wallet: <Icon icon="twemoji:coin" /><p> 99</p></Flex></Link>),
+               label: <Link to='/wallet'><Flex gap='small' align='center'>Wallet: <Icon icon="twemoji:coin" /><p> 99</p></Flex></Link>,
                key: '1',
           },
           {
-               label: (<Link onClick={() => setOpenModalBeMentor(true)}>Become a mentor</Link>),
+               label: <Link onClick={() => setOpenModalBeMentor(true)}>Become a mentor</Link>,
                key: '2',
           },
           { type: 'divider' },
           {
-               label: (<Link onClick={handleLogout}>Logout</Link>),
+               label: <Link onClick={handleLogout}>Logout</Link>,
                key: '3',
                danger: true
           },
-     ];
+          {
+               label: <Flex gap='small' justify='space-between'>
+                    Theme: <Switch
+                         defaultChecked={theme === 'dark-theme'}
+                         onChange={handleChangeTheme}
+                         checkedChildren="Dark"
+                         unCheckedChildren="Light"
+                    />
+               </Flex>,
+               key: '4'
+          },
+          {
+               label: <Flex gap='small' justify='space-between'>
+                    Language: <Select
+                         defaultValue="EN"
+                         onChange={handleChangeLanguage}
+                         options={[
+                              {
+                                   value: 'VN',
+                                   label: 'VN',
+                              },
+                              {
+                                   value: 'EN',
+                                   label: 'EN',
+                              }
+                         ]}
+                    />
+               </Flex>,
+               key: '5'
+          }
+     ]
 
      return (
           <div className="header">
@@ -106,7 +146,9 @@ function Header() {
                          </Col>
 
                          <Col xs={12} sm={0} className='btn-navbar-mobile'>
-                              <Button onClick={() => setOpenDrawer(true)} type='text'><Icon className='icon' icon="ic:round-menu" /></Button>
+                              <Button onClick={() => setOpenDrawer(true)} type='text'>
+                                   <Icon className='icon' icon="ic:round-menu" />
+                              </Button>
                          </Col>
 
                          <Col className='search-block' xs={24} sm={16} md={17} lg={8}>
@@ -122,7 +164,9 @@ function Header() {
                          </Col>
 
                          <Col xs={0} sm={3} md={3} lg={0} className='btn-navbar-mobile'>
-                              <Button onClick={() => setOpenDrawer(true)} type='text'><Icon className='icon' icon="ic:round-menu" /></Button>
+                              <Button onClick={() => setOpenDrawer(true)} type='text'>
+                                   <Icon className='icon' icon="ic:round-menu" />
+                              </Button>
                          </Col>
 
                          <Col xs={0} md={0} lg={11}>
@@ -135,13 +179,9 @@ function Header() {
                                         trigger={['click']}
                                    >
                                         <Link className='navbar-link' onClick={(e) => e.preventDefault()}>
-                                             <Space>
-                                                  More
-                                                  <DownOutlined />
-                                             </Space>
+                                             More <DownOutlined />
                                         </Link>
                                    </Dropdown>
-
 
                                    <div >
                                         <Flex align='center'>
@@ -152,12 +192,16 @@ function Header() {
                                                   }
                                              </Link>
                                              <Dropdown
-                                                  menu={{ items: accountMenuDropDown }}
+                                                  menu={{ items: accountMenuDropDown, onClick: handleMenuAccountClick }}
                                                   placement='bottomRight'
                                                   trigger={['click']}
                                                   arrow={true}
+                                                  onOpenChange={handleOpenAccountChange}
+                                                  open={openDropDownAccount}
                                              >
-                                                  <div><Icon style={{ cursor: 'pointer' }} icon="icon-park-outline:down" /></div>
+                                                  <div>
+                                                       <Icon style={{ cursor: 'pointer' }} icon="icon-park-outline:down" />
+                                                  </div>
                                              </Dropdown>
                                         </Flex>
                                    </div>
@@ -166,13 +210,56 @@ function Header() {
                     </Row>
                </div>
 
-               <Drawer className='navbar-drawer' placement='right' width={350} title="Basic Drawer" onClose={() => setOpenDrawer(false)} open={openDrawer}>
+               <Drawer
+                    className='navbar-drawer'
+                    placement='right'
+                    width={350}
+                    title="Basic Drawer"
+                    onClose={() => setOpenDrawer(false)}
+                    open={openDrawer}
+               >
                     <div className="navbar-mobile-block">
-                         <Link onClick={() => setOpenDrawer(false)} to='/browser-mentors' className='link-item'>Browser mentors</Link>
-                         <Link onClick={() => setOpenDrawer(false)} to={`/schedule/${currentUser?.id}`} className='link-item'>Schedule</Link>
-                         <Link onClick={() => setOpenDrawer(false)} className='link-item'>Wallet</Link>
-                         <Link onClick={() => setOpenDrawer(false)} to='/mentor/register' className='link-item'>Become a mentor</Link>
-                         <Link onClick={() => setOpenDrawer(false)} to='/profile' className='link-item'>Your profile</Link>
+                         <Link
+                              onClick={() => setOpenDrawer(false)}
+                              to='/browser-mentors'
+                              className='link-item'
+                         >
+                              Browser mentors
+                         </Link>
+
+                         <Link
+                              onClick={() => setOpenDrawer(false)}
+                              to={`/schedule/${currentUser?.id}`}
+                              className='link-item'
+                         >
+                              Schedule
+                         </Link>
+
+                         <Link
+                              onClick={() => setOpenDrawer(false)}
+                              to='/wallet'
+                              className='link-item'
+                         >
+                              Wallet
+                         </Link>
+
+                         <Link
+                              onClick={() => {
+                                   setOpenDrawer(false)
+                                   setOpenModalBeMentor(true)
+                              }}
+                              className='link-item'
+                         >
+                              Become a mentor
+                         </Link>
+
+                         <Link
+                              onClick={() => setOpenDrawer(false)}
+                              to='/student/profile'
+                              className='link-item'
+                         >
+                              Your profile
+                         </Link>
                     </div>
                </Drawer>
 

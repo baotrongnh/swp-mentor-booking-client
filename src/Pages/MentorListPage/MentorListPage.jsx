@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { Col, DatePicker, Pagination, Row, Skeleton } from 'antd'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { searchMentor } from '../../apis/mentor'
 import { ModalBookMentor } from '../../Components/Modal'
 import { AppContext } from '../../Contexts/AppContext'
@@ -11,10 +11,15 @@ function MentorListPage() {
      const { filterMentor, setFilterMentor } = useContext(AppContext)
      const [modalOpen, setModalOpen] = useState(false)
      const [currentIdMentor, setCurrentIdMentor] = useState('')
+     const [currentPage, setCurrentPage] = useState(1);
      const { data: listMentor, isPending } = useQuery({
           queryKey: ['listMentor', filterMentor],
           queryFn: () => searchMentor(filterMentor),
      })
+
+     useEffect(() => {
+          setFilterMentor({ ...filterMentor, currentPage })
+     }, [currentPage])
 
      const onChangeTime = (date, dateString) => {
           console.log(dateString)
@@ -62,19 +67,19 @@ function MentorListPage() {
                                                   </Col>
                                              ))}
                                         </Row>
-
-                                        <Pagination
-                                             className='pagination'
-                                             onChange={(page) => setFilterMentor({ ...filterMentor, page })}
-                                             align="center"
-                                             defaultPageSize={10}
-                                             defaultCurrent={1}
-                                             total={listMentor?.totalMentors}
-                                             showSizeChanger={false}
-                                             hideOnSinglePage={true}
-                                        />
                                    </>
                               }
+                              
+                              <Pagination
+                                   className='pagination'
+                                   onChange={(page) => setCurrentPage(page)}
+                                   align="center"
+                                   defaultPageSize={10}
+                                   defaultCurrent={1}
+                                   total={listMentor?.totalMentors}
+                                   showSizeChanger={false}
+                                   hideOnSinglePage={true}
+                              />
                          </Col>
                     </Row>
                </div>
