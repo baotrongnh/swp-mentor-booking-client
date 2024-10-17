@@ -10,20 +10,12 @@ import './StudentProfile.scss';
 function StudentProfile() {
     const [isEditing, setIsEditing] = useState(false);
     const { currentUser, isFetchUserData } = useContext(AuthContext);
-    // const [loading, setLoading] = useState(false);
 
     const handleToggle = () => {
         setIsEditing(prev => !prev);
     };
 
     useEffect(() => {
-        if (currentUser) {
-            // const timeoutId = setTimeout(() => {
-            //     setLoading(false);
-            // }, 1500);
-            // return () => clearTimeout(timeoutId);
-            // setLoading(false);
-        }
     }, [currentUser]);
 
     const handleClose = () => {
@@ -33,9 +25,6 @@ function StudentProfile() {
     if (isFetchUserData) {
         return <Loading />
     }
-
-    // console.log(JSON.stringify(currentUser))
-    // console.log(localStorage.getItem('token'))
 
     return (
         <div className="user-profile">

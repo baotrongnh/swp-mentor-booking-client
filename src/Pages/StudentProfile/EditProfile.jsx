@@ -37,7 +37,7 @@ function EditProfile({ visible, onClose }) {
                             className="input name"
                             id='name'
                             name='name'
-                            value={name}
+                            placeholder={name}
                             onChange={handleUserNameChange}
                         />
                     </div>
@@ -50,7 +50,7 @@ function EditProfile({ visible, onClose }) {
                             className="input email"
                             id='email'
                             name='email'
-                            value={email}
+                            placeholder={email}
                             onChange={handleEmailChange}
                         />
                     </div>
