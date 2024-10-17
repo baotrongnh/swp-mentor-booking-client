@@ -1,6 +1,106 @@
+@import "../../Styles/variables";
+
 .footer {
-     text-align: center;
-     height: 70px;
-     background-color: rgba(128, 128, 128, 0.074);
-     margin-top: 40px;
+  background-color: $bg-secondary;
+  width: 100%;
+  position: relative;
+  bottom: 0;
+  overflow: hidden;
+  margin-top: 5rem;
+
+  .text-center {
+    text-align: center;
+  }
+
+  .container {
+    padding: 0 2rem 0 2rem;
+
+    .links {
+      margin-top: 2rem;
+
+      .links-wrapper {
+        display: flex;
+        justify-content: center;
+        gap: 6rem;
+        padding-top: 2rem;
+
+        .link-item {
+          h6 {
+            text-transform: uppercase;
+            font-weight: bold;
+            margin: 0;
+
+            a {
+              color: $text-primary;
+              text-decoration: none;
+              transition: color 0.3s;
+
+              &:hover {
+                color: $accent-primary;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .divider {
+      border: 0;
+      height: 1px;
+      background: $text-primary;
+      margin: 2rem auto;
+      width: 100%;
+    }
+
+    .content {
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      color: $text-primary;
+      width: 100%;
+
+      p {
+        margin: 0;
+        font-size: 1.7rem;
+      }
+    }
+
+    .social-icons {
+      margin-top: 2.8rem;
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+
+      .icon {
+        color: $text-primary;
+        font-size: 2.6rem;
+        transition: color 0.3s;
+
+        &:hover {
+          color: $accent-primary;
+        }
+      }
+    }
+  }
+
+  .footer-bottom {
+    background-color: darken(#eeeeee, 20%);
+    text-align: center;
+    color: $text-primary;
+    padding: 1.5rem;
+    &:hover p {
+      color: $accent-primary;
+    }
+
+    p {
+      text-decoration: underline;
+      font-weight: 400;
+      font-size: 1.7rem;
+      width: auto;
+      cursor: pointer;
+      margin: 0;
+      color: $text-primary;
+      transition: 0.3s;
+    }
+  }
 }
