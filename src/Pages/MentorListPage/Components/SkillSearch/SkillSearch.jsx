@@ -1,12 +1,14 @@
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import { useQuery } from "@tanstack/react-query"
 import { Input } from "antd"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { loadAllSkills } from "../../../../apis/mentor"
 import CheckboxSkill from "../CheckboxSkill/CheckboxSkill"
 import './SkillSearch.scss'
+import { AppContext } from '../../../../Contexts/AppContext'
 
 function SkillSearch() {
+     const { t } = useContext(AppContext)
      const { data: listSkills } = useQuery({ queryKey: ['listSkill'], queryFn: loadAllSkills })
      const [numberSkills, setNumberSkills] = useState(5)
      const [searchSkillValue, setSearchSkillValue] = useState('')
@@ -25,11 +27,11 @@ function SkillSearch() {
 
      return (
           <div className="skill-search">
-               <h1 className='title-skill'>Skills</h1>
+               <h1 className='title-skill'>{t('skills')}</h1>
                <Input
                     onChange={handleChangeSearch}
                     className='input-search'
-                    placeholder="Search for skills"
+                    placeholder={t('search for skills')}
                     size='large'
                     style={{ fontSize: 16 }}
                />
@@ -41,11 +43,11 @@ function SkillSearch() {
                     <p onClick={handleShowMore} className='show-more-text' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '7px' }}>
                          {isShowMore
                               ? <>
-                                   Show less
+                                   {t('show less')}
                                    <UpOutlined />
                               </>
                               : <>
-                                   Show more
+                                   {t('show more')}
                                    <DownOutlined />
                               </>
                          }

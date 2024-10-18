@@ -2,6 +2,7 @@ import { DownOutlined } from '@ant-design/icons'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { Button, Col, Drawer, Dropdown, Flex, Input, Row, Select, Switch } from 'antd'
 import { useContext, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import defaultAvatar from '../../assets/Photos/avatar/default_avatar.jpg'
 import logo from '../../assets/Photos/logo/logo.png'
@@ -13,6 +14,7 @@ import { ModalBecomeMentor } from '../Modal'
 import './Header.scss'
 
 function Header() {
+     const { t, i18n } = useTranslation()
      const location = useLocation()
      const navigate = useNavigate()
      const { setFilterMentor, filterMentor, setTheme, theme } = useContext(AppContext)
@@ -64,7 +66,7 @@ function Header() {
      }
 
      const handleChangeLanguage = (value) => {
-          console.log('change lang: ' + value);
+          i18n.changeLanguage(value)
      }
 
      useEffect(() => {
@@ -85,27 +87,23 @@ function Header() {
      ]
 
      const accountMenuDropDown = [
+          { type: 'divider' },
           {
-               label: <Link to="/student/profile">Profile</Link>,
+               label: <Link to="/student/profile">{t('profile')}</Link>,
                key: '0',
           },
           {
-               label: <Link to='/wallet'><Flex gap='small' align='center'>Wallet: <Icon icon="twemoji:coin" /><p> 99</p></Flex></Link>,
+               label: <Link to='/wallet'><Flex gap='small' align='center'>{t('wallet')}: <Icon icon="twemoji:coin" /><p> 99</p></Flex></Link>,
                key: '1',
           },
           {
-               label: <Link onClick={() => setOpenModalBeMentor(true)}>Become a mentor</Link>,
+               label: <Link onClick={() => setOpenModalBeMentor(true)}>{t('become a mentor')}</Link>,
                key: '2',
           },
           { type: 'divider' },
           {
-               label: <Link onClick={handleLogout}>Logout</Link>,
-               key: '3',
-               danger: true
-          },
-          {
                label: <Flex gap='small' justify='space-between'>
-                    Theme: <Switch
+                    {t('theme')}: <Switch
                          defaultChecked={theme === 'dark-theme'}
                          onChange={handleChangeTheme}
                          checkedChildren="Dark"
@@ -115,24 +113,30 @@ function Header() {
                key: '4'
           },
           {
-               label: <Flex gap='small' justify='space-between'>
-                    Language: <Select
+               label: <Flex gap='small' align='center' justify='space-between'>
+                    {t('language')}: <Select
                          defaultValue="EN"
                          onChange={handleChangeLanguage}
                          options={[
                               {
-                                   value: 'VN',
+                                   value: 'vi',
                                    label: 'VN',
                               },
                               {
-                                   value: 'EN',
+                                   value: 'en',
                                    label: 'EN',
                               }
                          ]}
                     />
                </Flex>,
                key: '5'
-          }
+          },
+          { type: 'divider' },
+          {
+               label: <Link onClick={handleLogout}>{t('logout')}</Link>,
+               key: '3',
+               danger: true
+          },
      ]
 
      return (
@@ -153,7 +157,7 @@ function Header() {
 
                          <Col className='search-block' xs={24} sm={16} md={17} lg={8}>
                               <Input.Search
-                                   placeholder="Find mentors"
+                                   placeholder={t('find mentors')}
                                    onSearch={onSearch}
                                    style={{ width: '100%', }}
                                    size='large'
@@ -171,15 +175,15 @@ function Header() {
 
                          <Col xs={0} md={0} lg={11}>
                               <div className='btn-block'>
-                                   <NavLink to='/browser-mentors' className='navbar-link'>Browser mentors</NavLink>
-                                   <NavLink to={`/schedule/${currentUser?.id}`} className='navbar-link'>Schedule</NavLink>
+                                   <NavLink to='/browser-mentors' className='navbar-link'>{t('browser mentors')}</NavLink>
+                                   <NavLink to={`/schedule/${currentUser?.id}`} className='navbar-link'>{t('schedule')}</NavLink>
                                    <Dropdown
                                         menu={{ items: moreMenuDropDown }}
                                         placement='bottom'
                                         trigger={['click']}
                                    >
                                         <Link className='navbar-link' onClick={(e) => e.preventDefault()}>
-                                             More <DownOutlined />
+                                             {t('more')} <DownOutlined />
                                         </Link>
                                    </Dropdown>
 
