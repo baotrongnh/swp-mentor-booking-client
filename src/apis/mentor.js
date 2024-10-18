@@ -45,10 +45,21 @@ export const loadAllSkills = async () => {
      return await axiosClient(token).get('/mentor/loadskills');
 }
 
-export const ratingMentor = async ({studentId, mentorId, rating, text}) => {
+export const ratingMentor = async ({ studentId, mentorId, rating, text }) => {
      const token = getToken();
-     console.log(studentId, mentorId, rating, text);
      return await axiosClient(token).post('/mentor/rating', {
           studentId, mentorId, rating, text
      });
+}
+
+export const loadAvailableSlot = async(mentorId) => {
+     const token = getToken()
+     return await axiosClient(token).get(`/schedule/slots/${mentorId}`);
+}
+
+export const createSchedule = async ({ mentorId, description, slotStart }) => {
+     const token = getToken();
+     return await axiosClient(token).post('/schedule/slots', {
+          slotStart, mentorId, description
+     })
 }

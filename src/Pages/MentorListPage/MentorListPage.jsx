@@ -8,7 +8,7 @@ import { MentorCard, RatingSelect, SkillSearch } from './Components'
 import './MentorListPage.scss'
 
 function MentorListPage() {
-     const { filterMentor, setFilterMentor } = useContext(AppContext)
+     const { filterMentor, setFilterMentor, t } = useContext(AppContext)
      const [modalOpen, setModalOpen] = useState(false)
      const [currentIdMentor, setCurrentIdMentor] = useState('')
      const [currentPage, setCurrentPage] = useState(1);
@@ -41,7 +41,7 @@ function MentorListPage() {
                               </div>
 
                               <div className='date-filter-block'>
-                                   <h1 className="title-filter-date" style={{ margin: '20px 0', fontSize: '2.2rem', fontWeight: '500' }}>Date</h1>
+                                   <h1 className="title-filter-date" style={{ margin: '20px 0', fontSize: '2.2rem', fontWeight: '500' }}>{t('date')}</h1>
                                    <DatePicker
                                         multiple
                                         onChange={onChangeTime}
@@ -55,21 +55,21 @@ function MentorListPage() {
                          <Col xs={24} md={17} lg={18} className='mentor-block'>
                               {isPending
                                    ? <Skeleton active />
-                                   : <>
-                                        <Row gutter={15}>
-                                             {listMentor?.mentors.map((mentor) => (
-                                                  <Col xs={24} xl={12} key={mentor.id}>
-                                                       <MentorCard
-                                                            mentor={mentor}
-                                                            setModalOpen={setModalOpen}
-                                                            setCurrentIdMentor={setCurrentIdMentor}
-                                                       />
-                                                  </Col>
-                                             ))}
-                                        </Row>
-                                   </>
+                                   :
+                                   <Row gutter={15}>
+                                        {listMentor?.mentors.map((mentor) => (
+                                             <Col xs={24} xl={12} key={mentor.id}>
+                                                  <MentorCard
+                                                       mentor={mentor}
+                                                       setModalOpen={setModalOpen}
+                                                       setCurrentIdMentor={setCurrentIdMentor}
+                                                  />
+                                             </Col>
+                                        ))}
+                                   </Row>
+
                               }
-                              
+
                               <Pagination
                                    className='pagination'
                                    onChange={(page) => setCurrentPage(page)}

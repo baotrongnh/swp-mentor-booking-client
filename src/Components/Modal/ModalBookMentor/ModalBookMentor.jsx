@@ -1,20 +1,20 @@
-import { Button, DatePicker, Modal, Tabs } from "antd";
-import PropTypes from "prop-types";
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../../Contexts/AuthContext";
-import './ModalBookMentor.scss';
+import { Button, DatePicker, Modal, Tabs } from "antd"
+import PropTypes from "prop-types"
+import { useContext, useEffect, useState } from "react"
+import { AuthContext } from "../../../Contexts/AuthContext"
+import './ModalBookMentor.scss'
 
 function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
-     const [isValidate, setIsValidate] = useState(false);
-     const [tab, setTab] = useState('2');
-     const [dateCustom, setDateCustom] = useState({ date: '0000-00-00', time: '00:00:00' });
-     const [displayDate, setDisplayDate] = useState({ date: 'DD-MM-YYYY', time: '00:00' });
-     const { currentUser, setCurrentUser } = useContext(AuthContext);
+     const [isValidate, setIsValidate] = useState(false)
+     const [tab, setTab] = useState('2')
+     const [dateCustom, setDateCustom] = useState({ date: '0000-00-00', time: '00:00:00' })
+     const [displayDate, setDisplayDate] = useState({ date: 'DD-MM-YYYY', time: '00:00' })
+     const { currentUser, setCurrentUser } = useContext(AuthContext)
 
      const onChangeTabs = (key) => {
-          setTab(key);
-          setDateCustom({ date: '0000-00-00', time: '00:00:00' });
-     };
+          setTab(key)
+          setDateCustom({ date: '0000-00-00', time: '00:00:00' })
+     }
 
      useEffect(() => {
           if (tab === '2') {
@@ -26,26 +26,26 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
           } else {
                setIsValidate(false)
           }
-     }, [dateCustom, tab]);
+     }, [dateCustom, tab])
 
      const handleDatePick = (date, dateString) => {
-          setDisplayDate({ ...displayDate, date: dateString });
-          const [day, month, year] = dateString.split('-');
-          const formattedDate = `${year}-${month}-${day}`;
-          setDateCustom({ ...dateCustom, date: formattedDate });
+          setDisplayDate({ ...displayDate, date: dateString })
+          const [day, month, year] = dateString.split('-')
+          const formattedDate = `${year}-${month}-${day}`
+          setDateCustom({ ...dateCustom, date: formattedDate })
      };
 
      const handleTimePick = (time, timeString) => {
           setDisplayDate({ ...displayDate, time: timeString })
-          setDateCustom({ ...dateCustom, time: timeString });
+          setDateCustom({ ...dateCustom, time: timeString })
      }
 
      const handleBookMentor = () => {
-          console.log(`Time booking: ${dateCustom.date} ${dateCustom.time}`);
-          console.log('StudentID: ' + currentUser.id);
-          console.log('MentorID: ' + currentIdMentor);
-          setCurrentUser({ ...currentUser, point: currentUser.point - 10 });
-          setModalOpen(false);
+          console.log(`Time booking: ${dateCustom.date} ${dateCustom.time}`)
+          console.log('StudentID: ' + currentUser.id)
+          console.log('MentorID: ' + currentIdMentor)
+          setCurrentUser({ ...currentUser, point: currentUser.point - 10 })
+          setModalOpen(false)
      }
 
      const itemTabs = [
@@ -57,7 +57,7 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
                key: '2',
                label: 'Custom Schedule',
           }
-     ];
+     ]
 
      return (
           <div className="modal-book-mentor">
@@ -100,10 +100,10 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
                     </div>
                </Modal>
           </div>
-     );
+     )
 }
 
-export default ModalBookMentor;
+export default ModalBookMentor
 
 ModalBookMentor.propTypes = {
      modalOpen: PropTypes.bool,

@@ -4,7 +4,7 @@ import { useContext, useEffect } from "react";
 import { AppContext } from "../../../../Contexts/AppContext";
 
 function RatingSelect() {
-     const { filterMentor, setFilterMentor } = useContext(AppContext);
+     const { filterMentor, setFilterMentor, t } = useContext(AppContext);
 
      const handleChange = (e) => {
           if (e.target.checked) {
@@ -24,7 +24,7 @@ function RatingSelect() {
 
      return (
           <div className="rating-select" style={{ marginTop: '10px' }}>
-               <h1 className="title-filter-rating" style={{ margin: '20px 0', fontSize: '2.2rem', fontWeight: '500' }}>Rating</h1>
+               <h1 className="title-filter-rating" style={{ margin: '20px 0', fontSize: '2.2rem', fontWeight: '500' }}>{t('rating')}</h1>
 
                {stars.map((star) => (
                     <div key={star} className="block-star">
