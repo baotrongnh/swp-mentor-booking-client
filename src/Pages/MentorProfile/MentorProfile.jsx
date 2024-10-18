@@ -16,13 +16,13 @@ function MentorProfile() {
      const [modalRatingOpen, setModalRatingOpen] = useState(false);
      const { id } = useParams('id');
      const { data: mentorInfor, isLoading, isError, refetch } = useQuery({ queryKey: ['mentorProfile', id], queryFn: () => getProfileMentor(id) });
-     const [isCurrentUser, setIsCurrentUser] = useState(true);
+     const [isCurrentUser, setIsCurrentUser] = useState(false);
  
      useLayoutEffect(() => {
           if (id == currentUser?.id) {
-               setIsCurrentUser(true);
+               setIsCurrentUser(false);
           } else {
-               setIsCurrentUser(true);
+               setIsCurrentUser(false);
           }
      }, [currentUser, id]);
 

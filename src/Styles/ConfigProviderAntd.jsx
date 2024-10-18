@@ -13,7 +13,7 @@ function ConfigProviderAntd({ children }) {
                token: {
                     fontFamily: 'Segoe UI, Arial, sans-serif',
                     fontSize: 16,
-                    // colorPrimary: '#00DD73',
+                    colorPrimary: '#0084ff',
                },
                components: {
                     Dropdown: {

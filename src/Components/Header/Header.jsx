@@ -115,16 +115,16 @@ function Header() {
           {
                label: <Flex gap='small' align='center' justify='space-between'>
                     {t('language')}: <Select
-                         defaultValue="EN"
+                         defaultValue="en"
                          onChange={handleChangeLanguage}
                          options={[
                               {
-                                   value: 'vi',
-                                   label: 'VN',
-                              },
-                              {
                                    value: 'en',
                                    label: 'EN',
+                              },
+                              {
+                                   value: 'vi',
+                                   label: 'VN',
                               }
                          ]}
                     />

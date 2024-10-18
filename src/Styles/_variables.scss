@@ -3,10 +3,11 @@
     --text-primary: #333333;
     --theme-color-primary: #7ed4fc;
     --theme-color-secondary: #3c83f6;
-    --bg-primary: #fffff;
-    --bg-secondary: #eeeeee;
+    --bg-primary: #ffffff;
+    --bg-secondary: #ffffff;
     --accent-primary: #fb923c;
     --border: #817d7d34;
+    --shadow: rgba(128, 128, 128, 0.156);
   }
 
   &.dark-theme {
@@ -14,9 +15,10 @@
     --theme-color-primary: #035981;
     --theme-color-secondary: #0950c3;
     --bg-primary: #18191a;
-    --bg-secondary: #eeeeee;
-    --accent-primary: #020101;
+    --bg-secondary: #242526;
+    --accent-primary: #fb923c;
     --border: #ffffff22;
+    --shadow: rgba(27, 27, 27, 0.384);
   }
 }
 
@@ -27,6 +29,7 @@ $bg-primary: var(--bg-primary);
 $bg-secondary: var(--bg-secondary);
 $accent-primary: var(--accent-primary);
 $border: var(--border);
+$shadow: var(--shadow);
 
 //$text-secondary:
 //$text-muted:
