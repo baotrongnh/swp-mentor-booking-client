@@ -1,12 +1,17 @@
 @import "../../Styles/variables";
 
 .footer {
-  background-color: $bg-secondary;
+  background-color: #3f3f46;
   width: 100%;
-  position: relative;
   bottom: 0;
   overflow: hidden;
-  margin-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 50px;
+  height: 250px;
+
+
 
   .text-center {
     text-align: center;
@@ -22,21 +27,22 @@
         display: flex;
         justify-content: center;
         gap: 6rem;
-        padding-top: 2rem;
+        padding-top: 1rem;
 
         .link-item {
           h6 {
             text-transform: uppercase;
             font-weight: bold;
+            color: #e4e6eb;
             margin: 0;
 
             a {
-              color: $text-primary;
+              color: #e4e6eb;
               text-decoration: none;
               transition: color 0.3s;
 
               &:hover {
-                color: $accent-primary;
+                color: $theme-color-secondary;
               }
             }
           }
@@ -47,7 +53,7 @@
     .divider {
       border: 0;
       height: 1px;
-      background: $text-primary;
+      background: #e4e6eb;
       margin: 2rem auto;
       width: 100%;
     }
@@ -57,8 +63,10 @@
       margin: 0 auto 2rem;
       color: $text-primary;
       width: 100%;
+      color: #e4e6eb;
 
       p {
+        color: #e4e6eb;
         margin: 0;
         font-size: 1.7rem;
       }
@@ -72,24 +80,25 @@
       gap: 3rem;
 
       .icon {
-        color: $text-primary;
         font-size: 2.6rem;
-        transition: color 0.3s;
+        transition: 0.3s;
+        color: #e4e6eb;
 
         &:hover {
-          color: $accent-primary;
+          color: $theme-color-secondary;
         }
       }
     }
   }
 
   .footer-bottom {
-    background-color: darken(#eeeeee, 20%);
+    background-color: #36363e;
     text-align: center;
-    color: $text-primary;
+    color: #e4e6eb;
     padding: 1.5rem;
+
     &:hover p {
-      color: $accent-primary;
+      color: $theme-color-secondary;
     }
 
     p {
@@ -99,7 +108,7 @@
       width: auto;
       cursor: pointer;
       margin: 0;
-      color: $text-primary;
+      color: #b3b3b3;
       transition: 0.3s;
     }
   }

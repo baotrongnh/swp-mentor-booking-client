@@ -23,6 +23,27 @@ const resources = {
                'show more': 'Show more',
                'show less': 'Show less',
                'select date': 'Select date',
+               'name': 'Name',
+               'point': 'Point',
+               'edit-profile': 'Edit Profile',
+               'save': 'Save',
+               'cancel': 'Cancel',
+               'user profile': 'User Profile',
+
+               //footer
+               "about us": "About Us",
+               "help": "Help",
+               "contact": "Contact",
+               "welcome message": "Welcome to Mentor Booking System! We connect you with experienced mentors in various fields. Explore our platform to find the perfect mentor for your growth.",
+               "all rights reserved": "2024 Mentor Booking System - All rights reserved",
+
+               //schedule
+               "booking list": "Booking List",
+               "comming booking": "Coming Booking",
+               "all booking": "All Booking",
+               "booking calendar": "Booking Calendar",
+               "month": "Month",
+               "year": "Year",
           }
      },
      vi: {
@@ -45,7 +66,28 @@ const resources = {
                'search for skills': 'Tìm kiếm kỹ năng',
                'show more': 'Xem thêm',
                'show less': 'Thu gọn',
-               'select date': 'Chọn ngày'
+               'select date': 'Chọn ngày',
+               'name': 'Tên Đăng Nhập',
+               'point': 'Điểm',
+               'edit-profile': 'Chỉnh sửa',
+               'save': 'Lưu',
+               'cancel': 'Hủy',
+               'user profile': 'Trang Cá Nhân',
+
+               //footer
+               "about us": "Về Chúng Tôi",
+               "help": "Trợ Giúp",
+               "contact": "Liên Hệ",
+               "welcome message": "Chào mừng đến với Hệ Thống Đặt Lịch Mentor! Chúng tôi kết nối bạn với những mentor giàu kinh nghiệm trong nhiều lĩnh vực. Khám phá nền tảng của chúng tôi để tìm mentor phù hợp cho sự phát triển của bạn.",
+               "all rights reserved": "2024 Hệ Thống Đặt Lịch Mentor - Bản quyền thuộc về chúng tôi",
+
+               //schedule
+               "booking list": "Danh Sách Đặt Lịch",
+               "comming booking": "Lịch sắp tới",
+               "all booking": "Tất cả lịch",
+               "booking calendar": "Lịch",
+               "month": "Tháng",
+               "year": "Năm",
           }
      }
 }

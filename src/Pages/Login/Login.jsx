@@ -9,7 +9,7 @@ import logo from '../../assets/Photos/logo/logo.png'
 import { AuthContext } from '../../Contexts/AuthContext';
 import { getToken } from '../../utils/storageUtils';
 import './Login.scss';
-
+     
 
 function Login() {
      const navigate = useNavigate();

@@ -1,8 +1,13 @@
 import "./Footer.scss";
 import { Link } from "react-router-dom";
 import { Icon } from '@iconify/react';
+import { useContext } from "react";
+import { AppContext } from "../../Contexts/AppContext";
 
 function Footer() {
+     const { t } = useContext(AppContext)
+
+
      return (
           <div className="footer">
                <footer className="text-center">
@@ -11,17 +16,17 @@ function Footer() {
                               <div className="links-wrapper">
                                    <div className="link-item">
                                         <h6>
-                                             <Link to="/about">About Us</Link>
+                                             <Link to="/about">{t("about us")}</Link>
                                         </h6>
                                    </div>
                                    <div className="link-item">
                                         <h6>
-                                             <Link to="/help">Help</Link>
+                                             <Link to="/help">{t("help")}</Link>
                                         </h6>
                                    </div>
                                    <div className="link-item">
                                         <h6>
-                                             <Link to="/contact">Contact</Link>
+                                             <Link to="/contact">{t("contact")}</Link>
                                         </h6>
                                    </div>
                               </div>
@@ -29,7 +34,7 @@ function Footer() {
                          <hr className="divider" />
                          <section className="content">
                               <p>
-                                   Welcome to Mentor Booking System! We connect you with experienced mentors in various fields. Explore our platform to find the perfect mentor for your growth.
+                                   {t("welcome message")}
                               </p>
                          </section>
                          <section className="social-icons">
@@ -43,7 +48,7 @@ function Footer() {
                     </div>
                     <div className="footer-bottom">
                          <p>
-                              <small>2024 Mentor Booking System - All rights reserved</small>
+                              <small>{t("all rights reserved")}</small>
                          </p>
                     </div>
                </footer>
