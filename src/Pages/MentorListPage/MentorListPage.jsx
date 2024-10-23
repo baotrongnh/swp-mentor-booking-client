@@ -17,10 +17,9 @@ function MentorListPage() {
           queryFn: () => searchMentor(filterMentor),
      })
 
-     console.log(listMentor);
-
+     console.log(filterMentor);
      useEffect(() => {
-          setFilterMentor({ ...filterMentor, currentPage })
+          setFilterMentor({ ...filterMentor, page: currentPage })
      }, [currentPage])
 
      const onChangeTime = (date, dateString) => {
@@ -59,7 +58,7 @@ function MentorListPage() {
                                    ? <Skeleton active />
                                    :
                                    <Row gutter={15}>
-                                        {listMentor?.map((mentor) => (
+                                        {listMentor?.mentors.map((mentor) => (
                                              <Col xs={24} xl={12} key={mentor.accountId}>
                                                   <MentorCard
                                                        mentor={mentor}
