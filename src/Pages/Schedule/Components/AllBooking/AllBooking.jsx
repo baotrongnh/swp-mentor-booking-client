@@ -1,8 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Avatar, Divider, Flex, List, Skeleton } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import './AllBooking.scss';
+import { getListBooking } from '../../../../apis/booking';
+import { AuthContext } from '../../../../Contexts/AuthContext'
+import { getProfileMentor } from '../../../../apis/mentor';
+import avatarDefault from '../../../../assets/Photos/avatar/default_avatar_2.jpg'
+
 
 const formatDate = (date) => {
     const year = date.getFullYear();
@@ -28,25 +33,68 @@ const formatDate = (date) => {
 const AllBooking = () => {
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
+    const { currentUser } = useContext(AuthContext)
+    const [mentorProfiles, setMentorProfiles] = useState([])
+    const [hasMore, setHasMore] = useState(true);
 
-    const loadMoreData = () => {
+    const currentUserRole = (role) => {
+        return role === 0 ? 'student' : 'mentor'
+    }
+
+    const loadData = async () => {
         if (loading) return;
         setLoading(true);
-        fetch('https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo')
-            .then((res) => res.json())
-            .then((body) => {
-                const updatedData = body.results.map(item => ({
-                    ...item,
-                    time: formatDate(new Date())
-                }));
-                setData([...data, ...updatedData]);
-                setLoading(false);
-            })
-            .catch(() => setLoading(false));
+
+        const role = currentUserRole(currentUser.isMentor);
+        const id = currentUser.accountId;
+
+
+        try {
+            const res = await getListBooking(role, id)
+            if (res) {
+                setData(res.data)
+                setHasMore(false)
+                const mentorId = res.data.map(data => data.mentorId)
+                try {
+                    const mentorProfiles = await Promise.all(
+                        mentorId.map(async mentorId => {
+                            const profile = await getProfileMentor(mentorId);
+                            return { mentorId, name: profile.mentor.fullName, email: profile.mentor.email, image: profile.mentor.imgPath }
+                        })
+                    )
+                    setMentorProfiles(mentorProfiles)
+
+                } catch (error) {
+                    console.log(error.error_code + ": " + error.message)
+                }
+            }
+        } catch (error) {
+            console.log(error.error_code + ": " + error.message)
+        } finally {
+            setLoading(false)
+        }
+
     };
 
+    const getMentorNameById = (id) => {
+        const mentor = mentorProfiles.find(profile => profile.mentorId === id)
+        return mentor ? mentor.name : 'Unknow Mentor'
+    }
+
+    const getMentorEmailById = (id) => {
+        const mentor = mentorProfiles.find(profile => profile.mentorId === id)
+        return mentor ? mentor.email : 'Unknow Email'
+    }
+
+    const getMentorImageById = (id) => {
+        const mentor = mentorProfiles.find(profile => profile.mentorId === id)
+        return mentor ? mentor.image : { avatarDefault }
+    }
+
+
+    console.log(mentorProfiles)
     useEffect(() => {
-        loadMoreData();
+        loadData();
     }, []);
 
     return (
@@ -56,22 +104,26 @@ const AllBooking = () => {
         >
             <InfiniteScroll
                 dataLength={data.length}
-                next={loadMoreData}
-                hasMore={data.length < 50}
+                next={loadData}
+                hasMore={hasMore}
                 loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
-                endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
+                endMessage={<Divider plain>It is all, nothing more...</Divider>}
                 scrollableTarget="scrollableDiv"
             >
                 <List
                     dataSource={data}
                     renderItem={(item) => (
-                        <List.Item key={item.email} className="list-item">
+                        <List.Item key={item.id} className="list-item">
                             <List.Item.Meta
-                                avatar={<Avatar src={item.picture.large} size={70} />}
-                                title={<a href="https://ant.design">{item.name.last}</a>}
-                                description={item.email}
+                                avatar={<Avatar src={getMentorImageById(item.mentorId)} size={70} />}
+                                title={<a href="https://ant.design">{getMentorNameById(item.mentorId)}</a>}
+                                description={getMentorEmailById(item.mentorId)}
                             />
-                            <div className="time-wrapper">{item.time}</div>
+                            <div className="time-wrapper" >
+                                {formatDate(new Date(item.startTime))}
+                                <h1> - </h1>
+                                {formatDate(new Date(item.endTime))}
+                            </div>
                         </List.Item>
                     )}
                 />

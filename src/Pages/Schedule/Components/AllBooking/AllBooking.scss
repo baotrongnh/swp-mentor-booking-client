@@ -6,10 +6,25 @@
   padding: 0 16px;
   border: 1px solid rgba(140, 140, 140, 0.35);
 
+  .time-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+
+    h1 {
+      font: {
+        size: 2.5rem;
+        weight: 600;
+      }
+    }
+  }
+
   .data-form {
     color: $text-primary;
     text-align: start;
-    padding-right: 1rem;
+    padding: 0;
   }
 
   .data-date {
@@ -25,7 +40,8 @@
   }
 
   .ant-list-item {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+      align-items: center;
 
     .ant-list-item-meta {
       flex: 1 1 100%;
@@ -41,6 +57,7 @@
         justify-content: center;
         text-align: left;
         height: 100%;
+
         .ant-list-item-meta-title {
           font-size: 2rem !important;
           font-weight: 500 !important;
@@ -57,7 +74,7 @@
     }
   }
 
-  @media (min-width: 576px) {
+  @media (max-width: 576px) {
     height: 45rem !important;
 
     .ant-list-item {

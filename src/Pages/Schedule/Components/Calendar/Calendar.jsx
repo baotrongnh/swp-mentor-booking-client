@@ -15,16 +15,16 @@ const ShowCalendar = () => {
 
     const wrapperStyle = {
         display: 'flex',
-        justifyContent: 'center',  // Center horizontally
-        alignItems: 'center',      // Center vertically
-        height: '100%',           // Full viewport height to center vertically
-        width: '100%',             // Full width
+        justifyContent: 'center',  
+        alignItems: 'center',      
+        height: '100%',           
+        width: '100%',            
         border: `1px solid ${token.colorBorderSecondary}`,
         borderRadius: token.borderRadiusLG,
     };
 
     const calendarContainerStyle = {
-        width: '90%',              // Keep calendar width at 90%
+        width: '90%',             
     };
 
     return (
