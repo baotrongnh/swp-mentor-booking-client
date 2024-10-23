@@ -17,6 +17,8 @@ function MentorListPage() {
           queryFn: () => searchMentor(filterMentor),
      })
 
+     console.log(listMentor);
+
      useEffect(() => {
           setFilterMentor({ ...filterMentor, currentPage })
      }, [currentPage])
@@ -57,8 +59,8 @@ function MentorListPage() {
                                    ? <Skeleton active />
                                    :
                                    <Row gutter={15}>
-                                        {listMentor?.mentors.map((mentor) => (
-                                             <Col xs={24} xl={12} key={mentor.id}>
+                                        {listMentor?.map((mentor) => (
+                                             <Col xs={24} xl={12} key={mentor.accountId}>
                                                   <MentorCard
                                                        mentor={mentor}
                                                        setModalOpen={setModalOpen}

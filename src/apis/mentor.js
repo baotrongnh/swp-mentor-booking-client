@@ -17,7 +17,7 @@ export const getProfileMentor = async (id) => {
      const token = getToken();
      return await axiosClient(token).get('/mentor/profile', {
           params: {
-               id
+               mentorId: id
           }
      });
 }
@@ -26,7 +26,7 @@ export const getSkillMentor = async (id) => {
      const token = getToken();
      return await axiosClient(token).get('/mentor/skills', {
           params: {
-               id
+               mentorId: id
           }
      });
 }
@@ -35,7 +35,7 @@ export const getFeedback = async (id) => {
      const token = getToken();
      return await axiosClient(token).get('mentor/feedback', {
           params: {
-               id
+               mentorId: id
           }
      });
 }
