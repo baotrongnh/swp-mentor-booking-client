@@ -14,8 +14,7 @@ function SkillSearch() {
      const [searchSkillValue, setSearchSkillValue] = useState('')
      const [isShowMore, setIsShowMore] = useState(false)
 
-     const listSkillsSearch = listSkills?.filter(skill => searchSkillValue === '' || skill.name.toLowerCase().includes(searchSkillValue.toLowerCase()))
-
+     const listSkillsSearch = listSkills?.skills?.filter(skill => searchSkillValue === '' || skill.name.toLowerCase().includes(searchSkillValue.toLowerCase()))
      const handleChangeSearch = (e) => {
           setSearchSkillValue(e.target.value)
      }

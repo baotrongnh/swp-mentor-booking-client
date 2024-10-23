@@ -16,13 +16,13 @@ function MentorProfile() {
      const [modalRatingOpen, setModalRatingOpen] = useState(false);
      const { id } = useParams('id');
      const { data: mentorInfor, isLoading, isError, refetch } = useQuery({ queryKey: ['mentorProfile', id], queryFn: () => getProfileMentor(id) });
-     const [isCurrentUser, setIsCurrentUser] = useState(true);
- 
+     const [isCurrentUser, setIsCurrentUser] = useState(false);
+
      useLayoutEffect(() => {
           if (id == currentUser?.id) {
-               setIsCurrentUser(true);
+               setIsCurrentUser(false);
           } else {
-               setIsCurrentUser(true);
+               setIsCurrentUser(false);
           }
      }, [currentUser, id]);
 
@@ -76,8 +76,8 @@ function MentorProfile() {
                <div className="container" style={{ padding: '20px 0' }}>
                     <Breadcrumb
                          items={[
-                              { title: <Link to='/mentor'>Browser mentors</Link>, },
-                              { title: 'View Profile Mentor', },
+                              { title: <Link to='/browser-mentors'>Browser mentors</Link>, },
+                              { title: 'View Profile Mentor' },
                          ]}
                     />
                </div>

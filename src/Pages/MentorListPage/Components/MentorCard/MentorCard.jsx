@@ -6,7 +6,7 @@ import defaultAvatar2 from '../../../../assets/Photos/avatar/default_avatar_2.jp
 import './MentorCard.scss';
 
 function MentorCard({ mentor, setModalOpen, setCurrentIdMentor }) {
-     const urlProfileMentor = `/mentor/profile/${mentor.id}`;
+     const urlProfileMentor = `/mentor/profile/${mentor.accountId}`;
 
      const handleBook = () => {
           setCurrentIdMentor(mentor.id);
