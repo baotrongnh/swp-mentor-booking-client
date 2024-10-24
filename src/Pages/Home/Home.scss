@@ -8,7 +8,7 @@
   .banner {
     position: relative;
     width: 100%;
-    height: 100vh;
+    height: calc(100vh - 70px);
     overflow: hidden;
     z-index: 0;
 
@@ -80,7 +80,7 @@
   .container {
     .first-content {
       padding: 40px 0;
-      padding-top: 10rem;
+      padding-top: 8rem;
 
       .title {
         font-size: 4rem;

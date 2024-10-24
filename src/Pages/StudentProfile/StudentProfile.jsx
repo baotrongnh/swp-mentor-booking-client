@@ -8,6 +8,7 @@ import Loading from '../../Components/Loading/Loading'
 import { ModalBecomeMentor } from '../../Components/Modal';
 import './StudentProfile.scss';
 import { AppContext } from '../../Contexts/AppContext'
+import DonateModalButton from '../../Components/Modal/DonateModal/DonateModalButton';
 
 function StudentProfile() {
     const [isEditing, setIsEditing] = useState(false);
@@ -51,7 +52,8 @@ function StudentProfile() {
                         <Col flex={8} className='student-information'>
                             <h2>{currentUser.fullName || 'Please login to get information...'}</h2>
                             <p><strong>Email:</strong> {currentUser.email || ' abc@fpt.edu.vn'}</p>
-                            <p className='point'><strong>{t('point')}:</strong > {currentUser.point || 0} {/*<Icon icon="ri:typhoon-fill" style={{ width: '2rem', height: '2rem' }}  />*/}</p>
+                            <p className='point'><strong>{t('point')}:</strong > {currentUser.point || 0} </p>
+
                             <Button className='edit-profile-btn custom-btn' onClick={handleToggle} style={{ marginTop: '16px' }}>
                                 <Icon icon="uil:edit" style={{ width: '1.8rem', height: '1.8rem' }} /> {t('edit-profile')}
                             </Button>
@@ -61,6 +63,8 @@ function StudentProfile() {
                             >
                                 <Icon icon="ep:avatar" style={{ width: '1.8rem', height: '1.8rem' }} /> {t('become a mentor')}
                             </Button>
+
+                            <DonateModalButton />
                         </Col>
                     </Row>
 

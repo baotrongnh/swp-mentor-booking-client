@@ -1,0 +1,71 @@
+@import '../../../Styles/variables';
+
+.donate-button {
+    margin: 1rem 1rem 0 1rem;
+    width: 12rem;
+    transition: 0.5s;
+    border-color: #00ddff;
+    font-weight: 500;
+    background: linear-gradient(45deg, hsl(180, 98%, 44%), #00ddff, #0193f5, #03a3dd, #0033ff, #0055ff, #0077ff, #3399ff, #0033ff);
+
+    &:hover {
+        background: linear-gradient(45deg, hsl(180, 98%, 44%), #00ddff, #0193f5, #03a3dd, #0033ff, #0055ff, #0077ff, #3399ff, #0033ff) !important;
+        filter: brightness(130%);
+    }
+}
+
+.donate-modal {
+    .ant-modal-body {
+        padding: 24px;
+
+        .item {
+            margin-bottom: 20px;
+
+            .donate-card {
+                text-align: center;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease;
+
+                &:hover {
+                    transform: translateY(-5px);
+                }
+
+                .card-image {
+                    height: 150px;
+                    object-fit: cover;
+                }
+
+                .ant-card-body {
+                    padding: 16px;
+                }
+
+                .donate-card-title {
+                    font-size: 24px;
+                    font-weight: bold;
+                    margin-bottom: 8px;
+                    color: #1890ff;
+                }
+
+                .donate-card-description {
+                    font-size: 14px;
+                    color: $text-primary;
+                    margin-bottom: 16px;
+                }
+
+                .donate-button {
+                    width: 100%;
+                    height: 40px;
+                    font-size: 16px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    .iconify {
+                        font-size: 20px;
+                        margin-left: 5px;
+                    }
+                }
+            }
+        }
+    }
+}
