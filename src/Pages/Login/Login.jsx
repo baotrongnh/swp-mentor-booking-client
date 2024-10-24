@@ -9,7 +9,7 @@ import logo from '../../assets/Photos/logo/logo.png'
 import { AuthContext } from '../../Contexts/AuthContext';
 import { getToken } from '../../utils/storageUtils';
 import './Login.scss';
-     
+
 
 function Login() {
      const navigate = useNavigate();
@@ -25,7 +25,7 @@ function Login() {
      }, [userInfor]);
 
      const handleGoogleLogin = () => {
-          window.open('http://localhost:3000/auth/google', '_self');
+          window.open(`${import.meta.env.VITE_APP_API_URL}/auth/google`, '_self');
      }
 
      const fetchUserData = async () => {
@@ -38,7 +38,7 @@ function Login() {
           if (token) {
                localStorage.setItem('token', token);
                fetchUserData();
-               navigate('/student/profile');
+               navigate('/');
           }
      }, []);
 
@@ -46,7 +46,7 @@ function Login() {
           const token = getToken();
           if (token) {
                fetchUserData();
-               navigate('/student/profile');
+               navigate('/');
           }
      }, []);
 
