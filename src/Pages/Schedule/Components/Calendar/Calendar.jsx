@@ -2,9 +2,12 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
 import { Calendar, Col, Radio, Row, Select, theme, Typography } from 'antd';
 import dayLocaleData from 'dayjs/plugin/localeData';
+import { useContext } from 'react';
+import { AppContext } from '../../../../Contexts/AppContext';
 dayjs.extend(dayLocaleData);
 
 const ShowCalendar = () => {
+    const { t } = useContext(AppContext)
     const { token } = theme.useToken();
     const onPanelChange = (value, mode) => {
         console.log(value.format('YYYY-MM-DD'), mode);
@@ -12,16 +15,16 @@ const ShowCalendar = () => {
 
     const wrapperStyle = {
         display: 'flex',
-        justifyContent: 'center',  // Center horizontally
-        alignItems: 'center',      // Center vertically
-        height: '100%',           // Full viewport height to center vertically
-        width: '100%',             // Full width
+        justifyContent: 'center',  
+        alignItems: 'center',      
+        height: '100%',           
+        width: '100%',            
         border: `1px solid ${token.colorBorderSecondary}`,
         borderRadius: token.borderRadiusLG,
     };
 
     const calendarContainerStyle = {
-        width: '90%',              // Keep calendar width at 90%
+        width: '90%',             
     };
 
     return (
@@ -63,7 +66,7 @@ const ShowCalendar = () => {
                                     padding: 8,
                                 }}
                             >
-                                <Typography.Title level={4}>Booking Calendar</Typography.Title>
+                                <Typography.Title level={4}>{t('booking calendar')}</Typography.Title>
                                 <Row gutter={8}>
                                     <Col>
                                         <Radio.Group
@@ -71,8 +74,8 @@ const ShowCalendar = () => {
                                             onChange={(e) => onTypeChange(e.target.value)}
                                             value={type}
                                         >
-                                            <Radio.Button value="month">Month</Radio.Button>
-                                            <Radio.Button value="year">Year</Radio.Button>
+                                            <Radio.Button value="month">{t('month')}</Radio.Button>
+                                            <Radio.Button value="year">{t('year')}</Radio.Button>
                                         </Radio.Group>
                                     </Col>
                                     <Col>

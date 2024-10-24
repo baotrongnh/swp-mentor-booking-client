@@ -3,22 +3,19 @@ import { Button } from 'antd';
 import PropTypes from 'prop-types';
 import './EditProfile.scss'
 import { AuthContext } from '../../Contexts/AuthContext';
+import { AppContext } from '../../Contexts/AppContext';
 
 function EditProfile({ visible, onClose }) {
     const { currentUser } = useContext(AuthContext);
     const [name, setName] = useState(currentUser.fullName);
-    const [email, setEmail] = useState(currentUser.email);
-
+    const { t } = useContext(AppContext)
     const handleUserNameChange = (e) => {
         setName(e.target.value);
     };
 
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
-    };
 
     const onSave = () => {
-        const savedValues = { name, email }
+        const savedValues = { name }
         console.log('Saved values:', savedValues);
         onClose();
     };
@@ -26,11 +23,11 @@ function EditProfile({ visible, onClose }) {
     return (
         visible && (
             <div className="edit-profile">
-                <h1 className="edit-profile-title">Edit Profile</h1>
+                <h1 className="edit-profile-title">{t('edit-profile')}</h1>
                 <div className="edit-form">
                     <div className='input-block'>
                         <label htmlFor="name" className='label name'>
-                            Name
+                            {t('name')}
                         </label>
                         <input
                             type="text"
@@ -41,7 +38,7 @@ function EditProfile({ visible, onClose }) {
                             onChange={handleUserNameChange}
                         />
                     </div>
-                    <div className='input-block'>
+                    {/* <div className='input-block'>
                         <label htmlFor="email" className='label email'>
                             Email
                         </label>
@@ -53,13 +50,13 @@ function EditProfile({ visible, onClose }) {
                             placeholder={email}
                             onChange={handleEmailChange}
                         />
-                    </div>
+                    </div> */}
                     <div className="edit-profile-btn">
                         <Button type="primary" className='btn save' onClick={onSave}>
-                            Save
+                            {t('save')}
                         </Button>
                         <Button onClick={onClose} className='btn cancel' style={{ marginLeft: '8px' }}>
-                            Cancel
+                            {t('cancel')}
                         </Button>
                     </div>
                 </div>

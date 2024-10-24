@@ -1,11 +1,21 @@
 @import "../../Styles/variables.scss";
 
 .user-profile {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 70px - 250px);
+  height: auto;
+
   .container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100vh;
+    justify-content: flex-start;
+    width: 100%;
+    height: auto;
 
     .title {
       margin-top: 2.5rem;
@@ -13,7 +23,7 @@
       width: 100%;
       font-size: 3.5rem;
       font-weight: 700;
-      text-shadow: 3px 2px 6px rgba(0, 0, 0, 0.1);
+
     }
 
     .content {
@@ -85,6 +95,10 @@
             margin-bottom: 2rem;
           }
 
+          .point {
+            color: #0193f5;
+          }
+
           p {
             opacity: 70%;
             margin-left: 0.5rem;
@@ -92,54 +106,71 @@
             margin-bottom: 1rem;
 
             strong {
+              color: $text-primary;
               font-weight: 500;
+            }
+          }
+
+          .custom-btn {
+            font-weight: 500;
+            width: auto;
+          }
+
+          .gradient-btn {
+            margin-left: 2rem;
+            transition: 0.5s;
+            border-color: #00ddff;
+            background: linear-gradient(45deg, hsl(180, 98%, 44%), #00ddff, #0193f5, #03a3dd, #0033ff, #0055ff, #0077ff, #3399ff, #0033ff);
+
+            &:hover {
+              filter: brightness(130%);
             }
           }
         }
       }
 
-      .bio-information {
-        background-color: $bg-primary;
-        margin: 0 auto;
-        margin-top: 4rem;
-        border: 1px solid $border;
-        padding: 2rem;
-        border-radius: 20px;
-        box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);
-        width: 98%;
-        margin-bottom: 2rem;
+      // .bio-information {
+      //   background-color: $bg-primary;
+      //   margin: 0 auto;
+      //   margin-top: 4rem;
+      //   border: 1px solid $border;
+      //   padding: 2rem;
+      //   border-radius: 20px;
+      //   box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);
+      //   width: 98%;
+      //   margin-bottom: 2rem;
 
-        .top-bio-information {
-          display: flex;
-          flex-direction: row;
-          width: 100%;
-          padding: 0;
-          justify-content: space-between;
-          padding-right: 2rem;
-          margin-bottom: 1.5rem;
+      //   .top-bio-information {
+      //     display: flex;
+      //     flex-direction: row;
+      //     width: 100%;
+      //     padding: 0;
+      //     justify-content: space-between;
+      //     padding-right: 2rem;
+      //     margin-bottom: 1.5rem;
 
-          .bio-h1 {
-            margin-top: 0;
-            font-size: 2.5rem;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            font-weight: 700;
-          }
+      //     .bio-h1 {
+      //       margin-top: 0;
+      //       font-size: 2.5rem;
+      //       text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
+      //       width: 100%;
+      //       font-weight: 700;
+      //     }
 
-          .edit-bio-btn {
-            border-radius: 5px;
-            font-weight: 600;
-          }
-        }
+      //     .edit-bio-btn {
+      //       border-radius: 5px;
+      //       font-weight: 600;
+      //     }
+      //   }
 
-        p {
-          font-size: 1.5rem;
-          line-height: 1.6;
-          color: $text-primary;
-          text-align: justify;
-          margin-bottom: 1rem;
-        }
-      }
+      //   p {
+      //     font-size: 1.5rem;
+      //     line-height: 1.6;
+      //     color: $text-primary;
+      //     text-align: justify;
+      //     margin-bottom: 1rem;
+      //   }
+      // }
     }
   }
 }
@@ -147,6 +178,14 @@
 // Responsive sizes
 
 @media (max-width: 575px) {
+  .custom-btn {
+    width: 80% !important;
+  }
+
+  .become-mentor-btn {
+    margin-left: 0 !important;
+  }
+
   .avatar .ant-image {
     width: 80px;
     height: 80px;
@@ -191,6 +230,10 @@
 }
 
 @media (min-width: 576px) and (max-width: 767px) {
+  .become-mentor-btn {
+    margin-left: 0 !important;
+  }
+
   .avatar .ant-image {
     width: 60px;
     height: 60px;

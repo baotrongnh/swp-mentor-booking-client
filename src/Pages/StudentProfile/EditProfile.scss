@@ -14,7 +14,7 @@
   .edit-profile-title {
     margin-top: 0;
     font-size: 2.5rem;
-    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
+
     margin-bottom: 2rem;
     font-weight: 700;
   }
@@ -35,7 +35,7 @@
           weight: 600;
         }
 
-        width: 12rem;
+        width: auto;
         margin-bottom: 0.6rem;
         margin-left: 0.5rem;
         opacity: 80%;
@@ -58,6 +58,7 @@
         align-items: center;
         justify-content: space-between;
         outline: none;
+        color: $text-primary;
 
         &:focus {
           outline: none;
