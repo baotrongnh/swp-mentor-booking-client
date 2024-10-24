@@ -47,12 +47,12 @@ export const loadAllSkills = async () => {
 
 export const ratingMentor = async ({ studentId, mentorId, rating, text }) => {
      const token = getToken();
-     return await axiosClient(token).post('/mentor/rating', {
+     return await axiosClient(token).post('feedback/submit-feedback', {
           studentId, mentorId, rating, text
      });
 }
 
-export const loadAvailableSlot = async(mentorId) => {
+export const getAvailableSlot = async(mentorId) => {
      const token = getToken()
      return await axiosClient(token).get(`/schedule/slots/${mentorId}`);
 }

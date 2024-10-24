@@ -1,0 +1,97 @@
+@import "../../Styles/variables";
+
+.header-mentor {
+     position: sticky;
+     top: 0;
+     background-color: $bg-secondary;
+     z-index: 20;
+     border-bottom: 1px solid rgba(128, 128, 128, 0.211);
+
+     .header-block {
+          height: 70px;
+          align-items: center;
+
+          .logo-block {
+               .logo-img {
+                    width: 100px;
+               }
+          }
+
+          .search-block {
+               display: flex;
+               justify-content: center;
+               align-items: center;
+          }
+
+          .btn-block {
+               padding-left: 50px;
+               display: flex;
+               justify-content: space-between;
+               align-items: center;
+               color: $text-primary;
+
+               .navbar-link {
+                    color: $text-primary;
+                    font-weight: 500;
+                    transition: 0.3s;
+                    padding: 10px;
+                    border-radius: 7px;
+
+                    &:hover {
+                         opacity: 80%;
+                    }
+
+                    &.active {
+                         background-color: rgba(176, 175, 175, 0.167);
+                    }
+
+                    .icon {
+                         font-size: 4rem;
+                    }
+
+                    .avatar {
+                         border-radius: 50%;
+                         width: 35px;
+                    }
+               }
+          }
+
+          .btn-navbar-mobile {
+               text-align: right;
+
+               .icon {
+                    font-size: 3rem;
+               }
+          }
+
+     }
+
+     @media screen and (max-width: 575px) {
+          height: 120px;
+
+          .header-block {
+               .search-block {
+                    padding: 0 10px;
+                    margin-top: 20px;
+               }
+          }
+     }
+}
+
+.navbar-mobile-block {
+     display: flex;
+     flex-direction: column;
+     gap: 10px;
+
+     .link-item {
+          color: $text-primary;
+          font-size: 2rem;
+          font-weight: 600;
+          padding: 10px 10px;
+          border-radius: 10px;
+
+          &:hover {
+               background-color: rgba(128, 128, 128, 0.184);
+          }
+     }
+}

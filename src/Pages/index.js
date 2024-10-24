@@ -6,5 +6,6 @@ import PageNotFound from "./PageNotFound"
 import Schedule from "./Schedule/Schedule"
 import Wallet from "./Wallet/Wallet"
 import Home from "./Home/Home"
+import PageError from "./PageError"
 
-export { Login, MentorListPage, MentorProfile, StudentProfile, PageNotFound, Schedule, Wallet, Home }
+export { Login, MentorListPage, MentorProfile, StudentProfile, PageNotFound, Schedule, Wallet, Home, PageError }

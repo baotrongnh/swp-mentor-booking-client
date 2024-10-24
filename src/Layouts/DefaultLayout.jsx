@@ -1,10 +1,18 @@
 import PropTypes from 'prop-types'
 import { Footer, Header } from '../Components'
+import { HeaderMentor } from '../Components/Modal'
+import { useContext } from 'react';
+import { AuthContext } from '../Contexts/AuthContext';
 
 function DefaultLayout({ children }) {
+     const { currentUser } = useContext(AuthContext)
+     console.log(currentUser);
      return (
           <>
-               <Header />
+               {currentUser?.isMentor === 1
+                    ? < HeaderMentor />
+                    : <Header />
+               }
                {children}
                <Footer />
           </>

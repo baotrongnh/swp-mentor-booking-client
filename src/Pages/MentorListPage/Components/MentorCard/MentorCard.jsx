@@ -1,16 +1,16 @@
-import { Icon } from '@iconify/react';
-import { Button, Col, Image, Rate, Row, Tag, Typography } from "antd";
-import PropTypes from "prop-types";
-import { Link } from 'react-router-dom';
-import defaultAvatar2 from '../../../../assets/Photos/avatar/default_avatar_2.jpg';
-import './MentorCard.scss';
+import { Icon } from '@iconify/react'
+import { Button, Col, Image, Rate, Row, Tag, Typography } from "antd"
+import PropTypes from "prop-types"
+import { Link } from 'react-router-dom'
+import defaultAvatar2 from '../../../../assets/Photos/avatar/default_avatar_2.jpg'
+import './MentorCard.scss'
 
 function MentorCard({ mentor, setModalOpen, setCurrentIdMentor }) {
-     const urlProfileMentor = `/mentor/profile/${mentor.accountId}`;
+     const urlProfileMentor = `/mentor/profile/${mentor.accountId}`
 
      const handleBook = () => {
-          setCurrentIdMentor(mentor.id);
-          setModalOpen(true);
+          setCurrentIdMentor(mentor.accountId)
+          setModalOpen(true)
      }
 
      return (
@@ -76,10 +76,10 @@ function MentorCard({ mentor, setModalOpen, setCurrentIdMentor }) {
                     </Link>
                </Row>
           </div>
-     );
+     )
 }
 
-export default MentorCard;
+export default MentorCard
 
 MentorCard.propTypes = {
      mentor: PropTypes.object,

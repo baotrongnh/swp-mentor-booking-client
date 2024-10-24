@@ -1,30 +1,31 @@
-import { StarOutlined, UnorderedListOutlined, UserOutlined } from '@ant-design/icons';
-import { useQuery } from "@tanstack/react-query";
-import { Breadcrumb, Menu } from "antd";
-import { useContext, useLayoutEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { Loading } from "../../Components";
-import { ModalBookMentor, ModalRatingMentor } from '../../Components/Modal';
-import { AuthContext } from '../../Contexts/AuthContext';
-import { getProfileMentor } from "../../apis/mentor";
-import './MentorProfile.scss';
-import { AboutMentor, MentorInfor, RatingView, Skills } from "./components";
+import { StarOutlined, UnorderedListOutlined, UserOutlined } from '@ant-design/icons'
+import { useQuery } from "@tanstack/react-query"
+import { Breadcrumb, Menu } from "antd"
+import { useContext, useLayoutEffect, useState } from "react"
+import { Link, useParams } from "react-router-dom"
+import { Loading } from "../../Components"
+import { ModalBookMentor, ModalRatingMentor } from '../../Components/Modal'
+import { AuthContext } from '../../Contexts/AuthContext'
+import { getProfileMentor } from "../../apis/mentor"
+import './MentorProfile.scss'
+import { AboutMentor, MentorInfor, RatingView, Skills } from "./components"
+import PageError from '../PageError'
 
 function MentorProfile() {
-     const { currentUser } = useContext(AuthContext);
-     const [modalBookingOpen, setModalBookingOpen] = useState(false);
-     const [modalRatingOpen, setModalRatingOpen] = useState(false);
-     const { id } = useParams('id');
-     const { data: mentorInfor, isLoading, isError, refetch } = useQuery({ queryKey: ['mentorProfile', id], queryFn: () => getProfileMentor(id) });
-     const [isCurrentUser, setIsCurrentUser] = useState(false);
+     const { currentUser } = useContext(AuthContext)
+     const [modalBookingOpen, setModalBookingOpen] = useState(false)
+     const [modalRatingOpen, setModalRatingOpen] = useState(false)
+     const { id } = useParams('id')
+     const { data: mentorInfor, isLoading, isError, refetch } = useQuery({ queryKey: ['mentorProfile', id], queryFn: () => getProfileMentor(id) })
+     const [isCurrentUser, setIsCurrentUser] = useState(false)
 
      useLayoutEffect(() => {
           if (id == currentUser?.id) {
-               setIsCurrentUser(false);
+               setIsCurrentUser(false)
           } else {
-               setIsCurrentUser(false);
+               setIsCurrentUser(false)
           }
-     }, [currentUser, id]);
+     }, [currentUser, id])
 
      const items = [
           {
@@ -62,20 +63,14 @@ function MentorProfile() {
           return <Loading />
      }
 
-     if (isError) {
-          return (
-               <>
-                    <h1>Đã xãy ra lỗi</h1>
-                    <button onClick={() => refetch()}>try again</button>
-               </>
-          )
-     }
+     if (isError) return <PageError action={refetch} />
 
      return (
           <div className="mentor-profile">
                <div className="container" style={{ padding: '20px 0' }}>
                     <Breadcrumb
                          items={[
+                              { title: <Link to='/'>Home</Link>, },
                               { title: <Link to='/browser-mentors'>Browser mentors</Link>, },
                               { title: 'View Profile Mentor' },
                          ]}

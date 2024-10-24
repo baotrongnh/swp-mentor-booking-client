@@ -1,9 +1,9 @@
-import { Avatar, Breadcrumb, Button, Col, List, Row, Skeleton } from 'antd'
-import './Wallet.scss'
-import { Link } from 'react-router-dom'
 import { Icon } from '@iconify/react'
+import { Avatar, Breadcrumb, Button, Col, List, Row, Skeleton } from 'antd'
 import { useContext, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { AuthContext } from '../../Contexts/AuthContext'
+import './Wallet.scss'
 
 export default function Wallet() {
      const { currentUser } = useContext(AuthContext)
@@ -110,7 +110,7 @@ export default function Wallet() {
                                                        title={<Link>{item.name?.last}</Link>}
                                                        description="Booking Mentor"
                                                   />
-                                                  <div style={{color: 'red'}}>-10 point</div>
+                                                  <div style={{ color: 'red' }}>-10 point</div>
                                              </Skeleton>
                                         </List.Item>
                                    )}

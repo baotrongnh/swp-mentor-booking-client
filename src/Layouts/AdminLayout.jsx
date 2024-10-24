@@ -3,6 +3,7 @@ import { PropTypes } from "prop-types";
 import { SidebarAdmin } from "../Components";
 
 function AdminLayout({ children }) {
+     
      return (
           <Row wrap={false}>
                <Col xs={0} md={7} lg={6} xl={5} xxl={3}>

@@ -3,13 +3,23 @@ import PropTypes from "prop-types"
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../../Contexts/AuthContext"
 import './ModalBookMentor.scss'
+import { useQuery } from "@tanstack/react-query"
+import { getAvailableSlot } from "../../../apis/mentor"
 
 function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
      const [isValidate, setIsValidate] = useState(false)
-     const [tab, setTab] = useState('2')
+     const [tab, setTab] = useState('1')
      const [dateCustom, setDateCustom] = useState({ date: '0000-00-00', time: '00:00:00' })
      const [displayDate, setDisplayDate] = useState({ date: 'DD-MM-YYYY', time: '00:00' })
      const { currentUser, setCurrentUser } = useContext(AuthContext)
+
+     const { data: listAvailableSlot } = useQuery({
+          queryKey: [`available-slot-${currentIdMentor}`, currentIdMentor],
+          queryFn: () => getAvailableSlot(currentIdMentor),
+          enabled: !!currentIdMentor
+     })
+
+     console.log(listAvailableSlot)
 
      const onChangeTabs = (key) => {
           setTab(key)
@@ -19,9 +29,9 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
      useEffect(() => {
           if (tab === '2') {
                if (dateCustom.date !== '0000-00-00' && dateCustom.time !== '00:00:00') {
-                    setIsValidate(true);
+                    setIsValidate(true)
                } else {
-                    setIsValidate(false);
+                    setIsValidate(false)
                }
           } else {
                setIsValidate(false)
@@ -69,7 +79,7 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
                     footer={false}
                >
                     <div className="inside-modal-book">
-                         <Tabs style={{ width: '100%' }} defaultActiveKey="2" items={itemTabs} onChange={onChangeTabs} />
+                         <Tabs style={{ width: '100%' }} defaultActiveKey="1" items={itemTabs} onChange={onChangeTabs} />
 
                          <div className="select-time-block" >
                               {tab === '1'

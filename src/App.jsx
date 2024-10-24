@@ -1,16 +1,16 @@
-import { Fragment, useContext } from "react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import DefaultLayout from "./Layouts/DefaultLayout";
-import { adminRoutes, AdminRoutesAuth, privateRoutes, PrivateRoutesAuth, publicRoutes } from "./Routes";
-import { AuthContext } from "./Contexts/AuthContext";
-import { Loading } from "./Components";
-import { AppContext } from "./Contexts/AppContext";
+import { Fragment, useContext } from "react"
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom"
+import { Loading } from "./Components"
+import { AppContext } from "./Contexts/AppContext"
+import { AuthContext } from "./Contexts/AuthContext"
+import DefaultLayout from "./Layouts/DefaultLayout"
+import { adminRoutes, AdminRoutesAuth, privateRoutes, PrivateRoutesAuth, publicRoutes } from "./Routes"
 
 function App() {
   const { isFetchData } = useContext(AuthContext)
   const { theme } = useContext(AppContext)
 
-  if (isFetchData) return <Loading />;
+  if (isFetchData) return <Loading />
 
   return (
     <div className={`App ${theme}`}>
@@ -20,9 +20,9 @@ function App() {
             const Page = route.element
             let Layout = DefaultLayout
             if (route.layout) {
-              Layout = route.layout;
+              Layout = route.layout
             } else if (route.layout === null) {
-              Layout = Fragment;
+              Layout = Fragment
             }
             return (
               <Route key={index} path={route.path} element={<Layout> <Page /> </Layout>} />
@@ -30,12 +30,12 @@ function App() {
           })}
 
           {privateRoutes.map((route, index) => {
-            let Page = route.element;
-            let Layout = DefaultLayout;
+            let Page = route.element
+            let Layout = DefaultLayout
             if (route.layout === null) {
-              Layout = Fragment;
+              Layout = Fragment
             } else if (route.layout) {
-              Layout = route.layout;
+              Layout = route.layout
             }
             return (
               <Route
@@ -48,12 +48,12 @@ function App() {
 
           {/* ADMIN ROUTES */}
           {adminRoutes.map((route, index) => {
-            let Page = route.element;
-            let Layout = DefaultLayout;
+            let Page = route.element
+            let Layout = DefaultLayout
             if (route.layout === null) {
               Layout = Fragment;
             } else if (route.layout) {
-              Layout = route.layout;
+              Layout = route.layout
             }
             return (
               <Route
@@ -66,7 +66,7 @@ function App() {
         </Routes>
       </Router>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

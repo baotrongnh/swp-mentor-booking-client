@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "axios"
 
 const axiosClient = (token) => {
      const instance = axios.create({
@@ -6,14 +6,14 @@ const axiosClient = (token) => {
           headers: {
                Authorization: token
           }
-     });
+     })
 
      instance.interceptors.response.use(
           response => response.data,
           error => Promise.reject(error)
-     );
+     )
 
-     return instance;
+     return instance
 }
 
-export default axiosClient;
+export default axiosClient

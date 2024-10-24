@@ -1,7 +1,7 @@
 export const getToken = () => {
-     return localStorage.getItem('token');
+     return localStorage.getItem('token')
 }
 
 export const deleteToken = () => {
-     localStorage.removeItem('token');
+     localStorage.removeItem('token')
 }

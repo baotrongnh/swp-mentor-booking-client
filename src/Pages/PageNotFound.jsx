@@ -1,10 +1,10 @@
-import { Button, Flex, Result } from "antd";
-import { useNavigate } from "react-router-dom";
+import { Button, Flex, Result } from "antd"
+import { useNavigate } from "react-router-dom"
 
 function PageNotFound() {
-     const navigate = useNavigate();
+     const navigate = useNavigate()
      const handleBack = () => {
-          navigate(-1);
+          navigate(-1)
      }
      return (
           <Flex style={{ height: '100vh', width: '100vw' }} justify="center" align="center">
@@ -15,7 +15,7 @@ function PageNotFound() {
                     extra={<Button onClick={handleBack} type="primary">Back</Button>}
                />
           </Flex>
-     );
+     )
 }
 
 export default PageNotFound;

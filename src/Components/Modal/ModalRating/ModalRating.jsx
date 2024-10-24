@@ -1,32 +1,41 @@
-import { useMutation } from "@tanstack/react-query";
-import { Flex, Modal, Rate } from "antd";
-import TextArea from "antd/es/input/TextArea";
-import PropTypes from "prop-types";
-import { useContext, useState } from "react";
-import { ratingMentor } from "../../../apis/mentor";
-import { AuthContext } from "../../../Contexts/AuthContext";
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { Flex, Modal, Rate } from "antd"
+import TextArea from "antd/es/input/TextArea"
+import PropTypes from "prop-types"
+import { useContext, useState } from "react"
+import { ratingMentor } from "../../../apis/mentor"
+import { AuthContext } from "../../../Contexts/AuthContext"
 
 function ModalRatingMentor({ mentorId, modalOpen, setModalOpen }) {
-     const { currentUser } = useContext(AuthContext);
-     const [feedback, setFeedback] = useState({ studentId: currentUser?.id, mentorId, rating: '', text: '' });
-     const mutation = useMutation({ mutationFn: () => ratingMentor(feedback) });
+     const queryClient = useQueryClient()
+     const { currentUser } = useContext(AuthContext)
+     const [feedback, setFeedback] = useState({ studentId: currentUser?.accountId, mentorId, rating: '', text: '' })
+     const mutation = useMutation({
+          mutationFn: () => ratingMentor(feedback),
+          onSuccess: () => {
+               queryClient.invalidateQueries([`rating-list-${mentorId}`])
+          },
+          onError: (error) => {
+               console.log(error)
+          }
+     });
 
      const handleOk = () => {
           if (feedback.rating == '') {
-               console.log('isValidate?');
+               console.log('isValidate?')
           } else {
-               mutation.mutateAsync();
-               console.log(feedback);
-               setModalOpen(false);
+               mutation.mutateAsync()
+               console.log(feedback)
+               setModalOpen(false)
           }
-     };
+     }
 
      const onChangeFeedback = (e) => {
-          setFeedback({ ...feedback, text: e.target.value });
+          setFeedback({ ...feedback, text: e.target.value })
      }
 
      const onChangeRating = (value) => {
-          setFeedback({ ...feedback, rating: value });
+          setFeedback({ ...feedback, rating: value })
      }
 
      return (
@@ -58,10 +67,10 @@ function ModalRatingMentor({ mentorId, modalOpen, setModalOpen }) {
                     </Flex>
                </Modal>
           </div>
-     );
+     )
 }
 
-export default ModalRatingMentor;
+export default ModalRatingMentor
 
 ModalRatingMentor.propTypes = {
      studentId: PropTypes.any,

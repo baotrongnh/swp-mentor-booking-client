@@ -6,7 +6,7 @@ import defaultAvatar from '../../../../assets/Photos/avatar/default_avatar.jpg';
 import './RatingView.scss';
 
 function RatingView({ id, setModalRatingOpen, isCurrentUser }) {
-     const { data, isLoading } = useQuery({ queryKey: ['skill-mentor', id], queryFn: () => getFeedback(id) });
+     const { data, isLoading } = useQuery({ queryKey: [`rating-list-${id}`, id], queryFn: () => getFeedback(id) });
 
      if (isLoading) {
           return <Skeleton />
@@ -21,7 +21,7 @@ function RatingView({ id, setModalRatingOpen, isCurrentUser }) {
                               <p className="number-rating">{data?.averageRating === 5 ? `${data?.averageRating}.0` : data?.averageRating}</p>
                               <Rate style={{ fontSize: '4rem' }} disabled defaultValue={0} value={data?.averageRating} allowHalf />
                               <p className='total-rating'>{`(${data?.feedbacks.length} Reviews)`}</p>
-                              {!isCurrentUser && 
+                              {!isCurrentUser &&
                                    <div className="write-feedback">
                                         <h1 className="title-write-feedback">Write your Review</h1>
                                         <p className="description">Share your feedback and help create a better booking experience for everyone.</p>
@@ -39,35 +39,13 @@ function RatingView({ id, setModalRatingOpen, isCurrentUser }) {
                                              <div className='info-block'>
                                                   <img className='avatar' src={defaultAvatar} alt="" />
                                                   <div className='text-block'>
-                                                       <h1 className='name'>Bao trong</h1>
-                                                       <p className="date">12/12/1212</p>
+                                                       <h1 className='name'>{feedback.studentName}</h1>
+                                                       <p className="date">{feedback.createdAt}</p>
                                                   </div>
                                              </div>
 
                                              <Flex align='center' gap='small'>
-                                                  <p style={{ fontWeight: '600' }}>4.5</p>
-                                                  <Rate style={{ fontSize: '2rem' }} disabled defaultValue={0} value={feedback.rating} allowHalf />
-                                             </Flex>
-                                        </div>
-
-                                        <p className="comment">{feedback.text}</p>
-                                   </div>
-                              ))}
-
-                              {data?.feedbacks.map((feedback, index) => (
-                                   <div className="review-item" key={index}>
-                                        <div className='top-block'>
-                                             <div className='info-block'>
-                                                  <img className='avatar' src={defaultAvatar} alt="" />
-
-                                                  <div className='text-block'>
-                                                       <h1 className='name'>Bao trong</h1>
-                                                       <p className="date">12/12/1212</p>
-                                                  </div>
-                                             </div>
-
-                                             <Flex align='center' gap='small'>
-                                                  <p style={{ fontWeight: '600' }}>4.5</p>
+                                                  <p style={{ fontWeight: '600' }}>{feedback.rating}</p>
                                                   <Rate style={{ fontSize: '2rem' }} disabled defaultValue={0} value={feedback.rating} allowHalf />
                                              </Flex>
                                         </div>

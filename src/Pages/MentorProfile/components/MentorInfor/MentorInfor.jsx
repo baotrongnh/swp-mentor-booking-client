@@ -1,34 +1,34 @@
-import { Button, Col, Image, Rate, Row, Tag, Typography } from "antd";
-import PropTypes from "prop-types";
-import { useEffect, useRef, useState } from "react";
-import defaultAvatar2 from '../../../../assets/Photos/avatar/default_avatar_2.jpg';
-import './MentorInfor.scss';
+import { Button, Col, Image, Rate, Row, Tag, Typography } from "antd"
+import PropTypes from "prop-types"
+import { useEffect, useRef, useState } from "react"
+import defaultAvatar2 from '../../../../assets/Photos/avatar/default_avatar_2.jpg'
+import './MentorInfor.scss'
 
 function MentorInfor({ setModalOpen, mentorInfor, setCurrentTab, isCurrentUser }) {
-     const skills = ['ReactJS', 'NodeJS'];
-     const descriptionRef = useRef(null);
-     const [width, setWidth] = useState(window.innerWidth);
-     const [isShowMore, setIsShowMore] = useState(false);
+     const skills = ['ReactJS', 'NodeJS']
+     const descriptionRef = useRef(null)
+     const [width, setWidth] = useState(window.innerWidth)
+     const [isShowMore, setIsShowMore] = useState(false)
 
      useEffect(() => {
           const handleResize = () => {
-               setWidth(window.innerWidth);
+               setWidth(window.innerWidth)
           };
-          window.addEventListener('resize', handleResize);
+          window.addEventListener('resize', handleResize)
           return () => {
-               window.removeEventListener('resize', handleResize);
-          };
-     }, []);
+               window.removeEventListener('resize', handleResize)
+          }
+     }, [])
 
      useEffect(() => {
           if (descriptionRef.current) {
-               const isOverflow = descriptionRef.current.scrollHeight > descriptionRef.current.clientHeight;
-               setIsShowMore(isOverflow);
+               const isOverflow = descriptionRef.current.scrollHeight > descriptionRef.current.clientHeight
+               setIsShowMore(isOverflow)
           }
-     }, [width]);
+     }, [width])
 
      const handleOpenModal = () => {
-          setModalOpen(true);
+          setModalOpen(true)
      }
 
      return (
@@ -76,10 +76,10 @@ function MentorInfor({ setModalOpen, mentorInfor, setCurrentTab, isCurrentUser }
                     </Row>
                </div>
           </div>
-     );
+     )
 }
 
-export default MentorInfor;
+export default MentorInfor
 
 MentorInfor.propTypes = {
      setModalOpen: PropTypes.func,
