@@ -1,26 +1,21 @@
 import { DownOutlined } from '@ant-design/icons'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { Button, Col, Drawer, Dropdown, Flex, Input, Row, Select, Switch } from 'antd'
-import { useContext, useEffect, useState } from 'react'
+import { Button, Col, Drawer, Dropdown, Flex, Row, Select, Switch } from 'antd'
+import { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import defaultAvatar from '../../assets/Photos/avatar/default_avatar.jpg'
 import logo from '../../assets/Photos/logo/logo.png'
 import { AppContext } from '../../Contexts/AppContext'
 import { AuthContext } from '../../Contexts/AuthContext'
-import useDebounce from '../../hooks/useDebounce'
 import { deleteToken } from '../../utils/storageUtils'
 import { ModalBecomeMentor } from '../Modal'
 import './HeaderMentor.scss'
 
 function HeaderMentor() {
      const { t, i18n } = useTranslation()
-     const location = useLocation()
-     const navigate = useNavigate()
-     const { setFilterMentor, filterMentor, setTheme, theme } = useContext(AppContext)
+     const { setTheme, theme } = useContext(AppContext)
      const { currentUser, setCurrentUser } = useContext(AuthContext)
-     const [searchValue, setSearchValue] = useState(null)
-     const debounceSearchValue = useDebounce(searchValue, 800)
      const [openModalBeMentor, setOpenModalBeMentor] = useState(false)
      const [openDrawer, setOpenDrawer] = useState(false)
      const [openDropDownAccount, setOpenDropDownAccount] = useState(false)
@@ -35,18 +30,6 @@ function HeaderMentor() {
           if (info.source === 'trigger' || nextOpen) {
                setOpenDropDownAccount(nextOpen)
           }
-     }
-
-     const onSearch = (value) => {
-          const url = '/browser-mentors'
-          if (location.pathname !== url) {
-               navigate(url)
-          }
-          setFilterMentor({ ...filterMentor, search: value })
-     }
-
-     const handleChange = (e) => {
-          setSearchValue(e.target.value)
      }
 
      const handleLogout = () => {
@@ -69,12 +52,6 @@ function HeaderMentor() {
           i18n.changeLanguage(value)
      }
 
-     useEffect(() => {
-          if (debounceSearchValue !== null) {
-               setFilterMentor({ ...filterMentor, search: debounceSearchValue })
-          }
-     }, [debounceSearchValue])
-
      const moreMenuDropDown = [
           {
                label: <Link>Add member</Link>,
@@ -95,10 +72,6 @@ function HeaderMentor() {
           {
                label: <Link to='/wallet'><Flex gap='small' align='center'>{t('wallet')}: <Icon icon="twemoji:coin" /><p> 99</p></Flex></Link>,
                key: '1',
-          },
-          {
-               label: <Link onClick={() => setOpenModalBeMentor(true)}>{t('become a mentor')}</Link>,
-               key: '2',
           },
           { type: 'divider' },
           {
@@ -163,7 +136,7 @@ function HeaderMentor() {
 
                          <Col xs={0} md={0} lg={12}>
                               <div className='btn-block'>
-                                   <NavLink to='/browser-mentors' className='navbar-link'>{t('browser mentors')}</NavLink>
+                                   <NavLink to='/pending-booking' className='navbar-link'>{t('pending booking')}</NavLink>
                                    <NavLink to={`/schedule/${currentUser?.id}`} className='navbar-link'>{t('schedule')}</NavLink>
                                    <Dropdown
                                         menu={{ items: moreMenuDropDown }}

@@ -1,4 +1,4 @@
-import { DownOutlined } from '@ant-design/icons'
+import { DownOutlined, SettingOutlined } from '@ant-design/icons'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { Button, Col, Drawer, Dropdown, Flex, Input, Row, Select, Switch } from 'antd'
 import { useContext, useEffect, useState } from 'react'
@@ -139,6 +139,45 @@ function Header() {
           },
      ]
 
+     const guestMenuDropDown = [
+          { type: 'divider' },
+          {
+               label: <Flex gap='small' justify='space-between'>
+                    {t('theme')}: <Switch
+                         defaultChecked={theme === 'dark-theme'}
+                         onChange={handleChangeTheme}
+                         checkedChildren="Dark"
+                         unCheckedChildren="Light"
+                    />
+               </Flex>,
+               key: '4'
+          },
+          {
+               label: <Flex gap='small' align='center' justify='space-between'>
+                    {t('language')}: <Select
+                         defaultValue="en"
+                         onChange={handleChangeLanguage}
+                         options={[
+                              {
+                                   value: 'en',
+                                   label: 'EN',
+                              },
+                              {
+                                   value: 'vi',
+                                   label: 'VN',
+                              }
+                         ]}
+                    />
+               </Flex>,
+               key: '5'
+          },
+          { type: 'divider' },
+          {
+               label: <Link onClick={handleLogout}>{t('Contact')}</Link>,
+               key: '3',
+          },
+     ]
+
      return (
           <div className="header">
                <div className="container">
@@ -174,42 +213,65 @@ function Header() {
                          </Col>
 
                          <Col xs={0} md={0} lg={11}>
-                              <div className='btn-block'>
-                                   <NavLink to='/browser-mentors' className='navbar-link'>{t('browser mentors')}</NavLink>
-                                   <NavLink to={`/schedule/${currentUser?.id}`} className='navbar-link'>{t('schedule')}</NavLink>
-                                   <Dropdown
-                                        menu={{ items: moreMenuDropDown }}
-                                        placement='bottom'
-                                        trigger={['click']}
-                                   >
-                                        <Link className='navbar-link' onClick={(e) => e.preventDefault()}>
-                                             {t('more')} <DownOutlined />
-                                        </Link>
-                                   </Dropdown>
-
-                                   <div >
-                                        <Flex align='center'>
-                                             <Link to='/student/profile' className='navbar-link account'>
-                                                  {currentUser?.imgPath
-                                                       ? <img className='avatar' src={currentUser?.imgPath} alt="" onError={(e) => e.target.src = defaultAvatar} />
-                                                       : <Icon className='icon' icon="material-symbols-light:account-circle" />
-                                                  }
+                              {currentUser
+                                   ?
+                                   <div className='btn-block'>
+                                        <NavLink to='/browser-mentors' className='navbar-link'>{t('browser mentors')}</NavLink>
+                                        <NavLink to={`/schedule/${currentUser?.id}`} className='navbar-link'>{t('schedule')}</NavLink>
+                                        <Dropdown
+                                             menu={{ items: moreMenuDropDown }}
+                                             placement='bottom'
+                                             trigger={['click']}
+                                        >
+                                             <Link className='navbar-link' onClick={(e) => e.preventDefault()}>
+                                                  {t('more')} <DownOutlined />
                                              </Link>
+                                        </Dropdown>
+
+                                        <div >
+                                             <Flex align='center'>
+                                                  <Link to='/student/profile' className='navbar-link account'>
+                                                       {currentUser?.imgPath
+                                                            ? <img className='avatar' src={currentUser?.imgPath} alt="" onError={(e) => e.target.src = defaultAvatar} />
+                                                            : <Icon className='icon' icon="material-symbols-light:account-circle" />
+                                                       }
+                                                  </Link>
+                                                  <Dropdown
+                                                       menu={{ items: accountMenuDropDown, onClick: handleMenuAccountClick }}
+                                                       placement='bottomRight'
+                                                       trigger={['click']}
+                                                       arrow={true}
+                                                       onOpenChange={handleOpenAccountChange}
+                                                       open={openDropDownAccount}
+                                                  >
+                                                       <div>
+                                                            <Icon style={{ cursor: 'pointer' }} icon="icon-park-outline:down" />
+                                                       </div>
+                                                  </Dropdown>
+                                             </Flex>
+                                        </div>
+                                   </div>
+                                   :
+                                   <div className='btn-block guest'>
+                                        <NavLink to='/browser-mentors' className='navbar-link'>{t('browser mentors')}</NavLink>
+
+                                        <Flex align='center' gap='middle'>
+                                             <Link to='/login'><Button type='primary'>Login</Button></Link>
                                              <Dropdown
-                                                  menu={{ items: accountMenuDropDown, onClick: handleMenuAccountClick }}
+                                                  menu={{ items: guestMenuDropDown, onClick: handleMenuAccountClick }}
                                                   placement='bottomRight'
                                                   trigger={['click']}
                                                   arrow={true}
                                                   onOpenChange={handleOpenAccountChange}
                                                   open={openDropDownAccount}
                                              >
-                                                  <div>
-                                                       <Icon style={{ cursor: 'pointer' }} icon="icon-park-outline:down" />
-                                                  </div>
+                                                  <Link className='navbar-link' onClick={(e) => e.preventDefault()}>
+                                                       <SettingOutlined />
+                                                  </Link>
                                              </Dropdown>
                                         </Flex>
                                    </div>
-                              </div>
+                              }
                          </Col>
                     </Row>
                </div>

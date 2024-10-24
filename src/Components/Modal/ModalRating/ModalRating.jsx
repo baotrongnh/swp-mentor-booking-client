@@ -25,7 +25,6 @@ function ModalRatingMentor({ mentorId, modalOpen, setModalOpen }) {
                console.log('isValidate?')
           } else {
                mutation.mutateAsync()
-               console.log(feedback)
                setModalOpen(false)
           }
      }

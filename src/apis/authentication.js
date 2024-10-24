@@ -20,3 +20,9 @@ export const getUserInformation = async () => {
           console.log(`Error at getUserInformation(authentication.js): ${error}`);
      }
 }
+
+export const loginAdmin = async ({ username, password }) => {
+     return await axios.post(`${baseURL}/admin/login/validate`, {
+          username, password
+     })
+}

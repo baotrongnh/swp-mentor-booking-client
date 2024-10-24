@@ -1,12 +1,11 @@
 import PropTypes from 'prop-types'
+import { useContext } from 'react'
 import { Footer, Header } from '../Components'
 import { HeaderMentor } from '../Components/Modal'
-import { useContext } from 'react';
-import { AuthContext } from '../Contexts/AuthContext';
+import { AuthContext } from '../Contexts/AuthContext'
 
 function DefaultLayout({ children }) {
      const { currentUser } = useContext(AuthContext)
-     console.log(currentUser);
      return (
           <>
                {currentUser?.isMentor === 1

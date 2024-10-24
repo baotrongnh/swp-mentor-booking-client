@@ -26,9 +26,10 @@
     .btn-block {
       padding-left: 50px;
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: center;
       color: $text-primary;
+      gap: 20px;
 
       .navbar-link {
         color: $text-primary;

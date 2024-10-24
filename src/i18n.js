@@ -15,6 +15,7 @@ const resources = {
                'theme': 'Theme',
                'language': 'Language',
                'logout': 'Logout',
+               'pending booking': 'Pending bookings',
                //sidebar:
                'skills': 'Skills',
                'rating': 'Rating',
