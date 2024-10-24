@@ -44,6 +44,27 @@ const resources = {
                "booking calendar": "Booking Calendar",
                "month": "Month",
                "year": "Year",
+
+               // New translations for Home.jsx
+               "SWP Mentor Booking": "SWP Mentor Booking",
+               "Find Your Perfect Mentor": "Find Your Perfect Mentor",
+               "Connect with experienced professionals to guide your career": "Connect with experienced professionals to guide your career",
+               "Get Started": "Get Started",
+               "See Our Best Mentor": "See Our Best Mentor",
+               "View Mentor": "View Mentor",
+               "Why Use Our Mentor Booking System?": "Why Use Our Mentor Booking System?",
+               "Expert Guidance": "Expert Guidance",
+               "Connect with experienced professionals who can provide valuable insights and advice tailored to your career goals.": "Connect with experienced professionals who can provide valuable insights and advice tailored to your career goals.",
+               "Flexible Scheduling": "Flexible Scheduling",
+               "Book sessions at your convenience, fitting mentorship into your busy life with ease.": "Book sessions at your convenience, fitting mentorship into your busy life with ease.",
+               "Personalized Learning": "Personalized Learning",
+               "Receive one-on-one attention and customized advice to accelerate your professional growth.": "Receive one-on-one attention and customized advice to accelerate your professional growth.",
+               "Diverse Expertise": "Diverse Expertise",
+               "Access a wide range of mentors across various industries and specializations.": "Access a wide range of mentors across various industries and specializations.",
+               "Career Advancement": "Career Advancement",
+               "Gain insights and strategies to help you climb the career ladder and achieve your professional goals.": "Gain insights and strategies to help you climb the career ladder and achieve your professional goals.",
+               "Networking Opportunities": "Networking Opportunities",
+               "Expand your professional network and open doors to new opportunities through your mentors.": "Expand your professional network and open doors to new opportunities through your mentors."
           }
      },
      vi: {
@@ -88,6 +109,27 @@ const resources = {
                "booking calendar": "Lịch",
                "month": "Tháng",
                "year": "Năm",
+
+               // New translations for Home.jsx
+               "SWP Mentor Booking": "Đặt Lịch Mentor SWP",
+               "Find Your Perfect Mentor": "Tìm Mentor Phù Hợp Với Bạn",
+               "Connect with experienced professionals to guide your career": "Kết nối với các chuyên gia giàu kinh nghiệm để định hướng sự nghiệp của bạn",
+               "Get Started": "Bắt Đầu",
+               "See Our Best Mentor": "Xem Mentor Xuất Sắc Của Chúng Tôi",
+               "View Mentor": "Xem Mentor",
+               "Why Use Our Mentor Booking System?": "Tại Sao Nên Sử Dụng Hệ Thống Đặt Lịch Mentor Của Chúng Tôi?",
+               "Expert Guidance": "Hướng Dẫn Chuyên Nghiệp",
+               "Connect with experienced professionals who can provide valuable insights and advice tailored to your career goals.": "Kết nối với các chuyên gia giàu kinh nghiệm, những người có thể cung cấp những hiểu biết và lời khuyên quý giá phù hợp với mục tiêu nghề nghiệp của bạn.",
+               "Flexible Scheduling": "Lịch Trình Linh Hoạt",
+               "Book sessions at your convenience, fitting mentorship into your busy life with ease.": "Đặt lịch các buổi học theo sự thuận tiện của bạn, dễ dàng kết hợp việc học hỏi từ mentor vào cuộc sống bận rộn của bạn.",
+               "Personalized Learning": "Học Tập Cá Nhân Hóa",
+               "Receive one-on-one attention and customized advice to accelerate your professional growth.": "Nhận được sự chú ý cá nhân và lời khuyên tùy chỉnh để đẩy nhanh sự phát triển nghề nghiệp của bạn.",
+               "Diverse Expertise": "Chuyên Môn Đa Dạng",
+               "Access a wide range of mentors across various industries and specializations.": "Tiếp cận với nhiều mentor từ các ngành nghề và chuyên môn khác nhau.",
+               "Career Advancement": "Phát Triển Sự Nghiệp",
+               "Gain insights and strategies to help you climb the career ladder and achieve your professional goals.": "Nhận được những hiểu biết sâu sắc và chiến lược để giúp bạn thăng tiến trong sự nghiệp và đạt được mục tiêu nghề nghiệp.",
+               "Networking Opportunities": "Cơ Hội Kết Nối",
+               "Expand your professional network and open doors to new opportunities through your mentors.": "Mở rộng mạng lưới chuyên nghiệp và mở ra cánh cửa cho những cơ hội mới thông qua các mentor của bạn."
           }
      }
 }

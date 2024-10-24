@@ -55,7 +55,7 @@ function StudentProfile() {
                             <Button className='edit-profile-btn custom-btn' onClick={handleToggle} style={{ marginTop: '16px' }}>
                                 <Icon icon="uil:edit" style={{ width: '1.8rem', height: '1.8rem' }} /> {t('edit-profile')}
                             </Button>
-                            <Button className='become-mentor-btn custom-btn link-item' type="primary" style={{ marginTop: '1.8rem' }} onClick={() => {
+                            <Button className='gradient-btn custom-btn link-item' type="primary" style={{ marginTop: '1.8rem' }} onClick={() => {
                                 setOpenModalBeMentor(true)
                             }}
                             >

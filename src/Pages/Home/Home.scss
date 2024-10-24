@@ -28,6 +28,7 @@
       transform: translateX(-50%) translateY(-50%);
       color: aliceblue;
       text-align: center;
+      width: 100%;
 
       h3 {
         font: {
@@ -43,6 +44,7 @@
           size: 7rem;
           weight: 700;
         }
+
 
         text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
         margin-bottom: 1rem;

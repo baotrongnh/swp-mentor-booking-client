@@ -8,18 +8,14 @@ import { AppContext } from '../../Contexts/AppContext';
 function EditProfile({ visible, onClose }) {
     const { currentUser } = useContext(AuthContext);
     const [name, setName] = useState(currentUser.fullName);
-    const [email, setEmail] = useState(currentUser.email);
     const { t } = useContext(AppContext)
     const handleUserNameChange = (e) => {
         setName(e.target.value);
     };
 
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
-    };
 
     const onSave = () => {
-        const savedValues = { name, email }
+        const savedValues = { name }
         console.log('Saved values:', savedValues);
         onClose();
     };
@@ -42,7 +38,7 @@ function EditProfile({ visible, onClose }) {
                             onChange={handleUserNameChange}
                         />
                     </div>
-                    <div className='input-block'>
+                    {/* <div className='input-block'>
                         <label htmlFor="email" className='label email'>
                             Email
                         </label>
@@ -54,7 +50,7 @@ function EditProfile({ visible, onClose }) {
                             placeholder={email}
                             onChange={handleEmailChange}
                         />
-                    </div>
+                    </div> */}
                     <div className="edit-profile-btn">
                         <Button type="primary" className='btn save' onClick={onSave}>
                             {t('save')}
