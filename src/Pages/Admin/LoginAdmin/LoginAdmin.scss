@@ -1,9 +1,25 @@
 .login-admin-page {
+     height: 100vh;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     background-image: url('../../../assets/Photos/background/stacked-peaks-haikei.png');
+     background-size: cover;
+     background-repeat: no-repeat;
 
      .login-block {
-          height: 100vh;
+          background-color: #fff;
+          border-radius: 10px;
+          padding: 40px;
           display: flex;
-          justify-content: center;
           align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          box-shadow: 0 0 20px 3px rgba(175, 175, 175, 0.263);
+
+          .logo {
+               width: 30%;
+               margin: 20px;
+          }
      }
 }

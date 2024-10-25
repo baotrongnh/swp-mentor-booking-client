@@ -183,7 +183,7 @@ function Header() {
           <div className="header">
                <div className="container">
                     <Row className='header-block'>
-                         <Col className='logo-block' xs={12} sm={5} md={4} lg={5}>
+                         <Col className='logo-block' xs={12} sm={6} md={4} lg={5}>
                               <Link to='/'>
                                    <img className='logo-img' src={logo} alt="" />
                               </Link>
@@ -195,7 +195,7 @@ function Header() {
                               </Button>
                          </Col>
 
-                         <Col className='search-block' xs={24} sm={16} md={17} lg={8}>
+                         <Col className='search-block' xs={24} sm={14} md={17} lg={7} xl={9}>
                               <Input.Search
                                    placeholder={t('find mentors')}
                                    onSearch={onSearch}
@@ -207,13 +207,13 @@ function Header() {
                               />
                          </Col>
 
-                         <Col xs={0} sm={3} md={3} lg={0} className='btn-navbar-mobile'>
+                         <Col xs={0} sm={4} md={3} lg={0} className='btn-navbar-mobile'>
                               <Button onClick={() => setOpenDrawer(true)} type='text'>
                                    <Icon className='icon' icon="ic:round-menu" />
                               </Button>
                          </Col>
 
-                         <Col xs={0} md={0} lg={11}>
+                         <Col xs={0} md={0} lg={12} xl={10}>
                               {currentUser
                                    ?
                                    <div className='btn-block'>
@@ -225,7 +225,7 @@ function Header() {
                                              trigger={['click']}
                                         >
                                              <Link className='navbar-link' onClick={(e) => e.preventDefault()}>
-                                                  {t('more')} <DownOutlined />
+                                                  {t('more')}<DownOutlined />
                                              </Link>
                                         </Dropdown>
 

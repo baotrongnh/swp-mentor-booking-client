@@ -7,7 +7,7 @@ import PrivateRoutesAuth from "./PrivateRoutesAuth"
 const publicRoutes = [
   { path: '/*', element: PageNotFound, layout: null },
   { path: '/login', element: Login, layout: null },
-  { path: '/login/admin', element: LoginAdmin, layout: null },
+  { path: '/admin/login', element: LoginAdmin, layout: null },
   { path: '/', element: Home },
 ]
 

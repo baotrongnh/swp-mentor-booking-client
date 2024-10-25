@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { Breadcrumb, Button, Col, DatePicker, Pagination, Row, Skeleton } from 'antd'
+import { Breadcrumb, Button, Col, DatePicker, Flex, Pagination, Row, Skeleton } from 'antd'
 import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { searchMentor } from '../../apis/mentor'
@@ -46,14 +46,6 @@ function MentorListPage() {
                     </div>
                     <Row>
                          <Col xs={0} md={7} lg={6} className='left-sidebar'>
-                              <Button
-                                   onClick={() => {
-                                        setFilterMentor({ ...filterMentor, search: '', skills: [], star: '', dates: [] })
-                                        setTimeAntd(null)
-                                   }}
-                              >
-                                   Clear
-                              </Button>
                               <div className='skill-search-block'>
                                    <SkillSearch />
                               </div>
@@ -73,6 +65,19 @@ function MentorListPage() {
                                         value={timeAntd}
                                    />
                               </div>
+
+                              <Flex justify='center' style={{padding: '20px'}}>
+                                   <Button
+                                        onClick={() => {
+                                             setFilterMentor({ ...filterMentor, search: '', skills: [], star: '', dates: [] })
+                                             setTimeAntd(null)
+                                        }}
+                                        danger
+                                        disabled={filterMentor.star == '' && filterMentor.skills.length === 0 && filterMentor.dates.length === 0}
+                                   >
+                                        x Clear All Filter
+                                   </Button>
+                              </Flex>
                          </Col>
 
                          <Col xs={24} md={17} lg={18} className='mentor-block'>

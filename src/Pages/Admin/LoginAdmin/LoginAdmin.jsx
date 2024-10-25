@@ -2,6 +2,7 @@ import { useMutation } from '@tanstack/react-query'
 import { Button, Checkbox, Form, Input } from 'antd'
 import { loginAdmin } from '../../../apis/authentication'
 import './LoginAdmin.scss'
+import logo from '../../../assets/Photos/logo/logo.png'
 
 function LoginAdmin() {
      const mutation = useMutation({ mutationFn: (values) => loginAdmin(values) })
@@ -14,9 +15,11 @@ function LoginAdmin() {
      const onFinishFailed = (errorInfo) => {
           console.log('Failed:', errorInfo)
      }
+     
      return (
           <div className='login-admin-page'>
                <div className="login-block">
+                    <img className='logo' src={logo} alt="" />
                     <Form
                          name="basic"
                          labelCol={{
@@ -60,17 +63,6 @@ function LoginAdmin() {
                               ]}
                          >
                               <Input.Password />
-                         </Form.Item>
-
-                         <Form.Item
-                              name="remember"
-                              valuePropName="checked"
-                              wrapperCol={{
-                                   offset: 8,
-                                   span: 16,
-                              }}
-                         >
-                              <Checkbox>Remember me</Checkbox>
                          </Form.Item>
 
                          <Form.Item
