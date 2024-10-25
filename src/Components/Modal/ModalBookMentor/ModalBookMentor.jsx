@@ -75,11 +75,9 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
      ]
 
      const disabledDate = (current) => {
-          // Lấy ngày hiện tại
-          const today = new Date();
-          // So sánh ngày trong lịch với ngày hôm nay
-          return current && current < new Date(today.getFullYear(), today.getMonth(), today.getDate());
-     };
+          const today = new Date()
+          return current && current < new Date(today.getFullYear(), today.getMonth(), today.getDate())
+     }
 
      return (
           <div className="modal-book-mentor">

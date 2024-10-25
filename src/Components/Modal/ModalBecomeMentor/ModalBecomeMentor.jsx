@@ -1,24 +1,53 @@
-import { Checkbox, Modal } from 'antd'
-import './ModalBecomeMentor.scss'
+import { DownOutlined } from '@ant-design/icons'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { Checkbox, Modal, Select } from 'antd'
 import PropTypes from 'prop-types'
-import { useContext, useState } from 'react'
-import { AuthContext } from '../../../Contexts/AuthContext';
+import { useContext, useEffect, useState } from 'react'
+import { loadAllSkills, registerBecomeMentor } from '../../../apis/mentor'
+import { AuthContext } from '../../../Contexts/AuthContext'
+import './ModalBecomeMentor.scss'
 
 export default function ModalBecomeMentor({ modalOpen, setModalOpen }) {
-     const [isValidate, setIsValidate] = useState(false);
-     const { currentUser } = useContext(AuthContext);
+     const options = []
+     const [isValidate, setIsValidate] = useState(false)
+     const { currentUser } = useContext(AuthContext)
+     const [listSkillSelect, setListSkillSelect] = useState([])
+     const { data: listSkill } = useQuery({ queryKey: ['list-skills'], queryFn: loadAllSkills })
+     const mutation = useMutation({ mutationFn: ({ listSkillSelect, accountId }) => registerBecomeMentor(listSkillSelect, accountId) })
+     const [isAgree, setIsAgree] = useState(false)
 
-     const onChangeCheckbox = (e) => {
-          if (e.target.checked) {
-               setIsValidate(true);
+     listSkill?.skills.forEach((skill) => {
+          options.push({
+               label: skill.name,
+               value: skill.id
+          })
+     })
+
+     useEffect(() => {
+          if (listSkillSelect.length > 0 && isAgree) {
+               setIsValidate(true)
           } else {
-               setIsValidate(false);
+               setIsValidate(false)
           }
+     }, [listSkillSelect, isAgree])
+
+     const handleChange = (value) => {
+          setListSkillSelect(value)
      }
 
      const handleSend = () => {
-          console.log(currentUser.id);
+          const accountId = currentUser.accountId
+          mutation.mutate({ listSkillSelect, accountId })
      }
+
+     const suffix = (
+          <>
+               <span>
+                    {listSkillSelect.length} / {5}
+               </span>
+               <DownOutlined />
+          </>
+     )
 
      return (
           <Modal
@@ -28,9 +57,22 @@ export default function ModalBecomeMentor({ modalOpen, setModalOpen }) {
                onOk={handleSend}
                onCancel={() => setModalOpen(false)}
                okText='Send'
-               okButtonProps={{disabled: !isValidate}}
+               okButtonProps={{ disabled: !isValidate }}
           >
-               <Checkbox onChange={onChangeCheckbox}>Agree to our terms</Checkbox>
+               <h1 style={{ fontWeight: '400', paddingTop: '10px' }}>Select your main skills</h1>
+               <Select
+                    mode="multiple"
+                    allowClear
+                    style={{
+                         width: '100%',
+                    }}
+                    placeholder="Please select at least 1 skill"
+                    onChange={handleChange}
+                    options={options}
+                    maxCount={5}
+                    suffixIcon={suffix}
+               />
+               <Checkbox onChange={(e) => setIsAgree(e.target.checked)} checked={isAgree} style={{ padding: '20px 0 0 0' }}>Agree to our terms</Checkbox>
           </Modal>
      )
 }

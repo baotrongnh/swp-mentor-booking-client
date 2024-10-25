@@ -64,3 +64,10 @@ export const createSchedule = async ({ mentorId, description, slotStart }) => {
           slotStart, mentorId, description
      })
 }
+
+export const registerBecomeMentor = async (skills, accountId) => {
+     const token = getToken()
+     return await axiosClient(token).post('/student/apply-mentor', {
+          skills, accountId
+     })
+}
