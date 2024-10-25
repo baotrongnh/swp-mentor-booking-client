@@ -1,10 +1,11 @@
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { Button, DatePicker, Modal, Tabs } from "antd"
 import PropTypes from "prop-types"
 import { useContext, useEffect, useState } from "react"
+import { bookingMentor } from "../../../apis/booking"
+import { getAvailableSlot } from "../../../apis/mentor"
 import { AuthContext } from "../../../Contexts/AuthContext"
 import './ModalBookMentor.scss'
-import { useQuery } from "@tanstack/react-query"
-import { getAvailableSlot } from "../../../apis/mentor"
 
 function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
      const [isValidate, setIsValidate] = useState(false)
@@ -12,14 +13,13 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
      const [dateCustom, setDateCustom] = useState({ date: '0000-00-00', time: '00:00:00' })
      const [displayDate, setDisplayDate] = useState({ date: 'DD-MM-YYYY', time: '00:00' })
      const { currentUser, setCurrentUser } = useContext(AuthContext)
+     const mutation = useMutation({ mutationFn: ({ mentorId, studentId, startTime }) => bookingMentor(mentorId, studentId, startTime) })
 
      const { data: listAvailableSlot } = useQuery({
           queryKey: [`available-slot-${currentIdMentor}`, currentIdMentor],
           queryFn: () => getAvailableSlot(currentIdMentor),
           enabled: !!currentIdMentor
      })
-
-     console.log(listAvailableSlot)
 
      const onChangeTabs = (key) => {
           setTab(key)
@@ -52,8 +52,13 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
 
      const handleBookMentor = () => {
           console.log(`Time booking: ${dateCustom.date} ${dateCustom.time}`)
-          console.log('StudentID: ' + currentUser.id)
+          console.log('StudentID: ' + currentUser.accountId)
           console.log('MentorID: ' + currentIdMentor)
+          mutation.mutate({
+               mentorId: currentIdMentor,
+               studentId: currentUser.accountId,
+               startTime: `${dateCustom.date} ${dateCustom.time}`,
+          })
           setCurrentUser({ ...currentUser, point: currentUser.point - 10 })
           setModalOpen(false)
      }
@@ -68,6 +73,13 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
                label: 'Custom Schedule',
           }
      ]
+
+     const disabledDate = (current) => {
+          // Lấy ngày hiện tại
+          const today = new Date();
+          // So sánh ngày trong lịch với ngày hôm nay
+          return current && current < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+     };
 
      return (
           <div className="modal-book-mentor">
@@ -96,7 +108,7 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
                                         <p className="time-view">Scheduled for <b>{displayDate.date}</b> at <b>{displayDate.time}</b></p>
 
                                         <div className='select-block'>
-                                             <DatePicker format='DD-MM-YYYY' className='pick-date' onChange={handleDatePick} />
+                                             <DatePicker disabledDate={disabledDate} format='DD-MM-YYYY' className='pick-date' onChange={handleDatePick} />
                                              <DatePicker className='pick-time' picker='time' onChange={handleTimePick} />
                                         </div>
                                    </div>

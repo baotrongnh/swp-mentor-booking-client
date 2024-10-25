@@ -17,7 +17,7 @@ function Header() {
      const { t, i18n } = useTranslation()
      const location = useLocation()
      const navigate = useNavigate()
-     const { setFilterMentor, filterMentor, setTheme, theme } = useContext(AppContext)
+     const { setFilterMentor, filterMentor, setTheme, theme, defaultLanguage } = useContext(AppContext)
      const { currentUser, setCurrentUser } = useContext(AuthContext)
      const [searchValue, setSearchValue] = useState(null)
      const debounceSearchValue = useDebounce(searchValue, 800)
@@ -67,6 +67,7 @@ function Header() {
 
      const handleChangeLanguage = (value) => {
           i18n.changeLanguage(value)
+          localStorage.setItem('language', value)
      }
 
      useEffect(() => {
@@ -115,7 +116,7 @@ function Header() {
           {
                label: <Flex gap='small' align='center' justify='space-between'>
                     {t('language')}: <Select
-                         defaultValue="en"
+                         defaultValue={defaultLanguage}
                          onChange={handleChangeLanguage}
                          options={[
                               {
@@ -155,7 +156,7 @@ function Header() {
           {
                label: <Flex gap='small' align='center' justify='space-between'>
                     {t('language')}: <Select
-                         defaultValue="en"
+                         defaultValue={defaultLanguage}
                          onChange={handleChangeLanguage}
                          options={[
                               {

@@ -6,9 +6,10 @@ export const AppContext = createContext({})
 
 export const AppProvider = ({ children }) => {
      const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light-theme')
-     const [filterMentor, setFilterMentor] = useState({ search: '', skills: [], star: '', page: 1 })
+     const [filterMentor, setFilterMentor] = useState({ search: '', skills: [], star: '', page: 1, dates: [] })
      const [mentorList, setMentorList] = useState([])
      const { t, i18n } = useTranslation()
+     const defaultLanguage = localStorage.getItem('language')
 
      return <AppContext.Provider
           value={{
@@ -19,7 +20,8 @@ export const AppProvider = ({ children }) => {
                mentorList,
                setMentorList,
                t,
-               i18n
+               i18n,
+               defaultLanguage
           }}
      >
           {children}

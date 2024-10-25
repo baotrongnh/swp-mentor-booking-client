@@ -7,9 +7,9 @@ import { Loading } from "../../Components"
 import { ModalBookMentor, ModalRatingMentor } from '../../Components/Modal'
 import { AuthContext } from '../../Contexts/AuthContext'
 import { getProfileMentor } from "../../apis/mentor"
+import PageError from '../PageError'
 import './MentorProfile.scss'
 import { AboutMentor, MentorInfor, RatingView, Skills } from "./components"
-import PageError from '../PageError'
 
 function MentorProfile() {
      const { currentUser } = useContext(AuthContext)
@@ -102,7 +102,7 @@ function MentorProfile() {
                     mentorId={id}
                />
           </div>
-     );
+     )
 }
 
-export default MentorProfile;
+export default MentorProfile

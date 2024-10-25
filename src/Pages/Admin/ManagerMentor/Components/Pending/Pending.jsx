@@ -2,21 +2,23 @@ import { Icon } from "@iconify/react/dist/iconify.js"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { Button, Dropdown, Table, Tag } from "antd"
 import { useEffect, useState } from "react"
-import { activeMentor, getListDisableMentor } from "../../../../../apis/admin"
+import { disableMentor, getListMentor } from "../../../../../apis/admin"
 import { loadAllSkills } from "../../../../../apis/mentor"
 import { Loading } from "../../../../../Components"
 
-function DisableMentor() {
-     const queryClient = useQueryClient()
+function Pending() {
      const [selectedRowKeys, setSelectedRowKeys] = useState([])
+     const queryClient = useQueryClient()
      const { data: listSkills } = useQuery({ queryKey: ['list-skills'], queryFn: loadAllSkills })
-     const { data: dataMentors, isLoading } = useQuery({ queryKey: ['list-mentors-disable-admin'], queryFn: getListDisableMentor })
+     const { data: dataMentors, isLoading } = useQuery({ queryKey: ['list-mentors-admin'], queryFn: getListMentor })
      const [dataSource, setDataSource] = useState([])
-     const mutation = useMutation({ mutationFn: (mentorId) => activeMentor(mentorId) })
+     const mutation = useMutation({ mutationFn: (mentorId) => disableMentor(mentorId) })
+     console.log(listSkills)
+
      useEffect(() => {
           if (dataMentors) {
                setDataSource(
-                    dataMentors?.inactiveMentors?.map((mentor) => ({
+                    dataMentors?.mentorList.map((mentor) => ({
                          key: mentor.id,
                          id: mentor.id,
                          name: mentor.fullName,
@@ -25,15 +27,14 @@ function DisableMentor() {
                          rating: mentor.averageRating || '#',
                          skills: ['ReactJS'],
                     }))
-               );
+               )
           }
      }, [dataMentors])
 
-     const handleActiveMentor = async (mentor) => {
+     const handleDisableMentor = async (mentor) => {
           const data = await mutation.mutateAsync(mentor.id)
-          console.log(data)
           if (data.error_code === 0) {
-               queryClient.invalidateQueries({ queryKey: ['list-mentors-disable-admin'] })
+               queryClient.invalidateQueries({ queryKey: ['list-mentors-admin'] })
           }
      }
 
@@ -42,13 +43,14 @@ function DisableMentor() {
                label: 'Edit',
                key: '0',
                icon: <Icon icon="iconamoon:edit-bold" />,
-               onClick: () => handleActiveMentor(record)
+               onClick: () => handleDisableMentor(record)
           },
           {
-               label: 'Restore',
+               label: 'Delete',
                key: '3',
+               danger: true,
                icon: <Icon icon="weui:delete-outlined" />,
-               onClick: () => handleActiveMentor(record)
+               onClick: () => handleDisableMentor(record)
           },
      ])
 
@@ -119,7 +121,7 @@ function DisableMentor() {
           onSelect: (record, seleted) => console.log(seleted)
      }
 
-     if (isLoading) return (<Loading />)
+     if (isLoading) return (<Loading />);
 
      return (
           <div className="all-mentors">
@@ -134,4 +136,4 @@ function DisableMentor() {
      )
 }
 
-export default DisableMentor
+export default Pending

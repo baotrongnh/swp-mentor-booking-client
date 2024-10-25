@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { Breadcrumb, Col, DatePicker, Pagination, Row, Skeleton } from 'antd'
+import { Breadcrumb, Button, Col, DatePicker, Pagination, Row, Skeleton } from 'antd'
 import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { searchMentor } from '../../apis/mentor'
@@ -11,6 +11,7 @@ import './MentorListPage.scss'
 
 function MentorListPage() {
      const { filterMentor, setFilterMentor, t } = useContext(AppContext)
+     const [timeAntd, setTimeAntd] = useState()
      const [modalOpen, setModalOpen] = useState(false)
      const [currentIdMentor, setCurrentIdMentor] = useState('')
      const [currentPage, setCurrentPage] = useState(1);
@@ -24,7 +25,8 @@ function MentorListPage() {
      }, [currentPage])
 
      const onChangeTime = (date, dateString) => {
-          console.log(dateString)
+          setTimeAntd(date)
+          setFilterMentor({ ...filterMentor, dates: dateString })
      }
 
      if (isError) return <PageError />
@@ -44,6 +46,14 @@ function MentorListPage() {
                     </div>
                     <Row>
                          <Col xs={0} md={7} lg={6} className='left-sidebar'>
+                              <Button
+                                   onClick={() => {
+                                        setFilterMentor({ ...filterMentor, search: '', skills: [], star: '', dates: [] })
+                                        setTimeAntd(null)
+                                   }}
+                              >
+                                   Clear
+                              </Button>
                               <div className='skill-search-block'>
                                    <SkillSearch />
                               </div>
@@ -59,7 +69,8 @@ function MentorListPage() {
                                         onChange={onChangeTime}
                                         maxTagCount="responsive"
                                         size="large"
-                                        format='DD-MM-YYYY'
+                                        format='YYYY-MM-DD'
+                                        value={timeAntd}
                                    />
                               </div>
                          </Col>

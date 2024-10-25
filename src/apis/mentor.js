@@ -1,14 +1,15 @@
 import { getToken } from "../utils/storageUtils";
 import axiosClient from "./axiosClient";
 
-export const searchMentor = async ({ skills, search, star, page }) => {
+export const searchMentor = async ({ skills, search, star, page, dates }) => {
      const token = getToken();
      return await axiosClient(token).get('/mentor/search', {
           params: {
                skill: skills,
                name: search,
                page,
-               rating: star
+               rating: star,
+               dates
           }
      });
 }

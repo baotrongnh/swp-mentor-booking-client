@@ -6,7 +6,8 @@ import { AppContext } from "../../../../Contexts/AppContext";
 
 function CheckboxSkill({ skillName, numberMentor, id }) {
 
-     const { filterMentor, setFilterMentor } = useContext(AppContext);
+     const { filterMentor, setFilterMentor } = useContext(AppContext)
+     console.log(filterMentor);
 
      const onChange = (e) => {
           if (e.target.checked) {
@@ -18,7 +19,7 @@ function CheckboxSkill({ skillName, numberMentor, id }) {
 
      return (
           <div className="checkbox-skill">
-               <Checkbox id={id} onChange={onChange}>{skillName}</Checkbox>
+               <Checkbox id={id} onChange={onChange} checked={filterMentor?.skills?.includes(id)}>{skillName}</Checkbox>
                <p className="numberMentor">{numberMentor}</p>
           </div>
      );

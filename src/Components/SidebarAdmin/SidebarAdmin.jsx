@@ -20,7 +20,7 @@ function SidebarAdmin() {
                     },
                     {
                          key: 'pendingMentor',
-                         label: <Link to='/admin/pending'>Pending Approval</Link>,
+                         label: <Link to='/admin/pending-mentors'>Pending Approval</Link>,
                     },
 
                ],
@@ -69,7 +69,7 @@ function SidebarAdmin() {
                children: [
                     {
                          key: 'skillsAvailable',
-                         label: 'Skills Available',
+                         label: <Link to='/admin/skills'>Skills Available</Link>,
                     },
                     {
                          key: 'semester',

@@ -37,7 +37,7 @@ function SkillSearch() {
                <p className='sub-text-found'>100+ mentors found</p>
                <div className="skill-block">
                     {listSkillsSearch?.slice(0, numberSkills).map((skill) => (
-                         <CheckboxSkill key={skill.id} id={skill.id} skillName={skill.name} numberMentor={99} />
+                         <CheckboxSkill key={skill.id} id={skill.id} skillName={skill.name} numberMentor={skill.mentorCount} />
                     ))}
                     <p onClick={handleShowMore} className='show-more-text' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '7px' }}>
                          {isShowMore

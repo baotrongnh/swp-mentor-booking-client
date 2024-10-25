@@ -1,35 +1,31 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { Button, Dropdown, Table, Tag } from "antd"
+import { Button, Dropdown, Table } from "antd"
 import { useEffect, useState } from "react"
-import { disableMentor, getListMentor } from "../../../../../apis/admin"
-import { loadAllSkills } from "../../../../../apis/mentor"
-import { Loading } from "../../../../../Components"
+import { disableMentor } from "../../../apis/admin"
+import { loadAllSkills } from "../../../apis/mentor"
+import { Loading } from "../../../Components"
 
-function AllMentor() {
+function ManagerSkills() {
      const [selectedRowKeys, setSelectedRowKeys] = useState([])
      const queryClient = useQueryClient()
-     const { data: listSkills } = useQuery({ queryKey: ['list-skills'], queryFn: loadAllSkills })
-     const { data: dataMentors, isLoading } = useQuery({ queryKey: ['list-mentors-admin'], queryFn: getListMentor })
+     const { data: listSkills, isLoading } = useQuery({ queryKey: ['list-skills'], queryFn: loadAllSkills })
      const [dataSource, setDataSource] = useState([])
      const mutation = useMutation({ mutationFn: (mentorId) => disableMentor(mentorId) })
-     console.log(listSkills)
 
      useEffect(() => {
-          if (dataMentors) {
+          if (listSkills) {
                setDataSource(
-                    dataMentors?.mentorList.map((mentor) => ({
-                         key: mentor.id,
-                         id: mentor.id,
-                         name: mentor.fullName,
-                         email: mentor.email,
-                         point: mentor.point || 'null',
-                         rating: mentor.averageRating || '#',
-                         skills: ['ReactJS'],
+                    listSkills?.skills.map((skill) => ({
+                         key: skill.id,
+                         id: skill.id,
+                         name: skill.name,
+                         image: skill.imgPath,
+                         mentorCount: skill.mentorCount
                     }))
                )
           }
-     }, [dataMentors])
+     }, [listSkills])
 
      const handleDisableMentor = async (mentor) => {
           const data = await mutation.mutateAsync(mentor.id)
@@ -56,44 +52,23 @@ function AllMentor() {
 
      const columns = [
           {
+               title: 'ID',
+               dataIndex: 'id',
+          },
+          {
                title: 'Name',
                dataIndex: 'name',
+               sorter: (a, b) => a.name.length - b.name.length,
           },
           {
-               title: 'Email',
-               dataIndex: 'email',
+               title: 'Image',
+               dataIndex: 'image',
           },
           {
-               title: 'Point',
-               dataIndex: 'point',
+               title: 'Number mentors',
+               dataIndex: 'mentorCount',
                align: 'center',
-               sorter: (a, b) => a.point - b.point,
-          },
-          {
-               title: 'Rating',
-               dataIndex: 'rating',
-               align: 'center',
-               sorter: (a, b) => a.point - b.point,
-          },
-          {
-               title: 'Skills',
-               key: 'tags',
-               dataIndex: 'skills',
-               align: 'center',
-               render: (skills) => (
-                    <>
-                         {skills.map((skill) => {
-                              return <Tag color='cyan' key={skill}>{skill}</Tag>;
-                         })}
-                    </>
-               ),
-               filters: listSkills?.skills?.map(skill => (
-                    {
-                         text: skill.name,
-                         value: skill.name,
-                    }
-               )),
-               onFilter: (value, record) => record.skills.some((skill) => skill.indexOf(value) === 0),
+               sorter: (a, b) => a.mentorCount - b.mentorCount,
           },
           {
                title: '',
@@ -125,6 +100,7 @@ function AllMentor() {
 
      return (
           <div className="all-mentors">
+               <Button>+ Add skill</Button>
                <Table
                     scroll={{ y: '76vh' }}
                     pagination={{ position: ['bottomCenter'] }}
@@ -136,4 +112,4 @@ function AllMentor() {
      )
 }
 
-export default AllMentor
+export default ManagerSkills
