@@ -1,5 +1,5 @@
 import { Button, Col, Row } from 'antd';
-import HomeBackground from '../../assets/Photos/background/HomeBackground.svg';
+import HomeBackground from '../../assets/Photos/background/Home_Banner.png';
 import './Home.scss';
 import { Card } from 'antd';
 import { Link } from 'react-router-dom';

@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Col, Row, Image, Button } from 'antd';
 import { Icon } from '@iconify/react';
 import { AuthContext } from "../../Contexts/AuthContext"
-import avatarDefault from '../../assets/Photos/avatar/default_avatar_2.jpg'
+import avatarDefault from '../../assets/Photos/avatar/default_avatar.jpg'
 import EditProfile from './EditProfile';
 import Loading from '../../Components/Loading/Loading'
 import { ModalBecomeMentor } from '../../Components/Modal';
@@ -42,11 +42,12 @@ function StudentProfile() {
                                 src={currentUser.imgPath || avatarDefault}
                                 preview={{
                                     minScale: '10',
-                                    src: `${currentUser.imgPath}`,
+                                    src: currentUser.imgPath || avatarDefault,
                                     mask: <div className="preview-mask"><Icon icon="weui:eyes-on-outlined" style={{ width: '3rem', height: '3rem' }} /></div>
                                 }}
                                 className="avatar-image"
                                 alt="User Avatar"
+                                onError={(e) => e.target.src = avatarDefault}
                             />
                         </Col>
                         <Col flex={8} className='student-information'>

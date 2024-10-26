@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { Avatar, Divider, Flex, List, Skeleton } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Icon } from '@iconify/react/dist/iconify.js';
@@ -7,6 +7,8 @@ import { getListBooking } from '../../../../apis/booking';
 import { AuthContext } from '../../../../Contexts/AuthContext'
 import { getProfileMentor } from '../../../../apis/mentor';
 import avatarDefault from '../../../../assets/Photos/avatar/default_avatar_2.jpg'
+import PropTypes from 'prop-types';
+import dayjs from 'dayjs';
 
 
 const formatDate = (date) => {
@@ -30,18 +32,21 @@ const formatDate = (date) => {
     );
 };
 
-const AllBooking = () => {
+const AllBooking = ({ selectedDate, onBookingDatesChange }) => {
     const [loading, setLoading] = useState(false);
-    const [data, setData] = useState([]);
+    const [allData, setAllData] = useState([]);
+    const [displayData, setDisplayData] = useState([]);
     const { currentUser } = useContext(AuthContext)
     const [mentorProfiles, setMentorProfiles] = useState([])
     const [hasMore, setHasMore] = useState(true);
+    const [page, setPage] = useState(1);
+    const pageSize = 10;
 
     const currentUserRole = (role) => {
         return role === 0 ? 'student' : 'mentor'
     }
 
-    const loadData = async () => {
+    const loadData = useCallback(async () => {
         if (loading) return;
         setLoading(true);
 
@@ -52,9 +57,10 @@ const AllBooking = () => {
         try {
             const res = await getListBooking(role, id)
             if (res) {
-                setData(res.data)
-                setHasMore(false)
+                setAllData(res.data)
                 const mentorId = res.data.map(data => data.mentorId)
+
+
                 try {
                     const mentorProfiles = await Promise.all(
                         mentorId.map(async mentorId => {
@@ -74,7 +80,7 @@ const AllBooking = () => {
             setLoading(false)
         }
 
-    };
+    }, [currentUser.isMentor, currentUser.accountId, page, pageSize, loading])
 
     const getMentorNameById = (id) => {
         const mentor = mentorProfiles.find(profile => profile.mentorId === id)
@@ -91,11 +97,35 @@ const AllBooking = () => {
         return mentor ? mentor.image : { avatarDefault }
     }
 
-
-    console.log(mentorProfiles)
+    // cai nay la load data
     useEffect(() => {
         loadData();
-    }, []);
+    }, [loadData]);
+
+    //cai nay de load trang
+    const loadMore = useCallback(() => {
+        setPage(prevPage => prevPage + 1)
+    }, [])
+
+    //cai nay de cho hien thi selectDay
+    useEffect(() => {
+        let filterData = allData;
+
+        if (selectedDate) {
+            filterData = allData.filter(booking => dayjs(booking.startTime).isSame(selectedDate, 'day'))
+        }
+        setDisplayData(filterData.slice(0, page * pageSize))
+        setHasMore(filterData.length > page * pageSize)
+    }, [selectedDate, allData, page, pageSize])
+
+
+    //cai nay de loc ra nhung ngay co Booking
+    useEffect(() => {
+        if (allData.length > 0) {
+            const bookingDates = allData.map(booking => dayjs(booking.startTime).format('YYYY-MM-DD'))
+            onBookingDatesChange(bookingDates);
+        }
+    }, [allData, onBookingDatesChange])
 
     return (
         <div
@@ -103,15 +133,15 @@ const AllBooking = () => {
             id="scrollableDiv"
         >
             <InfiniteScroll
-                dataLength={data.length}
-                next={loadData}
+                dataLength={displayData.length}
+                next={loadMore}
                 hasMore={hasMore}
                 loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
                 endMessage={<Divider plain>It is all, nothing more...</Divider>}
                 scrollableTarget="scrollableDiv"
             >
                 <List
-                    dataSource={data}
+                    dataSource={displayData}
                     renderItem={(item) => (
                         <List.Item key={item.id} className="list-item">
                             <List.Item.Meta
@@ -131,5 +161,10 @@ const AllBooking = () => {
         </div>
     );
 };
+
+AllBooking.propTypes = {
+    selectedDate: PropTypes.instanceOf(dayjs),
+    onBookingDatesChange: PropTypes.func.isRequired,
+}
 
 export default AllBooking;

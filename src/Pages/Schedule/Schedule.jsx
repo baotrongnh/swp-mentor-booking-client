@@ -3,17 +3,27 @@ import ShowCalendar from "./Components/Calendar/Calendar.jsx";
 import CommingBooking from "./Components/CommingBooking/CommingBooking.jsx";
 import AllBooking from "./Components/AllBooking/AllBooking.jsx";
 import './Schedule.scss';
-import { useContext, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { AppContext } from "../../Contexts/AppContext.jsx";
 
 function Schedule() {
      const [currentTab, setCurrentTab] = useState('comming');
+     const [selectedDate, setSelectedDate] = useState(null);
+     const [bookingDates, setBookingDates] = useState([]);
      const { t } = useContext(AppContext)
 
      const onClick = (e) => {
           console.log('click ', e);
           setCurrentTab(e.key);
      };
+
+     const handleBookingDate = useCallback((date) => {
+          setBookingDates(date)
+     }, [])
+
+     const handleDateSelected = (day) => {
+          setSelectedDate(day)
+     }
 
      const items = [
           {
@@ -40,7 +50,7 @@ function Schedule() {
                               <Menu onClick={onClick} selectedKeys={[currentTab]} mode="horizontal" items={items} />
                               <div className="booking-list">
                                    {currentTab === 'comming' && <CommingBooking />}
-                                   {currentTab === 'all' && <AllBooking />}
+                                   {currentTab === 'all' && <AllBooking selectedDate={selectedDate} onBookingDatesChange={handleBookingDate} />}
                               </div>
                          </Col>
 
@@ -50,7 +60,7 @@ function Schedule() {
                               md={7}
                               className="calendar"
                          >
-                              <ShowCalendar />
+                              <ShowCalendar onDaySelect={handleDateSelected} bookingDates={bookingDates} />
                          </Col>
                     </Row>
                </div>
