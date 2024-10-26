@@ -65,6 +65,7 @@ function MentorListPage() {
                                         format='YYYY-MM-DD'
                                         value={timeAntd}
                                         disabledDate={disabledDateInPast}
+                                        allowClear={false}
                                    />
                               </div>
 
