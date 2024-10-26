@@ -78,11 +78,11 @@ function Header() {
 
      const moreMenuDropDown = [
           {
-               label: <Link>Add member</Link>,
+               label: <Link>Function?</Link>,
                key: '0',
           },
           {
-               label: <Link >History</Link>,
+               label: <Link>Funtion?</Link>,
                key: '1',
           }
      ]
@@ -94,42 +94,54 @@ function Header() {
                key: '0',
           },
           {
-               label: <Link to='/wallet'><Flex gap='small' align='center'>{t('wallet')}: <Icon icon="twemoji:coin" /><p> 99</p></Flex></Link>,
+               label:
+                    <Link to='/wallet'>
+                         <Flex gap='small' align='center'>
+                              {t('wallet')}: <Icon icon="twemoji:coin" /><p> {currentUser.point}</p>
+                         </Flex>
+                    </Link>,
                key: '1',
           },
           {
-               label: <Link onClick={() => setOpenModalBeMentor(true)}>{t('become a mentor')}</Link>,
+               label:
+                    <Link onClick={() => setOpenModalBeMentor(true)}>
+                         {t('become a mentor')}
+                    </Link>,
                key: '2',
           },
           { type: 'divider' },
           {
-               label: <Flex gap='small' justify='space-between'>
-                    {t('theme')}: <Switch
-                         defaultChecked={theme === 'dark-theme'}
-                         onChange={handleChangeTheme}
-                         checkedChildren="Dark"
-                         unCheckedChildren="Light"
-                    />
-               </Flex>,
+               label:
+                    <Flex gap='small' justify='space-between'>
+                         {t('theme')}:
+                         <Switch
+                              defaultChecked={theme === 'dark-theme'}
+                              onChange={handleChangeTheme}
+                              checkedChildren="Dark"
+                              unCheckedChildren="Light"
+                         />
+                    </Flex>,
                key: '4'
           },
           {
-               label: <Flex gap='small' align='center' justify='space-between'>
-                    {t('language')}: <Select
-                         defaultValue={defaultLanguage}
-                         onChange={handleChangeLanguage}
-                         options={[
-                              {
-                                   value: 'en',
-                                   label: 'EN',
-                              },
-                              {
-                                   value: 'vi',
-                                   label: 'VN',
-                              }
-                         ]}
-                    />
-               </Flex>,
+               label:
+                    <Flex gap='small' align='center' justify='space-between'>
+                         {t('language')}:
+                         <Select
+                              defaultValue={defaultLanguage}
+                              onChange={handleChangeLanguage}
+                              options={[
+                                   {
+                                        value: 'en',
+                                        label: 'EN',
+                                   },
+                                   {
+                                        value: 'vi',
+                                        label: 'VN',
+                                   }
+                              ]}
+                         />
+                    </Flex>,
                key: '5'
           },
           { type: 'divider' },
@@ -143,33 +155,35 @@ function Header() {
      const guestMenuDropDown = [
           { type: 'divider' },
           {
-               label: <Flex gap='small' justify='space-between'>
-                    {t('theme')}: <Switch
-                         defaultChecked={theme === 'dark-theme'}
-                         onChange={handleChangeTheme}
-                         checkedChildren="Dark"
-                         unCheckedChildren="Light"
-                    />
-               </Flex>,
+               label:
+                    <Flex gap='small' justify='space-between'>
+                         {t('theme')}: <Switch
+                              defaultChecked={theme === 'dark-theme'}
+                              onChange={handleChangeTheme}
+                              checkedChildren="Dark"
+                              unCheckedChildren="Light"
+                         />
+                    </Flex>,
                key: '4'
           },
           {
-               label: <Flex gap='small' align='center' justify='space-between'>
-                    {t('language')}: <Select
-                         defaultValue={defaultLanguage}
-                         onChange={handleChangeLanguage}
-                         options={[
-                              {
-                                   value: 'en',
-                                   label: 'EN',
-                              },
-                              {
-                                   value: 'vi',
-                                   label: 'VN',
-                              }
-                         ]}
-                    />
-               </Flex>,
+               label:
+                    <Flex gap='small' align='center' justify='space-between'>
+                         {t('language')}: <Select
+                              defaultValue={defaultLanguage}
+                              onChange={handleChangeLanguage}
+                              options={[
+                                   {
+                                        value: 'en',
+                                        label: 'EN',
+                                   },
+                                   {
+                                        value: 'vi',
+                                        label: 'VN',
+                                   }
+                              ]}
+                         />
+                    </Flex>,
                key: '5'
           },
           { type: 'divider' },

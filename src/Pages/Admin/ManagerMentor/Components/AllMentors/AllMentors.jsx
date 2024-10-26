@@ -13,13 +13,12 @@ function AllMentor() {
      const { data: dataMentors, isLoading } = useQuery({ queryKey: ['list-mentors-admin'], queryFn: getListMentor })
      const [dataSource, setDataSource] = useState([])
      const mutation = useMutation({ mutationFn: (mentorId) => disableMentor(mentorId) })
-     console.log(listSkills)
-
+     console.log(dataMentors?.mentorList)
      useEffect(() => {
           if (dataMentors) {
                setDataSource(
-                    dataMentors?.mentorList.map((mentor) => ({
-                         key: mentor.id,
+                    dataMentors?.mentorList.map((mentor, index) => ({
+                         key: index,
                          id: mentor.id,
                          name: mentor.fullName,
                          email: mentor.email,
@@ -82,8 +81,8 @@ function AllMentor() {
                align: 'center',
                render: (skills) => (
                     <>
-                         {skills.map((skill) => {
-                              return <Tag color='cyan' key={skill}>{skill}</Tag>;
+                         {skills.map((skill, index) => {
+                              return <Tag color='cyan' key={index}>{skill}</Tag>;
                          })}
                     </>
                ),

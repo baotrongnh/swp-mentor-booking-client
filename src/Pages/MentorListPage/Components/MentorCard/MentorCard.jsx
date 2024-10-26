@@ -4,9 +4,12 @@ import PropTypes from "prop-types"
 import { Link } from 'react-router-dom'
 import defaultAvatar2 from '../../../../assets/Photos/avatar/default_avatar_2.jpg'
 import './MentorCard.scss'
+import { useContext } from 'react'
+import { AppContext } from '../../../../Contexts/AppContext'
 
 function MentorCard({ mentor, setModalOpen, setCurrentIdMentor }) {
      const urlProfileMentor = `/mentor/profile/${mentor.accountId}`
+     const { t } = useContext(AppContext)
 
      const handleBook = () => {
           setCurrentIdMentor(mentor.accountId)
@@ -47,9 +50,9 @@ function MentorCard({ mentor, setModalOpen, setCurrentIdMentor }) {
 
                               <div>
                                    <Typography.Text strong>
-                                        {`${mentor.averageRating || 'No reviews yet'}`}
+                                        {`${mentor.averageRating || t('No reviews yet') }`}
                                    </Typography.Text>
-                                   {` (${mentor.ratingCount || 0} reviews)`}
+                                   {` (${mentor.ratingCount || 0} ${t('reviews')})`}
                               </div>
                          </div>
 
@@ -63,16 +66,16 @@ function MentorCard({ mentor, setModalOpen, setCurrentIdMentor }) {
                               <Icon className='icon' icon="tdesign:time" />
                          </div>
 
-                         <p className="description">{mentor.description || 'No description'}</p>
+                         <p className="description">{mentor.description || t('No description')}</p>
                     </Col>
                </Row>
 
                <Row className='btn-block'>
                     <Link to={urlProfileMentor}>
-                         <Button size='large' className='btn'>View Profile</Button>
+                         <Button size='large' className='btn'>{t('view profile')}</Button>
                     </Link>
                     <Link>
-                         <Button onClick={handleBook} size='large' className='btn' type="primary">Book</Button>
+                         <Button onClick={handleBook} size='large' className='btn' type="primary">{t('book')}</Button>
                     </Link>
                </Row>
           </div>

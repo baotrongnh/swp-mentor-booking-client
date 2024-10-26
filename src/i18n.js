@@ -16,6 +16,30 @@ const resources = {
                'language': 'Language',
                'logout': 'Logout',
                'pending booking': 'Pending bookings',
+
+               //button:
+               'book': 'Book',
+               'view profile': 'View Profile',
+               'home': 'Home',
+               'book now': 'Book now',
+               'Wallet': 'Wallet',
+               'view profile mentor': 'View profile mentor',
+
+               //moda-booking:
+               'Book mentor': 'Book mentor',
+               'Available Schedule': 'Available Schedule',
+               'Custom Schedule': 'Custom Schedule',
+               'Available time': 'Available time',
+               'Select a slot': 'Select a slot',
+               'This Mentor has no available slot.': 'This Mentor has no available slot.',
+               'Cancel': 'Cancel',
+
+               //mentor list page:
+               'Clear all filter': 'Clear all filter',
+               'No reviews yet': 'No reviews yet',
+               'reviews': 'reviews',
+               'No description': 'No description',
+
                //sidebar:
                'skills': 'Skills',
                'rating': 'Rating',
@@ -45,6 +69,10 @@ const resources = {
                "booking calendar": "Booking Calendar",
                "month": "Month",
                "year": "Year",
+
+               //wallet:
+               'Your balance': 'Your balance',
+               'Transition history': 'Transition history',
 
                // New translations for Home.jsx
                "SWP Mentor Booking": "SWP Mentor Booking",
@@ -81,6 +109,29 @@ const resources = {
                'theme': 'Chủ đề',
                'language': 'Ngôn ngữ',
                'logout': 'Đăng xuất',
+               //button:
+               'book': 'Đặt lịch',
+               'view profile': 'Xem thông tin',
+               'home': 'Trang chủ',
+               'book now': 'Đặt lịch ngay',
+               'Wallet': 'Ví',
+               'view profile mentor': 'Xem thông tin mentor',
+
+               //moda-booking:
+               'Book mentor': 'Đặt lịch mentor',
+               'Available Schedule': 'Lịch trống',
+               'Custom Schedule': 'Lịch tùy chỉnh',
+               'Available time': 'Thời gian trống',
+               'Select a slot': 'Chọn một khung giờ',
+               'This Mentor has no available slot.': 'Mentor này không có khung giờ trống nào.',
+               'Cancel': 'Hủy',
+
+               //mentor list page:
+               'Clear all filter': 'Xóa bộ lọc',
+               'No reviews yet': 'Chưa có đánh giá',
+               'reviews': 'đánh giá',
+               'No description': 'Không có mô tả',
+
                //sidebar:
                'skills': 'Kỹ năng',
                'rating': 'Đánh giá',
@@ -111,6 +162,10 @@ const resources = {
                "month": "Tháng",
                "year": "Năm",
 
+               //wallet:
+               'Your balance': 'Số dư của bạn',
+               'Transition history': 'Lịch sử giao dịch',
+
                // New translations for Home.jsx
                "SWP Mentor Booking": "Đặt Lịch Mentor SWP",
                "Find Your Perfect Mentor": "Tìm Mentor Phù Hợp Với Bạn",
@@ -139,7 +194,7 @@ i18n
      .use(initReactI18next)
      .init({
           resources,
-          lng: localStorage.getItem('language'),
+          lng: localStorage.getItem('language') || 'en',
           interpolation: {
                escapeValue: false
           }

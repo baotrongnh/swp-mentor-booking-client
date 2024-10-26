@@ -3,8 +3,9 @@ import { useQuery } from "@tanstack/react-query"
 import { Breadcrumb, Menu } from "antd"
 import { useContext, useLayoutEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
-import { Loading } from "../../Components"
+import { SkeletonLoading } from '../../Components'
 import { ModalBookMentor, ModalRatingMentor } from '../../Components/Modal'
+import { AppContext } from '../../Contexts/AppContext'
 import { AuthContext } from '../../Contexts/AuthContext'
 import { getProfileMentor } from "../../apis/mentor"
 import PageError from '../PageError'
@@ -13,6 +14,7 @@ import { AboutMentor, MentorInfor, RatingView, Skills } from "./components"
 
 function MentorProfile() {
      const { currentUser } = useContext(AuthContext)
+     const { t } = useContext(AppContext)
      const [modalBookingOpen, setModalBookingOpen] = useState(false)
      const [modalRatingOpen, setModalRatingOpen] = useState(false)
      const { id } = useParams('id')
@@ -59,9 +61,7 @@ function MentorProfile() {
           }
      }
 
-     if (isLoading) {
-          return <Loading />
-     }
+     if (isLoading) return <SkeletonLoading />
 
      if (isError) return <PageError action={refetch} />
 
@@ -70,9 +70,9 @@ function MentorProfile() {
                <div className="container" style={{ padding: '20px 0' }}>
                     <Breadcrumb
                          items={[
-                              { title: <Link to='/'>Home</Link>, },
-                              { title: <Link to='/browser-mentors'>Browser mentors</Link>, },
-                              { title: 'View Profile Mentor' },
+                              { title: <Link to='/'>{t('home')}</Link>, },
+                              { title: <Link to='/browser-mentors'>{t('browser mentors')}</Link>, },
+                              { title: t('view profile mentor') },
                          ]}
                     />
                </div>

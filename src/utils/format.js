@@ -6,3 +6,4 @@ export const formatDateToNormal = (dateString) => {
      console.log(dateParts)
      return `${day}/${month}/${year}`
 }
+

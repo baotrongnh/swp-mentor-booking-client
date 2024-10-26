@@ -4,9 +4,11 @@ import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../../Contexts/AuthContext'
 import './Wallet.scss'
+import { AppContext } from '../../Contexts/AppContext'
 
 export default function Wallet() {
      const { currentUser } = useContext(AuthContext)
+     const { t } = useContext(AppContext)
      const [initLoading, setInitLoading] = useState(true)
      const [loading, setLoading] = useState(false)
      const [data, setData] = useState([])
@@ -65,13 +67,13 @@ export default function Wallet() {
                     <Breadcrumb
                          items={[
                               {
-                                   title: <Link to='/'>Home</Link>,
+                                   title: <Link to='/'>{t('home')}</Link>,
                               },
                               {
-                                   title: <Link to='/browser-mentors'>Browser mentors</Link>,
+                                   title: <Link to='/browser-mentors'>{t('browser mentors')}</Link>,
                               },
                               {
-                                   title: 'Wallet',
+                                   title: t('Wallet'),
                               },
                          ]}
                          style={{ padding: '20px 0' }}
@@ -79,7 +81,7 @@ export default function Wallet() {
                     <Row gutter={20}>
                          <Col md={15}>
                               <div className="balance-block">
-                                   <h1 className="title">Your balance:</h1>
+                                   <h1 className="title">{t('Your balance')}:</h1>
                                    <div className="number-balance-block">
                                         <Icon className='icon' icon="twemoji:coin" />
                                         <p className='number'>{currentUser?.point}</p>
@@ -93,7 +95,7 @@ export default function Wallet() {
                     </Row>
 
                     <div className="transition-history">
-                         <h1 className='title'>Transition history</h1>
+                         <h1 className='title'>{t('Transition history')}</h1>
 
                          <div className="transition-block">
                               <List

@@ -1,7 +1,8 @@
 import { Button, Col, Image, Rate, Row, Tag, Typography } from "antd"
 import PropTypes from "prop-types"
-import { useEffect, useRef, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import defaultAvatar2 from '../../../../assets/Photos/avatar/default_avatar_2.jpg'
+import { AppContext } from "../../../../Contexts/AppContext"
 import './MentorInfor.scss'
 
 function MentorInfor({ setModalOpen, mentorInfor, setCurrentTab, isCurrentUser }) {
@@ -9,6 +10,7 @@ function MentorInfor({ setModalOpen, mentorInfor, setCurrentTab, isCurrentUser }
      const descriptionRef = useRef(null)
      const [width, setWidth] = useState(window.innerWidth)
      const [isShowMore, setIsShowMore] = useState(false)
+     const { t } = useContext(AppContext)
 
      useEffect(() => {
           const handleResize = () => {
@@ -66,10 +68,10 @@ function MentorInfor({ setModalOpen, mentorInfor, setCurrentTab, isCurrentUser }
 
                               <div className="btn-block">
                                    {isCurrentUser
-                                        ? <Button style={{ width: '40%' }} size="large">Edit Profile</Button>
+                                        ? <Button style={{ width: '40%' }} size="large">{t('edit-profile')}</Button>
                                         : <>
-                                             <Button style={{ width: '40%' }} size="large" type="primary" onClick={handleOpenModal} >Book Now</Button>
-                                             <Button style={{ width: '40%' }} size="large">Contact</Button>
+                                             <Button style={{ width: '40%' }} size="large" type="primary" onClick={handleOpenModal} >{t('book now')}</Button>
+                                             <Button style={{ width: '40%' }} size="large">{t('contact')}</Button>
                                         </>}
                               </div>
                          </Col>

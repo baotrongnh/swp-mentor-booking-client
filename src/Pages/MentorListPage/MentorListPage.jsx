@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { Breadcrumb, Button, Col, DatePicker, Flex, Pagination, Row, Skeleton } from 'antd'
+import { Breadcrumb, Button, Col, DatePicker, Empty, Flex, Pagination, Row, Skeleton } from 'antd'
 import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { searchMentor } from '../../apis/mentor'
@@ -8,6 +8,7 @@ import { AppContext } from '../../Contexts/AppContext'
 import { PageError } from '../index'
 import { MentorCard, RatingSelect, SkillSearch } from './Components'
 import './MentorListPage.scss'
+import { disabledDateInPast } from '../../utils/validate'
 
 function MentorListPage() {
      const { filterMentor, setFilterMentor, t } = useContext(AppContext)
@@ -39,8 +40,8 @@ function MentorListPage() {
                     <div className="container" style={{ paddingTop: '20px' }}>
                          <Breadcrumb
                               items={[
-                                   { title: <Link to='/'>Home</Link>, },
-                                   { title: 'Browser mentors' },
+                                   { title: <Link to='/'>{t('home')}</Link>, },
+                                   { title: t('browser mentors') },
                               ]}
                          />
                     </div>
@@ -63,10 +64,11 @@ function MentorListPage() {
                                         size="large"
                                         format='YYYY-MM-DD'
                                         value={timeAntd}
+                                        disabledDate={disabledDateInPast}
                                    />
                               </div>
 
-                              <Flex justify='center' style={{padding: '20px'}}>
+                              <Flex justify='center' style={{ padding: '20px' }}>
                                    <Button
                                         onClick={() => {
                                              setFilterMentor({ ...filterMentor, search: '', skills: [], star: '', dates: [] })
@@ -75,7 +77,7 @@ function MentorListPage() {
                                         danger
                                         disabled={filterMentor.star == '' && filterMentor.skills.length === 0 && filterMentor.dates.length === 0}
                                    >
-                                        x Clear All Filter
+                                        x {t('Clear all filter')}
                                    </Button>
                               </Flex>
                          </Col>
@@ -85,15 +87,18 @@ function MentorListPage() {
                                    ? <Skeleton active />
                                    :
                                    <Row gutter={15}>
-                                        {listMentor?.mentors.map((mentor) => (
-                                             <Col xs={24} xl={12} key={mentor.accountId}>
-                                                  <MentorCard
-                                                       mentor={mentor}
-                                                       setModalOpen={setModalOpen}
-                                                       setCurrentIdMentor={setCurrentIdMentor}
-                                                  />
-                                             </Col>
-                                        ))}
+                                        {listMentor?.mentors.length > 0
+                                             ? listMentor?.mentors.map((mentor) => (
+                                                  <Col xs={24} xl={12} key={mentor.accountId}>
+                                                       <MentorCard
+                                                            mentor={mentor}
+                                                            setModalOpen={setModalOpen}
+                                                            setCurrentIdMentor={setCurrentIdMentor}
+                                                       />
+                                                  </Col>
+                                             ))
+                                             : <Empty />
+                                        }
                                    </Row>
                               }
 

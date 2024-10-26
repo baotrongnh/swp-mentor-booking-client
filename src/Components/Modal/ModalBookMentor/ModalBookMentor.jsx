@@ -4,8 +4,10 @@ import PropTypes from "prop-types"
 import { useContext, useEffect, useState } from "react"
 import { bookingMentor } from "../../../apis/booking"
 import { getAvailableSlot } from "../../../apis/mentor"
+import { AppContext } from "../../../Contexts/AppContext"
 import { AuthContext } from "../../../Contexts/AuthContext"
 import './ModalBookMentor.scss'
+import { disabledDateInPast } from "../../../utils/validate"
 
 function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
      const [isValidate, setIsValidate] = useState(false)
@@ -14,7 +16,17 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
      const [displayDate, setDisplayDate] = useState({ date: 'DD-MM-YYYY', time: '00:00' })
      const [slotAvailableSelect, setSlotAvailableSelect] = useState()
      const { currentUser, setCurrentUser } = useContext(AuthContext)
-     const mutation = useMutation({ mutationFn: ({ mentorId, studentId, startTime }) => bookingMentor(mentorId, studentId, startTime) })
+     const { t } = useContext(AppContext)
+     
+     const mutation = useMutation({
+          mutationFn: ({ mentorId, studentId, startTime }) => bookingMentor(mentorId, studentId, startTime),
+          onError: (error) => {
+               console.log(error)
+          },
+          onSuccess: (data) => {
+               console.log(data)
+          },
+     })
 
      const { data: listAvailableSlot } = useQuery({
           queryKey: [`available-slot-${currentIdMentor}`, currentIdMentor],
@@ -71,18 +83,13 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
      const itemTabs = [
           {
                key: '1',
-               label: 'Available Schedule',
+               label: t('Available Schedule'),
           },
           {
                key: '2',
-               label: 'Custom Schedule',
+               label: t('Custom Schedule'),
           }
      ]
-
-     const disabledDate = (current) => {
-          const today = new Date()
-          return current && current < new Date(today.getFullYear(), today.getMonth(), today.getDate())
-     }
 
      const handleSelectSlotAvailable = (value, object) => {
           setSlotAvailableSelect(object.label)
@@ -93,7 +100,7 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
      return (
           <div className="modal-book-mentor">
                <Modal
-                    title='Book mentor'
+                    title={t('Book mentor')}
                     centered
                     open={modalOpen}
                     onCancel={() => {
@@ -112,10 +119,10 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
                                         {listAvailableSlot?.slots.length > 0
                                              ?
                                              <>
-                                                  <h1 className="title">Available time</h1>
+                                                  <h1 className="title">{t('Available time')}</h1>
                                                   <Select
                                                        showSearch
-                                                       placeholder="Select a slot"
+                                                       placeholder={t('Select a slot')}
                                                        value={slotAvailableSelect}
                                                        filterOption={(input, option) =>
                                                             (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
@@ -143,7 +150,7 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
                                                        }}
                                                        description={
                                                             <Typography.Text>
-                                                                 This Mentor has no available slot.
+                                                                 {t('This Mentor has no available slot.')}
                                                             </Typography.Text>
                                                        }
                                                   ></Empty>
@@ -157,7 +164,7 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
                                         <p className="time-view">Scheduled for <b>{displayDate.date}</b> at <b>{displayDate.time}</b></p>
 
                                         <div className='select-block'>
-                                             <DatePicker disabledDate={disabledDate} format='DD-MM-YYYY' className='pick-date' onChange={handleDatePick} />
+                                             <DatePicker disabledDate={disabledDateInPast} format='DD-MM-YYYY' className='pick-date' onChange={handleDatePick} />
                                              <DatePicker className='pick-time' picker='time' onChange={handleTimePick} />
                                         </div>
                                    </div>
@@ -165,8 +172,8 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
                          </div>
 
                          <div className="btn-block">
-                              <Button onClick={() => setModalOpen(false)}>Cancel</Button>
-                              <Button type="primary" disabled={currentUser?.point < 10 || !isValidate} onClick={handleBookMentor}>Book</Button>
+                              <Button onClick={() => setModalOpen(false)}>{t('Cancel')}</Button>
+                              <Button type="primary" disabled={currentUser?.point < 10 || !isValidate} onClick={handleBookMentor}>{t('book')}</Button>
                          </div>
                     </div>
                </Modal>

@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from 'react'
 import { loadAllSkills, registerBecomeMentor } from '../../../apis/mentor'
 import { AuthContext } from '../../../Contexts/AuthContext'
 import './ModalBecomeMentor.scss'
+import { Link } from 'react-router-dom'
 
 export default function ModalBecomeMentor({ modalOpen, setModalOpen }) {
      const options = []
@@ -72,7 +73,7 @@ export default function ModalBecomeMentor({ modalOpen, setModalOpen }) {
                     maxCount={5}
                     suffixIcon={suffix}
                />
-               <Checkbox onChange={(e) => setIsAgree(e.target.checked)} checked={isAgree} style={{ padding: '20px 0 0 0' }}>Agree to our terms</Checkbox>
+               <Checkbox onChange={(e) => setIsAgree(e.target.checked)} checked={isAgree} style={{ padding: '20px 0 0 0' }}>Agree to <Link to='/terms-become-mentor'>our terms</Link></Checkbox>
           </Modal>
      )
 }

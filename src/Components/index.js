@@ -4,6 +4,7 @@ import SkillItem from './SkillItem/SkillItem'
 import SidebarAdmin from "./SidebarAdmin/SidebarAdmin"
 import HeaderAdmin from "./HeaderAdmin/HeaderAdmin"
 import Footer from "./Footer/Footer"
+import SkeletonLoading from "./Skeleton/Skeleton"
 
-export { Header, Loading, SkillItem, SidebarAdmin, HeaderAdmin, Footer }
+export { Header, Loading, SkillItem, SidebarAdmin, HeaderAdmin, Footer, SkeletonLoading }
 
