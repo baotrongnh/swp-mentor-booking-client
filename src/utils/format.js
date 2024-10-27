@@ -1,9 +1,12 @@
 export const formatDateToNormal = (dateString) => {
-     const dateParts = dateString.split('-')
-     const year = dateParts[0]
-     const month = dateParts[1]
-     const day = dateParts[2]
-     console.log(dateParts)
-     return `${day}/${month}/${year}`
+    const [datePart, timePart] = dateString.split(' ')
+    const [year, month, day] = datePart.split('-')
+    const [hour, minute, second] = timePart.split(':')
+
+    return {date: `${day}/${month}/${year}`, time: `${hour}:${minute}:${second}`}
 }
 
+export const formatDataToServer = (dateString) => {
+    const [day, month, year] = dateString.split('-')
+    return `${year}-${month}-${day}`
+}

@@ -97,7 +97,7 @@ function Header() {
                label:
                     <Link to='/wallet'>
                          <Flex gap='small' align='center'>
-                              {t('wallet')}: <Icon icon="twemoji:coin" /><p> {currentUser.point}</p>
+                              {t('wallet')}: <Icon icon="twemoji:coin" /><p> {currentUser?.point}</p>
                          </Flex>
                     </Link>,
                key: '1',
