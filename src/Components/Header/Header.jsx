@@ -232,7 +232,7 @@ function Header() {
                                    ?
                                    <div className='btn-block'>
                                         <NavLink to='/browser-mentors' className='navbar-link'>{t('browser mentors')}</NavLink>
-                                        <NavLink to={`/schedule/${currentUser?.id}`} className='navbar-link'>{t('schedule')}</NavLink>
+                                        <NavLink to={`/schedule`} className='navbar-link'>{t('schedule')}</NavLink>
                                         <Dropdown
                                              menu={{ items: moreMenuDropDown }}
                                              placement='bottom'
@@ -310,7 +310,7 @@ function Header() {
 
                          <Link
                               onClick={() => setOpenDrawer(false)}
-                              to={`/schedule/${currentUser?.id}`}
+                              to='schedule'
                               className='link-item'
                          >
                               Schedule

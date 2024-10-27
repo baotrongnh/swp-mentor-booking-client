@@ -32,9 +32,9 @@ function ModalBookMentor({modalOpen, setModalOpen, currentIdMentor}) {
             }
         },
         onSuccess: (data) => {
-            console.log(data)
             if (data.error_code === 0) {
                 queryClient.invalidateQueries({queryKey: ['currentUser']})
+                queryClient.invalidateQueries({queryKey: [`available-slot-${currentIdMentor}`, currentIdMentor]})
                 toast.success('Booked successfully')
             }
         }
@@ -59,11 +59,7 @@ function ModalBookMentor({modalOpen, setModalOpen, currentIdMentor}) {
                 setIsValidate(false)
             }
         } else {
-            if (slotAvailableSelect) {
-                setIsValidate(true)
-            } else {
-                setIsValidate(false)
-            }
+            setIsValidate(!!slotAvailableSelect)
         }
     }, [dateCustom, tab, slotAvailableSelect])
 
@@ -102,8 +98,8 @@ function ModalBookMentor({modalOpen, setModalOpen, currentIdMentor}) {
         }
     ]
 
-    const handleSelectSlotAvailable = (value, object) => {
-        setSlotAvailableSelect(object.label)
+    const handleSelectSlotAvailable = (value) => {
+        setSlotAvailableSelect(value)
     }
 
     const confirm = (e) => {
@@ -151,7 +147,7 @@ function ModalBookMentor({modalOpen, setModalOpen, currentIdMentor}) {
                                                 options={
                                                     listAvailableSlot?.slots.map((slot) => (
                                                         {
-                                                            value: slot.id,
+                                                            value: slot.slotStart,
                                                             label: (`${formatDateToNormal(slot.slotStart).date} (${formatDateToNormal(slot.slotStart).time})`),
                                                         }
                                                     ))

@@ -15,7 +15,7 @@ const privateRoutes = [
   { path: 'browser-mentors', element: MentorListPage },
   { path: '/mentor/profile/:id', element: MentorProfile },
   { path: '/student/profile', element: StudentProfile },
-  { path: '/schedule/:id', element: Schedule },
+  { path: '/schedule', element: Schedule },
   { path: '/wallet', element: Wallet },
 ]
 

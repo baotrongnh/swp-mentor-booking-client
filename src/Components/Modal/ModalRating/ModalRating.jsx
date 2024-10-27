@@ -5,6 +5,7 @@ import PropTypes from "prop-types"
 import { useContext, useState } from "react"
 import { ratingMentor } from "../../../apis/mentor"
 import { AuthContext } from "../../../Contexts/AuthContext"
+import toast from "react-hot-toast";
 
 function ModalRatingMentor({ mentorId, modalOpen, setModalOpen }) {
      const queryClient = useQueryClient()
@@ -14,15 +15,17 @@ function ModalRatingMentor({ mentorId, modalOpen, setModalOpen }) {
           mutationFn: () => ratingMentor(feedback),
           onSuccess: () => {
                queryClient.invalidateQueries([`rating-list-${mentorId}`])
+               toast.success('Thanks for your review!')
           },
           onError: (error) => {
                console.log(error)
+               toast.error('Sorry, you cannot rate this mentor')
           }
-     });
+     })
 
      const handleOk = () => {
           if (feedback.rating == '') {
-               console.log('isValidate?')
+               toast.error('Error')
           } else {
                mutation.mutateAsync()
                setModalOpen(false)

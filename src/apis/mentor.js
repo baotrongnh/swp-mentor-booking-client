@@ -1,5 +1,5 @@
-import { getToken } from "../utils/storageUtils";
-import axiosClient from "./axiosClient";
+import { getToken } from "../utils/storageUtils"
+import axiosClient from "./axiosClient"
 
 export const searchMentor = async ({ skills, search, star, page, dates }) => {
      const token = getToken();
@@ -11,7 +11,7 @@ export const searchMentor = async ({ skills, search, star, page, dates }) => {
                rating: star,
                dates
           }
-     });
+     })
 }
 
 export const getProfileMentor = async (id) => {
@@ -20,7 +20,7 @@ export const getProfileMentor = async (id) => {
           params: {
                mentorId: id
           }
-     });
+     })
 }
 
 export const getSkillMentor = async (id) => {
@@ -29,7 +29,7 @@ export const getSkillMentor = async (id) => {
           params: {
                mentorId: id
           }
-     });
+     })
 }
 
 export const getFeedback = async (id) => {
@@ -38,24 +38,24 @@ export const getFeedback = async (id) => {
           params: {
                mentorId: id
           }
-     });
+     })
 }
 
 export const loadAllSkills = async () => {
-     const token = getToken();
-     return await axiosClient(token).get('/mentor/loadskills');
+     const token = getToken()
+     return await axiosClient(token).get('/mentor/loadskills')
 }
 
 export const ratingMentor = async ({ studentId, mentorId, rating, text }) => {
-     const token = getToken();
+     const token = getToken()
      return await axiosClient(token).post('feedback/submit-feedback', {
           studentId, mentorId, rating, text
-     });
+     })
 }
 
 export const getAvailableSlot = async(mentorId) => {
      const token = getToken()
-     return await axiosClient(token).get(`/schedule/slots/${mentorId}`);
+     return await axiosClient(token).get(`/schedule/slots/${mentorId}`)
 }
 
 export const createSchedule = async ({ mentorId, description, slotStart }) => {
