@@ -15,14 +15,19 @@ function Schedule() {
      const onClick = (e) => {
           console.log('click ', e);
           setCurrentTab(e.key);
+          if (e.key === 'all') {
+               setSelectedDate(null)
+          }
      };
 
      const handleBookingDate = useCallback((date) => {
           setBookingDates(date)
+          console.log('handleBookingDate')
      }, [])
 
      const handleDateSelected = (day) => {
           setSelectedDate(day)
+          console.log('handleDateSelected')
      }
 
      const items = [

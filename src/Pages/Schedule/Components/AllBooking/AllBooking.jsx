@@ -50,16 +50,14 @@ const AllBooking = ({ selectedDate, onBookingDatesChange }) => {
         if (loading) return;
         setLoading(true);
 
-        const role = currentUserRole(currentUser.isMentor);
-        const id = currentUser.accountId;
-
-
         try {
-            const res = await getListBooking(role, id)
+            const res = await getListBooking(currentUserRole(currentUser.isMentor), currentUser.accountId);
             if (res) {
                 setAllData(res.data)
+                const newBookingDates = res.data.map(booking => dayjs(booking.startTime).format('YYYY-MM-DD'));
+                onBookingDatesChange(newBookingDates);
                 const mentorId = res.data.map(data => data.mentorId)
-
+                console.log("loadData")
 
                 try {
                     const mentorProfiles = await Promise.all(
@@ -80,7 +78,7 @@ const AllBooking = ({ selectedDate, onBookingDatesChange }) => {
             setLoading(false)
         }
 
-    }, [currentUser.isMentor, currentUser.accountId, page, pageSize, loading])
+    }, [currentUser.isMentor, currentUser.accountId, onBookingDatesChange])
 
     const getMentorNameById = (id) => {
         const mentor = mentorProfiles.find(profile => profile.mentorId === id)
@@ -99,6 +97,7 @@ const AllBooking = ({ selectedDate, onBookingDatesChange }) => {
 
     // cai nay la load data
     useEffect(() => {
+        console.log('UseEffect LoadData')
         loadData();
     }, [loadData]);
 
