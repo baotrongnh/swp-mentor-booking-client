@@ -2,29 +2,42 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
 import { Calendar, Col, Radio, Row, Select, theme, Typography } from 'antd';
 import dayLocaleData from 'dayjs/plugin/localeData';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AppContext } from '../../../../Contexts/AppContext';
+import PropTypes from 'prop-types';
 dayjs.extend(dayLocaleData);
 
-const ShowCalendar = () => {
+const ShowCalendar = ({ onDaySelect, bookingDates }) => {
     const { t } = useContext(AppContext)
     const { token } = theme.useToken();
+    const [selectedDay, setSelectedDay] = useState(dayjs())
+
+    const disabledDate = (date) => {
+        return !bookingDates.includes(date.format('YYYY-MM-DD'))
+    }
+
+    const onDaySelected = (day) => {
+        setSelectedDay(day);
+        onDaySelect(day);
+        console.log("Selected day on click: " + day.format('YYYY-MM-DD'))
+    }
+
     const onPanelChange = (value, mode) => {
         console.log(value.format('YYYY-MM-DD'), mode);
     };
 
     const wrapperStyle = {
         display: 'flex',
-        justifyContent: 'center',  
-        alignItems: 'center',      
-        height: '100%',           
-        width: '100%',            
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100%',
+        width: '100%',
         border: `1px solid ${token.colorBorderSecondary}`,
         borderRadius: token.borderRadiusLG,
     };
 
     const calendarContainerStyle = {
-        width: '90%',             
+        width: '90%',
     };
 
     return (
@@ -32,6 +45,11 @@ const ShowCalendar = () => {
             <div style={calendarContainerStyle}>
                 <Calendar
                     fullscreen={false}
+
+                    value={selectedDay}
+                    onSelect={onDaySelected}
+                    disabledDate={disabledDate}
+
                     headerRender={({ value, type, onChange, onTypeChange }) => {
                         const start = 0;
                         const end = 12;
@@ -115,5 +133,10 @@ const ShowCalendar = () => {
         </div>
     );
 };
+
+ShowCalendar.propTypes = {
+    onDaySelect: PropTypes.func.isRequired,
+    bookingDates: PropTypes.arrayOf(PropTypes.string).isRequired,
+}
 
 export default ShowCalendar;
