@@ -9,6 +9,8 @@ import { getProfileMentor } from '../../../../apis/mentor';
 import avatarDefault from '../../../../assets/Photos/avatar/default_avatar_2.jpg'
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
+import { Link } from 'react-router-dom'
+
 
 
 const formatDate = (date) => {
@@ -145,7 +147,7 @@ const AllBooking = ({ selectedDate, onBookingDatesChange }) => {
                         <List.Item key={item.id} className="list-item">
                             <List.Item.Meta
                                 avatar={<Avatar src={getMentorImageById(item.mentorId)} size={70} />}
-                                title={<a href="https://ant.design">{getMentorNameById(item.mentorId)}</a>}
+                                title={<Link to={`/mentor/profile/${item.mentorId}`}>{getMentorNameById(item.mentorId)}</Link>}
                                 description={getMentorEmailById(item.mentorId)}
                             />
                             <div className="time-wrapper" >
