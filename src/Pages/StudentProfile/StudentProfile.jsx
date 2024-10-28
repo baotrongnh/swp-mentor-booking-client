@@ -16,10 +16,6 @@ function StudentProfile() {
     const [openModalBeMentor, setOpenModalBeMentor] = useState(false)
     const { t } = useContext(AppContext)
 
-    const handleToggle = () => {
-        setIsEditing(prev => !prev);
-    };
-
     useEffect(() => {
     }, [currentUser]);
 
@@ -55,17 +51,17 @@ function StudentProfile() {
                             <p><strong>Email:</strong> {currentUser.email || ' abc@fpt.edu.vn'}</p>
                             <p className='point'><strong>{t('point')}:</strong > {currentUser.point || 0} </p>
 
-                            <Button className='edit-profile-btn custom-btn' onClick={handleToggle} style={{ marginTop: '16px' }}>
-                                <Icon icon="uil:edit" style={{ width: '1.8rem', height: '1.8rem' }} /> {t('edit-profile')}
-                            </Button>
-                            <Button className='gradient-btn custom-btn link-item' type="primary" style={{ marginTop: '1.8rem' }} onClick={() => {
-                                setOpenModalBeMentor(true)
-                            }}
-                            >
-                                <Icon icon="ep:avatar" style={{ width: '1.8rem', height: '1.8rem' }} /> {t('become a mentor')}
-                            </Button>
+                            <div className="student-profile-btn">
+                                <Button
+                                    className='gradient-btn custom-btn link-item'
+                                    type="primary"
+                                    onClick={() => setOpenModalBeMentor(true)}
+                                >
+                                    <Icon icon="ep:avatar" style={{ marginRight: '8px' }} /> {t('become a mentor')}
+                                </Button>
 
-                            <DonateModalButton />
+                                <DonateModalButton className='gradient-btn custom-btn link-item' />
+                            </div>
                         </Col>
                     </Row>
 

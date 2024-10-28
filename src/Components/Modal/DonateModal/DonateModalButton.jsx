@@ -2,9 +2,10 @@ import { Button, Card, Col, Modal, Row } from 'antd';
 import { useState } from 'react';
 import './DonateModalButton.scss';
 import { Icon } from '@iconify/react/dist/iconify.js';
+import PropTypes from 'prop-types';
 
 
-const DonateModalButton = () => {
+const DonateModalButton = ({ className }) => {
     const [open, setOpen] = useState(false);
 
     const handleDonate = (amount) => {
@@ -13,9 +14,13 @@ const DonateModalButton = () => {
     };
 
     return (
-        <>
-            <Button type="primary" onClick={() => setOpen(true)} className="donate-button">
-                Donate
+        <div className='donate-modal-btn'>
+            <Button
+                type="primary"
+                onClick={() => setOpen(true)}
+                className={`donate-button ${className}`}
+            >
+                <Icon icon="noto:coin" style={{ marginRight: '8px' }} /> Donate
             </Button>
             <Modal
                 title="Choose Your Donation"
@@ -55,7 +60,12 @@ const DonateModalButton = () => {
                     ))}
                 </Row>
             </Modal>
-        </>
+        </div>
     );
 };
+
+DonateModalButton.propTypes = {
+    className: PropTypes.string
+}
+
 export default DonateModalButton;

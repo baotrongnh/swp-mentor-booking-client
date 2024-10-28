@@ -15,6 +15,9 @@ function Schedule() {
      const onClick = (e) => {
           console.log('click ', e);
           setCurrentTab(e.key);
+          if (e.key === 'all' || e.key === 'comming') {
+               setSelectedDate(null)
+          }
      };
 
      const handleBookingDate = useCallback((date) => {
@@ -49,7 +52,7 @@ function Schedule() {
                          >
                               <Menu onClick={onClick} selectedKeys={[currentTab]} mode="horizontal" items={items} />
                               <div className="booking-list">
-                                   {currentTab === 'comming' && <CommingBooking />}
+                                   {currentTab === 'comming' && <CommingBooking selectedDate={selectedDate} onBookingDatesChange={handleBookingDate} />}
                                    {currentTab === 'all' && <AllBooking selectedDate={selectedDate} onBookingDatesChange={handleBookingDate} />}
                               </div>
                          </Col>
