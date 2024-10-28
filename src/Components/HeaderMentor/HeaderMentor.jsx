@@ -9,16 +9,16 @@ import logo from '../../assets/Photos/logo/logo.png'
 import { AppContext } from '../../Contexts/AppContext'
 import { AuthContext } from '../../Contexts/AuthContext'
 import { deleteToken } from '../../utils/storageUtils'
-import { ModalBecomeMentor } from '../Modal'
+import { ModalAddSlot } from '../Modal'
 import './HeaderMentor.scss'
 
 function HeaderMentor() {
      const { t, i18n } = useTranslation()
-     const { setTheme, theme } = useContext(AppContext)
+     const { setTheme, theme, defaultLanguage } = useContext(AppContext)
      const { currentUser, setCurrentUser } = useContext(AuthContext)
-     const [openModalBeMentor, setOpenModalBeMentor] = useState(false)
      const [openDrawer, setOpenDrawer] = useState(false)
      const [openDropDownAccount, setOpenDropDownAccount] = useState(false)
+     const [openModalAddSkill, setOpenModalAddSkill] = useState(false)
 
      const handleMenuAccountClick = (e) => {
           if (e.key !== '4' && e.key !== '5') {
@@ -50,6 +50,7 @@ function HeaderMentor() {
 
      const handleChangeLanguage = (value) => {
           i18n.changeLanguage(value)
+          localStorage.setItem('language', value)
      }
 
      const moreMenuDropDown = [
@@ -72,6 +73,10 @@ function HeaderMentor() {
           {
                label: <Link to='/wallet'><Flex gap='small' align='center'>{t('wallet')}: <Icon icon="twemoji:coin" /><p> {currentUser?.point}</p></Flex></Link>,
                key: '1',
+          },
+          {
+               label: <Flex onClick={() => setOpenModalAddSkill(true)} gap='small' align='center'>Add schedule</Flex>,
+               key: '9',
           },
           { type: 'divider' },
           {
@@ -122,13 +127,7 @@ function HeaderMentor() {
                               </Link>
                          </Col>
 
-                         <Col xs={12} sm={0} className='btn-navbar-mobile'>
-                              <Button onClick={() => setOpenDrawer(true)} type='text'>
-                                   <Icon className='icon' icon="ic:round-menu" />
-                              </Button>
-                         </Col>
-
-                         <Col xs={0} sm={3} md={3} lg={0} className='btn-navbar-mobile'>
+                         <Col xs={12} lg={0} className='btn-navbar-mobile'>
                               <Button onClick={() => setOpenDrawer(true)} type='text'>
                                    <Icon className='icon' icon="ic:round-menu" />
                               </Button>
@@ -136,7 +135,7 @@ function HeaderMentor() {
 
                          <Col xs={0} md={0} lg={12}>
                               <div className='btn-block'>
-                                   <NavLink to='/pending-booking' className='navbar-link'>{t('pending booking')}</NavLink>
+                                   <NavLink to='/pending-booking' className='navbar-link'>{t('Gift')}</NavLink>
                                    <NavLink to='/schedule' className='navbar-link'>{t('schedule')}</NavLink>
                                    <Dropdown
                                         menu={{ items: moreMenuDropDown }}
@@ -183,13 +182,40 @@ function HeaderMentor() {
                     onClose={() => setOpenDrawer(false)}
                     open={openDrawer}
                >
+
+                    <Flex gap='small' align='center' justify='space-between'>
+                         {t('language')}: <Select
+                              defaultValue={defaultLanguage}
+                              onChange={handleChangeLanguage}
+                              options={[
+                                   {
+                                        value: 'en',
+                                        label: 'EN',
+                                   },
+                                   {
+                                        value: 'vi',
+                                        label: 'VN',
+                                   }
+                              ]}
+                         />
+                         <hr />
+                         {t('theme')}: <Switch
+                              defaultChecked={theme === 'dark-theme'}
+                              onChange={handleChangeTheme}
+                              checkedChildren="Dark"
+                              unCheckedChildren="Light"
+                         />
+                    </Flex>
+
+                    <hr />
+
                     <div className="navbar-mobile-block">
                          <Link
                               onClick={() => setOpenDrawer(false)}
                               to='/browser-mentors'
                               className='link-item'
                          >
-                              Browser mentors
+                              {t('Gift')}
                          </Link>
 
                          <Link
@@ -197,7 +223,7 @@ function HeaderMentor() {
                               to={`/schedule/${currentUser?.id}`}
                               className='link-item'
                          >
-                              Schedule
+                              {t('schedule')}
                          </Link>
 
                          <Link
@@ -205,30 +231,24 @@ function HeaderMentor() {
                               to='/wallet'
                               className='link-item'
                          >
-                              Wallet
+                              {t('Wallet')}
                          </Link>
 
-                         <Link
-                              onClick={() => {
-                                   setOpenDrawer(false)
-                                   setOpenModalBeMentor(true)
-                              }}
-                              className='link-item'
-                         >
-                              Become a mentor
-                         </Link>
+                         <hr style={{ width: '100%' }} />
 
                          <Link
                               onClick={() => setOpenDrawer(false)}
                               to='/student/profile'
                               className='link-item'
                          >
-                              Your profile
+                              {t('Profile')}
                          </Link>
+
+                         <Link className='link-item' style={{ color: 'red' }} onClick={handleLogout}>{t('logout')}</Link>
                     </div>
                </Drawer>
 
-               <ModalBecomeMentor modalOpen={openModalBeMentor} setModalOpen={setOpenModalBeMentor} />
+               <ModalAddSlot modalOpen={openModalAddSkill} setModalOpen={setOpenModalAddSkill} />
           </div>
      )
 }

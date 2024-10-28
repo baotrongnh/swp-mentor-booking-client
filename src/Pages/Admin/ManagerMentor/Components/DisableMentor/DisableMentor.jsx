@@ -13,6 +13,7 @@ function DisableMentor() {
      const { data: dataMentors, isLoading } = useQuery({ queryKey: ['list-mentors-disable-admin'], queryFn: getListDisableMentor })
      const [dataSource, setDataSource] = useState([])
      const mutation = useMutation({ mutationFn: (mentorId) => activeMentor(mentorId) })
+
      useEffect(() => {
           if (dataMentors) {
                setDataSource(

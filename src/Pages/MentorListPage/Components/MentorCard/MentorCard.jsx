@@ -1,15 +1,15 @@
-import {Icon} from '@iconify/react'
-import {Button, Col, Image, Rate, Row, Tag, Typography} from "antd"
+import { Icon } from '@iconify/react'
+import { Button, Col, Image, Rate, Row, Tag, Typography } from "antd"
 import PropTypes from "prop-types"
-import {Link} from 'react-router-dom'
+import { useContext } from 'react'
+import { Link } from 'react-router-dom'
 import defaultAvatar2 from '../../../../assets/Photos/avatar/default_avatar_2.jpg'
+import { AppContext } from '../../../../Contexts/AppContext'
 import './MentorCard.scss'
-import {useContext} from 'react'
-import {AppContext} from '../../../../Contexts/AppContext'
 
-function MentorCard({mentor, setModalOpen, setCurrentIdMentor}) {
+function MentorCard({ mentor, setModalOpen, setCurrentIdMentor }) {
     const urlProfileMentor = `/mentor/profile/${mentor.accountId}`
-    const {t} = useContext(AppContext)
+    const { t } = useContext(AppContext)
 
     const handleBook = () => {
         setCurrentIdMentor(mentor.accountId)
@@ -34,7 +34,7 @@ function MentorCard({mentor, setModalOpen, setCurrentIdMentor}) {
 
                     {mentor?.point > 180 &&
                         <div className="status-user">
-                            <Icon className='icon' icon="mingcute:user-star-fill"/>
+                            <Icon className='icon' icon="mingcute:user-star-fill" />
                             <p className='text-status'>Top Mentor</p>
                         </div>}
 
@@ -58,16 +58,16 @@ function MentorCard({mentor, setModalOpen, setCurrentIdMentor}) {
 
                     <div className="skill-tag-block">
                         {mentor.skills.slice(0, 5).map((skill, index) => (
-                            <Tag className="tag" key={index}>{skill}</Tag>
+                            <Tag color='blue' bordered={false} className="tag" key={index}>{skill}</Tag>
                         ))}
                     </div>
 
                     <div className="time-block">
                         {mentor?.availableSlots?.length > 0 ?
                             <>
-                                <Icon className='icon' icon="tdesign:time"/>
-                                <Tag>{mentor?.availableSlots[0]?.slotStart}</Tag>
-                                {mentor?.availableSlots?.length > 1 && <Tag>{mentor?.availableSlots?.length}+</Tag>}
+                                <Icon style={{ margin: '0 5px' }} className='icon' icon="tdesign:time" />
+                                <Tag color='green' style={{ cursor: 'pointer' }} onClick={handleBook}>{mentor?.availableSlots[0]?.slotStart}</Tag>
+                                {mentor?.availableSlots?.length > 1 && <Tag color='green' style={{ cursor: 'pointer' }} onClick={handleBook}>{mentor?.availableSlots?.length - 1}+</Tag>}
                             </>
                             : <span>No time available</span>
                         }

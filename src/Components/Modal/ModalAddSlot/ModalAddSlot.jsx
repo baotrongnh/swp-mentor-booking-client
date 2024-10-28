@@ -1,14 +1,32 @@
 import { DatePicker, Flex, Modal, TimePicker } from "antd"
 import PropTypes from "prop-types"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { disabledDateInPast, disableNotThing, disableTime, getDateNow } from "../../../utils/validate"
+import { useMutation } from "@tanstack/react-query"
+import { createSchedule } from "../../../apis/mentor"
+import { AuthContext } from "../../../Contexts/AuthContext"
+import toast from "react-hot-toast"
 
 export default function ModalAddSlot({ modalOpen, setModalOpen }) {
+     const { currentUser } = useContext(AuthContext)
+
      const [dateCustom, setDateCustom] = useState({ date: '0000-00-00', time: '00:00:00' })
      const [displayDate, setDisplayDate] = useState({ date: 'DD-MM-YYYY', time: '00:00' })
 
-     const handleAdd = () => {
+     const mutation = useMutation({
+          mutationFn: ({ mentorId, slotStart, description }) => createSchedule(mentorId, description, slotStart),
+          onSuccess: () => {
+               toast.success('Slot created successfully!')
+               setModalOpen(false)
+          },
+          onError: () => {
+               toast.error('Something went wrong!')
+          }
+     })
 
+     const handleAdd = () => {
+          console.log(`${dateCustom.date} ${dateCustom.time}`);
+          mutation.mutate({ mentorId: currentUser.accountId, slotStart: `${dateCustom.date} ${dateCustom.time}`, description: '' })
      }
 
      const handleDatePick = (date, dateString) => {
@@ -28,7 +46,7 @@ export default function ModalAddSlot({ modalOpen, setModalOpen }) {
                <Modal
                     title="Add your schedule"
                     centered
-                    open={true}
+                    open={modalOpen}
                     okText='Add'
                     onOk={handleAdd}
                     onCancel={() => setModalOpen(false)}

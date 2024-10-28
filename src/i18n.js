@@ -16,6 +16,7 @@ const resources = {
                'language': 'Language',
                'logout': 'Logout',
                'pending booking': 'Pending bookings',
+               'Gift': 'Gift',
 
                //button:
                'book': 'Book',

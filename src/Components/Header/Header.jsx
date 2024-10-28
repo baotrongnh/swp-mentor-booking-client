@@ -278,7 +278,7 @@ function Header() {
                                 <NavLink to='/browser-mentors' className='navbar-link'>{t('browser mentors')}</NavLink>
 
                                 <Flex align='center' gap='middle'>
-                                    <Link to='/login'><Button type='primary'>Login</Button></Link>
+                                    <Link to='/login'><Button type='primary'>{t('Login')}</Button></Link>
                                     <Dropdown
                                         menu={{ items: guestMenuDropDown, onClick: handleMenuAccountClick }}
                                         placement='bottomRight'
@@ -302,52 +302,100 @@ function Header() {
                 className='navbar-drawer'
                 placement='right'
                 width={350}
-                title="Basic Drawer"
+                title={`Welcome, ${currentUser?.fullName}`}
                 onClose={() => setOpenDrawer(false)}
                 open={openDrawer}
             >
+
+                <Flex gap='small' align='center' justify='space-between'>
+                    {t('language')}: <Select
+                        defaultValue={defaultLanguage}
+                        onChange={handleChangeLanguage}
+                        options={[
+                            {
+                                value: 'en',
+                                label: 'EN',
+                            },
+                            {
+                                value: 'vi',
+                                label: 'VN',
+                            }
+                        ]}
+                    />
+                    <hr />
+                    {t('theme')}: <Switch
+                        defaultChecked={theme === 'dark-theme'}
+                        onChange={handleChangeTheme}
+                        checkedChildren="Dark"
+                        unCheckedChildren="Light"
+                    />
+                </Flex>
+
+                <hr />
+
                 <div className="navbar-mobile-block">
+                    {currentUser
+                        ?
+                        <>
+                            <Link
+                                onClick={() => {
+                                    setOpenDrawer(false)
+                                    setOpenModalBeMentor(true)
+                                }}
+                                className='link-item'
+                            >
+                                {t('become a mentor')}
+                            </Link>
+
+                            <Link
+                                onClick={() => setOpenDrawer(false)}
+                                to='schedule'
+                                className='link-item'
+                            >
+                                {t('schedule')}
+                            </Link>
+
+                            <Link
+                                onClick={() => setOpenDrawer(false)}
+                                to='/wallet'
+                                className='link-item'
+                            >
+                                <Flex gap='small'>{t('wallet')}: <Icon icon="twemoji:coin" /> <p> {currentUser?.point}</p></Flex>
+                            </Link>
+                        </>
+                        :
+                        <Link
+                            onClick={() => setOpenDrawer(false)}
+                            to='/login'
+                            className='link-item'
+                        >
+                            {t('Login')}
+                        </Link>
+                    }
+
                     <Link
                         onClick={() => setOpenDrawer(false)}
                         to='/browser-mentors'
                         className='link-item'
                     >
-                        Browser mentors
+                        {t('browser mentors')}
                     </Link>
 
-                    <Link
-                        onClick={() => setOpenDrawer(false)}
-                        to='schedule'
-                        className='link-item'
-                    >
-                        Schedule
-                    </Link>
+                    <hr style={{ width: '100%' }} />
 
-                    <Link
-                        onClick={() => setOpenDrawer(false)}
-                        to='/wallet'
-                        className='link-item'
-                    >
-                        Wallet
-                    </Link>
+                    {currentUser &&
+                        <>
+                            <Link
+                                onClick={() => setOpenDrawer(false)}
+                                to='/student/profile'
+                                className='link-item'
+                            >
+                                {t('Your profile')}
+                            </Link>
 
-                    <Link
-                        onClick={() => {
-                            setOpenDrawer(false)
-                            setOpenModalBeMentor(true)
-                        }}
-                        className='link-item'
-                    >
-                        Become a mentor
-                    </Link>
-
-                    <Link
-                        onClick={() => setOpenDrawer(false)}
-                        to='/student/profile'
-                        className='link-item'
-                    >
-                        Your profile
-                    </Link>
+                            <Link className='link-item' style={{ color: 'red' }} onClick={handleLogout}>{t('logout')}</Link>
+                        </>
+                    }
                 </div>
             </Drawer>
 

@@ -7,6 +7,5 @@ import Schedule from "./Schedule/Schedule"
 import Wallet from "./Wallet/Wallet"
 import Home from "./Home/Home"
 import PageError from "./PageError"
-import ListBookingPending from "./ListBookingPending/ListBookingPending"
 
-export { Login, MentorListPage, MentorProfile, StudentProfile, PageNotFound, Schedule, Wallet, Home, PageError, ListBookingPending }
+export { Login, MentorListPage, MentorProfile, StudentProfile, PageNotFound, Schedule, Wallet, Home, PageError }

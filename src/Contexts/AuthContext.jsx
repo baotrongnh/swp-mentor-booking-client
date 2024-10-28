@@ -18,7 +18,6 @@ export const AuthProvider = ({children}) => {
 
     useEffect(() => {
         if (dataUser && dataUser.user) {
-            console.log(dataUser)
             setCurrentUser(dataUser.user)
             sessionStorage.setItem('currentUser', JSON.stringify(dataUser.user))
         }
