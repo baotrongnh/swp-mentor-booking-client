@@ -35,6 +35,7 @@ function Login() {
             if (userInfor && userInfor.user) {
                 toast.success(`Welcome ${userInfor?.user.fullName}!`)
                 navigate('/')
+                return
             }
         } else if (getToken()) {
             const token = getToken()

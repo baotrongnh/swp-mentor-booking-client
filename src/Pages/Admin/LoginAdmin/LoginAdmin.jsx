@@ -4,22 +4,31 @@ import {loginAdmin} from '../../../apis/authentication'
 import logo from '../../../assets/Photos/logo/logo.png'
 import './LoginAdmin.scss'
 import toast from 'react-hot-toast'
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {AppContext} from "../../../Contexts/AppContext.jsx";
 
 function LoginAdmin() {
     const [statusLogin, setStatusLogin] = useState('')
     const navigate = useNavigate()
+    const {authChannel} = useContext(AppContext)
+
+    const loginSuccessAction = () => {
+        sessionStorage.removeItem('currentUser')
+        localStorage.removeItem('token')
+        toast.success('Login successfully')
+        navigate('/admin/mentor/all')
+    }
 
     const mutation = useMutation({
         mutationFn: (values) => loginAdmin(values),
         onSuccess: (values) => {
             const errorCode = values.data.error_code
             if (errorCode === 0) {
-                sessionStorage.removeItem('currentUser')
-                localStorage.setItem('token', values.data.token)
-                toast.success('Login successfully')
-                navigate('/admin/mentor/all')
+                authChannel.postMessage({type: 'LOGIN', errorCode: 0})
+                localStorage.setItem('tokenAdmin', values.data.token)
+                loginSuccessAction()
+
             } else if (errorCode === 1) {
                 toast.error('Passwords do not match')
                 setStatusLogin('error')
@@ -28,6 +37,16 @@ function LoginAdmin() {
             }
         }
     })
+
+    authChannel.onmessage = (event) => {
+        console.log(event)
+        if (event.data.type === 'LOGIN') {
+            const errorCode = event.data.errorCode;
+            if (localStorage.getItem('tokenAdmin') && errorCode === 0) {
+                loginSuccessAction()
+            }
+        }
+    }
 
     const onFinish = (values) => {
         mutation.mutate(values)

@@ -16,9 +16,9 @@ function DisableMentor() {
      useEffect(() => {
           if (dataMentors) {
                setDataSource(
-                    dataMentors?.inactiveMentors?.map((mentor) => ({
-                         key: mentor.id,
-                         id: mentor.id,
+                    dataMentors?.mentors?.map((mentor) => ({
+                         key: mentor.accountId,
+                         id: mentor.accountId,
                          name: mentor.fullName,
                          email: mentor.email,
                          point: mentor.point || 'null',
@@ -30,8 +30,7 @@ function DisableMentor() {
      }, [dataMentors])
 
      const handleActiveMentor = async (mentor) => {
-          const data = await mutation.mutateAsync(mentor.id)
-          console.log(data)
+          const data = await mutation.mutateAsync(mentor.accountId)
           if (data.error_code === 0) {
                queryClient.invalidateQueries({ queryKey: ['list-mentors-disable-admin'] })
           }

@@ -5,6 +5,7 @@ import SidebarAdmin from "./SidebarAdmin/SidebarAdmin"
 import HeaderAdmin from "./HeaderAdmin/HeaderAdmin"
 import Footer from "./Footer/Footer"
 import SkeletonLoading from "./Skeleton/Skeleton"
+import HeaderMentor from './HeaderMentor/HeaderMentor.jsx'
 
-export { Header, Loading, SkillItem, SidebarAdmin, HeaderAdmin, Footer, SkeletonLoading }
+export { Header, Loading, SkillItem, SidebarAdmin, HeaderAdmin, Footer, SkeletonLoading, HeaderMentor }
 

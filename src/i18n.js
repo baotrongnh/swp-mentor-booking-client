@@ -72,7 +72,7 @@ const resources = {
 
                //wallet:
                'Your balance': 'Your balance',
-               'Transition history': 'Transition history',
+               'Transaction history': 'Transaction history',
 
                // New translations for Home.jsx
                "SWP Mentor Booking": "SWP Mentor Booking",

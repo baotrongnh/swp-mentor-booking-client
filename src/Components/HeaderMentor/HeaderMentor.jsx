@@ -66,7 +66,7 @@ function HeaderMentor() {
      const accountMenuDropDown = [
           { type: 'divider' },
           {
-               label: <Link to="/student/profile">{t('profile')}</Link>,
+               label: <Link to={`/mentor/profile/${currentUser?.accountId}`}>{t('profile')}</Link>,
                key: '0',
           },
           {
@@ -137,7 +137,7 @@ function HeaderMentor() {
                          <Col xs={0} md={0} lg={12}>
                               <div className='btn-block'>
                                    <NavLink to='/pending-booking' className='navbar-link'>{t('pending booking')}</NavLink>
-                                   <NavLink to={`/schedule/${currentUser?.id}`} className='navbar-link'>{t('schedule')}</NavLink>
+                                   <NavLink to='/schedule' className='navbar-link'>{t('schedule')}</NavLink>
                                    <Dropdown
                                         menu={{ items: moreMenuDropDown }}
                                         placement='bottom'
@@ -150,7 +150,7 @@ function HeaderMentor() {
 
                                    <div >
                                         <Flex align='center'>
-                                             <Link to='/student/profile' className='navbar-link account'>
+                                             <Link to={`/mentor/profile/${currentUser?.accountId}`} className='navbar-link account'>
                                                   {currentUser?.imgPath
                                                        ? <img className='avatar' src={currentUser?.imgPath} alt="" onError={(e) => e.target.src = defaultAvatar} />
                                                        : <Icon className='icon' icon="material-symbols-light:account-circle" />

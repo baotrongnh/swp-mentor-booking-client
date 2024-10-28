@@ -22,8 +22,8 @@ function MentorProfile() {
      const [isCurrentUser, setIsCurrentUser] = useState(false)
 
      useLayoutEffect(() => {
-          if (id == currentUser?.id) {
-               setIsCurrentUser(false)
+          if (id == currentUser?.accountId) {
+               setIsCurrentUser(true)
           } else {
                setIsCurrentUser(false)
           }

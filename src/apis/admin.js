@@ -1,8 +1,8 @@
-import { getToken } from "../utils/storageUtils"
+import {getTokenAdmin} from "../utils/storageUtils"
 import axiosClient from "./axiosClient"
 
 export const getListMentor = async () => {
-     const token = getToken()
+     const token = getTokenAdmin()
      try {
           return await axiosClient(token).get('/admin/mentor-list')
      } catch (error) {
@@ -11,7 +11,7 @@ export const getListMentor = async () => {
 }
 
 export const getListStudent = async () => {
-     const token = getToken()
+     const token = getTokenAdmin()
      try {
           return await axiosClient(token).get('admin/student-list')
      } catch (error) {
@@ -20,7 +20,7 @@ export const getListStudent = async () => {
 }
 
 export const getTopMentor = async () => {
-     const token = getToken();
+     const token = getTokenAdmin();
      try {
           return await axiosClient(token).get('admin/top-mentors')
      } catch (error) {
@@ -29,7 +29,7 @@ export const getTopMentor = async () => {
 }
 
 export const getListDisableMentor = async () => {
-     const token = getToken();
+     const token = getTokenAdmin();
      try {
           return await axiosClient(token).get('admin/inactive-mentors')
      } catch (error) {
@@ -38,12 +38,12 @@ export const getListDisableMentor = async () => {
 }
 
 export const getlistMentorPending = async () => {
-     const token = getToken()
+     const token = getTokenAdmin()
      return await axiosClient(token).get('/student/applying')
 }
 
 export const promoteMentor = async (accountId) => {
-     const token = getToken();
+     const token = getTokenAdmin();
      try {
           return await axiosClient(token).post('/admin/promote', {
                accountId
@@ -54,7 +54,7 @@ export const promoteMentor = async (accountId) => {
 }
 
 export const startNewSemester = async () => {
-     const token = getToken()
+     const token = getTokenAdmin()
      try {
           return await axiosClient(token).post('/admin/start-semester')
      } catch (error) {
@@ -63,7 +63,7 @@ export const startNewSemester = async () => {
 }
 
 export const resetStudentPoint = async () => {
-     const token = getToken()
+     const token = getTokenAdmin()
      try {
           return await axiosClient(token).post('/admin/reset-point')
      } catch (error) {
@@ -72,7 +72,7 @@ export const resetStudentPoint = async () => {
 }
 
 export const setDefaultPoint = async (newDefaultPoint) => {
-     const token = getToken()
+     const token = getTokenAdmin()
      try {
           return await axiosClient(token).post('/admin/set-default-point', {
                newDefaultPoint
@@ -83,7 +83,7 @@ export const setDefaultPoint = async (newDefaultPoint) => {
 }
 
 export const disableMentor = async (id) => {
-     const token = getToken()
+     const token = getTokenAdmin()
      try {
           return await axiosClient(token).get(`/admin/disable-mentor/${id}`)
      } catch (error) {
@@ -92,12 +92,12 @@ export const disableMentor = async (id) => {
 }
 
 export const activeMentor = async (id) => {
-     const token = getToken()
+     const token = getTokenAdmin()
      return await axiosClient(token).get(`admin/activate-mentor/${id}`)
 }
 
 export const createSkillMentor = async (name) => {
-     const token = getToken()
+     const token = getTokenAdmin()
      return await axiosClient(token).post('/admin/add-skill', {
           name,
           imgPath: 'url'

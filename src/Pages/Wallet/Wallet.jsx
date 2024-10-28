@@ -95,7 +95,7 @@ export default function Wallet() {
                     </Row>
 
                     <div className="transition-history">
-                         <h1 className='title'>{t('Transition history')}</h1>
+                         <h1 className='title'>{t('Transaction history')}</h1>
 
                          <div className="transition-block">
                               <List
