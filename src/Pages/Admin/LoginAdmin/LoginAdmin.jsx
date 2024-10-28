@@ -7,6 +7,7 @@ import toast from 'react-hot-toast'
 import {useContext, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {AppContext} from "../../../Contexts/AppContext.jsx";
+import {AuthContext} from "../../../Contexts/AuthContext.jsx";
 
 function LoginAdmin() {
     const [statusLogin, setStatusLogin] = useState('')
@@ -28,7 +29,6 @@ function LoginAdmin() {
                 authChannel.postMessage({type: 'LOGIN', errorCode: 0})
                 localStorage.setItem('tokenAdmin', values.data.token)
                 loginSuccessAction()
-
             } else if (errorCode === 1) {
                 toast.error('Passwords do not match')
                 setStatusLogin('error')
