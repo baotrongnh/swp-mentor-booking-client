@@ -3,21 +3,23 @@
 .comming-booking {
   height: 45rem;
   overflow: auto;
-  padding: 0 16px;
+  padding: 0;
   border: 1px solid rgba(140, 140, 140, 0.35);
 
+
+
   .time-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
+    gap: 0.5rem;
 
     h1 {
       font: {
         size: 2.5rem;
         weight: 600;
       }
+    }
+
+    .time-wrapper-2 {
+      width: 100%;
     }
   }
 
@@ -51,6 +53,9 @@
     .ant-list-item-meta {
       flex: 1 1 100%;
       margin-bottom: 1rem;
+      padding-left: 1rem;
+      align-items: center;
+      justify-content: center;
 
       .ant-list-item-meta-avatar {
         margin-bottom: 0.5rem;

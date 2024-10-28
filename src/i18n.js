@@ -64,11 +64,13 @@ const resources = {
 
                //schedule
                "booking list": "Booking List",
-               "comming booking": "Coming Booking",
+               "comming booking": "Pending Booking",
+               "completed booking": "Completed Booking",
                "all booking": "All Booking",
                "booking calendar": "Booking Calendar",
                "month": "Month",
                "year": "Year",
+               "end list": "You have reached the end of your bookings!",
 
                //wallet:
                'Your balance': 'Your balance',
@@ -156,11 +158,13 @@ const resources = {
 
                //schedule
                "booking list": "Danh Sách Đặt Lịch",
-               "comming booking": "Lịch sắp tới",
+               "comming booking": "Đợi duyệt",
+               "completed booking": "Đã hoàn thành",
                "all booking": "Tất cả lịch",
                "booking calendar": "Lịch",
                "month": "Tháng",
                "year": "Năm",
+               "end list": "Bạn đã xem hết lịch đặt của bạn!",
 
                //wallet:
                'Your balance': 'Số dư của bạn',

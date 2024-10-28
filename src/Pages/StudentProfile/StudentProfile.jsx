@@ -8,13 +8,22 @@ import Loading from '../../Components/Loading/Loading'
 import { ModalBecomeMentor } from '../../Components/Modal';
 import './StudentProfile.scss';
 import { AppContext } from '../../Contexts/AppContext'
-import DonateModalButton from '../../Components/Modal/DonateModal/DonateModalButton';
+import { useNavigate } from 'react-router-dom';
 
 function StudentProfile() {
     const [isEditing, setIsEditing] = useState(false);
     const { currentUser, isFetchUserData } = useContext(AuthContext);
     const [openModalBeMentor, setOpenModalBeMentor] = useState(false)
+    const navigate = useNavigate()
     const { t } = useContext(AppContext)
+
+    console.log(currentUser)
+
+    useEffect(() => {
+        if (currentUser?.isMentor !== 0) {
+            navigate(`/mentor/profile/${currentUser?.accountId}`)
+        }
+    })
 
     useEffect(() => {
     }, [currentUser]);
@@ -60,7 +69,6 @@ function StudentProfile() {
                                     <Icon icon="ep:avatar" style={{ marginRight: '8px' }} /> {t('become a mentor')}
                                 </Button>
 
-                                <DonateModalButton className='gradient-btn custom-btn link-item' />
                             </div>
                         </Col>
                     </Row>

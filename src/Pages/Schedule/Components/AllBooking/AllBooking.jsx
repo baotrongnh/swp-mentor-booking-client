@@ -3,12 +3,13 @@ import { Avatar, Divider, Flex, List, Skeleton } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import './AllBooking.scss';
-import { getListBooking } from '../../../../apis/booking';
+import { getListAllBooking } from '../../../../apis/booking';
 import { AuthContext } from '../../../../Contexts/AuthContext'
 // import avatarDefault from '../../../../assets/Photos/avatar/default_avatar_2.jpg'
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom'
+import { AppContext } from '../../../../Contexts/AppContext';
 
 
 
@@ -41,6 +42,7 @@ const AllBooking = ({ selectedDate, onBookingDatesChange }) => {
     const [hasMore, setHasMore] = useState(true);
     const [page, setPage] = useState(1);
     const pageSize = 10;
+    const { t } = useContext(AppContext)
 
     const currentUserRole = (role) => {
         return role === 0 ? 'student' : 'mentor'
@@ -51,10 +53,10 @@ const AllBooking = ({ selectedDate, onBookingDatesChange }) => {
         setLoading(true);
 
         try {
-            const res = await getListBooking(currentUserRole(currentUser.isMentor), currentUser.accountId);
+            const res = await getListAllBooking(currentUserRole(currentUser.isMentor), currentUser.accountId);
             if (res) {
                 setAllData(res.data) // set Data ne
-                console.log(res.data)
+
                 const newBookingDates = res.data.map(booking => dayjs(booking.startTime).format('YYYY-MM-DD'));
                 onBookingDatesChange(newBookingDates);
             }
@@ -80,15 +82,18 @@ const AllBooking = ({ selectedDate, onBookingDatesChange }) => {
     //cai nay de cho hien thi selectDay
     useEffect(() => {
         let filterData = allData;
-
+        console.log(filterData)
         if (selectedDate) {
             filterData = allData.filter(booking => dayjs(booking.startTime).isSame(selectedDate, 'day'))
         }
+
+        const sortData = filterData.sort((item1, item2) => item1.status - item2.status)
+
         const startIndex = (page - 1) * pageSize;
         const endIndex = startIndex + pageSize;
 
-        setDisplayData(filterData.slice(0, endIndex))
-        setHasMore(filterData.length > endIndex) // cai nay cho load data neu con 
+        setDisplayData(sortData.slice(0, endIndex))
+        setHasMore(sortData.length > endIndex) // cai nay cho load data neu con 
     }, [selectedDate, allData, page, pageSize])
 
 
@@ -107,7 +112,6 @@ const AllBooking = ({ selectedDate, onBookingDatesChange }) => {
             console.log('No more Data')
         }
         if (allData.length <= 4) {
-            console.log("Less than 4 booking")
             setHasMore(false)
         }
     }, [hasMore, allData.length])
@@ -122,23 +126,26 @@ const AllBooking = ({ selectedDate, onBookingDatesChange }) => {
                 next={loadMore}
                 hasMore={hasMore}
                 loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
-                endMessage={<Divider plain>You have reached the end of your bookings!</Divider>}
+                endMessage={<Divider plain>{t('end list')}</Divider>}
                 scrollableTarget="scrollableDiv"
             >
                 <List
                     dataSource={displayData}
                     renderItem={(item) => (
-                        <List.Item key={item.id} className="list-item">
+                        <List.Item
+                            key={item.id}
+                            className={`list-item ${item.status === 2 ? 'pending' : ''}`}
+                        >
                             <List.Item.Meta
                                 avatar={<Avatar src={item.mentor.imgPath} alt='Mentor image' size={70} />}
                                 title={<Link to={`/mentor/profile/${item.mentorId}`}>{item.mentor.fullName}</Link>}
                                 description={item.mentor.email}
                             />
-                            <div className="time-wrapper" >
+
+                            <Flex justify='center' align='center' gap={24} className="time-wrapper" >
                                 {formatDate(new Date(item.startTime), true)}
-                                {/* <h1> - </h1> */}
                                 {formatDate(new Date(item.endTime), false)}
-                            </div>
+                            </Flex>
                         </List.Item>
                     )}
                 />

@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import { useContext, useEffect, useRef, useState } from "react"
 import defaultAvatar2 from '../../../../assets/Photos/avatar/default_avatar_2.jpg'
 import { AppContext } from "../../../../Contexts/AppContext"
+import DonateModalButton from '../../../../Components/Modal/DonateModal/DonateModalButton'
 import './MentorInfor.scss'
 
 function MentorInfor({ setModalOpen, mentorInfor, setCurrentTab, isCurrentUser }) {
@@ -72,6 +73,7 @@ function MentorInfor({ setModalOpen, mentorInfor, setCurrentTab, isCurrentUser }
                                         : <>
                                              <Button style={{ width: '40%' }} size="large" type="primary" onClick={handleOpenModal} >{t('book now')}</Button>
                                              <Button style={{ width: '40%' }} size="large">{t('contact')}</Button>
+                                             <DonateModalButton/>
                                         </>}
                               </div>
                          </Col>

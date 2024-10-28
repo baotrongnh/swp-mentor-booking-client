@@ -2,10 +2,10 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import { Avatar, Divider, Flex, List, Skeleton } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Icon } from '@iconify/react/dist/iconify.js';
-import './CommingBooking.scss';
+import './CompletedBooking.scss';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
-import { getListBooking } from '../../../../apis/booking';
+import { getListAllBooking } from '../../../../apis/booking';
 import { AuthContext } from '../../../../Contexts/AuthContext';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../../../Contexts/AppContext';
@@ -32,7 +32,7 @@ const formatDate = (date, isStartTime) => {
     );
 };
 
-const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
+const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
     const [loading, setLoading] = useState(false);
     const [allData, setAllData] = useState([]);
     const [displayData, setDisplayData] = useState([]);
@@ -51,9 +51,10 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
         setLoading(true);
 
         try {
-            const res = await getListBooking(getCurrentUserRole(currentUser.isMentor), currentUser.accountId);
+            const res = await getListAllBooking(getCurrentUserRole(currentUser.isMentor), currentUser.accountId);
             if (res) {
                 setAllData(res.data) // set Data ne
+
 
                 const newBookingDates = res.data.map(booking => dayjs(booking.startTime).format('YYYY-MM-DD'))
                 onBookingDatesChange(newBookingDates)
@@ -86,7 +87,7 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
 
 
     useEffect(() => {
-        let filterData = allData.filter(booking => booking.status === 1);
+        let filterData = allData.filter(booking => booking.status === 2);
         console.log(filterData)
 
         if (selectedDate) {
@@ -101,7 +102,7 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
 
     return (
         <div
-            className='comming-booking'
+            className='completed-booking'
             id="scrollableDiv"
         >
             <InfiniteScroll
@@ -122,7 +123,7 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
                                         src={item.mentor.imgPath}
                                         alt='Mentor image'
                                         size={70}
-                                    // onError={() => item.mentor.src = 'https://th.bing.com/th/id/OIP.eOOngUPVabUEj_aWCQDfywAAAA?rs=1&pid=ImgDetMain'}
+                                    // onError={(e) => e.target.src = defaultAvatar}
                                     />}
                                 title={<Link to={`/mentor/profile/${item.mentorId}`}>{item.mentor.fullName}</Link>}
                                 description={item.mentor.email}
@@ -139,9 +140,9 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
     );
 };
 
-CommingBooking.propTypes = {
+CompletedBooking.propTypes = {
     selectedDate: PropTypes.instanceOf(dayjs),
     onBookingDatesChange: PropTypes.func.isRequired,
 }
 
-export default CommingBooking;
+export default CompletedBooking;
