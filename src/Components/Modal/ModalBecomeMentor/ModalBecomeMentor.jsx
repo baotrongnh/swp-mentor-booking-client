@@ -1,26 +1,29 @@
-import {DownOutlined} from '@ant-design/icons'
-import {useMutation, useQuery} from '@tanstack/react-query'
-import {Checkbox, Modal, Select} from 'antd'
+import { DownOutlined } from '@ant-design/icons'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { Checkbox, Modal, Select } from 'antd'
 import PropTypes from 'prop-types'
-import {useContext, useEffect, useState} from 'react'
-import {loadAllSkills, registerBecomeMentor} from '../../../apis/mentor'
-import {AuthContext} from '../../../Contexts/AuthContext'
+import { useContext, useEffect, useState } from 'react'
+import { loadAllSkills, registerBecomeMentor } from '../../../apis/mentor'
+import { AuthContext } from '../../../Contexts/AuthContext'
 import './ModalBecomeMentor.scss'
-import {Link} from 'react-router-dom'
-import skillSearch from "../../../Pages/MentorListPage/Components/SkillSearch/SkillSearch.jsx";
+import { Link } from 'react-router-dom'
+import toast from 'react-hot-toast'
 
-export default function ModalBecomeMentor({modalOpen, setModalOpen}) {
+export default function ModalBecomeMentor({ modalOpen, setModalOpen }) {
     const options = []
     const [isValidate, setIsValidate] = useState(false)
-    const {currentUser} = useContext(AuthContext)
+    const { currentUser } = useContext(AuthContext)
     const [listSkillSelect, setListSkillSelect] = useState([])
-    const {data: listSkill} = useQuery({queryKey: ['list-skills'], queryFn: loadAllSkills})
+    const { data: listSkill } = useQuery({ queryKey: ['list-skills'], queryFn: loadAllSkills })
     const mutation = useMutation({
-        mutationFn: ({listSkillSelect, studentId}) => registerBecomeMentor(listSkillSelect, studentId),
+        mutationFn: ({ listSkillSelect, studentId }) => registerBecomeMentor(listSkillSelect, studentId),
         onError: (error, variables) => {
             console.log(variables)
+            toast.error('This account is already registered or an error occurred, please try again!')
         },
         onSuccess: (data) => {
+            toast.success('Successfully registered as a mentor')
+            setModalOpen(false)
             console.log(data)
         }
     })
@@ -44,22 +47,22 @@ export default function ModalBecomeMentor({modalOpen, setModalOpen}) {
     const handleChange = (value) => {
         const listSkill = []
         value.map((skill) => {
-            listSkill.push({skillId: skill, level: 5})
+            listSkill.push({ skillId: skill, level: 5 })
         })
         setListSkillSelect(listSkill)
     }
 
     const handleSend = () => {
         const studentId = currentUser.accountId
-        mutation.mutate({listSkillSelect, studentId})
+        mutation.mutate({ listSkillSelect, studentId })
     }
 
     const suffix = (
         <>
-               <span>
-                    {listSkillSelect.length} / {5}
-               </span>
-            <DownOutlined/>
+            <span>
+                {listSkillSelect.length} / {5}
+            </span>
+            <DownOutlined />
         </>
     )
 
@@ -71,9 +74,9 @@ export default function ModalBecomeMentor({modalOpen, setModalOpen}) {
             onOk={handleSend}
             onCancel={() => setModalOpen(false)}
             okText='Apply'
-            okButtonProps={{disabled: !isValidate}}
+            okButtonProps={{ disabled: !isValidate }}
         >
-            <h1 style={{fontWeight: '400', paddingTop: '10px'}}>Select your main skills</h1>
+            <h1 style={{ fontWeight: '400', paddingTop: '10px' }}>Select your main skills</h1>
             <Select
                 mode="multiple"
                 allowClear
@@ -89,7 +92,7 @@ export default function ModalBecomeMentor({modalOpen, setModalOpen}) {
                     (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                 }
             />
-            <Checkbox onChange={(e) => setIsAgree(e.target.checked)} checked={isAgree} style={{padding: '20px 0 0 0'}}>Agree
+            <Checkbox onChange={(e) => setIsAgree(e.target.checked)} checked={isAgree} style={{ padding: '20px 0 0 0' }}>Agree
                 to <Link to='/terms-become-mentor'>our terms</Link></Checkbox>
         </Modal>
     )

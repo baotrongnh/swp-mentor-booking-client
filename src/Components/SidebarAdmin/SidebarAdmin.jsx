@@ -1,8 +1,8 @@
-import { Menu } from 'antd';
-import './SidebarAdmin.scss';
-import { LineChartOutlined, ScheduleOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
-import logo from '../../assets/Photos/logo/logo.png';
+import { LineChartOutlined, ScheduleOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons'
+import { Menu } from 'antd'
+import { Link } from 'react-router-dom'
+import logo from '../../assets/Photos/logo/logo.png'
+import './SidebarAdmin.scss'
 
 function SidebarAdmin() {
      const items = [
@@ -32,7 +32,7 @@ function SidebarAdmin() {
                children: [
                     {
                          key: 'viewStudent',
-                         label: <Link to='/admin/student'>View All Students</Link>,
+                         label: <Link to='/admin/student/all'>View All Students</Link>,
                     }
                ],
           },
@@ -88,11 +88,11 @@ function SidebarAdmin() {
                     }
                ]
           }
-     ];
+     ]
 
      const onClick = (e) => {
-          console.log('click ', e);
-     };
+          console.log('click ', e)
+     }
 
      return (
           <div className="sidebar-admin">
@@ -109,7 +109,7 @@ function SidebarAdmin() {
                     items={items}
                />
           </div>
-     );
+     )
 }
 
-export default SidebarAdmin;
+export default SidebarAdmin

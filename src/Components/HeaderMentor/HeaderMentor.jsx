@@ -70,7 +70,7 @@ function HeaderMentor() {
                key: '0',
           },
           {
-               label: <Link to='/wallet'><Flex gap='small' align='center'>{t('wallet')}: <Icon icon="twemoji:coin" /><p> 99</p></Flex></Link>,
+               label: <Link to='/wallet'><Flex gap='small' align='center'>{t('wallet')}: <Icon icon="twemoji:coin" /><p> {currentUser?.point}</p></Flex></Link>,
                key: '1',
           },
           { type: 'divider' },
