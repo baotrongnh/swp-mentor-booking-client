@@ -1,29 +1,29 @@
-import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query"
-import {Button, DatePicker, Empty, Modal, Popconfirm, Select, Skeleton, Tabs, Typography} from "antd"
+import { Icon } from '@iconify/react'
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { Button, DatePicker, Empty, Modal, Popconfirm, Select, Skeleton, Tabs, Typography } from "antd"
 import PropTypes from "prop-types"
-import {useContext, useEffect, useState} from "react"
-import {bookingMentor} from "../../../apis/booking"
-import {getAvailableSlot} from "../../../apis/mentor"
-import {AppContext} from "../../../Contexts/AppContext"
-import {AuthContext} from "../../../Contexts/AuthContext"
-import './ModalBookMentor.scss'
-import {disabledDateInPast} from "../../../utils/validate"
-import {Icon} from '@iconify/react'
+import { useContext, useEffect, useState } from "react"
 import toast from 'react-hot-toast'
-import {formatDateToNormal} from "../../../utils/format.js";
+import { bookingMentor } from "../../../apis/booking"
+import { getAvailableSlot } from "../../../apis/mentor"
+import { AppContext } from "../../../Contexts/AppContext"
+import { AuthContext } from "../../../Contexts/AuthContext"
+import { formatDateToNormal } from "../../../utils/format.js"
+import { disabledDateInPast, disableNotThing, disableTime, getDateNow } from "../../../utils/validate"
+import './ModalBookMentor.scss'
 
-function ModalBookMentor({modalOpen, setModalOpen, currentIdMentor}) {
+function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
     const [isValidate, setIsValidate] = useState(false)
     const [tab, setTab] = useState('1')
-    const [dateCustom, setDateCustom] = useState({date: '0000-00-00', time: '00:00:00'})
-    const [displayDate, setDisplayDate] = useState({date: 'DD-MM-YYYY', time: '00:00'})
+    const [dateCustom, setDateCustom] = useState({ date: '0000-00-00', time: '00:00:00' })
+    const [displayDate, setDisplayDate] = useState({ date: 'DD-MM-YYYY', time: '00:00' })
     const [slotAvailableSelect, setSlotAvailableSelect] = useState()
-    const {currentUser} = useContext(AuthContext)
-    const {t} = useContext(AppContext)
+    const { currentUser } = useContext(AuthContext)
+    const { t } = useContext(AppContext)
     const queryClient = useQueryClient()
 
     const mutation = useMutation({
-        mutationFn: ({mentorId, studentId, startTime}) => bookingMentor(mentorId, studentId, startTime),
+        mutationFn: ({ mentorId, studentId, startTime }) => bookingMentor(mentorId, studentId, startTime),
         onError: (error) => {
             if (error.response.data.error_code === 1) {
                 toast.error('Please do not select a date in the past')
@@ -33,14 +33,14 @@ function ModalBookMentor({modalOpen, setModalOpen, currentIdMentor}) {
         },
         onSuccess: (data) => {
             if (data.error_code === 0) {
-                queryClient.invalidateQueries({queryKey: ['currentUser']})
-                queryClient.invalidateQueries({queryKey: [`available-slot-${currentIdMentor}`, currentIdMentor]})
+                queryClient.invalidateQueries({ queryKey: ['currentUser'] })
+                queryClient.invalidateQueries({ queryKey: [`available-slot-${currentIdMentor}`, currentIdMentor] })
                 toast.success('Booked successfully')
             }
         }
     })
 
-    const {data: listAvailableSlot, isLoading} = useQuery({
+    const { data: listAvailableSlot, isLoading } = useQuery({
         queryKey: [`available-slot-${currentIdMentor}`, currentIdMentor],
         queryFn: () => getAvailableSlot(currentIdMentor),
         enabled: !!currentIdMentor
@@ -48,7 +48,7 @@ function ModalBookMentor({modalOpen, setModalOpen, currentIdMentor}) {
 
     const onChangeTabs = (key) => {
         setTab(key)
-        setDateCustom({date: '0000-00-00', time: '00:00:00'})
+        setDateCustom({ date: '0000-00-00', time: '00:00:00' })
     }
 
     useEffect(() => {
@@ -64,15 +64,15 @@ function ModalBookMentor({modalOpen, setModalOpen, currentIdMentor}) {
     }, [dateCustom, tab, slotAvailableSelect])
 
     const handleDatePick = (date, dateString) => {
-        setDisplayDate({...displayDate, date: dateString})
+        setDisplayDate({ ...displayDate, date: dateString })
         const [day, month, year] = dateString.split('-')
         const formattedDate = `${year}-${month}-${day}`
-        setDateCustom({...dateCustom, date: formattedDate})
+        setDateCustom({ ...dateCustom, date: formattedDate })
     }
 
     const handleTimePick = (time, timeString) => {
-        setDisplayDate({...displayDate, time: timeString})
-        setDateCustom({...dateCustom, time: timeString})
+        setDisplayDate({ ...displayDate, time: timeString })
+        setDateCustom({ ...dateCustom, time: timeString })
     }
 
     const handleBookMentor = () => {
@@ -124,13 +124,13 @@ function ModalBookMentor({modalOpen, setModalOpen, currentIdMentor}) {
                 footer={false}
             >
                 <div className="inside-modal-book">
-                    <Tabs style={{width: '100%'}} defaultActiveKey="1" items={itemTabs} onChange={onChangeTabs}/>
+                    <Tabs style={{ width: '100%' }} defaultActiveKey="1" items={itemTabs} onChange={onChangeTabs} />
 
                     <div className="select-time-block">
                         {tab === '1'
                             ?
                             isLoading ?
-                                <Skeleton active block/>
+                                <Skeleton active block />
                                 :
                                 <div className="available-block">
                                     {listAvailableSlot?.slots.length > 0
@@ -154,7 +154,7 @@ function ModalBookMentor({modalOpen, setModalOpen, currentIdMentor}) {
                                                 }
                                                 defaultActiveFirstOption
                                                 onChange={handleSelectSlotAvailable}
-                                                style={{width: '100%', marginTop: '10px'}}
+                                                style={{ width: '100%', marginTop: '10px' }}
                                                 allowClear
                                             />
                                         </>
@@ -193,6 +193,7 @@ function ModalBookMentor({modalOpen, setModalOpen, currentIdMentor}) {
                                         picker='time'
                                         onChange={handleTimePick}
                                         format='HH:mm'
+                                        disabledTime={dateCustom.date === getDateNow() ? disableTime : disableNotThing}
                                     />
                                 </div>
                             </div>
@@ -204,16 +205,16 @@ function ModalBookMentor({modalOpen, setModalOpen, currentIdMentor}) {
 
                         <Popconfirm
                             title="Book this mentor?"
-                            description={<span>Your balance: {currentUser?.point} {<Icon icon="twemoji:coin"/>}</span>}
+                            description={<span>Your balance: {currentUser?.point} {<Icon icon="twemoji:coin" />}</span>}
                             onConfirm={confirm}
                             onCancel={cancel}
                             okText="Book"
                             cancelText="No"
                         >
                             <Button type="primary"
-                                    disabled={currentUser?.point < 10 || !isValidate}
+                                disabled={currentUser?.point < 10 || !isValidate}
                             >
-                                {t('book')}: 10 <Icon icon="twemoji:coin"/>
+                                {t('book')}: 10 <Icon icon="twemoji:coin" />
                             </Button>
                         </Popconfirm>
                     </div>

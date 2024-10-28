@@ -31,10 +31,3 @@ export const confirmBooking = async (bookingId) => {
           bookingId
      })
 }
-
-export const addStudentToGroup = async (bookingId, studentId, memberMail) => {
-     const token = getToken()
-     return await axiosClient(token).post('/group/add', {
-          bookingId, studentId, memberMail
-     })
-}

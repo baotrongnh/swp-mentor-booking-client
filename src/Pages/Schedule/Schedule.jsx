@@ -5,6 +5,8 @@ import AllBooking from "./Components/AllBooking/AllBooking.jsx";
 import './Schedule.scss';
 import { useCallback, useContext, useState } from "react";
 import { AppContext } from "../../Contexts/AppContext.jsx";
+import ModalAddGroup from "../../Components/Modal/ModalAddGroup/ModalAddGroup.jsx";
+import { ModalAddSkills, ModalAddSlot } from "../../Components/Modal/index.js";
 
 function Schedule() {
      const [currentTab, setCurrentTab] = useState('comming');
@@ -67,6 +69,8 @@ function Schedule() {
                          </Col>
                     </Row>
                </div>
+
+               <ModalAddSlot />
           </div>
      );
 }

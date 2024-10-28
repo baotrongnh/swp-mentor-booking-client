@@ -30,7 +30,7 @@ function DisableMentor() {
      }, [dataMentors])
 
      const handleActiveMentor = async (mentor) => {
-          const data = await mutation.mutateAsync(mentor.accountId)
+          const data = await mutation.mutateAsync(mentor.id)
           if (data.error_code === 0) {
                queryClient.invalidateQueries({ queryKey: ['list-mentors-disable-admin'] })
           }

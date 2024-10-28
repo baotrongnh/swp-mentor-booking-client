@@ -1,25 +1,25 @@
-import {DownOutlined, SettingOutlined} from '@ant-design/icons'
-import {Icon} from '@iconify/react/dist/iconify.js'
-import {Button, Col, Drawer, Dropdown, Flex, Input, Row, Select, Switch} from 'antd'
-import {useContext, useEffect, useState} from 'react'
-import {useTranslation} from 'react-i18next'
-import {Link, NavLink, useLocation, useNavigate} from 'react-router-dom'
+import { DownOutlined, SettingOutlined } from '@ant-design/icons'
+import { Icon } from '@iconify/react/dist/iconify.js'
+import { Button, Col, Drawer, Dropdown, Flex, Input, Row, Select, Switch } from 'antd'
+import { useContext, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import defaultAvatar from '../../assets/Photos/avatar/default_avatar.jpg'
 import logo from '../../assets/Photos/logo/logo.png'
-import {AppContext} from '../../Contexts/AppContext'
-import {AuthContext} from '../../Contexts/AuthContext'
+import { AppContext } from '../../Contexts/AppContext'
+import { AuthContext } from '../../Contexts/AuthContext'
 import useDebounce from '../../hooks/useDebounce'
-import {deleteToken} from '../../utils/storageUtils'
-import {ModalBecomeMentor} from '../Modal'
+import { deleteToken } from '../../utils/storageUtils'
+import { HeaderMentor } from "../index.js"
+import { ModalBecomeMentor } from '../Modal'
 import './Header.scss'
-import {HeaderMentor} from "../index.js";
 
 function Header() {
-    const {t, i18n} = useTranslation()
+    const { t, i18n } = useTranslation()
     const location = useLocation()
     const navigate = useNavigate()
-    const {setFilterMentor, filterMentor, setTheme, theme, defaultLanguage} = useContext(AppContext)
-    const {currentUser, setCurrentUser} = useContext(AuthContext)
+    const { setFilterMentor, filterMentor, setTheme, theme, defaultLanguage } = useContext(AppContext)
+    const { currentUser, setCurrentUser } = useContext(AuthContext)
     const [searchValue, setSearchValue] = useState(null)
     const debounceSearchValue = useDebounce(searchValue, 800)
     const [openModalBeMentor, setOpenModalBeMentor] = useState(false)
@@ -43,7 +43,7 @@ function Header() {
         if (location.pathname !== url) {
             navigate(url)
         }
-        setFilterMentor({...filterMentor, search: value})
+        setFilterMentor({ ...filterMentor, search: value })
     }
 
     const handleChange = (e) => {
@@ -73,7 +73,7 @@ function Header() {
 
     useEffect(() => {
         if (debounceSearchValue !== null) {
-            setFilterMentor({...filterMentor, search: debounceSearchValue})
+            setFilterMentor({ ...filterMentor, search: debounceSearchValue })
         }
     }, [debounceSearchValue])
 
@@ -89,7 +89,7 @@ function Header() {
     ]
 
     const accountMenuDropDown = [
-        {type: 'divider'},
+        { type: 'divider' },
         {
             label: <Link to="/student/profile">{t('profile')}</Link>,
             key: '0',
@@ -98,7 +98,7 @@ function Header() {
             label:
                 <Link to='/wallet'>
                     <Flex gap='small' align='center'>
-                        {t('wallet')}: <Icon icon="twemoji:coin"/><p> {currentUser?.point}</p>
+                        {t('wallet')}: <Icon icon="twemoji:coin" /><p> {currentUser?.point}</p>
                     </Flex>
                 </Link>,
             key: '1',
@@ -110,7 +110,7 @@ function Header() {
                 </Link>,
             key: '2',
         },
-        {type: 'divider'},
+        { type: 'divider' },
         {
             label:
                 <Flex gap='small' justify='space-between'>
@@ -145,7 +145,7 @@ function Header() {
                 </Flex>,
             key: '5'
         },
-        {type: 'divider'},
+        { type: 'divider' },
         {
             label: <Link onClick={handleLogout}>{t('logout')}</Link>,
             key: '3',
@@ -154,16 +154,16 @@ function Header() {
     ]
 
     const guestMenuDropDown = [
-        {type: 'divider'},
+        { type: 'divider' },
         {
             label:
                 <Flex gap='small' justify='space-between'>
                     {t('theme')}: <Switch
-                    defaultChecked={theme === 'dark-theme'}
-                    onChange={handleChangeTheme}
-                    checkedChildren="Dark"
-                    unCheckedChildren="Light"
-                />
+                        defaultChecked={theme === 'dark-theme'}
+                        onChange={handleChangeTheme}
+                        checkedChildren="Dark"
+                        unCheckedChildren="Light"
+                    />
                 </Flex>,
             key: '4'
         },
@@ -171,30 +171,30 @@ function Header() {
             label:
                 <Flex gap='small' align='center' justify='space-between'>
                     {t('language')}: <Select
-                    defaultValue={defaultLanguage}
-                    onChange={handleChangeLanguage}
-                    options={[
-                        {
-                            value: 'en',
-                            label: 'EN',
-                        },
-                        {
-                            value: 'vi',
-                            label: 'VN',
-                        }
-                    ]}
-                />
+                        defaultValue={defaultLanguage}
+                        onChange={handleChangeLanguage}
+                        options={[
+                            {
+                                value: 'en',
+                                label: 'EN',
+                            },
+                            {
+                                value: 'vi',
+                                label: 'VN',
+                            }
+                        ]}
+                    />
                 </Flex>,
             key: '5'
         },
-        {type: 'divider'},
+        { type: 'divider' },
         {
             label: <Link onClick={handleLogout}>{t('Contact')}</Link>,
             key: '3',
         },
     ]
 
-    if (currentUser?.isMentor !== 0 && currentUser) return <HeaderMentor/>
+    if (currentUser?.isMentor !== 0 && currentUser) return <HeaderMentor />
 
     return (
         <div className="header">
@@ -202,13 +202,13 @@ function Header() {
                 <Row className='header-block'>
                     <Col className='logo-block' xs={12} sm={6} md={4} lg={5}>
                         <Link to='/'>
-                            <img className='logo-img' src={logo} alt=""/>
+                            <img className='logo-img' src={logo} alt="" />
                         </Link>
                     </Col>
 
                     <Col xs={12} sm={0} className='btn-navbar-mobile'>
                         <Button onClick={() => setOpenDrawer(true)} type='text'>
-                            <Icon className='icon' icon="ic:round-menu"/>
+                            <Icon className='icon' icon="ic:round-menu" />
                         </Button>
                     </Col>
 
@@ -216,10 +216,10 @@ function Header() {
                         <Input.Search
                             placeholder={t('find mentors')}
                             onSearch={onSearch}
-                            style={{width: '100%',}}
+                            style={{ width: '100%', }}
                             size='large'
                             allowClear
-                            onClear={() => setFilterMentor({...filterMentor, search: ''})}
+                            onClear={() => setFilterMentor({ ...filterMentor, search: '' })}
                             onChange={e => handleChange(e)}
                             enterButton
                         />
@@ -227,7 +227,7 @@ function Header() {
 
                     <Col xs={0} sm={4} md={3} lg={0} className='btn-navbar-mobile'>
                         <Button onClick={() => setOpenDrawer(true)} type='text'>
-                            <Icon className='icon' icon="ic:round-menu"/>
+                            <Icon className='icon' icon="ic:round-menu" />
                         </Button>
                     </Col>
 
@@ -238,12 +238,12 @@ function Header() {
                                 <NavLink to='/browser-mentors' className='navbar-link'>{t('browser mentors')}</NavLink>
                                 <NavLink to={`/schedule`} className='navbar-link'>{t('schedule')}</NavLink>
                                 <Dropdown
-                                    menu={{items: moreMenuDropDown}}
+                                    menu={{ items: moreMenuDropDown }}
                                     placement='bottom'
                                     trigger={['click']}
                                 >
                                     <Link className='navbar-link' onClick={(e) => e.preventDefault()}>
-                                        {t('more')}<DownOutlined/>
+                                        {t('more')}<DownOutlined />
                                     </Link>
                                 </Dropdown>
 
@@ -254,12 +254,12 @@ function Header() {
                                             className='navbar-link account'>
                                             {currentUser?.imgPath
                                                 ? <img className='avatar' src={currentUser?.imgPath} alt=""
-                                                       onError={(e) => e.target.src = defaultAvatar}/>
-                                                : <Icon className='icon' icon="material-symbols-light:account-circle"/>
+                                                    onError={(e) => e.target.src = defaultAvatar} />
+                                                : <Icon className='icon' icon="material-symbols-light:account-circle" />
                                             }
                                         </Link>
                                         <Dropdown
-                                            menu={{items: accountMenuDropDown, onClick: handleMenuAccountClick}}
+                                            menu={{ items: accountMenuDropDown, onClick: handleMenuAccountClick }}
                                             placement='bottomRight'
                                             trigger={['click']}
                                             arrow={true}
@@ -267,7 +267,7 @@ function Header() {
                                             open={openDropDownAccount}
                                         >
                                             <div>
-                                                <Icon style={{cursor: 'pointer'}} icon="icon-park-outline:down"/>
+                                                <Icon style={{ cursor: 'pointer' }} icon="icon-park-outline:down" />
                                             </div>
                                         </Dropdown>
                                     </Flex>
@@ -280,7 +280,7 @@ function Header() {
                                 <Flex align='center' gap='middle'>
                                     <Link to='/login'><Button type='primary'>Login</Button></Link>
                                     <Dropdown
-                                        menu={{items: guestMenuDropDown, onClick: handleMenuAccountClick}}
+                                        menu={{ items: guestMenuDropDown, onClick: handleMenuAccountClick }}
                                         placement='bottomRight'
                                         trigger={['click']}
                                         arrow={true}
@@ -288,7 +288,7 @@ function Header() {
                                         open={openDropDownAccount}
                                     >
                                         <Link className='navbar-link' onClick={(e) => e.preventDefault()}>
-                                            <SettingOutlined/>
+                                            <SettingOutlined />
                                         </Link>
                                     </Dropdown>
                                 </Flex>
@@ -351,7 +351,7 @@ function Header() {
                 </div>
             </Drawer>
 
-            <ModalBecomeMentor modalOpen={openModalBeMentor} setModalOpen={setOpenModalBeMentor}/>
+            <ModalBecomeMentor modalOpen={openModalBeMentor} setModalOpen={setOpenModalBeMentor} />
         </div>
     )
 }
