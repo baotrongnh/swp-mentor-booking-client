@@ -5,8 +5,8 @@
   width: 100%;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-height: calc(100vh - 70px - 250px);
+  // justify-content: center;
+  min-height: calc(100vh - 70px - 300px);
   height: auto;
 
   .container {
@@ -23,7 +23,6 @@
       width: 100%;
       font-size: 3.5rem;
       font-weight: 700;
-
     }
 
     .content {
@@ -111,19 +110,32 @@
             }
           }
 
-          .custom-btn {
-            font-weight: 500;
-            width: auto;
-          }
 
-          .gradient-btn {
-            margin-left: 2rem;
-            transition: 0.5s;
-            border-color: #00ddff;
-            background: linear-gradient(45deg, hsl(180, 98%, 44%), #00ddff, #0193f5, #03a3dd, #0033ff, #0055ff, #0077ff, #3399ff, #0033ff);
 
-            &:hover {
-              filter: brightness(130%);
+          .student-profile-btn {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2rem;
+
+            .custom-btn {
+              font-weight: 500;
+
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+
+            .gradient-btn {
+              transition: 0.5s;
+              border-color: $bg-primary;
+              background: linear-gradient(45deg, hsl(180, 98%, 44%), #00ddff, #0193f5, #03a3dd, #0033ff, #0055ff, #0077ff, #3399ff, #0033ff);
+
+              &:hover {
+                filter: brightness(130%);
+              }
             }
           }
         }
