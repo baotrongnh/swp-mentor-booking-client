@@ -8,6 +8,7 @@
     --accent-primary: #fb923c;
     --border: #817d7d34;
     --shadow: rgba(128, 128, 128, 0.156);
+    --pending-bg: #dff4ff;
   }
 
   &.dark-theme {
@@ -19,6 +20,7 @@
     --accent-primary: #fb923c;
     --border: #ffffff22;
     --shadow: rgba(27, 27, 27, 0.384);
+    --pending-bg: #021a2b;
   }
 }
 
@@ -30,6 +32,7 @@ $bg-secondary: var(--bg-secondary);
 $accent-primary: var(--accent-primary);
 $border: var(--border);
 $shadow: var(--shadow);
+$pending-bg: var(--pending-bg);
 
 //$text-secondary:
 //$text-muted:

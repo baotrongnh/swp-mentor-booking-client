@@ -5,8 +5,7 @@ import AllBooking from "./Components/AllBooking/AllBooking.jsx";
 import './Schedule.scss';
 import { useCallback, useContext, useState } from "react";
 import { AppContext } from "../../Contexts/AppContext.jsx";
-import ModalAddGroup from "../../Components/Modal/ModalAddGroup/ModalAddGroup.jsx";
-import { ModalAddSkills, ModalAddSlot } from "../../Components/Modal/index.js";
+import CompletedBooking from "./Components/CompletedBooking/CompletedBooking.jsx";
 
 function Schedule() {
      const [currentTab, setCurrentTab] = useState('comming');
@@ -17,9 +16,7 @@ function Schedule() {
      const onClick = (e) => {
           console.log('click ', e);
           setCurrentTab(e.key);
-          if (e.key === 'all' || e.key === 'comming') {
-               setSelectedDate(null)
-          }
+          setSelectedDate(null)
      };
 
      const handleBookingDate = useCallback((date) => {
@@ -34,6 +31,10 @@ function Schedule() {
           {
                label: `${t('comming booking')}`,
                key: 'comming',
+          },
+          {
+               label: `${t('completed booking')}`,
+               key: 'completed',
           },
           {
                label: `${t('all booking')}`,
@@ -55,6 +56,7 @@ function Schedule() {
                               <Menu onClick={onClick} selectedKeys={[currentTab]} mode="horizontal" items={items} />
                               <div className="booking-list">
                                    {currentTab === 'comming' && <CommingBooking selectedDate={selectedDate} onBookingDatesChange={handleBookingDate} />}
+                                   {currentTab === 'completed' && <CompletedBooking selectedDate={selectedDate} onBookingDatesChange={handleBookingDate} />}
                                    {currentTab === 'all' && <AllBooking selectedDate={selectedDate} onBookingDatesChange={handleBookingDate} />}
                               </div>
                          </Col>
@@ -69,8 +71,6 @@ function Schedule() {
                          </Col>
                     </Row>
                </div>
-
-               <ModalAddSlot />
           </div>
      );
 }
