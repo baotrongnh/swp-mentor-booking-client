@@ -3,12 +3,16 @@ import { Home, Login, MentorListPage, MentorProfile, PageNotFound, Schedule, Stu
 import { LoginAdmin, ManagerItems, ManagerMentor, ManagerSemester, ManagerSkills, ManagerStudent, OverviewChart, Pending } from "../Pages/Admin"
 import AdminRoutesAuth from './AdminRoutesAuth'
 import PrivateRoutesAuth from "./PrivateRoutesAuth"
+import DonateProcess from "../Pages/Donate/DonateProcess/DonateProcess"
+import DonateSuccess from "../Pages/Donate/DonateSuccess/DonateSuccess"
 
 const publicRoutes = [
   { path: '/*', element: PageNotFound, layout: null },
   { path: '/login', element: Login, layout: null },
   { path: '/admin/login', element: LoginAdmin, layout: null },
   { path: '/', element: Home },
+  { path: '/donate-process', element: DonateProcess, layout: null },
+  { path: '/donate-success', element: DonateSuccess, layout: null },
 ]
 
 const privateRoutes = [

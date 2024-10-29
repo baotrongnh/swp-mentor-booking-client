@@ -1,0 +1,131 @@
+@import "../../../Styles//variables";
+
+.donate-success-page {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #f0fff4, #e6fffa);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+
+  .success-card {
+    background-color: $bg-secondary;
+    border-radius: 1rem;
+    box-shadow: 0 0 20px 2px $shadow;
+    padding: 3rem;
+    max-width: 40rem;
+    width: 100%;
+    text-align: center;
+
+    .success-icon {
+      width: 6rem;
+      height: 6rem;
+      margin: 0 auto 2rem;
+      color: $theme-color-primary;
+    }
+
+    .title {
+      font-size: 3rem;
+      font-weight: 700;
+      color: $text-primary;
+      margin-bottom: 1.5rem;
+      text-shadow: 3px 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .message {
+      font-size: 1.8rem;
+      color: $text-primary;
+      margin-bottom: 2.5rem;
+      opacity: 0.9;
+    }
+
+    .details-box {
+      background-color: rgba(128, 128, 128, 0.1);
+      border-radius: 0.7rem;
+      padding: 2rem;
+      margin-bottom: 2.5rem;
+      border: 1px solid $border;
+
+      .details-title {
+        font-size: 2rem;
+        font-weight: 600;
+        color: $text-primary;
+        margin-bottom: 1.5rem;
+      }
+
+      .details-text {
+        font-size: 1.6rem;
+        color: $text-primary;
+        margin-bottom: 1rem;
+        opacity: 0.9;
+
+        span {
+          font-weight: 500;
+        }
+      }
+    }
+
+    .home-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: $theme-color-primary;
+      color: $bg-primary;
+      font-weight: 600;
+      padding: 1rem 2rem;
+      border-radius: 0.7rem;
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+      font-size: 1.6rem;
+
+      &:hover {
+        opacity: 0.8;
+      }
+
+      .button-icon {
+        width: 2rem;
+        height: 2rem;
+        margin-right: 1rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .donate-success-page {
+    .success-card {
+      padding: 2rem;
+      margin: 1rem;
+
+      .success-icon {
+        width: 5rem;
+        height: 5rem;
+      }
+
+      .title {
+        font-size: 2.4rem;
+      }
+
+      .message {
+        font-size: 1.6rem;
+      }
+
+      .details-box {
+        padding: 1.5rem;
+
+        .details-title {
+          font-size: 1.8rem;
+        }
+
+        .details-text {
+          font-size: 1.4rem;
+        }
+      }
+
+      .home-button {
+        width: 100%;
+        padding: 1.2rem;
+      }
+    }
+  }
+}

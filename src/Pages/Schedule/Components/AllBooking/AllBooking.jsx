@@ -121,9 +121,11 @@ const AllBooking = ({ selectedDate, onBookingDatesChange }) => {
         }
     }, [hasMore, allData.length])
 
-    // const handleIsPending = (status, time) => {
-
-    // }
+    const handleIsPending = (status, startTime) => {
+        const currentTime = new Date();
+        const bookingStartTime = new Date(startTime);
+        return status === 1 && bookingStartTime > currentTime;
+    };
 
     return (
         <div
@@ -143,7 +145,7 @@ const AllBooking = ({ selectedDate, onBookingDatesChange }) => {
                         dataSource={displayData}
                         renderItem={(item) => (
                             <List.Item key={item.id}
-                                className={`list-item ${item.status === 1 ? 'pending' : ''} ${item.status === 0 ? 'deny' : ''}`}  >
+                                className={`list-item ${handleIsPending(item.status, item.startTime) ? 'pending' : ''} ${item.status === 0 ? 'deny' : ''}`}  >
                                 <List.Item.Meta
                                     avatar={
                                         <AvatarGroup studentGroup={item.studentGroups} />
@@ -166,7 +168,7 @@ const AllBooking = ({ selectedDate, onBookingDatesChange }) => {
                         dataSource={displayData}
                         renderItem={(item) => (
                             <List.Item key={item.id}
-                                className={`list-item ${item.status === 1 ? 'pending' : ''}`}>
+                                className={`list-item ${handleIsPending(item.status, item.startTime) ? 'pending' : ''}`}>
                                 <List.Item.Meta
                                     avatar={
                                         <Image

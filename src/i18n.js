@@ -96,7 +96,12 @@ const resources = {
                "Career Advancement": "Career Advancement",
                "Gain insights and strategies to help you climb the career ladder and achieve your professional goals.": "Gain insights and strategies to help you climb the career ladder and achieve your professional goals.",
                "Networking Opportunities": "Networking Opportunities",
-               "Expand your professional network and open doors to new opportunities through your mentors.": "Expand your professional network and open doors to new opportunities through your mentors."
+               "Expand your professional network and open doors to new opportunities through your mentors.": "Expand your professional network and open doors to new opportunities through your mentors.",
+
+               //Login page
+               "welcom back": 'Welcome Back!',
+               "We are glad": 'We are glad to see you back.',
+               "login": 'Log in with Google',
           }
      },
      vi: {
@@ -190,7 +195,12 @@ const resources = {
                "Career Advancement": "Phát Triển Sự Nghiệp",
                "Gain insights and strategies to help you climb the career ladder and achieve your professional goals.": "Nhận được những hiểu biết sâu sắc và chiến lược để giúp bạn thăng tiến trong sự nghiệp và đạt được mục tiêu nghề nghiệp.",
                "Networking Opportunities": "Cơ Hội Kết Nối",
-               "Expand your professional network and open doors to new opportunities through your mentors.": "Mở rộng mạng lưới chuyên nghiệp và mở ra cánh cửa cho những cơ hội mới thông qua các mentor của bạn."
+               "Expand your professional network and open doors to new opportunities through your mentors.": "Mở rộng mạng lưới chuyên nghiệp và mở ra cánh cửa cho những cơ hội mới thông qua các mentor của bạn.",
+
+               //Login page
+               "welcom back": 'Chào mừng trở lại!',
+               "We are glad": 'Chúng tôi rất vui khi được gặp lại bạn.',
+               "login": 'Đăng nhập bằng Google',
           }
      }
 }

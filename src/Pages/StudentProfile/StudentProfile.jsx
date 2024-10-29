@@ -79,6 +79,8 @@ function StudentProfile() {
 
                 </div>
             </div>
+
+
         </div>
     );
 }
