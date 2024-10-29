@@ -1,4 +1,4 @@
-import {getTokenAdmin} from "../utils/storageUtils"
+import { getTokenAdmin } from "../utils/storageUtils"
 import axiosClient from "./axiosClient"
 
 export const getListMentor = async () => {
@@ -47,7 +47,7 @@ export const promoteMentor = async (accountId) => {
      try {
           return await axiosClient(token).post('/admin/promote', {
                accountId
-          });
+          })
      } catch (error) {
           console.log(`Error at promoteMentor (admin.js): ${error}`)
      }
@@ -55,11 +55,7 @@ export const promoteMentor = async (accountId) => {
 
 export const startNewSemester = async () => {
      const token = getTokenAdmin()
-     try {
-          return await axiosClient(token).post('/admin/start-semester')
-     } catch (error) {
-          console.log(`Error at startNewSemester (admin.js): ${error}`)
-     }
+     return await axiosClient(token).post('/admin/start-semester')
 }
 
 export const resetStudentPoint = async () => {
@@ -102,4 +98,19 @@ export const createSkillMentor = async (name) => {
           name,
           imgPath: 'url'
      })
+}
+
+export const getTotalUser = async () => {
+     const token = getTokenAdmin()
+     return await axiosClient(token).get('admin/total-mentor-and-student')
+}
+
+export const getTotalBooking = async () => {
+     const token = getTokenAdmin()
+     return await axiosClient(token).get('admin/total-booking')
+}
+
+export const getNumberMentorInSkill = async () => {
+     const token = getTokenAdmin()
+     return await axiosClient(token).get('admin/mentors-in-each-skill')
 }

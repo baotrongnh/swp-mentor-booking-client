@@ -3,5 +3,5 @@ import axiosClient from "./axiosClient"
 
 export const getCurrentSemester = async () => {
      const token = getToken()
-     return await axiosClient(token).get('/')
+     return await axiosClient(token).get('/semester/current')
 }

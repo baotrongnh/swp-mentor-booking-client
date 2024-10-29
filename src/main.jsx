@@ -5,6 +5,7 @@ import { AppProvider } from './Contexts/AppContext.jsx'
 import { AuthProvider } from './Contexts/AuthContext.jsx'
 import ConfigProviderAntd from './Styles/ConfigProviderAntd.jsx'
 import './i18n'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 const queryClient = new QueryClient()
 
@@ -13,7 +14,9 @@ createRoot(document.getElementById('root')).render(
     <AppProvider>
       <AuthProvider>
         <ConfigProviderAntd>
-          <App />
+          <Router>
+            <App />
+          </Router>
         </ConfigProviderAntd>
       </AuthProvider>
     </AppProvider>

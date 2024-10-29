@@ -10,6 +10,21 @@ function SidebarAdmin() {
                type: 'divider',
           },
           {
+               key: 'analyticsMenu',
+               label: 'Reports & Analytics',
+               icon: <LineChartOutlined />,
+               children: [
+                    {
+                         key: 'overview',
+                         label: <Link to='/admin/analytics/overview'>Overview</Link>
+                    },
+                    {
+                         key: 'bookingAnalytics',
+                         label: <Link to='/admin/analytics/mentors'>Booking Analytics</Link>
+                    }
+               ]
+          },
+          {
                key: 'mentorsMenu',
                label: 'Mentors',
                icon: <UserOutlined />,
@@ -72,21 +87,14 @@ function SidebarAdmin() {
                          label: <Link to='/admin/skills'>Skills Available</Link>,
                     },
                     {
+                         key: 'listItems',
+                         label: <Link to='/admin/items'>Items Donate</Link>,
+                    },
+                    {
                          key: 'semester',
-                         label: 'Semester Management',
+                         label: <Link to='/admin/semester'>Manager Semester</Link>,
                     },
                ],
-          },
-          {
-               key: 'analyticsMenu',
-               label: 'Reports & Analytics',
-               icon: <LineChartOutlined />,
-               children: [
-                    {
-                         key: 'bookingAnalytics',
-                         label: <Link to='/admin/analytics/mentors'>Booking Analytics</Link>
-                    }
-               ]
           }
      ]
 
@@ -103,8 +111,8 @@ function SidebarAdmin() {
 
                <Menu
                     onClick={onClick}
-                    defaultSelectedKeys={['1']}
-                    defaultOpenKeys={['sub1']}
+                    defaultSelectedKeys={['overview']}
+                    defaultOpenKeys={['analyticsMenu']}
                     mode="inline"
                     items={items}
                />

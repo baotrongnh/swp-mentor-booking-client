@@ -1,8 +1,8 @@
-import {useQuery} from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import PropTypes from 'prop-types'
-import {createContext, useEffect, useState} from "react"
-import {getAdminInformation, getUserInformation} from '../apis/authentication'
-import {getToken, getTokenAdmin} from '../utils/storageUtils'
+import { createContext, useEffect, useState } from "react"
+import { getAdminInformation, getUserInformation } from '../apis/authentication'
+import { getToken, getTokenAdmin } from '../utils/storageUtils'
 
 export const AuthContext = createContext({})
 

@@ -75,6 +75,7 @@ export default function ModalBecomeMentor({ modalOpen, setModalOpen }) {
             onCancel={() => setModalOpen(false)}
             okText='Apply'
             okButtonProps={{ disabled: !isValidate }}
+            confirmLoading={mutation.isPending}
         >
             <h1 style={{ fontWeight: '400', paddingTop: '10px' }}>Select your main skills</h1>
             <Select

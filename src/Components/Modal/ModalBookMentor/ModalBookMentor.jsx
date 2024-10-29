@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { Button, DatePicker, Empty, Modal, Popconfirm, Select, Skeleton, Tabs, Typography } from "antd"
+import { Button, DatePicker, Empty, Modal, Popconfirm, Select, Skeleton, Tabs, Tooltip, Typography } from "antd"
 import PropTypes from "prop-types"
 import { useContext, useEffect, useState } from "react"
 import toast from 'react-hot-toast'
@@ -40,10 +40,10 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
         }
     })
 
-    const { data: listAvailableSlot, isLoading } = useQuery({
+    const { data: listAvailableSlot, isLoading, refetch } = useQuery({
         queryKey: [`available-slot-${currentIdMentor}`, currentIdMentor],
         queryFn: () => getAvailableSlot(currentIdMentor),
-        enabled: !!currentIdMentor
+        enabled: !!currentIdMentor,
     })
 
     const onChangeTabs = (key) => {
@@ -122,6 +122,9 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
                     setSlotAvailableSelect(null)
                 }}
                 footer={false}
+                confirmLoading={mutation.isPending}
+                destroyOnClose
+                afterOpenChange={() => refetch()}
             >
                 <div className="inside-modal-book">
                     <Tabs style={{ width: '100%' }} defaultActiveKey="1" items={itemTabs} onChange={onChangeTabs} />
@@ -136,7 +139,9 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
                                     {listAvailableSlot?.slots.length > 0
                                         ?
                                         <>
-                                            <h1 className="title">{t('Available time')}</h1>
+                                            <h1 style={{ fontWeight: '600' }} className="title">
+                                                {t('Available time')}  <Tooltip title="Available times will be automatically confirmed!"><Icon icon="f7:question-circle" /></Tooltip>
+                                            </h1>
                                             <Select
                                                 showSearch
                                                 placeholder={t('Select a slot')}
@@ -176,7 +181,7 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
                                 </div>
                             :
                             <div className="custom-block">
-                                <h1 className="title">Select Date & Time</h1>
+                                <h1 className="title">Select Date & Time <Tooltip title="Custom time needs to wait for mentor confirmation!"><Icon icon="f7:question-circle" /></Tooltip></h1>
 
                                 <p className="time-view">Scheduled
                                     for <b>{displayDate.date}</b> at <b>{displayDate.time}</b></p>

@@ -50,6 +50,7 @@ export default function ModalAddSlot({ modalOpen, setModalOpen }) {
                     okText='Add'
                     onOk={handleAdd}
                     onCancel={() => setModalOpen(false)}
+                    confirmLoading={mutation.isPending}
                >
                     <h1 className="title">Select Date & Time</h1>
 

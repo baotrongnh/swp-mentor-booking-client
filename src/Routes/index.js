@@ -1,6 +1,6 @@
 import AdminLayout from "../Layouts/AdminLayout"
 import { Home, Login, MentorListPage, MentorProfile, PageNotFound, Schedule, StudentProfile, Wallet } from "../Pages"
-import { LoginAdmin, ManagerMentor, ManagerSkills, ManagerStudent, Pending } from "../Pages/Admin"
+import { LoginAdmin, ManagerItems, ManagerMentor, ManagerSemester, ManagerSkills, ManagerStudent, OverviewChart, Pending } from "../Pages/Admin"
 import AdminRoutesAuth from './AdminRoutesAuth'
 import PrivateRoutesAuth from "./PrivateRoutesAuth"
 
@@ -22,8 +22,11 @@ const privateRoutes = [
 const adminRoutes = [
   { path: '/admin/mentor/:tab', element: ManagerMentor, layout: AdminLayout },
   { path: '/admin/student/:tab', element: ManagerStudent, layout: AdminLayout },
-  { path: 'admin/pending-mentors', element: Pending, layout: AdminLayout },
-  { path: 'admin/skills', element: ManagerSkills, layout: AdminLayout }
+  { path: '/admin/pending-mentors', element: Pending, layout: AdminLayout },
+  { path: '/admin/skills', element: ManagerSkills, layout: AdminLayout },
+  { path: '/admin/items', element: ManagerItems, layout: AdminLayout },
+  { path: '/admin/analytics/overview', element: OverviewChart, layout: AdminLayout },
+  { path: '/admin/semester', element: ManagerSemester, layout: AdminLayout },
 ]
 
 export { adminRoutes, AdminRoutesAuth, privateRoutes, PrivateRoutesAuth, publicRoutes }

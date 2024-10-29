@@ -31,3 +31,8 @@ export const confirmBooking = async (bookingId) => {
           bookingId
      })
 }
+
+export const getHistoryTransaction = async (type, id) => {
+     const token = getToken()
+     return await axiosClient(token).get(`/transaction/${type}/${id}`)
+}

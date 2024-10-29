@@ -37,6 +37,7 @@ export default function ModalAddGroup({ modalOpen, setModalOpen, bookingId }) {
                     okText='Add'
                     onOk={handleAdd}
                     onCancel={() => setModalOpen(false)}
+                    confirmLoading={mutation.isPending}
                >
                     <h1>Select</h1>
                     <Select

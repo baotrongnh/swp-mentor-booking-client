@@ -1,13 +1,12 @@
-import {useMutation} from '@tanstack/react-query'
-import {Button, Form, Input} from 'antd'
-import {loginAdmin} from '../../../apis/authentication'
-import logo from '../../../assets/Photos/logo/logo.png'
-import './LoginAdmin.scss'
+import { useMutation } from '@tanstack/react-query'
+import { Button, Form, Input } from 'antd'
+import { useContext, useState } from "react"
 import toast from 'react-hot-toast'
-import {useContext, useState} from "react";
-import {useNavigate} from "react-router-dom";
-import {AppContext} from "../../../Contexts/AppContext.jsx";
-import {AuthContext} from "../../../Contexts/AuthContext.jsx";
+import { useNavigate } from "react-router-dom"
+import { loginAdmin } from '../../../apis/authentication'
+import logo from '../../../assets/Photos/logo/logo.png'
+import { AppContext } from "../../../Contexts/AppContext.jsx"
+import './LoginAdmin.scss'
 
 function LoginAdmin() {
     const [statusLogin, setStatusLogin] = useState('')
@@ -18,7 +17,7 @@ function LoginAdmin() {
         sessionStorage.removeItem('currentUser')
         localStorage.removeItem('token')
         toast.success('Login successfully')
-        navigate('/admin/mentor/all')
+        navigate('/admin/analytics/overview')
     }
 
     const mutation = useMutation({

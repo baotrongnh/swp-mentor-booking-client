@@ -1,9 +1,9 @@
-import { Col, Row } from "antd";
-import { PropTypes } from "prop-types";
-import { SidebarAdmin } from "../Components";
+import { Col, Row } from "antd"
+import { PropTypes } from "prop-types"
+import { SidebarAdmin } from "../Components"
 
 function AdminLayout({ children }) {
-     
+
      return (
           <Row wrap={false}>
                <Col xs={0} md={7} lg={6} xl={5} xxl={3}>
@@ -15,10 +15,10 @@ function AdminLayout({ children }) {
                     {children}
                </Col>
           </Row>
-     );
+     )
 }
 
-export default AdminLayout;
+export default AdminLayout
 
 AdminLayout.propTypes = {
      children: PropTypes.any

@@ -3,16 +3,16 @@ import { Flex, Modal, Rate } from "antd"
 import TextArea from "antd/es/input/TextArea"
 import PropTypes from "prop-types"
 import { useContext, useState } from "react"
+import toast from "react-hot-toast"
 import { ratingMentor } from "../../../apis/mentor"
 import { AuthContext } from "../../../Contexts/AuthContext"
-import toast from "react-hot-toast";
 
 function ModalRatingMentor({ mentorId, modalOpen, setModalOpen }) {
      const queryClient = useQueryClient()
      const { currentUser } = useContext(AuthContext)
      const [feedback, setFeedback] = useState({ studentId: currentUser?.accountId, mentorId, rating: '', text: '' })
      const mutation = useMutation({
-          mutationFn: () => ratingMentor(feedback),
+          mutationFn: (feedback) => ratingMentor(feedback),
           onSuccess: () => {
                queryClient.invalidateQueries([`rating-list-${mentorId}`])
                toast.success('Thanks for your review!')
@@ -24,10 +24,11 @@ function ModalRatingMentor({ mentorId, modalOpen, setModalOpen }) {
      })
 
      const handleOk = () => {
+          console.log(feedback);
           if (feedback.rating == '') {
                toast.error('Error')
           } else {
-               mutation.mutateAsync()
+               mutation.mutate(feedback)
                setModalOpen(false)
           }
      }
