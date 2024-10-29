@@ -5,7 +5,7 @@ const resources = {
      en: {
           translation: {
                //header:
-               "browser mentors": "Browser mentors",
+               "browser mentors": "Browse mentors",
                'schedule': 'Schedule',
                'more': 'More',
                'find mentors': 'Find mentors',

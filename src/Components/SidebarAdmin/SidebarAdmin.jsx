@@ -1,4 +1,4 @@
-import { LineChartOutlined, ScheduleOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons'
+import { LineChartOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons'
 import { Menu } from 'antd'
 import { Link } from 'react-router-dom'
 import logo from '../../assets/Photos/logo/logo.png'
@@ -53,29 +53,6 @@ function SidebarAdmin() {
           },
           {
                type: 'divider',
-          },
-          {
-               key: 'bookingMenu',
-               label: 'Sessions Booking',
-               icon: <ScheduleOutlined />,
-               children: [
-                    {
-                         key: '9',
-                         label: 'Option 9',
-                    },
-                    {
-                         key: '10',
-                         label: 'Option 10',
-                    },
-                    {
-                         key: '11',
-                         label: 'Option 11',
-                    },
-                    {
-                         key: '12',
-                         label: 'Option 12',
-                    },
-               ],
           },
           {
                key: 'systemMenu',

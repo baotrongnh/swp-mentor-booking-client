@@ -11,12 +11,10 @@ export default function ModalAddSkills({ modalOpen, setModalOpen }) {
      const { currentUser } = useContext(AuthContext)
      const { data: listSkills } = useQuery({ queryKey: ['list-skills'], queryFn: loadAllSkills })
 
-     console.log(listSkillSelect)
-
      const mutation = useMutation({
           mutationFn: ({ bookingId, studentId, memberMails }) => addStudentToGroup(bookingId, studentId, memberMails),
-          onSuccess: (value) => {
-               console.log(value)
+          onSuccess: () => {
+               console.log(listSkillSelect)
           },
           onError: (error) => {
                console.log(error)

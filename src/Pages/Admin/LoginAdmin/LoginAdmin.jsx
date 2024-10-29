@@ -11,7 +11,7 @@ import './LoginAdmin.scss'
 function LoginAdmin() {
     const [statusLogin, setStatusLogin] = useState('')
     const navigate = useNavigate()
-    const {authChannel} = useContext(AppContext)
+    const { authChannel } = useContext(AppContext)
 
     const loginSuccessAction = () => {
         sessionStorage.removeItem('currentUser')
@@ -25,7 +25,7 @@ function LoginAdmin() {
         onSuccess: (values) => {
             const errorCode = values.data.error_code
             if (errorCode === 0) {
-                authChannel.postMessage({type: 'LOGIN', errorCode: 0})
+                authChannel.postMessage({ type: 'LOGIN', errorCode: 0 })
                 localStorage.setItem('tokenAdmin', values.data.token)
                 loginSuccessAction()
             } else if (errorCode === 1) {
@@ -37,15 +37,14 @@ function LoginAdmin() {
         }
     })
 
-    authChannel.onmessage = (event) => {
-        console.log(event)
-        if (event.data.type === 'LOGIN') {
-            const errorCode = event.data.errorCode;
-            if (localStorage.getItem('tokenAdmin') && errorCode === 0) {
-                loginSuccessAction()
-            }
-        }
-    }
+    // authChannel.onmessage = (event) => {
+    //     if (event.data.type === 'LOGIN') {
+    //         const errorCode = event.data.errorCode;
+    //         if (localStorage.getItem('tokenAdmin') && errorCode === 0) {
+    //             loginSuccessAction()
+    //         }
+    //     }
+    // }
 
     const onFinish = (values) => {
         mutation.mutate(values)
@@ -59,7 +58,7 @@ function LoginAdmin() {
     return (
         <div className='login-admin-page'>
             <div className="login-block">
-                <img className='logo' src={logo} alt=""/>
+                <img className='logo' src={logo} alt="" />
                 <Form
                     name="basic"
                     labelCol={{
@@ -89,7 +88,7 @@ function LoginAdmin() {
                             },
                         ]}
                     >
-                        <Input/>
+                        <Input />
                     </Form.Item>
 
                     <Form.Item
@@ -103,7 +102,7 @@ function LoginAdmin() {
                         ]}
                         validateStatus={statusLogin}
                     >
-                        <Input.Password/>
+                        <Input.Password />
                     </Form.Item>
 
                     <Form.Item
