@@ -25,7 +25,7 @@ function RatingView({ id, setModalRatingOpen, isCurrentUser }) {
                                    <div className="write-feedback">
                                         <h1 className="title-write-feedback">Write your Review</h1>
                                         <p className="description">Share your feedback and help create a better booking experience for everyone.</p>
-                                        <Button onClick={() => setModalRatingOpen(true)} type='primary' size='large'>Submit Reviews</Button>
+                                        <Button onClick={() => setModalRatingOpen(true)} type='primary' size='large'>Write a review</Button>
                                    </div>
                               }
                          </div>

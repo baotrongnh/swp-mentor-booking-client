@@ -79,11 +79,17 @@ function Header() {
 
     const moreMenuDropDown = [
         {
-            label: <Link>Function?</Link>,
+            label:
+                <Link onClick={() => setOpenModalBeMentor(true)}>
+                    {t('become a mentor')}
+                </Link>,
             key: '0',
         },
         {
-            label: <Link>Funtion?</Link>,
+            label:
+                <Link to='/gift'>
+                    {t('Donation history')}
+                </Link>,
             key: '1',
         }
     ]
@@ -379,6 +385,14 @@ function Header() {
                         className='link-item'
                     >
                         {t('browser mentors')}
+                    </Link>
+
+                    <Link
+                        onClick={() => setOpenDrawer(false)}
+                        to='/gift'
+                        className='link-item'
+                    >
+                        {t('Donation history')}
                     </Link>
 
                     <hr style={{ width: '100%' }} />

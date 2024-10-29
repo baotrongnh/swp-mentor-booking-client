@@ -9,3 +9,8 @@ export const getAllItems = async (page) => {
           }
      })
 }
+
+export const getListGift = async (type, id) => {
+     const token = getToken()
+     return axiosClient(token).get(`/donate/${type}/${id}`)
+}

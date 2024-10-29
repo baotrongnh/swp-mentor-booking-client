@@ -3,14 +3,14 @@ import { Col, Row } from 'antd';
 import './AboutMentor.scss';
 import PropTypes from 'prop-types';
 
-function AboutMentor({ mentorInfor }) { 
+function AboutMentor({ mentorInfor }) {
      return (
           <div className="about-mentor">
                <Row gutter={50}>
                     <Col md={13} className='description-block'>
                          <h1 className='title'>About Me</h1>
                          <p className='description'>
-                              {mentorInfor?.description}
+                              {mentorInfor?.description || 'No description'}
                          </p>
                     </Col>
 

@@ -19,7 +19,7 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
     const [displayDate, setDisplayDate] = useState({ date: 'DD-MM-YYYY', time: '00:00' })
     const [slotAvailableSelect, setSlotAvailableSelect] = useState()
     const { currentUser } = useContext(AuthContext)
-    const { t } = useContext(AppContext)
+    const { t, semesterData } = useContext(AppContext)
     const queryClient = useQueryClient()
 
     const mutation = useMutation({
@@ -215,11 +215,14 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
                             onCancel={cancel}
                             okText="Book"
                             cancelText="No"
+                            confirmLoading={mutation.isPending}
                         >
                             <Button type="primary"
-                                disabled={currentUser?.point < 10 || !isValidate}
+                                disabled={currentUser?.point < semesterData?.latestSemester?.slotCost || !isValidate}
                             >
-                                {t('book')}: 10 <Icon icon="twemoji:coin" />
+                                {currentUser?.point > semesterData?.latestSemester?.slotCost
+                                    ? <>{t('book')}: {semesterData?.latestSemester?.slotCost} <Icon icon="twemoji:coin" /></>
+                                    : 'Not enough coins'}
                             </Button>
                         </Popconfirm>
                     </div>
