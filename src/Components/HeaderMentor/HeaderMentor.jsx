@@ -135,7 +135,7 @@ function HeaderMentor() {
 
                          <Col xs={0} md={0} lg={12}>
                               <div className='btn-block'>
-                                   <NavLink to='/pending-booking' className='navbar-link'>{t('Gift')}</NavLink>
+                                   <NavLink to='/gift' className='navbar-link'>{t('Gift')}</NavLink>
                                    <NavLink to='/schedule' className='navbar-link'>{t('schedule')}</NavLink>
                                    <Dropdown
                                         menu={{ items: moreMenuDropDown }}

@@ -57,12 +57,12 @@ function MentorInfor({ setModalOpen, mentorInfor, setCurrentTab, isCurrentUser }
 
                               <div className="skill-block">
                                    {skills.map((skill, index) => (
-                                        <Tag className="tag" key={index}>{skill}</Tag>
+                                        <Tag color="blue" className="tag" key={index}>{skill}</Tag>
                                    ))}
                               </div>
 
                               <p className="description" ref={descriptionRef}>
-                                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse dolorem placeat animi dolores! Rem perspiciatis, quas, nulla doloremque, odio esse quod aperiam error necessitatibus tempore perferendis laborum veniam nam voluptates.
+                                   {mentorInfor?.description || 'No description'}
                               </p>
 
                               <a className={`read-more ${isShowMore ? 'show' : ''}`}>Read more</a>
@@ -72,7 +72,6 @@ function MentorInfor({ setModalOpen, mentorInfor, setCurrentTab, isCurrentUser }
                                         ? <Button style={{ width: '40%' }} size="large">{t('edit-profile')}</Button>
                                         : <>
                                              <Button style={{ width: '40%' }} size="large" type="primary" onClick={handleOpenModal} >{t('book now')}</Button>
-                                             <Button style={{ width: '40%' }} size="large">{t('contact')}</Button>
                                              <DonateModalButton mentorId={mentorInfor.accountId} />
                                         </>}
                               </div>

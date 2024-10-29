@@ -63,9 +63,9 @@ function MentorCard({ mentor, setModalOpen, setCurrentIdMentor }) {
                     </div>
 
                     <div className="time-block">
+                        <Icon style={{ margin: '0 5px' }} className='icon' icon="tdesign:time" />
                         {mentor?.availableSlots?.length > 0 ?
                             <>
-                                <Icon style={{ margin: '0 5px' }} className='icon' icon="tdesign:time" />
                                 <Tag color='green' style={{ cursor: 'pointer' }} onClick={handleBook}>{mentor?.availableSlots[0]?.slotStart}</Tag>
                                 {mentor?.availableSlots?.length > 1 && <Tag color='green' style={{ cursor: 'pointer' }} onClick={handleBook}>{mentor?.availableSlots?.length - 1}+</Tag>}
                             </>
@@ -73,7 +73,7 @@ function MentorCard({ mentor, setModalOpen, setCurrentIdMentor }) {
                         }
                     </div>
 
-                    <p className="description">{mentor.description || t('No description')}</p>
+                    <p className="description"><Icon icon="material-symbols-light:description-outline" /> {mentor.description || t('No description')}</p>
                 </Col>
             </Row>
 

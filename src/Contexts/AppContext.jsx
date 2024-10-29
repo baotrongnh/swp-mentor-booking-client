@@ -1,6 +1,8 @@
+import { useQuery } from '@tanstack/react-query'
 import PropTypes from 'prop-types'
 import {createContext, useState} from 'react'
 import {useTranslation} from 'react-i18next'
+import { getCurrentSemester } from '../apis/semester'
 
 export const AppContext = createContext({})
 
@@ -11,6 +13,7 @@ export const AppProvider = ({children}) => {
     const {t, i18n} = useTranslation()
     const defaultLanguage = localStorage.getItem('language')
     const authChannel = new BroadcastChannel('auth')
+    const { data: semesterData } = useQuery({ queryKey: ['current-semester'], queryFn: getCurrentSemester })
 
     return <AppContext.Provider
         value={{
@@ -23,7 +26,8 @@ export const AppProvider = ({children}) => {
             t,
             i18n,
             defaultLanguage,
-            authChannel
+            authChannel,
+            semesterData
         }}
     >
         {children}

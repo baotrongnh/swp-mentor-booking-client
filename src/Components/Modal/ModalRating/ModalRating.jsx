@@ -51,7 +51,8 @@ function ModalRatingMentor({ mentorId, modalOpen, setModalOpen }) {
                     onOk={handleOk}
                     onCancel={() => setModalOpen(false)}
                     confirmLoading={mutation.isPending}
-                    okButtonProps={{ disabled: feedback.rating == '' }}
+                    okButtonProps={{ disabled: feedback.rating == '' || feedback.text == '' }}
+                    destroyOnClose
                >
                     <Flex vertical align="center" className="rating-block">
                          <Rate style={{ padding: '20px', fontSize: '3rem' }} allowClear onChange={onChangeRating} />
