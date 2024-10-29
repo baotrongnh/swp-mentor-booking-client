@@ -87,8 +87,9 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
 
 
     useEffect(() => {
-        let filterData = allData.filter(booking => booking.status === 1);
-        console.log(filterData)
+        let filterData = allData.filter(booking =>
+            booking.status === 1 && dayjs(booking.startTime).isAfter(dayjs())
+        );
 
         if (selectedDate) {
             filterData = filterData.filter(booking => dayjs(booking.startTime).isSame(selectedDate, 'day'))
@@ -100,8 +101,8 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
     }, [allData, selectedDate, page, pageSize])
 
 
-    const handleReload = useCallback( (reload) => {
-        if(reload) {
+    const handleReload = useCallback((reload) => {
+        if (reload) {
             loadData()
         }
     }, [loadData])
@@ -131,7 +132,7 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
                                         <AvatarGroup studentGroup={item.studentGroups} />
                                     }
                                     title={`Group ${item.id}`}
-                                    description={<MentorButton bookingId={item.id} onReload={handleReload}/>}
+                                    description={<MentorButton bookingId={item.id} onReload={handleReload} />}
                                 />
                                 <Flex justify='center' align='center' gap={24} className="time-wrapper" >
                                     {formatDate(new Date(item.startTime), true)}

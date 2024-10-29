@@ -43,7 +43,6 @@ const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
     const pageSize = 10;
     const { t } = useContext(AppContext)
     const role = currentUser?.isMentor === undefined ? 'mentor' : 'student'
-    const currentTime = dayjs()
 
     const loadData = useCallback(async () => {
         if (loading) return;
@@ -84,10 +83,9 @@ const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
 
 
     useEffect(() => {
-        console.log(role)
-        console.log(allData)
-        let filterData = allData.filter(booking => booking.status === 2 && dayjs(booking.startTime).isBefore(currentTime));
-        console.log(filterData)
+        let filterData = allData.filter(booking =>
+            booking.status === 2 && dayjs(booking.startTime).isBefore(dayjs())
+        );
 
         if (selectedDate) {
             filterData = filterData.filter(booking => dayjs(booking.startTime).isSame(selectedDate, 'day'))

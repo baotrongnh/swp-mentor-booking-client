@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js';
-import { Divider, Flex, Image, List, Skeleton } from 'antd';
+import { Button, Divider, Flex, Image, List, Skeleton } from 'antd';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import { useCallback, useContext, useEffect, useState } from 'react';
@@ -10,6 +10,7 @@ import defaultAvatar from '../../../../assets/Photos/avatar/default_avatar.jpg';
 import { AppContext } from '../../../../Contexts/AppContext';
 import { AuthContext } from '../../../../Contexts/AuthContext';
 import AvatarGroup from '../AvatarGroup/AvatarGroup';
+import { ModalAddGroup } from '../../../../Components/Modal';
 import './AllBooking.scss';
 
 
@@ -42,6 +43,8 @@ const AllBooking = ({ selectedDate, onBookingDatesChange }) => {
     const { currentUser } = useContext(AuthContext)
     const [hasMore, setHasMore] = useState(true);
     const [page, setPage] = useState(1);
+    const [modalOpen, setModalOpen] = useState(false)
+    const [bookingId, setBookigId] = useState(null)
     const pageSize = 10;
     const { t } = useContext(AppContext)
     const role = currentUser?.isMentor === undefined ? 'mentor' : 'student'
@@ -84,21 +87,20 @@ const AllBooking = ({ selectedDate, onBookingDatesChange }) => {
         if (selectedDate) {
             filterData = allData.filter(booking => dayjs(booking.startTime).isSame(selectedDate, 'day'))
         }
-        console.log(filterData)
+        filterData = filterData.filter(booking => booking.status === 0 || booking.status === 2);
 
         const sortData = filterData.sort((item1, item2) => {
-            if (item1.status === 0) return 1;
-            if (item2.status === 0) return -1;
-            return item1.status - item2.status
+            if (item1.status !== item2.status) {
+                return item2.status - item1.status;
+            }
+            return new Date(item1.startTime) - new Date(item2.startTime);
         });
 
-        console.log(sortData)
         const startIndex = (page - 1) * pageSize;
         const endIndex = startIndex + pageSize;
 
         setDisplayData(sortData.slice(0, endIndex))
-
-        setHasMore(sortData.length > endIndex) // cai nay cho load data neu con 
+        setHasMore(sortData.length > endIndex)
     }, [selectedDate, allData, page, pageSize])
 
 
@@ -121,12 +123,13 @@ const AllBooking = ({ selectedDate, onBookingDatesChange }) => {
         }
     }, [hasMore, allData.length])
 
-    const handleIsPending = (status, startTime) => {
+    const handleIsCompleted = (status, startTime) => {
         const currentTime = new Date();
         const bookingStartTime = new Date(startTime);
-        return status === 1 && bookingStartTime > currentTime;
+        return bookingStartTime < currentTime;
     };
 
+    console.log(displayData)
     return (
         <div
             className='all-booking'
@@ -145,7 +148,7 @@ const AllBooking = ({ selectedDate, onBookingDatesChange }) => {
                         dataSource={displayData}
                         renderItem={(item) => (
                             <List.Item key={item.id}
-                                className={`list-item ${handleIsPending(item.status, item.startTime) ? 'pending' : ''} ${item.status === 0 ? 'deny' : ''}`}  >
+                                className={`list-item ${handleIsCompleted(item.status, item.startTime) ? 'completed' : ''} ${item.status === 0 ? 'deny' : ''}`}  >
                                 <List.Item.Meta
                                     avatar={
                                         <AvatarGroup studentGroup={item.studentGroups} />
@@ -168,7 +171,7 @@ const AllBooking = ({ selectedDate, onBookingDatesChange }) => {
                         dataSource={displayData}
                         renderItem={(item) => (
                             <List.Item key={item.id}
-                                className={`list-item ${handleIsPending(item.status, item.startTime) ? 'pending' : ''}`}>
+                                className={`list-item ${handleIsCompleted(item.status, item.startTime) ? 'completed' : ''} ${item.status === 0 ? 'deny' : ''}`}>
                                 <List.Item.Meta
                                     avatar={
                                         <Image
@@ -185,15 +188,32 @@ const AllBooking = ({ selectedDate, onBookingDatesChange }) => {
                                     title={<Link to={`/mentor/profile/${item.mentorId}`}>{item.mentor.fullName}</Link>}
                                     description={item.mentor.email}
                                 />
-                                <Flex justify='center' align='center' gap={24} className="time-wrapper" >
-                                    {formatDate(new Date(item.startTime), true)}
-                                    {formatDate(new Date(item.endTime), false)}
+                                <Flex vertical justify='center' align='center' style={{ paddingRight: '2rem' }}>
+                                    <Flex justify='center' align='center' gap={24} className="time-wrapper" >
+                                        {formatDate(new Date(item.startTime), true)}
+                                        {formatDate(new Date(item.endTime), false)}
+                                    </Flex>
+                                    {handleIsCompleted(item.status, item.startTime)
+                                        ?
+                                        ''
+                                        :
+                                        <Button
+                                            style={{ marginTop: '8px' }}
+                                            onClick={() => {
+                                                setModalOpen(true)
+                                                setBookigId(item.id)
+                                            }
+                                            }
+                                        >Add Member</Button>
+                                    }
                                 </Flex>
+
                             </List.Item>
                         )}
                     />
                 }
             </InfiniteScroll>
+            <ModalAddGroup modalOpen={modalOpen} setModalOpen={setModalOpen} bookingId={bookingId} />
         </div>
     );
 };

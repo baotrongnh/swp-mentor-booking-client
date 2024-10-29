@@ -12,7 +12,7 @@ const publicRoutes = [
   { path: '/admin/login', element: LoginAdmin, layout: null },
   { path: '/', element: Home },
   { path: '/donate-process', element: DonateProcess, layout: null },
-  { path: '/donate-success', element: DonateSuccess, layout: null },
+  { path: '/donate-success/:orderInfor', element: DonateSuccess, layout: null },
 ]
 
 const privateRoutes = [

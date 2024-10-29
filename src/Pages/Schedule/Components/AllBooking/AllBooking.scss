@@ -51,51 +51,54 @@
   }
 
   .list-item {
-    &.pending {
-      background-color: $pending-bg !important;
+    padding: 2rem;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.02);
+    }
+
+    &.completed {
+      background-color: $completed-bg !important;
+      opacity: 0.8;
     }
 
     &.deny {
       background-color: $deny-bg;
+      opacity: 0.8;
     }
   }
 
   .time-wrapper {
-    gap: 0.5rem;
+    width: 30rem;
+    margin-left: 1rem;
+    gap: 1.6rem;
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-radius: 8px;
 
-    h1 {
-      font: {
-        size: 2.5rem;
-        weight: 600;
+    .data-form {
+      padding: 0.8rem;
+
+      .data-date {
+        font-size: 1.4rem !important;
+        font-weight: 600;
+        color: $text-primary;
+        margin: 0;
+      }
+
+      .data-time {
+        font-size: 1.4rem !important;
+        font-weight: 500;
+        margin: 0;
+        color: #1890ff;
+      }
+
+      .data-time-label {
+        font-weight: 500;
+        color: rgba(0, 0, 0, 0.65);
       }
     }
-
-    .time-wrapper-2 {
-      width: 100%;
-    }
-  }
-
-  .data-form {
-    color: $text-primary;
-    text-align: start;
-    padding: 0;
-
-    .data-time-label {
-      font-weight: 500;
-    }
-  }
-
-  .data-date {
-    font-size: 1.5rem !important;
-    font-weight: bold;
-    margin: 0;
-  }
-
-  .data-time {
-    font-size: 1.5rem !important;
-    font-style: italic;
-    margin: 0;
-    color: rgb(5, 156, 226);
   }
 
   .ant-list-item {
@@ -110,7 +113,9 @@
       align-items: center;
       justify-content: center;
 
-      .ant-list-item-meta-avatar {}
+      .ant-list-item-meta-avatar {
+        margin-right: 2rem;
+      }
 
       .ant-list-item-meta-content {
         display: flex;
@@ -122,6 +127,15 @@
         .ant-list-item-meta-title {
           font-size: 2rem !important;
           font-weight: 500 !important;
+          margin-bottom: 0.8rem;
+
+          a {
+            color: $text-primary;
+
+            &:hover {
+              color: #1890ff;
+            }
+          }
         }
 
         .ant-list-item-meta-description {
@@ -132,6 +146,16 @@
 
     .time-wrapper {
       flex: 1 1 100%;
+    }
+
+    .ant-btn {
+      margin-top: 1.2rem;
+      border-radius: 6px;
+
+      &:hover {
+        color: #1890ff;
+        border-color: #1890ff;
+      }
     }
   }
 

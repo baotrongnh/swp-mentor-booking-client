@@ -1,11 +1,10 @@
 import './DonateSuccess.scss';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 
 export default function DonateSuccess() {
-    const orderNumber = "ORD-12345";
-    const amount = "$99.99";
 
+    const { orderInfor } = useParams()
     return (
         <div className="donate-success-page">
             <div className="success-card">
@@ -18,17 +17,27 @@ export default function DonateSuccess() {
 
                 <div className="details-box">
                     <h2 className="details-title">Order Details</h2>
-                    <p className="details-text">Order Number: <span>{orderNumber}</span></p>
-                    <p className="details-text">Amount Paid: <span>{amount}</span></p>
+                    <p className="details-text">Order Number: <span>{orderInfor}</span></p>
+
                 </div>
 
-                <Link to="/" className="home-button">
-                    <Icon
-                        icon="heroicons:home"
-                        className="button-icon"
-                    />
-                    Return to Home
-                </Link>
+                <div className="button-container">
+                    <Link to="/" className="home-button">
+                        <Icon
+                            icon="heroicons:home"
+                            className="button-icon"
+                        />
+                        Return to Home
+                    </Link>
+
+                    <Link to="/gift" className="view-button">
+                        <Icon
+                            icon="heroicons:gift"
+                            className="button-icon"
+                        />
+                        View Donation
+                    </Link>
+                </div>
             </div>
         </div>
     );

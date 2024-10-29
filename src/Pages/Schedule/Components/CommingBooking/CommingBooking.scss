@@ -6,11 +6,21 @@
   padding: 0;
   border: 1px solid rgba(140, 140, 140, 0.35);
 
+  .list-item {
+    padding: 2rem;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.02);
+    }
+  }
+
   .ant-list-item-meta-avatar {
     height: 5rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-right: 2rem;
   }
 
   .ant-image {
@@ -37,111 +47,67 @@
         align-items: center;
         justify-content: center;
         background: rgba(0, 0, 0, 0.5);
-
-        .anticon-eye {
-          margin-right: 8px;
-        }
-
-        .ant-image-mask-info-content {
-          color: white;
-          font-size: 16px;
-        }
       }
-    }
-  }
-
-  // Responsive sizes for the avatar
-  @media (max-width: 575px) {
-    .avatar-img {
-      width: 60px !important;
-      height: 60px !important;
-    }
-  }
-
-  @media (min-width: 576px) and (max-width: 767px) {
-    .avatar-img {
-      width: 50px !important;
-      height: 50px !important;
-    }
-  }
-
-  @media (min-width: 768px) and (max-width: 991px) {
-    .avatar-img {
-      width: 60px !important;
-      height: 60px !important;
-    }
-  }
-
-  @media (min-width: 992px) {
-    .avatar-img {
-      width: 80px !important;
-      height: 80px !important;
     }
   }
 
   .time-wrapper {
-    gap: 0.5rem;
+    width: 30rem;
+    margin-left: 1rem;
+    gap: 1.6rem;
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-radius: 8px;
 
-    h1 {
-      font: {
-        size: 2.5rem;
-        weight: 600;
+    .data-form {
+      padding: 0.8rem;
+      color: $text-primary;
+      text-align: start;
+
+      .data-date {
+        font-size: 1.4rem !important;
+        font-weight: 600;
+        color: $text-primary;
+        margin: 0;
+      }
+
+      .data-time {
+        font-size: 1.4rem !important;
+        font-weight: 500;
+        margin: 0;
+        color: #1890ff;
+      }
+
+      .data-time-label {
+        font-weight: 500;
+        color: rgba(0, 0, 0, 0.65);
       }
     }
-
-    .time-wrapper-2 {
-      width: 100%;
-    }
-  }
-
-  .data-form {
-    color: $text-primary;
-    text-align: start;
-    padding: 0;
-
-    .data-time-label {
-      font-weight: 500;
-    }
-  }
-
-  .data-date {
-    font-size: 1.5rem !important;
-    font-weight: bold;
-    margin: 0;
-  }
-
-  .data-time {
-    font-size: 1.5rem !important;
-    font-style: italic;
-    margin: 0;
-    color: rgb(5, 156, 226);
   }
 
   .ant-list-item {
     flex-wrap: nowrap;
     align-items: center;
+    justify-content: center;
 
     .ant-list-item-meta {
       flex: 1 1 100%;
       margin-bottom: 1rem;
       padding-left: 1rem;
       align-items: center;
-      justify-content: center;
-
-      .ant-list-item-meta-avatar {
-        margin-bottom: 0.5rem;
-      }
 
       .ant-list-item-meta-content {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        text-align: left;
-        height: 100%;
-
         .ant-list-item-meta-title {
           font-size: 2rem !important;
           font-weight: 500 !important;
+          margin-bottom: 0.8rem;
+
+          a {
+            color: $text-primary;
+            &:hover {
+              color: #1890ff;
+            }
+          }
         }
 
         .ant-list-item-meta-description {
@@ -155,13 +121,11 @@
     }
   }
 
+  // Media queries remain the same but with updated styles
   @media (max-width: 576px) {
     height: 45rem !important;
 
     .ant-list-item {
-      flex-wrap: nowrap;
-      align-items: center;
-
       .ant-list-item-meta {
         flex: 1 1 auto;
         margin-bottom: 0;
@@ -173,30 +137,6 @@
       }
     }
 
-    .data-form {
-      padding-right: 2rem;
-    }
-
-    .data-date {
-      font-size: 1.4rem;
-    }
-
-    .data-time {
-      font-size: 1.2rem;
-    }
-
-    .ant-list-item-meta-content {
-      .ant-list-item-meta-title {
-        font-size: 1.6rem !important;
-      }
-
-      .ant-list-item-meta-description {
-        font-size: 1.4rem !important;
-      }
-    }
-  }
-
-  @media (min-width: 768px) {
     .ant-list-item-meta-content {
       .ant-list-item-meta-title {
         font-size: 1.6rem !important;

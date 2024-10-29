@@ -11,7 +11,7 @@ function DonateProcess() {
         console.log(data)
         if (data.error_code === 0) {
             toast.success('Ok bạn nhá')
-            navigate('/donate-success')
+            navigate(`/donate-success/${orderInfor}`)
         } else {
             toast.error('Error')
             navigate('')

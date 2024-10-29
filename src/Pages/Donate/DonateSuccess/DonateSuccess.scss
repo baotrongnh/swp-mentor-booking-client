@@ -12,8 +12,8 @@
     background-color: $bg-secondary;
     border-radius: 1rem;
     box-shadow: 0 0 20px 2px $shadow;
-    padding: 3rem;
-    max-width: 40rem;
+    padding: 4rem;
+    max-width: 80rem;
     width: 100%;
     text-align: center;
 
@@ -65,7 +65,15 @@
       }
     }
 
-    .home-button {
+    .button-container {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .home-button,
+    .view-button {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -77,6 +85,8 @@
       text-decoration: none;
       transition: opacity 0.3s ease;
       font-size: 1.6rem;
+      flex: 1;
+      max-width: 20rem;
 
       &:hover {
         opacity: 0.8;
@@ -87,6 +97,12 @@
         height: 2rem;
         margin-right: 1rem;
       }
+    }
+
+    .view-button {
+      background-color: $bg-primary;
+      color: $theme-color-primary;
+      border: 2px solid $theme-color-primary;
     }
   }
 }
@@ -122,8 +138,14 @@
         }
       }
 
-      .home-button {
+      .button-container {
+        flex-direction: column;
+      }
+
+      .home-button,
+      .view-button {
         width: 100%;
+        max-width: none;
         padding: 1.2rem;
       }
     }
