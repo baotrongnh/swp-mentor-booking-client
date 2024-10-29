@@ -6,7 +6,49 @@
     padding: 0;
     border: 1px solid rgba(140, 140, 140, 0.35);
 
+    .ant-list-item-meta-avatar {
+        height: 5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
+    .ant-image {
+        border-radius: 50%;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .ant-image-img {
+            width: 80px !important;
+            height: 80px !important;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .ant-image-mask {
+            border-radius: 50%;
+            overflow: hidden;
+
+            .ant-image-mask-info {
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: rgba(0, 0, 0, 0.5);
+
+                .anticon-eye {
+                    margin-right: 8px;
+                }
+
+                .ant-image-mask-info-content {
+                    color: white;
+                    font-size: 16px;
+                }
+            }
+        }
+    }
 
     .time-wrapper {
         gap: 0.5rem;

@@ -12,58 +12,95 @@
   }
 }
 
+.donate-modal-btn {
+  .donate-button {
+    transition: 0.5s;
+    border-color: #00ddff;
+    font-weight: 500;
+    background: linear-gradient(45deg, hsl(180, 98%, 44%), #00ddff, #0193f5, #03a3dd, #0033ff, #0055ff, #0077ff, #3399ff, #0033ff);
+
+    &:hover {
+      background: linear-gradient(45deg, hsl(180, 98%, 44%), #00ddff, #0193f5, #03a3dd, #0033ff, #0055ff, #0077ff, #3399ff, #0033ff) !important;
+      filter: brightness(130%);
+    }
+  }
+}
+
 .donate-modal {
+  .ant-modal-content {
+    height: 80vh;
+    border-radius: 12px;
+    overflow-x: hidden;
+  }
+
   .ant-modal-body {
+    height: calc(100% - 60px);
+    overflow-y: auto;
     padding: 24px;
+    overflow-x: hidden;
+  }
 
-    .item {
-      margin-bottom: 20px;
+  .donate-col {
+    .ant-card {
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      height: 100%;
+      border: 1px solid $border;
 
-      .donate-card {
-        text-align: center;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease;
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 
-        &:hover {
-          transform: translateY(-5px);
-        }
-
-        .card-image {
-          height: 150px;
-          object-fit: cover;
-        }
-
-        .ant-card-body {
-          padding: 16px;
-        }
-
-        .donate-card-title {
-          font-size: 24px;
-          font-weight: bold;
-          margin-bottom: 8px;
+        .donate-item-title {
           color: #1890ff;
         }
+      }
 
-        .donate-card-description {
-          font-size: 14px;
-          color: $text-primary;
-          margin-bottom: 16px;
-        }
+      .ant-card-body {
+        padding: 16px;
+      }
 
-        .donate-button {
-          width: 100%;
-          height: 40px;
-          font-size: 16px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+      .donate-item-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: $text-primary;
+        transition: color 0.3s ease;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
 
-          .iconify {
-            font-size: 20px;
-            margin-left: 5px;
-          }
+      .donate-price {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: #f5a623;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        .iconify {
+          font-size: 1.5rem;
         }
       }
+    }
+  }
+
+  .infinite-scroll-component {
+    overflow: hidden !important;
+  }
+
+  .ant-row {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    width: 100%;
+  }
+
+  .donate-col {
+    .ant-card {
+      width: 100%;
     }
   }
 }
