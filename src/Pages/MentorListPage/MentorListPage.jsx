@@ -3,7 +3,7 @@ import {Breadcrumb, Button, Col, DatePicker, Empty, Flex, Pagination, Row, Skele
 import {useContext, useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 import {searchMentor} from '../../apis/mentor'
-import {ModalBookMentor} from '../../Components/Modal'
+import {ModalAddGroup, ModalBookMentor} from '../../Components/Modal'
 import {AppContext} from '../../Contexts/AppContext'
 import {PageError} from '../index'
 import {MentorCard, RatingSelect, SkillSearch} from './Components'
@@ -117,6 +117,8 @@ function MentorListPage() {
                     </Col>
                 </Row>
             </div>
+
+            <ModalAddGroup />
         </div>
     )
 }

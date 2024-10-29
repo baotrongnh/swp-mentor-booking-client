@@ -1,7 +1,9 @@
+
 import { useMutation } from "@tanstack/react-query"
 import { Modal, Select } from "antd"
 import PropTypes from "prop-types"
 import { useContext, useState } from "react"
+import toast from "react-hot-toast"
 import { addStudentToGroup } from "../../../apis/student"
 import { AuthContext } from "../../../Contexts/AuthContext"
 
@@ -12,11 +14,12 @@ export default function ModalAddGroup({ modalOpen, setModalOpen, bookingId }) {
 
      const mutation = useMutation({
           mutationFn: ({ bookingId, studentId, memberMails }) => addStudentToGroup(bookingId, studentId, memberMails),
-          onSuccess: (value) => {
-               console.log(value)
+          onSuccess: () => {
+               toast.apply('Add success!')
+               setModalOpen(false)
           },
-          onError: (error) => {
-               console.log(error)
+          onError: () => {
+               toast.error('Something went wrong')
           }
      })
 
@@ -31,7 +34,7 @@ export default function ModalAddGroup({ modalOpen, setModalOpen, bookingId }) {
      return (
           <div>
                <Modal
-                    title="Add your member group"
+                    title="Add member group"
                     centered
                     open={modalOpen}
                     okText='Add'
@@ -39,7 +42,7 @@ export default function ModalAddGroup({ modalOpen, setModalOpen, bookingId }) {
                     onCancel={() => setModalOpen(false)}
                     confirmLoading={mutation.isPending}
                >
-                    <h1>Select</h1>
+                    <h1 style={{fontWeight: '400', padding: '5px 0'}}>Import group member email list</h1>
                     <Select
                          mode="tags"
                          style={{
@@ -59,5 +62,5 @@ export default function ModalAddGroup({ modalOpen, setModalOpen, bookingId }) {
 ModalAddGroup.propTypes = {
      modalOpen: PropTypes.bool,
      setModalOpen: PropTypes.func,
-     bookingId: PropTypes.string,
+     bookingId: PropTypes.any,
 }
