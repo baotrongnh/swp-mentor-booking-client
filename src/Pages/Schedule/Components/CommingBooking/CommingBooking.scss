@@ -6,7 +6,78 @@
   padding: 0;
   border: 1px solid rgba(140, 140, 140, 0.35);
 
+  .ant-list-item-meta-avatar {
+    height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
+  .ant-image {
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .ant-image-img {
+      width: 80px !important;
+      height: 80px !important;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .ant-image-mask {
+      border-radius: 50%;
+      overflow: hidden;
+
+      .ant-image-mask-info {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.5);
+
+        .anticon-eye {
+          margin-right: 8px;
+        }
+
+        .ant-image-mask-info-content {
+          color: white;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+
+  // Responsive sizes for the avatar
+  @media (max-width: 575px) {
+    .avatar-img {
+      width: 60px !important;
+      height: 60px !important;
+    }
+  }
+
+  @media (min-width: 576px) and (max-width: 767px) {
+    .avatar-img {
+      width: 50px !important;
+      height: 50px !important;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 991px) {
+    .avatar-img {
+      width: 60px !important;
+      height: 60px !important;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .avatar-img {
+      width: 80px !important;
+      height: 80px !important;
+    }
+  }
 
   .time-wrapper {
     gap: 0.5rem;
