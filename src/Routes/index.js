@@ -5,6 +5,7 @@ import AdminRoutesAuth from './AdminRoutesAuth'
 import PrivateRoutesAuth from "./PrivateRoutesAuth"
 import DonateProcess from "../Pages/Donate/DonateProcess/DonateProcess"
 import DonateSuccess from "../Pages/Donate/DonateSuccess/DonateSuccess"
+import DonateError from "../Pages/Donate/DonateError/DonateError"
 
 const publicRoutes = [
   { path: '/*', element: PageNotFound, layout: null },
@@ -13,6 +14,7 @@ const publicRoutes = [
   { path: '/', element: Home },
   { path: '/donate-process', element: DonateProcess, layout: null },
   { path: '/donate-success/:orderInfor', element: DonateSuccess, layout: null },
+  { path: '/donate-error', element: DonateError, layout: null },
 ]
 
 const privateRoutes = [

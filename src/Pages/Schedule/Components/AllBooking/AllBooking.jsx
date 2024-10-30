@@ -57,7 +57,7 @@ const AllBooking = ({ selectedDate, onBookingDatesChange }) => {
             const res = await getListAllBooking(role, currentUser?.accountId);
             if (res) {
                 setAllData(res.data) // set Data ne
-
+                console.log('All data: ', res.data)
                 const newBookingDates = res.data.map(booking => dayjs(booking.startTime).format('YYYY-MM-DD'));
                 onBookingDatesChange(newBookingDates);
             }
@@ -107,7 +107,9 @@ const AllBooking = ({ selectedDate, onBookingDatesChange }) => {
     //cai nay de loc ra nhung ngay co Booking
     useEffect(() => {
         if (allData.length > 0) {
-            const bookingDates = allData.map(booking => dayjs(booking.startTime).format('YYYY-MM-DD'))
+            const bookingDates = allData
+                .filter(booking => booking.status === 0 || booking.status === 2)
+                .map(booking => dayjs(booking.startTime).format('YYYY-MM-DD'));
             onBookingDatesChange(bookingDates);
         }
     }, [allData, onBookingDatesChange])
@@ -126,7 +128,8 @@ const AllBooking = ({ selectedDate, onBookingDatesChange }) => {
     const handleIsCompleted = (status, startTime) => {
         const currentTime = new Date();
         const bookingStartTime = new Date(startTime);
-        return bookingStartTime < currentTime;
+
+        return status === 2 && bookingStartTime < currentTime;
     };
 
     console.log(displayData)
