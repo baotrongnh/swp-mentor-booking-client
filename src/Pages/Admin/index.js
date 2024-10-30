@@ -6,5 +6,6 @@ import ManagerSkills from "./ManagerSkills/ManagerSkills"
 import ManagerItems from "./ManagerItems/ManagerItems"
 import OverviewChart from "./OverviewChart/OverviewChart"
 import ManagerSemester from './ManagerSemester/ManagerSemester'
+import ProcessAccept from "../AcceptGroup/ProcessAccept"
 
 export { ManagerMentor, ManagerStudent, LoginAdmin, Pending, ManagerSkills, ManagerItems, OverviewChart, ManagerSemester }

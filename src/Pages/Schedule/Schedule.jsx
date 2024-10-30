@@ -1,7 +1,7 @@
 import { Col, Menu, Row } from "antd";
 import ShowCalendar from "./Components/Calendar/Calendar.jsx";
 import CommingBooking from "./Components/CommingBooking/CommingBooking.jsx";
-import AllBooking from "./Components/AllBooking/AllBooking.jsx";
+import DenyBooking from '../Schedule/Components/DenyBooking/DenyBooking.jsx'
 import './Schedule.scss';
 import { useCallback, useContext, useState } from "react";
 import { AppContext } from "../../Contexts/AppContext.jsx";
@@ -37,8 +37,8 @@ function Schedule() {
                key: 'completed',
           },
           {
-               label: `${t('all booking')}`,
-               key: 'all',
+               label: `${t('deny booking')}`,
+               key: 'deny',
           },
      ];
 
@@ -57,7 +57,7 @@ function Schedule() {
                               <div className="booking-list">
                                    {currentTab === 'comming' && <CommingBooking selectedDate={selectedDate} onBookingDatesChange={handleBookingDate} />}
                                    {currentTab === 'completed' && <CompletedBooking selectedDate={selectedDate} onBookingDatesChange={handleBookingDate} />}
-                                   {currentTab === 'all' && <AllBooking selectedDate={selectedDate} onBookingDatesChange={handleBookingDate} />}
+                                   {currentTab === 'deny' && <DenyBooking selectedDate={selectedDate} onBookingDatesChange={handleBookingDate} />}
                               </div>
                          </Col>
 

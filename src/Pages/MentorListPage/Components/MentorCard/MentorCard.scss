@@ -60,7 +60,7 @@
           }
 
           .rating-block {
-               margin: 5px 0 20px 0;
+               margin: 5px 0 5px 0;
                display: flex;
                gap: 15px;
                align-items: center;
@@ -79,6 +79,7 @@
           }
 
           .skill-tag-block {
+               margin-top: 15px;
                .tag {
                     transition: 0.2s;
                     cursor: pointer;

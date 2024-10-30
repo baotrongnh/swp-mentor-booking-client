@@ -1,19 +1,29 @@
-import { Button, Col, Row } from 'antd';
-import HomeBackground from '../../assets/Photos/background/Home_Banner.png';
-import './Home.scss';
-import { Card } from 'antd';
-import { Link } from 'react-router-dom';
+import { Button, Card, Col, Row } from 'antd';
 import { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import HomeBackground from '../../assets/Photos/background/Home_Banner.png';
 import { AppContext } from '../../Contexts/AppContext';
+import './Home.scss';
 
 const { Meta } = Card;
 
 export default function Home() {
-     const { t } = useContext(AppContext);
+     // const { filterMentor, t } = useContext(AppContext);
+     // const { data: listMentor, isLoading, isError } = useQuery({
+     //      queryKey: ['listMentor', filterMentor],
+     //      queryFn: () => searchMentor(filterMentor)
+     // })
+     const { t } = useContext(AppContext)
+     // console.log(listMentor.mentors)
 
      const scrollToFirstContent = () => {
           document.getElementById('first-content').scrollIntoView({ behavior: 'smooth' })
      }
+
+     // const fetchMentorData = async () => {
+     //      const res = await getProfileMentor()
+     // }
+
 
      return (
           <div className="home-page">

@@ -1,0 +1,169 @@
+.semester-manager {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+
+  .header {
+    margin-bottom: 40px;
+    
+    h1 {
+      font-size: 3.2rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 1.6rem;
+      color: #666;
+    }
+  }
+
+  .current-semester-card {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 40px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 25px;
+      
+      h2 {
+        font-size: 2rem;
+        font-weight: 600;
+        margin: 0;
+      }
+
+      .status-badge {
+        margin-left: 15px;
+        padding: 6px 12px;
+        background: #e6f4ea;
+        color: #1e7e34;
+        border-radius: 20px;
+        font-size: 1.4rem;
+        font-weight: 500;
+      }
+    }
+
+    .semester-info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+
+      .info-item {
+        .label {
+          font-size: 1.4rem;
+          color: #666;
+          margin-bottom: 8px;
+          display: block;
+        }
+
+        .value {
+          font-size: 1.8rem;
+          color: #1a1a1a;
+          font-weight: 500;
+          margin: 0;
+
+          .unit {
+            color: #666;
+            font-size: 1.4rem;
+            margin-left: 4px;
+          }
+        }
+      }
+    }
+  }
+
+  .action-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+
+    .action-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-content {
+        padding: 30px;
+
+        h3 {
+          font-size: 1.8rem;
+          font-weight: 600;
+          margin-bottom: 12px;
+        }
+
+        .description {
+          color: #666;
+          font-size: 1.4rem;
+          margin-bottom: 20px;
+          min-height: 40px;
+        }
+
+        .input-group {
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+
+          .point-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1.6rem;
+            transition: all 0.2s ease;
+            
+            &:focus {
+              outline: none;
+              border-color: #3498db;
+              box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.1);
+            }
+
+            &::-webkit-outer-spin-button,
+            &::-webkit-inner-spin-button {
+              -webkit-appearance: none;
+              margin: 0;
+            }
+            &[type=number] {
+              -moz-appearance: textfield;
+            }
+          }
+        }
+
+        .action-button {
+          width: 100%;
+          padding: 12px 24px;
+          border-radius: 8px;
+          border: none;
+          background: #3498db;
+          color: white;
+          font-size: 1.6rem;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.2s ease;
+
+          &:hover {
+            background: #2980b9;
+          }
+
+          &.warning {
+            background: #e74c3c;
+
+            &:hover {
+              background: #c0392b;
+            }
+          }
+        }
+      }
+    }
+  }
+} 

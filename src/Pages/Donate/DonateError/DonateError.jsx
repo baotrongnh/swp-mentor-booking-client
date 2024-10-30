@@ -11,7 +11,7 @@ export default function DonateError() {
                     icon="codicon:error"
                     className="error-icon"
                 />
-                <h1 className="title">Payment Error</h1>
+                <h1 className="title">Payment Failed</h1>
 
                 <div className="details-box">
                     <h2 className="text">Unfortunately, we encountered an issue processing your payment.</h2>

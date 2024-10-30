@@ -65,9 +65,9 @@ const resources = {
 
                //schedule
                "booking list": "Booking List",
-               "comming booking": "Pending Booking",
-               "completed booking": "Completed Booking",
-               "all booking": "All Booking",
+               "comming booking": "Coming",
+               "completed booking": "Completed",
+               "deny booking": "Deny",
                "booking calendar": "Booking Calendar",
                "month": "Month",
                "year": "Year",
@@ -166,7 +166,7 @@ const resources = {
                "booking list": "Danh Sách Đặt Lịch",
                "comming booking": "Đợi duyệt",
                "completed booking": "Đã hoàn thành",
-               "all booking": "Tất cả lịch",
+               "deny booking": "Đã hủy",
                "booking calendar": "Lịch",
                "month": "Tháng",
                "year": "Năm",
