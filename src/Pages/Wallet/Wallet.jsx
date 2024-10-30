@@ -15,7 +15,7 @@ export default function Wallet() {
     const [list, setList] = useState([])
     const { data: transactionData } = useQuery({
         queryKey: [`transaction-${currentUser.accountId}`],
-        queryFn: () => getHistoryTransaction('student', currentUser?.accountId)
+        queryFn: () => getHistoryTransaction(currentUser.isMentor === 0 ? 'student' : 'mentor', currentUser?.accountId)
     })
 
     useEffect(() => {

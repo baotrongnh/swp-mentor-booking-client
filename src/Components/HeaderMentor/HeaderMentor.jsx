@@ -212,7 +212,7 @@ function HeaderMentor() {
                     <div className="navbar-mobile-block">
                          <Link
                               onClick={() => setOpenDrawer(false)}
-                              to='/browser-mentors'
+                              to='/gift'
                               className='link-item'
                          >
                               {t('Gift')}
@@ -220,7 +220,7 @@ function HeaderMentor() {
 
                          <Link
                               onClick={() => setOpenDrawer(false)}
-                              to={`/schedule/${currentUser?.id}`}
+                              to={`/schedule`}
                               className='link-item'
                          >
                               {t('schedule')}

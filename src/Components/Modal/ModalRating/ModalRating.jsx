@@ -18,8 +18,7 @@ function ModalRatingMentor({ mentorId, modalOpen, setModalOpen }) {
                toast.success('Thanks for your review!')
           },
           onError: (error) => {
-               console.log(error)
-               toast.error('Sorry, you cannot rate this mentor')
+               toast.error(error.response.data.message)
           }
      })
 
@@ -52,7 +51,6 @@ function ModalRatingMentor({ mentorId, modalOpen, setModalOpen }) {
                     onCancel={() => setModalOpen(false)}
                     confirmLoading={mutation.isPending}
                     okButtonProps={{ disabled: feedback.rating == '' || feedback.text == '' }}
-                    destroyOnClose
                >
                     <Flex vertical align="center" className="rating-block">
                          <Rate style={{ padding: '20px', fontSize: '3rem' }} allowClear onChange={onChangeRating} />

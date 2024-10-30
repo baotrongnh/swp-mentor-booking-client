@@ -56,9 +56,13 @@ function MentorCard({ mentor, setModalOpen, setCurrentIdMentor }) {
                         </div>
                     </div>
 
+                    <Typography.Text>
+                        {`${mentor.completedBookings} Booked`}
+                    </Typography.Text>
+
                     <div className="skill-tag-block">
                         {mentor.skills.slice(0, 5).map((skill, index) => (
-                            <Tag color='blue' bordered={false} className="tag" key={index}>{skill}</Tag>
+                            <Tag color='blue' bordered={false} className="tag" key={index}>{skill.skillName}</Tag>
                         ))}
                     </div>
 
