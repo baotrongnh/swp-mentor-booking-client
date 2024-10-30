@@ -102,6 +102,19 @@ const resources = {
                "welcom back": 'Welcome Back!',
                "We are glad": 'We are glad to see you back.',
                "login": 'Log in with Google',
+
+               //Modal apply mentor:
+               'Skill Selector': 'Skill Selector',
+               'Become a Mentor': 'Become a Mentor',
+               'Apply': 'Apply',
+               'Add': 'Add',
+               'Your selected skills': 'Your selected skills',
+               'Remove': 'Remove',
+               'Level': 'Level',
+               'Agree to': 'Agree to',
+               'our terms': 'our terms',
+               'Select a level': 'Select a level',
+               'Select a skill': 'Select a skill'
           }
      },
      vi: {
@@ -201,6 +214,19 @@ const resources = {
                "welcom back": 'Chào mừng trở lại!',
                "We are glad": 'Chúng tôi rất vui khi được gặp lại bạn.',
                "login": 'Đăng nhập bằng Google',
+
+               //Modal apply mentor:
+               'Skill Selector': 'Chọn Kỹ Năng',
+               'Become a Mentor': 'Trở Thành Mentor',
+               'Apply': 'Đăng Ký',
+               'Add': 'Thêm',
+               'Your selected skills': 'Kỹ Năng Đã Chọn',
+               'Remove': 'Xóa',
+               'Level': 'Cấp Độ',
+               'Agree to': 'Đồng ý với',
+               'our terms': 'điều khoản của chúng tôi',
+               'Select a level': 'Chọn Cấp Độ',
+               'Select a skill': 'Chọn Kỹ Năng'
           }
      }
 }
