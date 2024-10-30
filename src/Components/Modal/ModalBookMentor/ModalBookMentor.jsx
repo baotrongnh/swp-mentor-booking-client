@@ -123,7 +123,6 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
                 }}
                 footer={false}
                 confirmLoading={mutation.isPending}
-                destroyOnClose
                 afterOpenChange={() => refetch()}
             >
                 <div className="inside-modal-book">
@@ -220,7 +219,7 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
                             <Button type="primary"
                                 disabled={currentUser?.point < semesterData?.latestSemester?.slotCost || !isValidate}
                             >
-                                {currentUser?.point > semesterData?.latestSemester?.slotCost
+                                {currentUser?.point >= semesterData?.latestSemester?.slotCost
                                     ? <>{t('book')}: {semesterData?.latestSemester?.slotCost} <Icon icon="twemoji:coin" /></>
                                     : 'Not enough coins'}
                             </Button>

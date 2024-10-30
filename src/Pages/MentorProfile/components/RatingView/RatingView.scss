@@ -47,49 +47,96 @@
 
      .review-block {
           .review-item {
-               border: 1px solid rgba(128, 128, 128, 0.208);
-               border-radius: 7px;
-               padding: 30px;
-               margin-bottom: 20px;
+               padding: 35px;
+               background: #ffffff;
+               border-radius: 16px;
+               box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px;
+               margin-bottom: 25px;
+               transition: all 0.3s ease;
+               border: 1px solid rgba(0, 0, 0, 0.03);
+
+               &:hover {
+                    transform: translateY(-3px);
+                    box-shadow: rgba(17, 12, 46, 0.1) 0px 8px 30px 0px;
+               }
 
                .top-block {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    flex-wrap: wrap;
-
                     .info-block {
-                         display: flex;
-                         align-items: center;
-                         gap: 10px;
+                         gap: 20px;
 
                          .avatar {
-                              width: 50px;
+                              width: 65px;
+                              height: 65px;
+                              border-radius: 50%;
+                              object-fit: cover;
+                              border: 3px solid #fff;
+                              box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 12px;
                          }
 
                          .text-block {
-                              opacity: 90%;
-
                               .name {
-                                   font-size: 2rem;
-                                   font-weight: 700;
-                                   margin-bottom: 5px;
+                                   font-size: 1.8rem;
+                                   margin-bottom: 8px;
+                                   color: #2c3e50;
+                              }
+
+                              .review-meta {
+                                   display: flex;
+                                   align-items: center;
+                                   gap: 15px;
+
+                                   .date {
+                                        color: #94a3b8;
+                                        font-size: 1.4rem;
+                                   }
+
+                                   .rating-badge {
+                                        display: flex;
+                                        align-items: center;
+                                        gap: 8px;
+                                        background: #f8fafc;
+                                        padding: 6px 12px;
+                                        border-radius: 8px;
+
+                                        .rating-number {
+                                             font-weight: 600;
+                                             color: #64748b;
+                                        }
+                                   }
                               }
                          }
                     }
                }
-          }
 
-          .comment {
-               margin-top: 20px;
-               line-height: 1.6;
-               font-size: 1.8rem;
-               text-align: justify;
-               opacity: 75%;
-               height: 70px;
-               overflow: hidden;
-               text-overflow: ellipsis;
-               white-space: normal
+               .comment-section {
+                    position: relative;
+                    margin-top: 25px;
+                    padding-top: 20px;
+                    border-top: 1px solid #f1f5f9;
+
+                    .comment {
+                         font-size: 1.6rem;
+                         line-height: 1.8;
+                         color: #475569;
+                         margin: 0;
+                         padding-right: 10px;
+                         height: auto;
+                         max-height: 90px;
+                         overflow: hidden;
+                    }
+
+                    .fade-overlay {
+                         position: absolute;
+                         bottom: 0;
+                         left: 0;
+                         right: 0;
+                         height: 60px;
+                         background: linear-gradient(to bottom,
+                                   rgba(255, 255, 255, 0),
+                                   rgba(255, 255, 255, 1));
+                         pointer-events: none;
+                    }
+               }
           }
      }
 }

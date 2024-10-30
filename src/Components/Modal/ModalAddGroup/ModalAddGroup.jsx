@@ -15,7 +15,7 @@ export default function ModalAddGroup({ modalOpen, setModalOpen, bookingId }) {
      const mutation = useMutation({
           mutationFn: ({ bookingId, studentId, memberMails }) => addStudentToGroup(bookingId, studentId, memberMails),
           onSuccess: () => {
-               toast.apply('Add success!')
+               toast.success('Add success!')
                setModalOpen(false)
           },
           onError: () => {

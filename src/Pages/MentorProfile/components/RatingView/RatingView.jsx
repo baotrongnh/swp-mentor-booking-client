@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { Button, Col, Flex, Rate, Row, Skeleton } from 'antd';
+import { Button, Col, Rate, Row, Skeleton } from 'antd';
 import PropTypes from 'prop-types';
 import { getFeedback } from '../../../../apis/mentor';
 import defaultAvatar from '../../../../assets/Photos/avatar/default_avatar.jpg';
@@ -37,20 +37,31 @@ function RatingView({ id, setModalRatingOpen, isCurrentUser }) {
                                    <div className="review-item" key={index}>
                                         <div className='top-block'>
                                              <div className='info-block'>
-                                                  <img className='avatar' src={defaultAvatar} alt="" />
+                                                  <img className='avatar' src={defaultAvatar} alt={feedback.studentName} />
                                                   <div className='text-block'>
-                                                       <h1 className='name'>{feedback.studentName}</h1>
-                                                       <p className="date">{feedback.createdAt}</p>
+                                                       <h3 className='name'>{feedback.studentName}</h3>
+                                                       <div className="review-meta">
+                                                            <span className="date">
+                                                                 {new Date(feedback.createdAt).toLocaleDateString('en-US', {
+                                                                      year: 'numeric',
+                                                                      month: 'long',
+                                                                      day: 'numeric'
+                                                                 })}
+                                                            </span>
+                                                            <span className="rating-badge">
+                                                                 <Rate disabled value={feedback.rating} allowHalf />
+                                                                 <span className="rating-number">{feedback.rating}</span>
+                                                            </span>
+                                                       </div>
                                                   </div>
                                              </div>
-
-                                             <Flex align='center' gap='small'>
-                                                  <p style={{ fontWeight: '600' }}>{feedback.rating}</p>
-                                                  <Rate style={{ fontSize: '2rem' }} disabled defaultValue={0} value={feedback.rating} allowHalf />
-                                             </Flex>
                                         </div>
-
-                                        <p className="comment">{feedback.text}</p>
+                                        <div className="comment-section">
+                                             <p className="comment">{feedback.text}</p>
+                                             {feedback.text.length > 200 && (
+                                                  <div className="fade-overlay"></div>
+                                             )}
+                                        </div>
                                    </div>
                               ))}
                          </div>
