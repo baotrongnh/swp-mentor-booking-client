@@ -5,7 +5,7 @@ import { Icon } from '@iconify/react/dist/iconify.js';
 import './CommingBooking.scss';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
-import { getListBooking } from '../../../../apis/booking';
+import { getListAllBooking } from '../../../../apis/booking';
 import { AuthContext } from '../../../../Contexts/AuthContext';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../../../Contexts/AppContext';
@@ -13,27 +13,11 @@ import AvatarGroup from '../AvatarGroup/AvatarGroup';
 import defaultAvatar from '../../../../assets/Photos/avatar/default_avatar.jpg';
 import MentorButton from '../MentorButton/MentorButton';
 import { ModalAddGroup } from '../../../../Components/Modal';
+import FormatDate from '../FormatDate/FormatDate';
+import { getToken } from '../../../../utils/storageUtils';
+import axiosClient from '../../../../apis/axiosClient';
+import toast from 'react-hot-toast';
 
-const formatDate = (date, isStartTime) => {
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-    const seconds = date.getSeconds().toString().padStart(2, '0');
-    return (
-        <div className='data-form'>
-            <Flex align='center' gap='small'>
-                <Icon icon="ion:calendar-outline" style={{ fontSize: '1.6rem' }} />
-                <p className='data-date'>{`${year}-${month}-${day}`}</p>
-            </Flex>
-            <Flex align='center' gap='small'>
-                <p className='data-time-label'>{isStartTime ? 'Start:' : 'End:'}</p>
-                <p className='data-time'>{`${hours}:${minutes}:${seconds}`}</p>
-            </Flex>
-        </div>
-    );
-};
 
 const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
     const [loading, setLoading] = useState(false);
@@ -53,10 +37,10 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
         setLoading(true);
 
         try {
-            const res = await getListBooking(role, currentUser?.accountId);
+            const res = await getListAllBooking(role, currentUser?.accountId);
             if (res) {
                 setAllData(res.data) // set Data ne
-                console.log('All data', res.data)
+                // console.log('All data', res.data)
                 const newBookingDates = res.data.map(booking => dayjs(booking.startTime).format('YYYY-MM-DD'))
                 onBookingDatesChange(newBookingDates)
             }
@@ -78,11 +62,7 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
     })
 
     useEffect(() => {
-        if (hasMore) {
-            console.log("Has more Data");
-        } else {
-            console.log("No more Data");
-        }
+        hasMore ? console.log("Has more Data") : console.log("No more Data");
         if (allData.length <= 4) {
             setHasMore(false)
         }
@@ -91,7 +71,7 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
 
     useEffect(() => {
         let filterData = allData.filter(booking =>
-            booking.status === 1 && dayjs(booking.startTime).isAfter(dayjs())
+            (booking.status === 1 || booking.status === 2) && dayjs(booking.startTime).isAfter(dayjs())
         );
 
         if (selectedDate) {
@@ -111,6 +91,22 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
     }, [loadData])
 
     console.log(displayData)
+
+    const handleDeny = async (id) => {
+        const token = getToken()
+        const res = await axiosClient(token).post('/booking/deny', {
+            bookingId: id
+        })
+        try {
+            if (res) {
+                toast.success('Success')
+                handleReload(true)
+            }
+        } catch (error) {
+            console.log('Error: ', error)
+            toast.error('Error')
+        }
+    }
 
     return (
         <div
@@ -137,9 +133,22 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
                                     title={`Group ${item.id}`}
                                     description={<MentorButton bookingId={item.id} onReload={handleReload} />}
                                 />
-                                <Flex justify='center' align='center' gap={24} className="time-wrapper" >
-                                    {formatDate(new Date(item.startTime), true)}
-                                    {formatDate(new Date(item.endTime), false)}
+
+                                <Flex justify='center' align='center'>
+                                    <Flex justify='center' align='center' gap={24} className="time-wrapper" >
+                                        {FormatDate(new Date(item.startTime), true)}
+                                        {FormatDate(new Date(item.endTime), false)}
+                                        <Flex justify='center' align='center' gap={24} style={{ marginTop: '1rem' }}>
+                                            <Button
+                                                danger
+                                                style={{ width: '12rem' }}
+                                                onClick={() => {
+                                                    handleDeny(item.id)
+                                                }
+                                                }
+                                            >Cancel</Button>
+                                        </Flex>
+                                    </Flex>
                                 </Flex>
 
                             </List.Item>
@@ -170,19 +179,29 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
                                 />
                                 <Flex vertical justify='center' align='center' style={{ paddingRight: '2rem' }}>
                                     <Flex justify='center' align='center' gap={24} className="time-wrapper" >
-                                        {formatDate(new Date(item.startTime), true)}
-                                        {formatDate(new Date(item.endTime), false)}
+                                        {FormatDate(new Date(item.startTime), true)}
+                                        {FormatDate(new Date(item.endTime), false)}
                                     </Flex>
-
-                                    <Button
-                                        style={{ marginTop: '8px' }}
-                                        onClick={() => {
-                                            setModalOpen(true)
-                                            setBookigId(item.id)
-                                        }
-                                        }
-                                    >Add Member</Button>
-
+                                    <Flex justify='center' align='center' gap={24} style={{ marginTop: '1rem' }}>
+                                        <Button
+                                            type="primary"
+                                            variant="outlined"
+                                            style={{ width: '12rem' }}
+                                            onClick={() => {
+                                                setModalOpen(true)
+                                                setBookigId(item.id)
+                                            }
+                                            }
+                                        >Add Member</Button>
+                                        <Button
+                                            danger
+                                            style={{ width: '12rem' }}
+                                            onClick={() => {
+                                                handleDeny(item.id)
+                                            }
+                                            }
+                                        >Cancel</Button>
+                                    </Flex>
                                 </Flex>
                             </List.Item>
                         )}

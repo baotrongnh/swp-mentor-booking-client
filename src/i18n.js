@@ -67,11 +67,14 @@ const resources = {
                "booking list": "Booking List",
                "comming booking": "Coming",
                "completed booking": "Completed",
-               "deny booking": "Deny",
+               "deny booking": "Denied",
                "booking calendar": "Booking Calendar",
                "month": "Month",
                "year": "Year",
                "end list": "You have reached the end of your bookings!",
+               "deny": "Booking Denied",
+               "start": 'Start',
+               "end": 'End',
 
                //wallet:
                'Your balance': 'Your balance',
@@ -171,6 +174,9 @@ const resources = {
                "month": "Tháng",
                "year": "Năm",
                "end list": "Bạn đã xem hết lịch đặt của bạn!",
+               "deny": "Đã hủy",
+               "start": 'Bắt đầu',
+               "end": 'Kết thúc',
 
                //wallet:
                'Your balance': 'Số dư của bạn',

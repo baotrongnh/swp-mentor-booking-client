@@ -6,6 +6,11 @@
   padding: 0;
   border: 1px solid rgba(140, 140, 140, 0.35);
 
+  .denied {
+    font-weight: 500;
+    color: $text-primary;
+  }
+
   .ant-list-item-meta-avatar {
     height: 5rem;
     display: flex;
@@ -70,15 +75,14 @@
   }
 
   .time-wrapper {
-    width: 30rem;
-    margin-left: 1rem;
+    width: 35rem;
     gap: 1.6rem;
     padding: 1rem;
     background-color: rgba(0, 0, 0, 0.02);
     border-radius: 8px;
 
     .data-form {
-      padding: 0.8rem;
+      padding: 1rem;
 
       .data-date {
         font-size: 1.4rem !important;
@@ -96,7 +100,10 @@
 
       .data-time-label {
         font-weight: 500;
-        color: rgba(0, 0, 0, 0.65);
+
+        span {
+          color: $text-primary;
+        }
       }
     }
   }
@@ -125,7 +132,7 @@
         height: 100%;
 
         .ant-list-item-meta-title {
-          font-size: 2rem !important;
+          font-size: 1.9rem !important;
           font-weight: 500 !important;
           margin-bottom: 0.8rem;
 
