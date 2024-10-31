@@ -11,7 +11,7 @@ import { AppContext } from '../../../../Contexts/AppContext';
 import { AuthContext } from '../../../../Contexts/AuthContext';
 import AvatarGroup from '../AvatarGroup/AvatarGroup';
 import { ModalAddGroup } from '../../../../Components/Modal';
-import './AllBooking.scss';
+import './DenyBooking.scss';
 
 
 
@@ -36,7 +36,7 @@ const formatDate = (date, isStartTime) => {
     );
 };
 
-const AllBooking = ({ selectedDate, onBookingDatesChange }) => {
+const DenyBooking = ({ selectedDate, onBookingDatesChange }) => {
     const [loading, setLoading] = useState(false);
     const [allData, setAllData] = useState([]);
     const [displayData, setDisplayData] = useState([]);
@@ -57,7 +57,7 @@ const AllBooking = ({ selectedDate, onBookingDatesChange }) => {
             const res = await getListAllBooking(role, currentUser?.accountId);
             if (res) {
                 setAllData(res.data) // set Data ne
-
+                console.log('All data: ', res.data)
                 const newBookingDates = res.data.map(booking => dayjs(booking.startTime).format('YYYY-MM-DD'));
                 onBookingDatesChange(newBookingDates);
             }
@@ -83,18 +83,11 @@ const AllBooking = ({ selectedDate, onBookingDatesChange }) => {
     //cai nay de cho hien thi selectDay
     useEffect(() => {
         let filterData = allData;
-
+        filterData = filterData.filter(booking => booking.status === 0);
         if (selectedDate) {
             filterData = allData.filter(booking => dayjs(booking.startTime).isSame(selectedDate, 'day'))
         }
-        filterData = filterData.filter(booking => booking.status === 0 || booking.status === 2);
-
-        const sortData = filterData.sort((item1, item2) => {
-            if (item1.status !== item2.status) {
-                return item2.status - item1.status;
-            }
-            return new Date(item1.startTime) - new Date(item2.startTime);
-        });
+        const sortData = filterData.sort((item1, item2) => { return new Date(item1.startTime) - new Date(item2.startTime); });
 
         const startIndex = (page - 1) * pageSize;
         const endIndex = startIndex + pageSize;
@@ -107,7 +100,9 @@ const AllBooking = ({ selectedDate, onBookingDatesChange }) => {
     //cai nay de loc ra nhung ngay co Booking
     useEffect(() => {
         if (allData.length > 0) {
-            const bookingDates = allData.map(booking => dayjs(booking.startTime).format('YYYY-MM-DD'))
+            const bookingDates = allData
+                .filter(booking => booking.status === 0 || booking.status === 2)
+                .map(booking => dayjs(booking.startTime).format('YYYY-MM-DD'));
             onBookingDatesChange(bookingDates);
         }
     }, [allData, onBookingDatesChange])
@@ -126,7 +121,8 @@ const AllBooking = ({ selectedDate, onBookingDatesChange }) => {
     const handleIsCompleted = (status, startTime) => {
         const currentTime = new Date();
         const bookingStartTime = new Date(startTime);
-        return bookingStartTime < currentTime;
+
+        return status === 2 && bookingStartTime < currentTime;
     };
 
     console.log(displayData)
@@ -218,9 +214,9 @@ const AllBooking = ({ selectedDate, onBookingDatesChange }) => {
     );
 };
 
-AllBooking.propTypes = {
+DenyBooking.propTypes = {
     selectedDate: PropTypes.instanceOf(dayjs),
     onBookingDatesChange: PropTypes.func.isRequired,
 }
 
-export default AllBooking;
+export default DenyBooking;

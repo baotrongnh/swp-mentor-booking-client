@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { Divider, Flex, Image, List, Skeleton } from 'antd';
+import { Button, Divider, Flex, Image, List, Skeleton } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import './CommingBooking.scss';
@@ -12,6 +12,7 @@ import { AppContext } from '../../../../Contexts/AppContext';
 import AvatarGroup from '../AvatarGroup/AvatarGroup';
 import defaultAvatar from '../../../../assets/Photos/avatar/default_avatar.jpg';
 import MentorButton from '../MentorButton/MentorButton';
+import { ModalAddGroup } from '../../../../Components/Modal';
 
 const formatDate = (date, isStartTime) => {
     const year = date.getFullYear();
@@ -40,6 +41,8 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
     const [displayData, setDisplayData] = useState([]);
     const { currentUser } = useContext(AuthContext)
     const [hasMore, setHasMore] = useState(true)
+    const [modalOpen, setModalOpen] = useState(false)
+    const [bookingId, setBookigId] = useState(null)
     const [page, setPage] = useState(1)
     const pageSize = 10;
     const { t } = useContext(AppContext)
@@ -53,7 +56,7 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
             const res = await getListBooking(role, currentUser?.accountId);
             if (res) {
                 setAllData(res.data) // set Data ne
-                console.log(res.data)
+                console.log('All data', res.data)
                 const newBookingDates = res.data.map(booking => dayjs(booking.startTime).format('YYYY-MM-DD'))
                 onBookingDatesChange(newBookingDates)
             }
@@ -165,14 +168,27 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
                                     title={<Link to={`/mentor/profile/${item.mentorId}`}>{item.mentor.fullName}</Link>}
                                     description={item.mentor.email}
                                 />
-                                <Flex justify='center' align='center' gap={24} className="time-wrapper" >
-                                    {formatDate(new Date(item.startTime), true)}
-                                    {formatDate(new Date(item.endTime), false)}
+                                <Flex vertical justify='center' align='center' style={{ paddingRight: '2rem' }}>
+                                    <Flex justify='center' align='center' gap={24} className="time-wrapper" >
+                                        {formatDate(new Date(item.startTime), true)}
+                                        {formatDate(new Date(item.endTime), false)}
+                                    </Flex>
+
+                                    <Button
+                                        style={{ marginTop: '8px' }}
+                                        onClick={() => {
+                                            setModalOpen(true)
+                                            setBookigId(item.id)
+                                        }
+                                        }
+                                    >Add Member</Button>
+
                                 </Flex>
                             </List.Item>
                         )}
                     />
                 }
+                <ModalAddGroup modalOpen={modalOpen} setModalOpen={setModalOpen} bookingId={bookingId} />
             </InfiniteScroll>
         </div>
     );

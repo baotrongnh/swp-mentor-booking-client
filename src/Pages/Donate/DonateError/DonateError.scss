@@ -1,0 +1,153 @@
+@import "../../../Styles/variables";
+
+.donate-error-page {
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #ffe6e6, #ffcccc);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+
+    .success-card {
+        background-color: $bg-secondary;
+        border-radius: 1rem;
+        box-shadow: 0 0 20px 2px $shadow;
+        padding: 4rem;
+        max-width: 60rem;
+        width: 100%;
+        text-align: center;
+
+        .error-icon {
+            width: 6rem;
+            height: 6rem;
+            margin: 0 auto 2rem;
+            color: #ff4d4d; // Bright red color for error icon
+        }
+
+        .title {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #d32f2f; // Darker red for title
+            margin-bottom: 1.5rem;
+            text-shadow: 3px 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .message {
+            font-size: 1.8rem;
+            color: #b71c1c; // Dark red for the message
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+
+        .details-box {
+            background-color: rgba(255, 102, 102, 0.1);
+            border-radius: 0.7rem;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid #ff6666; // Soft red for border
+
+            .details-title {
+                font-size: 2rem;
+                font-weight: 600;
+                color: #d32f2f;
+                margin-bottom: 1.5rem;
+            }
+
+            .details-text {
+                font-size: 1.6rem;
+                color: #b71c1c;
+                margin-bottom: 1rem;
+                opacity: 0.9;
+
+                span {
+                    font-weight: 500;
+                }
+            }
+        }
+
+        .button-container {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .home-button,
+        .view-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ff4d4d; // Red background for main buttons
+            color: $bg-primary;
+            font-weight: 600;
+            padding: 1rem 2rem;
+            border-radius: 0.7rem;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+            font-size: 1.6rem;
+            flex: 1;
+            max-width: 20rem;
+
+            &:hover {
+                opacity: 0.8;
+            }
+
+            .button-icon {
+                width: 2rem;
+                height: 2rem;
+                margin-right: 1rem;
+            }
+        }
+
+        .view-button {
+            background-color: $bg-primary;
+            color: #ff4d4d;
+            border: 2px solid #ff4d4d; // Red border for alternate button
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .donate-error-page {
+        .success-card {
+            padding: 2rem;
+            margin: 1rem;
+
+            .error-icon {
+                width: 5rem;
+                height: 5rem;
+            }
+
+            .title {
+                font-size: 2.4rem;
+            }
+
+            .message {
+                font-size: 1.6rem;
+            }
+
+            .details-box {
+                padding: 1.5rem;
+
+                .details-title {
+                    font-size: 1.8rem;
+                }
+
+                .details-text {
+                    font-size: 1.4rem;
+                }
+            }
+
+            .button-container {
+                flex-direction: column;
+            }
+
+            .home-button,
+            .view-button {
+                width: 100%;
+                max-width: none;
+                padding: 1.2rem;
+            }
+        }
+    }
+}
