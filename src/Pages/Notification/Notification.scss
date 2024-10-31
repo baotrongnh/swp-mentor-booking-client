@@ -1,3 +1,5 @@
+@import '../../Styles/variables';
+
 .notification-page {
      min-height: 100vh;
 
@@ -19,11 +21,7 @@
                transition: background-color 0.3s ease;
 
                &.read {
-                    background-color: #f0f2f5;
-               }
-
-               &.unread {
-                    background-color: #e6f7ff;
+                    opacity: 60%;
                }
 
                .notification-avatar {

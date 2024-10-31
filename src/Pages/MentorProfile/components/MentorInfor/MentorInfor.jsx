@@ -1,17 +1,18 @@
 import { Button, Col, Image, Rate, Row, Tag, Typography } from "antd"
 import PropTypes from "prop-types"
-import { useContext, useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
+import { useTranslation } from 'react-i18next'
 import defaultAvatar2 from '../../../../assets/Photos/avatar/default_avatar_2.jpg'
-import { AppContext } from "../../../../Contexts/AppContext"
-import './MentorInfor.scss'
 import DonateModalButton from '../../../../Components/Modal/DonateModal/DonateModalButton'
+import './MentorInfor.scss'
 
 function MentorInfor({ setModalOpen, mentorInfor, setCurrentTab, isCurrentUser }) {
      const skills = ['ReactJS', 'NodeJS']
      const descriptionRef = useRef(null)
      const [width, setWidth] = useState(window.innerWidth)
      const [isShowMore, setIsShowMore] = useState(false)
-     const { t } = useContext(AppContext)
+     const { t } = useTranslation()
+     
 
      useEffect(() => {
           const handleResize = () => {
@@ -34,6 +35,8 @@ function MentorInfor({ setModalOpen, mentorInfor, setCurrentTab, isCurrentUser }
           setModalOpen(true)
      }
 
+     console.log(mentorInfor);
+
      return (
           <div className="mentor-infor">
                <div className="container mentor-infor-block">
@@ -49,10 +52,14 @@ function MentorInfor({ setModalOpen, mentorInfor, setCurrentTab, isCurrentUser }
 
                          <Col md={13} lg={16} xl={17} className="info-block">
                               <h1 className="name">{mentorInfor?.fullName}</h1>
-                              <p className="semester"><b>Semester:</b> 7</p>
+                              <p className="semester"><b>{t('Semester')}:</b> 7</p>
                               <div className="rating-block" onClick={() => setCurrentTab('rating')}>
                                    <Rate disabled allowHalf defaultValue={0} value={mentorInfor?.averageRating} />
-                                   <p className="rating-text"><Typography.Text strong>{`${mentorInfor?.averageRating || 'No reviews yet'}`}</Typography.Text> {`(${mentorInfor?.numberReviews || 0} reviews)`}</p>
+                                   <p className="rating-text">
+                                        <Typography.Text strong>
+                                             {`${mentorInfor?.averageRating || t('No reviews yet')}`}
+                                        </Typography.Text> {`(${mentorInfor?.ratingsCount || 0} ${t('reviews')})`}
+                                   </p>
                               </div>
 
                               <div className="skill-block">
@@ -62,18 +69,24 @@ function MentorInfor({ setModalOpen, mentorInfor, setCurrentTab, isCurrentUser }
                               </div>
 
                               <p className="description" ref={descriptionRef}>
-                                   {mentorInfor?.description || 'No description'}
+                                   {mentorInfor?.description || t('No description')}
                               </p>
 
-                              <a onClick={() => setCurrentTab('about')} className={`read-more ${isShowMore ? 'show' : ''}`}>Read more</a>
+                              <a onClick={() => setCurrentTab('about')} className={`read-more ${isShowMore ? 'show' : ''}`}>{t('Read more')}</a>
 
                               <div className="btn-block">
-                                   {isCurrentUser
-                                        ? <Button style={{ width: '40%' }} size="large">{t('edit-profile')}</Button>
-                                        : <>
-                                             <Button style={{ width: '40%' }} size="large" type="primary" onClick={handleOpenModal} >{t('book now')}</Button>
+                                   {isCurrentUser ? (
+                                        <Button style={{ width: '40%' }} size="large">
+                                             {t('edit-profile')}
+                                        </Button>
+                                   ) : (
+                                        <>
+                                             <Button style={{ width: '40%' }} size="large" type="primary" onClick={handleOpenModal}>
+                                                  {t('book now')}
+                                             </Button>
                                              <DonateModalButton mentorId={mentorInfor.accountId} />
-                                        </>}
+                                        </>
+                                   )}
                               </div>
                          </Col>
                     </Row>

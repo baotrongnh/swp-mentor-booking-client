@@ -3,15 +3,17 @@ import { Card, List, Progress, Rate, Typography } from 'antd';
 import PropTypes from "prop-types";
 import { getSkillMentor } from "../../../../apis/mentor";
 import './Skills.scss';
+import { useTranslation } from 'react-i18next';
 
 function Skills({ id }) {
      const { Title } = Typography;
      const { data: listSkill } = useQuery({ queryKey: ['list-skill-profile', id], queryFn: () => getSkillMentor(id) })
+     const { t } = useTranslation();
 
      return (
           <div className="mentor-skills-list">
                <Title level={2}>
-                    Mentor Skills
+                    {t('Mentor Skills')}
                </Title>
                <List
                     grid={{
@@ -31,7 +33,7 @@ function Skills({ id }) {
                                    <Rate disabled defaultValue={skill.level} />
                                    <Progress
                                         percent={skill.level * 20}
-                                        format={(percent) => `Level ${percent / 20}`}
+                                        format={(percent) => `${t('Level')} ${percent / 20}`}
                                         status="active"
                                         strokeColor={{
                                              '0%': '#108ee9',

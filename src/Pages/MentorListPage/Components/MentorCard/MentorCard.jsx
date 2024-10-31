@@ -57,7 +57,7 @@ function MentorCard({ mentor, setModalOpen, setCurrentIdMentor }) {
                     </div>
 
                     <Typography.Text>
-                        {`${mentor.completedBookings} Booked`}
+                        {`${mentor.completedBookings} ${t('Booked')}`}
                     </Typography.Text>
 
                     <div className="skill-tag-block">
@@ -73,7 +73,7 @@ function MentorCard({ mentor, setModalOpen, setCurrentIdMentor }) {
                                 <Tag color='green' style={{ cursor: 'pointer' }} onClick={handleBook}>{mentor?.availableSlots[0]?.slotStart}</Tag>
                                 {mentor?.availableSlots?.length > 1 && <Tag color='green' style={{ cursor: 'pointer' }} onClick={handleBook}>{mentor?.availableSlots?.length - 1}+</Tag>}
                             </>
-                            : <span>No time available</span>
+                            : <span>{t('No time available')}</span>
                         }
                     </div>
 

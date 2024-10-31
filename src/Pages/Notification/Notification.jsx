@@ -1,11 +1,11 @@
 import { BellOutlined, CheckCircleOutlined } from '@ant-design/icons'
-import { Avatar, Badge, List, Space, Typography } from 'antd'
-import { Content } from 'antd/es/layout/layout'
-import { useContext, useState } from 'react'
-import './Notification.scss'
 import { useQuery } from '@tanstack/react-query'
+import { Avatar, Badge, Breadcrumb, List, Space, Typography } from 'antd'
+import { useContext, useState } from 'react'
 import { AuthContext } from '../../Contexts/AuthContext'
 import { getNotifications } from '../../apis/other'
+import './Notification.scss'
+import { Link } from 'react-router-dom'
 
 export default function Notification() {
      const { Text } = Typography
@@ -27,7 +27,24 @@ export default function Notification() {
      return (
           <div className='notification-page'>
                <div className="container">
-                    <Content className="notifications-content">
+                    {currentUser.isMentor === 0 &&
+                         <Breadcrumb
+                              style={{ paddingTop: '20px' }}
+                              items={[
+                                   {
+                                        title: <Link to='/'>Home</Link>,
+                                   },
+                                   {
+                                        title: <Link to='/browser-mentors'>Browse mentors</Link>,
+                                   },
+                                   {
+                                        title: 'Notification',
+                                   },
+                              ]}
+                         />
+                    }
+
+                    <div className="notifications-content">
                          <List
                               itemLayout="horizontal"
                               dataSource={filteredNotifications}
@@ -60,7 +77,7 @@ export default function Notification() {
                                    </List.Item>
                               )}
                          />
-                    </Content>
+                    </div>
                </div>
           </div>
      )

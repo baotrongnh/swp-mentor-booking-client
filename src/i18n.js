@@ -143,6 +143,65 @@ const resources = {
 
                // For Report Modal
                "Report": "Report",
+
+               // MentorCard translations
+               "Booked": "Booked",
+               "No time available": "No time available",
+
+               // MentorInfo translations
+               "Semester": "Semester",
+               "Read more": "Read more",
+
+               // Common translations for stats
+               "years experience": "years experience",
+               "sessions": "sessions",
+               "points": "points",
+               "mentees": "mentees",
+               "No mentees yet": "No mentees yet",
+
+               // MentorProfile Menu Items
+               "Slots": "Slots",
+               "About": "About",
+               "Skills": "Skills",
+               "Rating": "Rating",
+
+               // RatingView translations
+               "Rating & reviews": "Rating & reviews",
+               "Reviews": "Reviews",
+               "Write your Review": "Write your Review",
+               "Share your feedback": "Share your feedback and help create a better booking experience for everyone.",
+               "Write a review": "Write a review",
+
+               // Skills translations
+               "Mentor Skills": "Mentor Skills",
+
+               // Slots translations
+               "Available Time Slots": "Available Time Slots",
+               "Add new slot": "Add new slot",
+               "Book": "Book",
+               "Delete": "Delete",
+               "Something went wrong": "Something went wrong",
+               "Booked successfully": "Booked successfully",
+
+               // AboutMentor translations
+               "About Me": "About Me",
+               "Contact": "Contact",
+               "Email": "Email",
+
+               // Gift page translations
+               "Total Value": "Total Value",
+               "Select a gift to view details": "Select a gift to view details",
+               "Send": "Send",
+               "Received": "Received",
+               "To": "To",
+               "From": "From",
+
+               // Gift page additional translations
+               "Home": "Home",
+               "Browse mentors": "Browse mentors",
+               "Gifts Received from Donations": "Gifts Received from Donations",
+               "History of sent gifts": "History of sent gifts",
+               "Gift History": "Gift History",
           }
      },
      vi: {
@@ -228,20 +287,20 @@ const resources = {
                "SWP Mentor Booking": "Đặt Lịch Mentor SWP",
                "Find Your Perfect Mentor": "Tìm Mentor Phù Hợp Với Bạn",
                "Connect with experienced professionals to guide your career": "Kết nối với các chuyên gia giàu kinh nghiệm để định hướng sự nghiệp của bạn",
-               "Get Started": "Bắt Đầu",
+               "Get Started": "Bt Đầu",
                "See Our Best Mentor": "Xem Mentor Xuất Sắc Của Chúng Tôi",
                "View Mentor": "Xem Mentor",
                "Why Use Our Mentor Booking System?": "Tại Sao Nên Sử Dụng Hệ Thống Đặt Lịch Mentor Của Chúng Tôi?",
                "Expert Guidance": "Hướng Dẫn Chuyên Nghiệp",
-               "Connect with experienced professionals who can provide valuable insights and advice tailored to your career goals.": "Kết nối với các chuyên gia giàu kinh nghiệm, những người có thể cung cấp những hiểu biết và lời khuyên quý giá phù hợp với mục tiêu nghề nghiệp của bạn.",
+               "Connect with experienced professionals who can provide valuable insights and advice tailored to your career goals.": "Kết nối với các chuyên gia giàu kinh nghiệm, những người có thể cung cấp những hiểu biết và lời khuyên quý giá phù hợp với mục tiêu nghề nghip của bạn.",
                "Flexible Scheduling": "Lịch Trình Linh Hoạt",
                "Book sessions at your convenience, fitting mentorship into your busy life with ease.": "Đặt lịch các buổi học theo sự thuận tiện của bạn, dễ dàng kết hợp việc học hỏi từ mentor vào cuộc sống bận rộn của bạn.",
                "Personalized Learning": "Học Tập Cá Nhân Hóa",
-               "Receive one-on-one attention and customized advice to accelerate your professional growth.": "Nhận được sự chú ý cá nhân và lời khuyên tùy chỉnh để đẩy nhanh sự phát triển nghề nghiệp của bạn.",
+               "Receive one-on-one attention and customized advice to accelerate your professional growth.": "Nhận được sự chú ý cá nhân và lời khuyên tùy chỉnh để đẩy nhanh sự phát triển nghề nghip của bạn.",
                "Diverse Expertise": "Chuyên Môn Đa Dạng",
                "Access a wide range of mentors across various industries and specializations.": "Tiếp cận với nhiều mentor từ các ngành nghề và chuyên môn khác nhau.",
                "Career Advancement": "Phát Triển Sự Nghiệp",
-               "Gain insights and strategies to help you climb the career ladder and achieve your professional goals.": "Nhận được những hiểu biết sâu sắc và chiến lược để giúp bạn thăng tiến trong sự nghiệp và đạt được mục tiêu nghề nghiệp.",
+               "Gain insights and strategies to help you climb the career ladder and achieve your professional goals.": "Nhận được những hiểu biết sâu sắc và chiến lược để giúp bạn thăng tiến trong sự nghiệp và đạt được mục tiêu nghề nghip.",
                "Networking Opportunities": "Cơ Hội Kết Nối",
                "Expand your professional network and open doors to new opportunities through your mentors.": "Mở rộng mạng lưới chuyên nghiệp và mở ra cánh cửa cho những cơ hội mới thông qua các mentor của bạn.",
 
@@ -286,6 +345,65 @@ const resources = {
 
                // For Report Modal
                "Report": "Báo cáo",
+
+               // MentorCard translations
+               "Booked": "Đã đặt",
+               "No time available": "Không có lịch trống",
+
+               // MentorInfo translations
+               "Semester": "Học kỳ",
+               "Read more": "Xem thêm",
+
+               // Common translations for stats
+               "years experience": "năm kinh nghiệm",
+               "sessions": "buổi học",
+               "points": "điểm",
+               "mentees": "học viên",
+               "No mentees yet": "Chưa có học viên",
+
+               // MentorProfile Menu Items
+               "Slots": "Lịch Trống",
+               "About": "Giới Thiệu",
+               "Skills": "Kỹ Năng",
+               "Rating": "Đánh Giá",
+
+               // RatingView translations
+               "Rating & reviews": "Đánh giá & nhận xét",
+               "Reviews": "Nhận xét",
+               "Write your Review": "Viết đánh giá của bạn",
+               "Share your feedback": "Chia sẻ phản hồi của bạn và giúp tạo trải nghiệm đặt lịch tốt hơn cho mọi người.",
+               "Write a review": "Viết đánh giá",
+
+               // Skills translations
+               "Mentor Skills": "Kỹ Năng Mentor",
+
+               // Slots translations
+               "Available Time Slots": "Lịch Trống Hiện Có",
+               "Add new slot": "Thêm lịch mới",
+               "Book": "Đặt lịch",
+               "Delete": "Xóa",
+               "Something went wrong": "Đã xảy ra lỗi",
+               "Booked successfully": "Đặt lịch thành công",
+
+               // AboutMentor translations
+               "About Me": "Về Tôi",
+               "Contact": "Liên Hệ",
+               "Email": "Email",
+
+               // Gift page translations
+               "Total Value": "Tổng giá trị",
+               "Select a gift to view details": "Chọn một món quà để xem chi tiết",
+               "Send": "Đã gửi",
+               "Received": "Đã nhận",
+               "To": "Đến",
+               "From": "Từ",
+
+               // Gift page additional translations
+               "Home": "Trang chủ",
+               "Browse mentors": "Tìm mentor",
+               "Gifts Received from Donations": "Quà Tặng Nhận Được",
+               "History of sent gifts": "Lịch Sử Quà Đã Tặng",
+               "Gift History": "Lịch Sử Quà Tặng",
           }
      }
 }
