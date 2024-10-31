@@ -17,6 +17,7 @@ const resources = {
                'logout': 'Logout',
                'pending booking': 'Pending bookings',
                'Gift': 'Gift',
+               'Donation history': 'Donation history',
 
                //button:
                'book': 'Book',
@@ -130,6 +131,10 @@ const resources = {
                'theme': 'Chủ đề',
                'language': 'Ngôn ngữ',
                'logout': 'Đăng xuất',
+               'pending booking': 'Đang chờ xác nhận',
+               'Gift': 'Quà tặng',
+               'Donation history': 'Lịch sử tặng quà',
+
                //button:
                'book': 'Đặt lịch',
                'view profile': 'Xem thông tin',
@@ -161,9 +166,9 @@ const resources = {
                'show more': 'Xem thêm',
                'show less': 'Thu gọn',
                'select date': 'Chọn ngày',
-               'name': 'Tên Đăng Nhập',
+               'name': 'Tên',
                'point': 'Điểm',
-               'edit-profile': 'Chỉnh sửa',
+               'edit-profile': 'Chỉnh sửa hồ sơ',
                'save': 'Lưu',
                'cancel': 'Hủy',
                'user profile': 'Trang Cá Nhân',
@@ -180,14 +185,14 @@ const resources = {
                "comming booking": "Đợi duyệt",
                "completed booking": "Đã hoàn thành",
                "all booking": "Tất cả lịch",
-               "booking calendar": "Lịch",
+               "booking calendar": "Lịch Đặt",
                "month": "Tháng",
                "year": "Năm",
                "end list": "Bạn đã xem hết lịch đặt của bạn!",
 
                //wallet:
                'Your balance': 'Số dư của bạn',
-               'Transition history': 'Lịch sử giao dịch',
+               'Transaction history': 'Lịch sử giao dịch',
 
                // New translations for Home.jsx
                "SWP Mentor Booking": "Đặt Lịch Mentor SWP",
@@ -211,7 +216,7 @@ const resources = {
                "Expand your professional network and open doors to new opportunities through your mentors.": "Mở rộng mạng lưới chuyên nghiệp và mở ra cánh cửa cho những cơ hội mới thông qua các mentor của bạn.",
 
                //Login page
-               "welcom back": 'Chào mừng trở lại!',
+               "welcome back": 'Chào mừng trở lại!',
                "We are glad": 'Chúng tôi rất vui khi được gặp lại bạn.',
                "login": 'Đăng nhập bằng Google',
 

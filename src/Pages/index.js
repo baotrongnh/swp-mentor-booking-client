@@ -8,5 +8,6 @@ import Wallet from "./Wallet/Wallet"
 import Home from "./Home/Home"
 import PageError from "./PageError"
 import Gift from "./Gift/Gift"
+import Notification from "./Notification/Notification"
 
-export { Login, MentorListPage, MentorProfile, StudentProfile, PageNotFound, Schedule, Wallet, Home, PageError, Gift }
+export { Login, Notification, MentorListPage, MentorProfile, StudentProfile, PageNotFound, Schedule, Wallet, Home, PageError, Gift }

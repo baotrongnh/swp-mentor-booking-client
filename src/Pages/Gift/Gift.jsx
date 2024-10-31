@@ -23,6 +23,8 @@ const Gift = () => {
           }
      }, [currentUser])
 
+     console.log(isMentor);
+
      return (
           <div className='container'>
                {!isMentor &&
@@ -131,14 +133,14 @@ const Gift = () => {
                                                        fontSize: '1.3rem',
                                                        marginBottom: '0.5rem',
                                                   }}>
-                                                       {!isMentor ? <>Send: {gift.createdAt}</> : <>Received: {gift.createdAt}</>}
+                                                       {!isMentor ? <>Send: {gift?.createdAt}</> : <>Received: {gift.createdAt}</>}
                                                   </p>
                                                   <p style={{
                                                        color: '#3498db',
                                                        fontSize: '1.4rem',
                                                        fontStyle: 'italic',
                                                   }}>
-                                                       {!isMentor ? <>To: {gift.mentor.fullName}</> : <>From: {gift.student.fullName}</>}
+                                                       {!isMentor ? <>To: {gift?.mentor?.fullName}</> : <>From: {gift?.student.fullName}</>}
                                                   </p>
                                              </div>
                                         </li>

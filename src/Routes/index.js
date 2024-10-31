@@ -1,5 +1,5 @@
 import AdminLayout from "../Layouts/AdminLayout"
-import { Gift, Home, Login, MentorListPage, MentorProfile, PageNotFound, Schedule, StudentProfile, Wallet } from "../Pages"
+import { Gift, Home, Login, MentorListPage, MentorProfile, Notification, PageNotFound, Schedule, StudentProfile, Wallet } from "../Pages"
 import { LoginAdmin, ManagerItems, ManagerMentor, ManagerSemester, ManagerSkills, ManagerStudent, OverviewChart, Pending } from "../Pages/Admin"
 import AdminRoutesAuth from './AdminRoutesAuth'
 import PrivateRoutesAuth from "./PrivateRoutesAuth"
@@ -28,6 +28,7 @@ const privateRoutes = [
   { path: '/schedule', element: Schedule },
   { path: '/wallet', element: Wallet },
   { path: '/gift', element: Gift },
+  { path: '/notification', element: Notification },
 ]
 
 const adminRoutes = [

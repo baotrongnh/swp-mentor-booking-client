@@ -1,17 +1,47 @@
-import { useQuery } from "@tanstack/react-query"
-import PropTypes from "prop-types"
-import { getSkillMentor } from "../../../../apis/mentor"
-import { Tag } from "antd"
+import { useQuery } from "@tanstack/react-query";
+import { Card, List, Progress, Rate, Typography } from 'antd';
+import PropTypes from "prop-types";
+import { getSkillMentor } from "../../../../apis/mentor";
+import './Skills.scss';
 
 function Skills({ id }) {
+     const { Title } = Typography;
      const { data: listSkill } = useQuery({ queryKey: ['list-skill-profile', id], queryFn: () => getSkillMentor(id) })
-     console.log(listSkill)
+
      return (
-          <div className="skills-block" style={{ padding: '30px 0' }}>
-               <h1 style={{marginBottom: '20px', fontSize: '2rem', fontWeight: '600'}}>All Skills:</h1>
-               {listSkill?.skills.map((skill) => (
-                    <Tag color="blue" key={skill.id} style={{fontSize: '2.5rem', marginRight: '15px'}}>{skill.name}</Tag>
-               ))}
+          <div className="mentor-skills-list">
+               <Title level={2}>
+                    Mentor Skills
+               </Title>
+               <List
+                    grid={{
+                         gutter: 16,
+                         xs: 1,
+                         sm: 2,
+                         md: 3,
+                         lg: 3,
+                         xl: 4,
+                         xxl: 4,
+                    }}
+                    dataSource={listSkill?.mentorSkillsWithLevels}
+                    renderItem={(skill) => (
+                         <List.Item>
+                              <Card className="skill-card">
+                                   <Title level={4}>{skill.skillName}</Title>
+                                   <Rate disabled defaultValue={skill.level} />
+                                   <Progress
+                                        percent={skill.level * 20}
+                                        format={(percent) => `Level ${percent / 20}`}
+                                        status="active"
+                                        strokeColor={{
+                                             '0%': '#108ee9',
+                                             '100%': '#87d068',
+                                        }}
+                                   />
+                              </Card>
+                         </List.Item>
+                    )}
+               />
           </div>
      );
 }

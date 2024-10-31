@@ -1,6 +1,5 @@
-import { DownOutlined } from '@ant-design/icons'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { Button, Col, Drawer, Dropdown, Flex, Row, Select, Switch } from 'antd'
+import { Badge, Button, Col, Drawer, Dropdown, Flex, Row, Select, Switch } from 'antd'
 import { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, NavLink } from 'react-router-dom'
@@ -52,17 +51,6 @@ function HeaderMentor() {
           i18n.changeLanguage(value)
           localStorage.setItem('language', value)
      }
-
-     const moreMenuDropDown = [
-          {
-               label: <Link>Add member</Link>,
-               key: '0',
-          },
-          {
-               label: <Link >History</Link>,
-               key: '1',
-          }
-     ]
 
      const accountMenuDropDown = [
           { type: 'divider' },
@@ -137,15 +125,13 @@ function HeaderMentor() {
                               <div className='btn-block'>
                                    <NavLink to='/gift' className='navbar-link'>{t('Gift')}</NavLink>
                                    <NavLink to='/schedule' className='navbar-link'>{t('schedule')}</NavLink>
-                                   <Dropdown
-                                        menu={{ items: moreMenuDropDown }}
-                                        placement='bottom'
-                                        trigger={['click']}
-                                   >
-                                        <Link className='navbar-link' onClick={(e) => e.preventDefault()}>
-                                             {t('more')} <DownOutlined />
-                                        </Link>
-                                   </Dropdown>
+                                   <NavLink to='/manager-slot' className='navbar-link'>{t('Manager slot')}</NavLink>
+
+                                   <NavLink to='/notification' className='navbar-link'>
+                                        <Badge size='small' count={7} showZero color="#faad14" >
+                                             <Icon style={{fontSize: '3rem'}} icon="material-symbols-light:notifications-outline" />
+                                        </Badge>
+                                   </NavLink>
 
                                    <div >
                                         <Flex align='center'>

@@ -1,27 +1,30 @@
-import { StarOutlined, UnorderedListOutlined, UserOutlined } from '@ant-design/icons'
+import { FieldTimeOutlined, StarOutlined, UnorderedListOutlined, UserOutlined } from '@ant-design/icons'
 import { useQuery } from "@tanstack/react-query"
 import { Breadcrumb, Menu } from "antd"
 import { useContext, useLayoutEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import { SkeletonLoading } from '../../Components'
-import { ModalBookMentor, ModalRatingMentor } from '../../Components/Modal'
+import { ModalAddSlot, ModalBookMentor, ModalRatingMentor } from '../../Components/Modal'
 import { AppContext } from '../../Contexts/AppContext'
 import { AuthContext } from '../../Contexts/AuthContext'
 import { getProfileMentor } from "../../apis/mentor"
 import PageError from '../PageError'
 import './MentorProfile.scss'
-import { AboutMentor, MentorInfor, RatingView, Skills } from "./components"
+import { AboutMentor, MentorInfor, RatingView, Skills, Slots } from "./components"
 
 function MentorProfile() {
     const { currentUser } = useContext(AuthContext)
     const { t } = useContext(AppContext)
+    const [currentTab, setCurrentTab] = useState('slots')
     const [modalBookingOpen, setModalBookingOpen] = useState(false)
     const [modalRatingOpen, setModalRatingOpen] = useState(false)
+    const [modalAddSlotsOpen, setModalAddSlotsOpen] = useState(false)
     const { id } = useParams('id')
     const { data: mentorInfor, isLoading, isError, refetch } = useQuery({
         queryKey: ['mentorProfile', id],
         queryFn: () => getProfileMentor(id)
     })
+
     const [isCurrentUser, setIsCurrentUser] = useState(false)
 
     useLayoutEffect(() => {
@@ -34,7 +37,12 @@ function MentorProfile() {
 
     const items = [
         {
-            label: 'About mentor',
+            label: 'Slots',
+            key: 'slots',
+            icon: <FieldTimeOutlined />,
+        },
+        {
+            label: 'About',
             key: 'about',
             icon: <UserOutlined />,
         },
@@ -48,13 +56,12 @@ function MentorProfile() {
             key: 'rating',
             icon: <StarOutlined />,
         },
-    ];
+    ]
 
-    const [currentTab, setCurrentTab] = useState('about');
 
     const onClick = (e) => {
-        setCurrentTab(e.key);
-    };
+        setCurrentTab(e.key)
+    }
 
     const renderContent = () => {
         switch (currentTab) {
@@ -64,6 +71,8 @@ function MentorProfile() {
                 return <Skills id={id} />
             case 'rating':
                 return <RatingView id={id} setModalRatingOpen={setModalRatingOpen} isCurrentUser={isCurrentUser} />
+            case 'slots':
+                return <Slots isCurrentUser={isCurrentUser} mentorId={id} setModalAddSlotsOpen={setModalAddSlotsOpen} />
         }
     }
 
@@ -110,6 +119,8 @@ function MentorProfile() {
                 setModalOpen={setModalRatingOpen}
                 mentorId={id}
             />
+
+            <ModalAddSlot modalOpen={modalAddSlotsOpen} setModalOpen={setModalAddSlotsOpen} />
         </div>
     )
 }
