@@ -73,4 +73,11 @@ export const registerBecomeMentor = async (skills, studentId) => {
      })
 }
 
+export const editProfileMentor = async (accountId, description) => {
+     const token = getToken()
+     return await axiosClient(token).post('/mentor/edit-profile', {
+          accountId, description
+     })
+}
+
 

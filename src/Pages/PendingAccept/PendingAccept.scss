@@ -1,0 +1,207 @@
+.group-invitation-list {
+     min-height: 100vh;
+     width: 100%;
+
+     .header {
+          padding: 0;
+          position: sticky;
+          top: 70px;
+          z-index: 100;
+          width: 100%;
+
+          .header-content {
+               width: 100%;
+               max-width: 1400px;
+               margin: 0 auto;
+               padding: 20px 40px;
+               display: flex;
+               align-items: center;
+               justify-content: space-between;
+
+               h2 {
+                    margin: 0;
+                    font-size: 3rem;
+               }
+
+               .invitation-count {
+                    padding: 8px 20px;
+                    border-radius: 20px;
+                    font-weight: 500;
+                    font-size: 1.6rem;
+               }
+          }
+     }
+
+     .content {
+          width: 100%;
+          max-width: 1400px;
+          margin: 0 auto;
+          padding: 40px;
+
+          .invitation-list {
+               .invitation-item {
+                    background-color: #cacaca27;
+                    margin-bottom: 24px;
+                    padding: 30px;
+                    border-radius: 8px;
+                    transition: all 0.3s ease;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    &:hover {
+                         transform: translateY(-2px);
+                         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+                    }
+
+                    .item-main {
+                         display: flex;
+                         align-items: center;
+                         gap: 25px;
+
+                         .ant-avatar {
+                              width: 70px !important;
+                              height: 70px !important;
+                              border: 2px solid #f0f0f0;
+                              transition: transform 0.2s ease;
+                              
+                              &:hover {
+                                   transform: scale(1.05);
+                              }
+                         }
+
+                         .item-info {
+                              display: flex;
+                              flex-direction: column;
+                              gap: 8px;
+
+                              .group-name {
+                                   font-size: 2rem;
+                              }
+
+                              .inviter {
+                                   font-size: 1.6rem;
+                              }
+
+                              .timestamp {
+                                   font-size: 1.4rem;
+                              }
+                         }
+                    }
+
+                    .action-buttons {
+                         display: flex;
+                         gap: 16px;
+
+                         button {
+                              padding: 8px 24px;
+                              height: auto;
+                              font-weight: 500;
+                              font-size: 1.6rem;
+                              
+                              &.deny-btn {
+                                   background: #fff;
+                              }
+                         }
+                    }
+               }
+          }
+
+          .empty-state {
+               background: #fff;
+               padding: 60px;
+               border-radius: 16px;
+               margin-top: 30px;
+          }
+     }
+}
+
+// Responsive styles
+@media (max-width: 1200px) {
+     .group-invitation-list {
+          .header-content,
+          .content {
+               max-width: 100%;
+               padding: 20px 30px;
+          }
+     }
+}
+
+@media (max-width: 768px) {
+     .group-invitation-list {
+          .header {
+               .header-content {
+                    padding: 16px 20px;
+                    
+                    h2 {
+                         font-size: 2.4rem;
+                    }
+               }
+          }
+
+          .content {
+               padding: 20px;
+
+               .invitation-list {
+                    .invitation-item {
+                         padding: 20px;
+                         flex-direction: column;
+                         gap: 25px;
+                         text-align: center;
+
+                         .item-main {
+                              width: 100%;
+                              justify-content: center;
+                         }
+
+                         .action-buttons {
+                              width: 100%;
+                              justify-content: center;
+                              
+                              button {
+                                   min-width: 140px;
+                              }
+                         }
+                    }
+               }
+          }
+     }
+}
+
+@media (max-width: 480px) {
+     .group-invitation-list {
+          .header {
+               .header-content {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 12px;
+               }
+          }
+
+          .content {
+               padding: 16px;
+
+               .invitation-list {
+                    .invitation-item {
+                         .item-main {
+                              flex-direction: column;
+                              
+                              .item-info {
+                                   align-items: center;
+                              }
+                         }
+
+                         .action-buttons {
+                              flex-direction: column;
+                              gap: 12px;
+                              
+                              button {
+                                   width: 100%;
+                                   padding: 12px 24px;
+                              }
+                         }
+                    }
+               }
+          }
+     }
+}

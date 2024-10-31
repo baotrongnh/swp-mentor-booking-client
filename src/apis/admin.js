@@ -110,7 +110,14 @@ export const getTotalBooking = async () => {
      return await axiosClient(token).get('admin/total-booking')
 }
 
-export const getNumberMentorInSkill = async () => {
+export const getPendingComplaint = async () => {
      const token = getTokenAdmin()
-     return await axiosClient(token).get('admin/mentors-in-each-skill')
+     return await axiosClient(token).get('/admin/pending-complaint')
+}
+
+export const updateComplaintStatus = async ({ complaintId, status }) => {
+     const token = getTokenAdmin()
+     return await axiosClient(token).post('/admin/update-complaint-status', {
+          complaintId, status
+     })
 }

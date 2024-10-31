@@ -1,11 +1,18 @@
 import { BellOutlined, CheckCircleOutlined } from '@ant-design/icons'
 import { Avatar, Badge, List, Space, Typography } from 'antd'
 import { Content } from 'antd/es/layout/layout'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import './Notification.scss'
+import { useQuery } from '@tanstack/react-query'
+import { AuthContext } from '../../Contexts/AuthContext'
+import { getNotifications } from '../../apis/other'
 
 export default function Notification() {
      const { Text } = Typography
+     const { currentUser } = useContext(AuthContext)
+     
+     const { data: notificationData } = useQuery({ queryKey: `notification-${currentUser.accountId}`, queryFn: () => getNotifications(currentUser?.accountId) })
+     console.log(notificationData)
 
      const [notifications] = useState([
           { id: 1, title: "New Message", message: "You have a new message from John Doe", timestamp: "2 minutes ago", read: false },
@@ -14,7 +21,6 @@ export default function Notification() {
           { id: 4, title: "New Follower", message: "Jane Smith started following you", timestamp: "1 day ago", read: true },
           { id: 5, title: "System Update", message: "A new system update is available. Please restart your device.", timestamp: "2 days ago", read: false },
      ])
-
 
      const filteredNotifications = notifications
 

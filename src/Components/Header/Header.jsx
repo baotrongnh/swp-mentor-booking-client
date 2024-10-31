@@ -91,6 +91,13 @@ function Header() {
                     {t('Donation history')}
                 </Link>,
             key: '1',
+        },
+        {
+            label:
+                <Link to='/pending-accept'>
+                    {t('Invitation Pending')}
+                </Link>,
+            key: '2',
         }
     ]
 
