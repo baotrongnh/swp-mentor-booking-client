@@ -68,11 +68,14 @@ const resources = {
                "booking list": "Booking List",
                "comming booking": "Coming",
                "completed booking": "Completed",
-               "deny booking": "Deny",
+               "deny booking": "Denied",
                "booking calendar": "Booking Calendar",
                "month": "Month",
                "year": "Year",
                "end list": "You have reached the end of your bookings!",
+               "deny": "Booking Denied",
+               "start": 'Start',
+               "end": 'End',
 
                //wallet:
                'Your balance': 'Your balance',
@@ -115,7 +118,31 @@ const resources = {
                'Agree to': 'Agree to',
                'our terms': 'our terms',
                'Select a level': 'Select a level',
-               'Select a skill': 'Select a skill'
+               'Select a skill': 'Select a skill',
+
+               //Donate
+               "//Donate": "//Donate",
+               "Payment Failed": "Payment Failed",
+               "Payment processing error": "Unfortunately, we encountered an issue processing your payment.",
+               "Return to Home": "Return to Home",
+               "Payment Successful": "Payment Successful!",
+               "Thank you message": "Thank you for your purchase. Your order has been processed successfully.",
+               "Order Details": "Order Details",
+               "Order Number": "Order Number",
+               "View Donation": "View Donation",
+
+               // For CommingBooking
+               "Cancel this booking?": "Cancel this booking?",
+               "Are you sure to cancel this booking?": "Are you sure to cancel this booking?",
+               "Yes": "Yes",
+               "No": "No",
+               "Add Member": "Add Member",
+
+               // For Group display
+               "Group": "Group",
+
+               // For Report Modal
+               "Report": "Report",
           }
      },
      vi: {
@@ -189,6 +216,9 @@ const resources = {
                "month": "Tháng",
                "year": "Năm",
                "end list": "Bạn đã xem hết lịch đặt của bạn!",
+               "deny": "Đã hủy",
+               "start": 'Bắt đầu',
+               "end": 'Kết thúc',
 
                //wallet:
                'Your balance': 'Số dư của bạn',
@@ -231,7 +261,31 @@ const resources = {
                'Agree to': 'Đồng ý với',
                'our terms': 'điều khoản của chúng tôi',
                'Select a level': 'Chọn Cấp Độ',
-               'Select a skill': 'Chọn Kỹ Năng'
+               'Select a skill': 'Chọn Kỹ Năng',
+
+               //Donate
+               "//Donate": "//Donate",
+               "Payment Failed": "Thanh Toán Thất Bại",
+               "Payment processing error": "Rất tiếc, chúng tôi gặp sự cố khi xử lý thanh toán của bạn.",
+               "Return to Home": "Trở Về Trang Chủ",
+               "Payment Successful": "Thanh Toán Thành Công!",
+               "Thank you message": "Cảm ơn bạn đã mua hàng. Đơn hàng của bạn đã được xử lý thành công.",
+               "Order Details": "Chi Tiết Đơn Hàng",
+               "Order Number": "Mã Đơn Hàng",
+               "View Donation": "Xem Quà Tặng",
+
+               // For CommingBooking
+               "Cancel this booking?": "Hủy lịch này?",
+               "Are you sure to cancel this booking?": "Bạn có chắc chắn muốn hủy lịch này không?",
+               "Yes": "Có",
+               "No": "Không",
+               "Add Member": "Thêm thành viên",
+
+               // For Group display
+               "Group": "Nhóm",
+
+               // For Report Modal
+               "Report": "Báo cáo",
           }
      }
 }

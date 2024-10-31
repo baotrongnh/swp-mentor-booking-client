@@ -9,7 +9,7 @@
     --border: #817d7d34;
     --shadow: rgba(128, 128, 128, 0.156);
     --completed-bg: #dfffeb;
-    --deny-bg: rgb(250, 199, 199);
+    --deny-bg: #ff0000;
   }
 
   &.dark-theme {
@@ -22,7 +22,7 @@
     --border: #ffffff22;
     --shadow: rgba(27, 27, 27, 0.384);
     --completed-bg: #022b10;
-    --deny-bg: #491616;
+    --deny-bg: rgb(255, 49, 49);
   }
 }
 

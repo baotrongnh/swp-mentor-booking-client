@@ -1,39 +1,22 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
-import { Button, Divider, Flex, Image, List, Skeleton } from 'antd';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import { Icon } from '@iconify/react/dist/iconify.js';
-import './CommingBooking.scss';
-import PropTypes from 'prop-types';
+import { Button, Col, Divider, Flex, Image, List, Popconfirm, Row, Skeleton } from 'antd';
 import dayjs from 'dayjs';
-import { getListBooking } from '../../../../apis/booking';
-import { AuthContext } from '../../../../Contexts/AuthContext';
+import PropTypes from 'prop-types';
+import { useCallback, useContext, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { Link } from 'react-router-dom';
-import { AppContext } from '../../../../Contexts/AppContext';
-import AvatarGroup from '../AvatarGroup/AvatarGroup';
+import axiosClient from '../../../../apis/axiosClient';
+import { getListAllBooking } from '../../../../apis/booking';
 import defaultAvatar from '../../../../assets/Photos/avatar/default_avatar.jpg';
-import MentorButton from '../MentorButton/MentorButton';
 import { ModalAddGroup } from '../../../../Components/Modal';
+import { AppContext } from '../../../../Contexts/AppContext';
+import { AuthContext } from '../../../../Contexts/AuthContext';
+import { getToken } from '../../../../utils/storageUtils';
+import AvatarGroup from '../AvatarGroup/AvatarGroup';
+import FormatDate from '../FormatDate/FormatDate';
+import './CommingBooking.scss';
 
-const formatDate = (date, isStartTime) => {
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-    const seconds = date.getSeconds().toString().padStart(2, '0');
-    return (
-        <div className='data-form'>
-            <Flex align='center' gap='small'>
-                <Icon icon="ion:calendar-outline" style={{ fontSize: '1.6rem' }} />
-                <p className='data-date'>{`${year}-${month}-${day}`}</p>
-            </Flex>
-            <Flex align='center' gap='small'>
-                <p className='data-time-label'>{isStartTime ? 'Start:' : 'End:'}</p>
-                <p className='data-time'>{`${hours}:${minutes}:${seconds}`}</p>
-            </Flex>
-        </div>
-    );
-};
 
 const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
     const [loading, setLoading] = useState(false);
@@ -53,12 +36,17 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
         setLoading(true);
 
         try {
-            const res = await getListBooking(role, currentUser?.accountId);
+            const res = await getListAllBooking(role, currentUser?.accountId);
             if (res) {
                 setAllData(res.data) // set Data ne
-                console.log('All data', res.data)
-                const newBookingDates = res.data.map(booking => dayjs(booking.startTime).format('YYYY-MM-DD'))
-                onBookingDatesChange(newBookingDates)
+                // console.log('All data', res.data)
+                const bookingDates = res.data
+                    .filter(booking =>
+                        (booking.status === 1 || booking.status === 2) &&
+                        dayjs(booking.startTime).isAfter(dayjs())
+                    )
+                    .map(booking => dayjs(booking.startTime).format('YYYY-MM-DD'));
+                onBookingDatesChange(bookingDates);
             }
         } catch (error) {
             console.log(error.error_code + ": " + error.message)
@@ -78,11 +66,7 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
     })
 
     useEffect(() => {
-        if (hasMore) {
-            console.log("Has more Data");
-        } else {
-            console.log("No more Data");
-        }
+        hasMore ? console.log("Has more Data") : console.log("No more Data");
         if (allData.length <= 4) {
             setHasMore(false)
         }
@@ -91,7 +75,7 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
 
     useEffect(() => {
         let filterData = allData.filter(booking =>
-            booking.status === 1 && dayjs(booking.startTime).isAfter(dayjs())
+            (booking.status === 1 || booking.status === 2) && dayjs(booking.startTime).isAfter(dayjs())
         );
 
         if (selectedDate) {
@@ -112,6 +96,22 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
 
     console.log(displayData)
 
+    const handleDeny = async (id) => {
+        const token = getToken()
+        const res = await axiosClient(token).post('/booking/deny', {
+            bookingId: id
+        })
+        try {
+            if (res) {
+                toast.success('Success')
+                handleReload(true)
+            }
+        } catch (error) {
+            console.log('Error: ', error)
+            toast.error('Error')
+        }
+    }
+
     return (
         <div
             className='comming-booking'
@@ -129,19 +129,42 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
                     <List
                         dataSource={displayData}
                         renderItem={(item) => (
-                            <List.Item key={item.id} className="list-item">
-                                <List.Item.Meta
-                                    avatar={
-                                        <AvatarGroup studentGroup={item.studentGroups} />
-                                    }
-                                    title={`Group ${item.id}`}
-                                    description={<MentorButton bookingId={item.id} onReload={handleReload} />}
-                                />
-                                <Flex justify='center' align='center' gap={24} className="time-wrapper" >
-                                    {formatDate(new Date(item.startTime), true)}
-                                    {formatDate(new Date(item.endTime), false)}
-                                </Flex>
-
+                            <List.Item
+                                key={item.id}
+                                className="list-item">
+                                <Row align='middle' justify='center' style={{ width: '100%' }}>
+                                    <Col flex={6}>
+                                        <List.Item.Meta
+                                            avatar={
+                                                <AvatarGroup studentGroup={item.studentGroups} />
+                                            }
+                                            title={`${t('Group')} ${item.id}`}
+                                        />
+                                    </Col>
+                                    <Col flex={1}>
+                                        <Flex vertical justify='center' align='center' style={{ paddingRight: '2rem' }}>
+                                            <Flex justify='center' align='center' gap={24} className="time-wrapper" >
+                                                {FormatDate(new Date(item.startTime), true)}
+                                                {FormatDate(new Date(item.endTime), false)}
+                                            </Flex>
+                                            <Flex justify='center' align='center' gap={24} style={{ marginTop: '1rem' }}>
+                                                <Popconfirm
+                                                    title={t("Cancel this booking?")}
+                                                    description={t("Are you sure to cancel this booking?")}
+                                                    okText={t("Yes")}
+                                                    cancelText={t("No")}
+                                                    onConfirm={() => handleDeny(item.id)}
+                                                >
+                                                    <Button
+                                                        danger
+                                                        style={{ width: '12rem' }}
+                                                    >{t('Cancel')}
+                                                    </Button>
+                                                </Popconfirm>
+                                            </Flex>
+                                        </Flex>
+                                    </Col>
+                                </Row>
                             </List.Item>
 
                         )}
@@ -151,43 +174,66 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
                     <List
                         dataSource={displayData}
                         renderItem={(item) => (
-                            <List.Item key={item.id} className="list-item">
-                                <List.Item.Meta
-                                    avatar={
-                                        <Image
-                                            className="avatar-img"
-                                            src={item.mentor.imgPath}
-                                            alt='Avatar image'
-                                            preview={{
-                                                minScale: '10',
-                                                src: item.mentor.imgPath || defaultAvatar,
-                                                mask: <div className="preview-mask"><Icon icon="weui:eyes-on-outlined" style={{ width: '3rem', height: '3rem' }} /></div>
-                                            }}
-                                            onError={(e) => e.target.src = defaultAvatar}
-                                        />}
-                                    title={<Link to={`/mentor/profile/${item.mentorId}`}>{item.mentor.fullName}</Link>}
-                                    description={item.mentor.email}
-                                />
-                                <Flex vertical justify='center' align='center' style={{ paddingRight: '2rem' }}>
-                                    <Flex justify='center' align='center' gap={24} className="time-wrapper" >
-                                        {formatDate(new Date(item.startTime), true)}
-                                        {formatDate(new Date(item.endTime), false)}
-                                    </Flex>
-
-                                    <Button
-                                        style={{ marginTop: '8px' }}
-                                        onClick={() => {
-                                            setModalOpen(true)
-                                            setBookigId(item.id)
-                                        }
-                                        }
-                                    >Add Member</Button>
-
-                                </Flex>
+                            <List.Item
+                                key={item.id}
+                                className="list-item">
+                                <Row align='middle' justify='center' style={{ width: '100%' }}>
+                                    <Col flex={6}>
+                                        <List.Item.Meta
+                                            avatar={
+                                                <Image
+                                                    className="avatar-img"
+                                                    src={item.mentor.imgPath}
+                                                    alt='Avatar image'
+                                                    preview={{
+                                                        minScale: '10',
+                                                        src: item.mentor.imgPath || defaultAvatar,
+                                                        mask: <div className="preview-mask"><Icon icon="weui:eyes-on-outlined" style={{ width: '3rem', height: '3rem' }} /></div>
+                                                    }}
+                                                    onError={(e) => e.target.src = defaultAvatar}
+                                                />}
+                                            title={<Link to={`/mentor/profile/${item.mentorId}`}>{item.mentor.fullName}</Link>}
+                                            description={item.mentor.email}
+                                        />
+                                    </Col>
+                                    <Col flex={1}>
+                                        <Flex vertical justify='center' align='center' style={{ paddingRight: '2rem' }}>
+                                            <Flex justify='center' align='center' gap={24} className="time-wrapper" >
+                                                {FormatDate(new Date(item.startTime), true)}
+                                                {FormatDate(new Date(item.endTime), false)}
+                                            </Flex>
+                                            <Flex justify='center' align='center' gap={24} style={{ marginTop: '1rem' }}>
+                                                <Button
+                                                    type="primary"
+                                                    variant="outlined"
+                                                    style={{ width: '14rem' }}
+                                                    onClick={() => {
+                                                        setModalOpen(true)
+                                                        setBookigId(item.id)
+                                                    }}
+                                                >{t('Add Member')}</Button>
+                                                <Popconfirm
+                                                    title={t("Cancel this booking?")}
+                                                    description={t("Are you sure to cancel this booking?")}
+                                                    okText={t("Yes")}
+                                                    cancelText={t("No")}
+                                                    onConfirm={() => handleDeny(item.id)}
+                                                >
+                                                    <Button
+                                                        danger
+                                                        style={{ width: '12rem' }}
+                                                    >{t('Cancel')}
+                                                    </Button>
+                                                </Popconfirm>
+                                            </Flex>
+                                        </Flex>
+                                    </Col>
+                                </Row>
                             </List.Item>
                         )}
                     />
                 }
+                <ModalAddGroup modalOpen={modalOpen} setModalOpen={setModalOpen} bookingId={bookingId} />
                 <ModalAddGroup modalOpen={modalOpen} setModalOpen={setModalOpen} bookingId={bookingId} />
             </InfiniteScroll>
         </div>

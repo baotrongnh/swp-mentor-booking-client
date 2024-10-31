@@ -1,0 +1,79 @@
+.data-form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.5rem;
+
+  .calendar-icon {
+    font-size: 1.2rem;
+  }
+
+  .date-container,
+  .time-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: auto;
+    flex-wrap: nowrap;
+  }
+
+  .data-date {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: $text-primary;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  .data-time {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin: 0;
+    color: #1890ff;
+    white-space: nowrap;
+  }
+
+  .data-time-label {
+    font-weight: 500;
+    font-size: 1.2rem;
+    white-space: nowrap;
+
+    span {
+      color: $text-primary;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .data-form {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.3rem;
+
+    .date-container,
+    .time-container {
+      width: 100%;
+      justify-content: flex-start;
+    }
+
+    .data-date,
+    .data-time,
+    .data-time-label {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+  .data-form {
+    gap: 0.75rem;
+
+    .data-date,
+    .data-time,
+    .data-time-label {
+      font-size: 1.15rem;
+    }
+  }
+}

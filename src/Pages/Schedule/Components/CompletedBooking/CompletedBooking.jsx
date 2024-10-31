@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js';
-import { Divider, Flex, Image, List, Skeleton } from 'antd';
+import { Col, Divider, Flex, Image, List, Row, Skeleton } from 'antd';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import { useCallback, useContext, useEffect, useState } from 'react';
@@ -10,28 +10,11 @@ import defaultAvatar from '../../../../assets/Photos/avatar/default_avatar.jpg';
 import { AppContext } from '../../../../Contexts/AppContext';
 import { AuthContext } from '../../../../Contexts/AuthContext';
 import AvatarGroup from '../AvatarGroup/AvatarGroup';
+import FormatDate from '../FormatDate/FormatDate';
+import ModalReport from '../ModalReport/ModalReport';
 import './CompletedBooking.scss';
 
-const formatDate = (date, isStartTime) => {
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-    const seconds = date.getSeconds().toString().padStart(2, '0');
-    return (
-        <div className='data-form'>
-            <Flex align='center' gap='small'>
-                <Icon icon="ion:calendar-outline" style={{ fontSize: '1.6rem' }} />
-                <p className='data-date'>{`${year}-${month}-${day}`}</p>
-            </Flex>
-            <Flex align='center' gap='small'>
-                <p className='data-time-label'>{isStartTime ? 'Start:' : 'End:'}</p>
-                <p className='data-time'>{`${hours}:${minutes}:${seconds}`}</p>
-            </Flex>
-        </div>
-    );
-};
+
 
 const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
     const [loading, setLoading] = useState(false);
@@ -51,9 +34,14 @@ const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
         try {
             const res = await getListAllBooking(role, currentUser?.accountId);
             if (res) {
-                setAllData(res.data) // set Data ne
-                const newBookingDates = res.data.map(booking => dayjs(booking.startTime).format('YYYY-MM-DD'))
-                onBookingDatesChange(newBookingDates)
+                setAllData(res.data)
+                const bookingDates = res.data
+                    .filter(booking =>
+                        booking.status === 2 &&
+                        dayjs(booking.startTime).isBefore(dayjs())
+                    )
+                    .map(booking => dayjs(booking.startTime).format('YYYY-MM-DD'));
+                onBookingDatesChange(bookingDates);
             }
         } catch (error) {
             console.log(error.error_code + ": " + error.message)
@@ -114,19 +102,32 @@ const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
                     <List
                         dataSource={displayData}
                         renderItem={(item) => (
-                            <List.Item key={item.id} className="list-item">
-                                <List.Item.Meta
-                                    avatar={
-                                        <AvatarGroup studentGroup={item.studentGroups} />
-                                    }
-                                    title={`Group ${item.id}`}
+                            <List.Item
+                                key={item.id}
+                                className="list-item"
+                            >
+                                <Row justify='center' align='middle'>
+                                    <Col flex={6} justify='center'>
+                                        <List.Item.Meta
+                                            avatar={
+                                                <AvatarGroup studentGroup={item.studentGroups} />
+                                            }
+                                            title={`${t('Group')} ${item.id}`}
 
-                                />
-                                <Flex justify='center' align='center' gap={24} className="time-wrapper" >
-                                    {formatDate(new Date(item.startTime), true)}
-                                    {formatDate(new Date(item.endTime), false)}
-                                </Flex>
-
+                                        />
+                                    </Col>
+                                    <Col flex={1}>
+                                        <Flex vertical justify='center' align='center' style={{ paddingRight: '2rem' }}>
+                                            <Flex justify='center' align='center' gap={24} className="time-wrapper" >
+                                                {FormatDate(new Date(item.startTime), true)}
+                                                {FormatDate(new Date(item.endTime), false)}
+                                            </Flex>
+                                            <Flex justify='center' align='center' gap={24} style={{ marginTop: '1rem' }}>
+                                                <ModalReport />
+                                            </Flex>
+                                        </Flex>
+                                    </Col>
+                                </Row>
                             </List.Item>
 
                         )}
@@ -135,27 +136,41 @@ const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
                     <List
                         dataSource={displayData}
                         renderItem={(item) => (
-                            <List.Item key={item.id} className="list-item">
-                                <List.Item.Meta
-                                    avatar={
-                                        <Image
-                                            className="avatar-img"
-                                            src={item.mentor.imgPath}
-                                            alt='Avatar image'
-                                            preview={{
-                                                minScale: '10',
-                                                src: item.mentor.imgPath || defaultAvatar,
-                                                mask: <div className="preview-mask"><Icon icon="weui:eyes-on-outlined" style={{ width: '3rem', height: '3rem' }} /></div>
-                                            }}
-                                            onError={(e) => e.target.src = defaultAvatar}
-                                        />}
-                                    title={<Link to={`/mentor/profile/${item.mentorId}`}>{item.mentor.fullName}</Link>}
-                                    description={item.mentor.email}
-                                />
-                                <Flex justify='center' align='center' gap={24} className="time-wrapper" >
-                                    {formatDate(new Date(item.startTime), true)}
-                                    {formatDate(new Date(item.endTime), false)}
-                                </Flex>
+                            <List.Item
+                                key={item.id}
+                                className="list-item"
+                            >
+                                <Row justify='center' align='middle'>
+                                    <Col flex={6} justify='center'>
+                                        <List.Item.Meta
+                                            avatar={
+                                                <Image
+                                                    className="avatar-img"
+                                                    src={item.mentor.imgPath}
+                                                    alt='Avatar image'
+                                                    preview={{
+                                                        minScale: '10',
+                                                        src: item.mentor.imgPath || defaultAvatar,
+                                                        mask: <div className="preview-mask"><Icon icon="weui:eyes-on-outlined" style={{ width: '3rem', height: '3rem' }} /></div>
+                                                    }}
+                                                    onError={(e) => e.target.src = defaultAvatar}
+                                                />}
+                                            title={<Link to={`/mentor/profile/${item.mentorId}`}>{item.mentor.fullName}</Link>}
+                                            description={item.mentor.email}
+                                        />
+                                    </Col >
+                                    <Col flex={1}>
+                                        <Flex vertical justify='center' align='center' style={{ paddingRight: '2rem' }}>
+                                            <Flex justify='center' align='center' gap={24} className="time-wrapper" >
+                                                {FormatDate(new Date(item.startTime), true)}
+                                                {FormatDate(new Date(item.endTime), false)}
+                                            </Flex>
+                                            <Flex justify='center' align='center' gap={24} style={{ marginTop: '1rem' }}>
+                                                <ModalReport />
+                                            </Flex>
+                                        </Flex>
+                                    </Col>
+                                </Row>
                             </List.Item>
                         )}
                     />

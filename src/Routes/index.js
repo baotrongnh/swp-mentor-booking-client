@@ -8,6 +8,8 @@ import DonateSuccess from "../Pages/Donate/DonateSuccess/DonateSuccess"
 import ProcessAccept from "../Pages/AcceptGroup/ProcessAccept"
 import Success from "../Pages/AcceptGroup/Success"
 import Reject from "../Pages/AcceptGroup/Reject"
+import DonateError from '../Pages/Donate/DonateError/DonateError'
+
 
 const publicRoutes = [
   { path: '/*', element: PageNotFound, layout: null },
@@ -18,7 +20,8 @@ const publicRoutes = [
   { path: '/donate-success/:orderInfor', element: DonateSuccess, layout: null },
   { path: '/process-accept/:type/:bookingId/:memberId', element: ProcessAccept, layout: null },
   { path: '/process-accept/success', element: Success, layout: null },
-  { path: '/process-accept/reject', element: Reject, layout: null }
+  { path: '/process-accept/reject', element: Reject, layout: null },
+  { path: '/donate-error', element: DonateError, layout: null },
 ]
 
 const privateRoutes = [

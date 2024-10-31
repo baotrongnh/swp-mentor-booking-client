@@ -129,7 +129,7 @@ const DonateModalButton = ({ className, mentorId }) => {
                                     <h1 className='donate-item-title'>{item.name}</h1>
                                     <Flex align='center' justify='center'>
                                         <span className='donate-price'>
-                                            {formatNumber(item.price)} <Icon icon="noto:coin" />
+                                            {formatNumber(item.price)} vnđ
                                         </span>
                                     </Flex>
                                     <Button

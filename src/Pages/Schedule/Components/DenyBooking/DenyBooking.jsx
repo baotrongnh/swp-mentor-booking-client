@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js';
-import { Button, Divider, Flex, Image, List, Skeleton } from 'antd';
+import { Col, Divider, Flex, Image, List, Row, Skeleton } from 'antd';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import { useCallback, useContext, useEffect, useState } from 'react';
@@ -7,34 +7,15 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { Link } from 'react-router-dom';
 import { getListAllBooking } from '../../../../apis/booking';
 import defaultAvatar from '../../../../assets/Photos/avatar/default_avatar.jpg';
+import { ModalAddGroup } from '../../../../Components/Modal';
 import { AppContext } from '../../../../Contexts/AppContext';
 import { AuthContext } from '../../../../Contexts/AuthContext';
 import AvatarGroup from '../AvatarGroup/AvatarGroup';
-import { ModalAddGroup } from '../../../../Components/Modal';
 import './DenyBooking.scss';
+import FormatDate from '../FormatDate/FormatDate';
 
 
 
-const formatDate = (date, isStartTime) => {
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-    const seconds = date.getSeconds().toString().padStart(2, '0');
-    return (
-        <div className='data-form'>
-            <Flex align='center' gap='small'>
-                <Icon icon="ion:calendar-outline" style={{ fontSize: '1.6rem' }} />
-                <p className='data-date'>{`${year}-${month}-${day}`}</p>
-            </Flex>
-            <Flex align='center' gap='small'>
-                <p className='data-time-label'>{isStartTime ? 'Start:' : 'End:'}</p>
-                <p className='data-time'>{`${hours}:${minutes}:${seconds}`}</p>
-            </Flex>
-        </div>
-    );
-};
 
 const DenyBooking = ({ selectedDate, onBookingDatesChange }) => {
     const [loading, setLoading] = useState(false);
@@ -44,7 +25,7 @@ const DenyBooking = ({ selectedDate, onBookingDatesChange }) => {
     const [hasMore, setHasMore] = useState(true);
     const [page, setPage] = useState(1);
     const [modalOpen, setModalOpen] = useState(false)
-    const [bookingId, setBookigId] = useState(null)
+    const [bookingId] = useState(null)
     const pageSize = 10;
     const { t } = useContext(AppContext)
     const role = currentUser?.isMentor === undefined ? 'mentor' : 'student'
@@ -56,17 +37,17 @@ const DenyBooking = ({ selectedDate, onBookingDatesChange }) => {
         try {
             const res = await getListAllBooking(role, currentUser?.accountId);
             if (res) {
-                setAllData(res.data) // set Data ne
-                console.log('All data: ', res.data)
-                const newBookingDates = res.data.map(booking => dayjs(booking.startTime).format('YYYY-MM-DD'));
-                onBookingDatesChange(newBookingDates);
+                setAllData(res.data)
+                const bookingDates = res.data
+                    .filter(booking => booking.status === 0)
+                    .map(booking => dayjs(booking.startTime).format('YYYY-MM-DD'));
+                onBookingDatesChange(bookingDates);
             }
         } catch (error) {
             console.log(error.error_code + ": " + error.message)
         } finally {
             setLoading(false)
         }
-
     }, [currentUser.isMentor, currentUser.accountId, onBookingDatesChange])
 
 
@@ -97,16 +78,6 @@ const DenyBooking = ({ selectedDate, onBookingDatesChange }) => {
     }, [selectedDate, allData, page, pageSize])
 
 
-    //cai nay de loc ra nhung ngay co Booking
-    useEffect(() => {
-        if (allData.length > 0) {
-            const bookingDates = allData
-                .filter(booking => booking.status === 0 || booking.status === 2)
-                .map(booking => dayjs(booking.startTime).format('YYYY-MM-DD'));
-            onBookingDatesChange(bookingDates);
-        }
-    }, [allData, onBookingDatesChange])
-
     useEffect(() => {
         if (hasMore) {
             console.log('Has more Data')
@@ -118,12 +89,6 @@ const DenyBooking = ({ selectedDate, onBookingDatesChange }) => {
         }
     }, [hasMore, allData.length])
 
-    const handleIsCompleted = (status, startTime) => {
-        const currentTime = new Date();
-        const bookingStartTime = new Date(startTime);
-
-        return status === 2 && bookingStartTime < currentTime;
-    };
 
     console.log(displayData)
     return (
@@ -143,22 +108,29 @@ const DenyBooking = ({ selectedDate, onBookingDatesChange }) => {
                     <List
                         dataSource={displayData}
                         renderItem={(item) => (
-                            <List.Item key={item.id}
-                                className={`list-item ${handleIsCompleted(item.status, item.startTime) ? 'completed' : ''} ${item.status === 0 ? 'deny' : ''}`}  >
-                                <List.Item.Meta
-                                    avatar={
-                                        <AvatarGroup studentGroup={item.studentGroups} />
-                                    }
-                                    title={`Group ${item.id}`}
-
-                                />
-                                <Flex justify='center' align='center' gap={24} className="time-wrapper" >
-                                    {formatDate(new Date(item.startTime), true)}
-                                    {formatDate(new Date(item.endTime), false)}
-                                </Flex>
-
+                            <List.Item key={item.id} className="list-item">
+                                <Row align='middle' justify='center' style={{ width: '100%' }}>
+                                    <Col flex={6}>
+                                        <List.Item.Meta
+                                            avatar={
+                                                <AvatarGroup studentGroup={item.studentGroups} />
+                                            }
+                                            title={`${t('Group')} ${item.id}`}
+                                        />
+                                    </Col>
+                                    <Col flex={1}>
+                                        <Flex vertical justify='center' align='center'>
+                                            <Flex justify='center' align='center' gap={24} className="time-wrapper">
+                                                {FormatDate(new Date(item.startTime), true, t)}
+                                                {FormatDate(new Date(item.endTime), false, t)}
+                                            </Flex>
+                                            <div className="denied">
+                                                {t('deny')}
+                                            </div>
+                                        </Flex>
+                                    </Col>
+                                </Row>
                             </List.Item>
-
                         )}
                     />
 
@@ -166,44 +138,43 @@ const DenyBooking = ({ selectedDate, onBookingDatesChange }) => {
                     <List
                         dataSource={displayData}
                         renderItem={(item) => (
-                            <List.Item key={item.id}
-                                className={`list-item ${handleIsCompleted(item.status, item.startTime) ? 'completed' : ''} ${item.status === 0 ? 'deny' : ''}`}>
-                                <List.Item.Meta
-                                    avatar={
-                                        <Image
-                                            className="avatar-img"
-                                            src={item.mentor.imgPath}
-                                            alt='Avatar image'
-                                            preview={{
-                                                minScale: '10',
-                                                src: item.mentor.imgPath || defaultAvatar,
-                                                mask: <div className="preview-mask"><Icon icon="weui:eyes-on-outlined" style={{ width: '3rem', height: '3rem' }} /></div>
-                                            }}
-                                            onError={(e) => e.target.src = defaultAvatar}
-                                        />}
-                                    title={<Link to={`/mentor/profile/${item.mentorId}`}>{item.mentor.fullName}</Link>}
-                                    description={item.mentor.email}
-                                />
-                                <Flex vertical justify='center' align='center' style={{ paddingRight: '2rem' }}>
-                                    <Flex justify='center' align='center' gap={24} className="time-wrapper" >
-                                        {formatDate(new Date(item.startTime), true)}
-                                        {formatDate(new Date(item.endTime), false)}
-                                    </Flex>
-                                    {handleIsCompleted(item.status, item.startTime)
-                                        ?
-                                        ''
-                                        :
-                                        <Button
-                                            style={{ marginTop: '8px' }}
-                                            onClick={() => {
-                                                setModalOpen(true)
-                                                setBookigId(item.id)
-                                            }
-                                            }
-                                        >Add Member</Button>
-                                    }
-                                </Flex>
+                            <List.Item
+                                key={item.id}
+                                className="list-item"
+                            >
+                                <Row align='middle' justify='center'>
+                                    <Col flex={6} justify='center' >
+                                        <List.Item.Meta
+                                            avatar={
+                                                <Image
+                                                    className="avatar-img"
+                                                    src={item.mentor.imgPath}
+                                                    alt='Avatar image'
+                                                    preview={{
+                                                        minScale: '10',
+                                                        src: item.mentor.imgPath || defaultAvatar,
+                                                        mask: <div className="preview-mask"><Icon icon="weui:eyes-on-outlined" style={{ width: '3rem', height: '3rem' }} /></div>
+                                                    }}
+                                                    onError={(e) => e.target.src = defaultAvatar}
+                                                />}
+                                            title={<Link to={`/mentor/profile/${item.mentorId}`}>{item.mentor.fullName}</Link>}
+                                            description={item.mentor.email}
+                                        />
+                                    </Col>
+                                    <Col flex={1}>
+                                        <Flex vertical justify='center' align='center' style={{ paddingRight: '2rem' }}>
+                                            <Flex justify='center' align='center' gap={24} className="time-wrapper" >
+                                                {FormatDate(new Date(item.startTime), true)}
+                                                {FormatDate(new Date(item.endTime), false)}
+                                            </Flex>
+                                            <p className="denied">
+                                                {t('deny')}
+                                            </p>
+                                        </Flex>
+                                    </Col>
 
+
+                                </Row>
                             </List.Item>
                         )}
                     />
