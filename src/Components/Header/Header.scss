@@ -24,12 +24,11 @@
     }
 
     .btn-block {
-      padding-left: 50px;
       display: flex;
       justify-content: flex-end;
       align-items: center;
       color: $text-primary;
-      gap: 10px;
+      gap: 5px;
 
       .navbar-link {
         color: $text-primary;

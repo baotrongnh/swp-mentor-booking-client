@@ -37,17 +37,17 @@ const DenyBooking = ({ selectedDate, onBookingDatesChange }) => {
         try {
             const res = await getListAllBooking(role, currentUser?.accountId);
             if (res) {
-                setAllData(res.data) // set Data ne
-                console.log('All data: ', res.data)
-                const newBookingDates = res.data.map(booking => dayjs(booking.startTime).format('YYYY-MM-DD'));
-                onBookingDatesChange(newBookingDates);
+                setAllData(res.data)
+                const bookingDates = res.data
+                    .filter(booking => booking.status === 0)
+                    .map(booking => dayjs(booking.startTime).format('YYYY-MM-DD'));
+                onBookingDatesChange(bookingDates);
             }
         } catch (error) {
             console.log(error.error_code + ": " + error.message)
         } finally {
             setLoading(false)
         }
-
     }, [currentUser.isMentor, currentUser.accountId, onBookingDatesChange])
 
 
@@ -77,16 +77,6 @@ const DenyBooking = ({ selectedDate, onBookingDatesChange }) => {
         setHasMore(sortData.length > endIndex)
     }, [selectedDate, allData, page, pageSize])
 
-
-    //cai nay de loc ra nhung ngay co Booking
-    useEffect(() => {
-        if (allData.length > 0) {
-            const bookingDates = allData
-                .filter(booking => booking.status === 0 || booking.status === 2)
-                .map(booking => dayjs(booking.startTime).format('YYYY-MM-DD'));
-            onBookingDatesChange(bookingDates);
-        }
-    }, [allData, onBookingDatesChange])
 
     useEffect(() => {
         if (hasMore) {
@@ -125,7 +115,7 @@ const DenyBooking = ({ selectedDate, onBookingDatesChange }) => {
                                             avatar={
                                                 <AvatarGroup studentGroup={item.studentGroups} />
                                             }
-                                            title={`Group ${item.id}`}
+                                            title={`${t('Group')} ${item.id}`}
                                         />
                                     </Col>
                                     <Col flex={1}>
@@ -172,17 +162,18 @@ const DenyBooking = ({ selectedDate, onBookingDatesChange }) => {
                                         />
                                     </Col>
                                     <Col flex={1}>
-                                        <Flex vertical justify='center' align='center'>
+                                        <Flex vertical justify='center' align='center' style={{ paddingRight: '2rem' }}>
                                             <Flex justify='center' align='center' gap={24} className="time-wrapper" >
                                                 {FormatDate(new Date(item.startTime), true)}
                                                 {FormatDate(new Date(item.endTime), false)}
-
                                             </Flex>
-                                            <div className="denied">
+                                            <p className="denied">
                                                 {t('deny')}
-                                            </div>
+                                            </p>
                                         </Flex>
                                     </Col>
+
+
                                 </Row>
                             </List.Item>
                         )}

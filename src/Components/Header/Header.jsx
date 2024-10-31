@@ -1,6 +1,6 @@
 import { DownOutlined, SettingOutlined } from '@ant-design/icons'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { Button, Col, Drawer, Dropdown, Flex, Input, Row, Select, Switch } from 'antd'
+import { Badge, Button, Col, Drawer, Dropdown, Flex, Input, Row, Select, Switch } from 'antd'
 import { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
@@ -253,6 +253,12 @@ function Header() {
                                     </Link>
                                 </Dropdown>
 
+                                <NavLink to='/notification' className='navbar-link'>
+                                    <Badge size='small' count={7} showZero color="#faad14" >
+                                        <Icon style={{ fontSize: '3rem' }} icon="material-symbols-light:notifications-outline" />
+                                    </Badge>
+                                </NavLink>
+
                                 <div>
                                     <Flex align='center'>
                                         <Link
@@ -308,7 +314,7 @@ function Header() {
                 className='navbar-drawer'
                 placement='right'
                 width={350}
-                title={`Welcome, ${currentUser?.fullName}`}
+                title={currentUser ? `Welcome, ${currentUser?.fullName}` : ''}
                 onClose={() => setOpenDrawer(false)}
                 open={openDrawer}
             >
@@ -387,18 +393,18 @@ function Header() {
                         {t('browser mentors')}
                     </Link>
 
-                    <Link
-                        onClick={() => setOpenDrawer(false)}
-                        to='/gift'
-                        className='link-item'
-                    >
-                        {t('Donation history')}
-                    </Link>
-
-                    <hr style={{ width: '100%' }} />
-
                     {currentUser &&
                         <>
+                            <Link
+                                onClick={() => setOpenDrawer(false)}
+                                to='/gift'
+                                className='link-item'
+                            >
+                                {t('Donation history')}
+                            </Link>
+
+                            <hr style={{ width: '100%' }} />
+
                             <Link
                                 onClick={() => setOpenDrawer(false)}
                                 to='/student/profile'

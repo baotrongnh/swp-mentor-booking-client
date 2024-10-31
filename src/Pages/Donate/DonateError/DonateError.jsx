@@ -1,8 +1,11 @@
 import { Icon } from '@iconify/react';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { AppContext } from '../../../Contexts/AppContext';
 import './DonateError.scss';
 
 export default function DonateError() {
+    const { t } = useContext(AppContext);
 
     return (
         <div className="donate-error-page">
@@ -11,10 +14,10 @@ export default function DonateError() {
                     icon="codicon:error"
                     className="error-icon"
                 />
-                <h1 className="title">Payment Failed</h1>
+                <h1 className="title">{t('Payment Failed')}</h1>
 
                 <div className="details-box">
-                    <h2 className="text">Unfortunately, we encountered an issue processing your payment.</h2>
+                    <h2 className="text">{t('Payment processing error')}</h2>
                 </div>
 
                 <div className="button-container">
@@ -23,7 +26,7 @@ export default function DonateError() {
                             icon="heroicons:home"
                             className="button-icon"
                         />
-                        Return to Home
+                        {t('Return to Home')}
                     </Link>
                 </div>
             </div>

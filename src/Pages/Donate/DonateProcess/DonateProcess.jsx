@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { getResultPayment } from "../../../apis/payment";
 import { Loading } from "../../../Components";
+import { AppContext } from "../../../Contexts/AppContext";
 
 function DonateProcess() {
     const navigate = useNavigate()
     const [fetchDataSuccess, setFetchDataSuccess] = useState(false)
+    const { t } = useContext(AppContext);
 
     const fetchData = async (orderInfor, status) => {
         const data = await getResultPayment(orderInfor, status)
@@ -15,15 +17,15 @@ function DonateProcess() {
             if (data.error_code === 0) {
                 setFetchDataSuccess(true)
                 console.log("success", fetchDataSuccess)
-                toast.success('Ok bạn nhá')
+                toast.success(t('Payment Successful'))
                 navigate(`/donate-success/${orderInfor}`)
             } else {
-                toast.error('Error')
+                toast.error(t('Payment Failed'))
                 navigate('/')
             }
         } catch (error) {
             console.log("Error", error);
-            toast.error('Error');
+            toast.error(t('Payment Failed'));
             navigate('/');
         }
     };
@@ -43,13 +45,13 @@ function DonateProcess() {
         const timer = setTimeout(() => {
             if (!fetchDataSuccess) {
                 console.log('Timeout: fetchDataSuccess is still false');
-                toast.error('Error');
+                toast.error(t('Payment Failed'));
                 navigate('/donate-error');
             }
-        }, 5000);
+        }, 3000);
 
         return () => clearTimeout(timer);
-    }, [fetchDataSuccess, navigate])
+    }, [fetchDataSuccess, navigate, t])
 
 
     return (

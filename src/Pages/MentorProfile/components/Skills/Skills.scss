@@ -1,0 +1,53 @@
+.mentor-skills-list {
+     padding: 24px;
+     min-height: 100vh;
+
+     .ant-typography {
+          margin-bottom: 24px;
+          display: flex;
+          align-items: center;
+
+          .anticon {
+               margin-right: 12px;
+               font-size: 24px;
+               color: #faad14;
+          }
+     }
+
+     .ant-list {
+          .ant-list-item {
+               .skill-card {
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    text-align: center;
+                    transition: all 0.3s;
+
+                    &:hover {
+                         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                    }
+
+                    .ant-card-body {
+                         padding: 24px;
+                    }
+
+                    .ant-typography {
+                         margin-bottom: 12px;
+                    }
+
+                    .ant-rate {
+                         margin-bottom: 12px;
+                         font-size: 16px;
+                    }
+
+                    .ant-progress {
+                         .ant-progress-text {
+                              font-size: 14px;
+                              font-weight: bold;
+                         }
+                    }
+               }
+          }
+     }
+}

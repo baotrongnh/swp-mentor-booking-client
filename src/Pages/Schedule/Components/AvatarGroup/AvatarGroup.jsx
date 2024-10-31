@@ -11,7 +11,6 @@ function AvatarGroup({ studentGroup }) {
                 <Tooltip key={index} title={group.student.fullName} placement='top'>
                     <Avatar
                         src={group.student.imgPath || defaultAvatar}
-
                     />
                 </Tooltip>
             ))}

@@ -3,7 +3,7 @@ export const formatDateToNormal = (dateString) => {
     const [year, month, day] = datePart.split('-')
     const [hour, minute, second] = timePart.split(':')
 
-    return { date: `${day}/${month}/${year}`, time: `${hour}:${minute}:${second}` }
+    return { date: `${day}/${month}/${year}`, time: `${hour}:${minute}`, second: second }
 }
 
 export const formatDataToServer = (dateString) => {

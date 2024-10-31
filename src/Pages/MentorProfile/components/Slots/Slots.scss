@@ -1,0 +1,39 @@
+.time-slot-list {
+     padding: 24px;
+     min-height: 100vh;
+
+     .ant-list {
+          margin-bottom: 24px;
+     }
+
+     .time-slot-card {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          transition: all 0.3s;
+
+          &:hover {
+               box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+          }
+
+          .ant-card-body {
+               padding: 24px;
+          }
+     }
+
+     .add-slot-card {
+          background-color: #ffffff;
+          border-radius: 8px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+          .ant-card-body {
+               display: flex;
+               justify-content: center;
+               align-items: center;
+               padding: 24px;
+          }
+     }
+}

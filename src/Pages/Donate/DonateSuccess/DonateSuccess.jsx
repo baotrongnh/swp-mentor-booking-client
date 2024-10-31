@@ -1,10 +1,13 @@
 import './DonateSuccess.scss';
 import { Link, useParams } from 'react-router-dom';
 import { Icon } from '@iconify/react';
+import { useContext } from 'react';
+import { AppContext } from '../../../Contexts/AppContext';
 
 export default function DonateSuccess() {
+    const { t } = useContext(AppContext);
+    const { orderInfor } = useParams();
 
-    const { orderInfor } = useParams()
     return (
         <div className="donate-success-page">
             <div className="success-card">
@@ -12,13 +15,12 @@ export default function DonateSuccess() {
                     icon="heroicons:check-circle"
                     className="success-icon"
                 />
-                <h1 className="title">Payment Successful!</h1>
-                <p className="message">Thank you for your purchase. Your order has been processed successfully.</p>
+                <h1 className="title">{t('Payment Successful')}</h1>
+                <p className="message">{t('Thank you message')}</p>
 
                 <div className="details-box">
-                    <h2 className="details-title">Order Details</h2>
-                    <p className="details-text">Order Number: <span>{orderInfor}</span></p>
-
+                    <h2 className="details-title">{t('Order Details')}</h2>
+                    <p className="details-text">{t('Order Number')}: <span>{orderInfor}</span></p>
                 </div>
 
                 <div className="button-container">
@@ -27,7 +29,7 @@ export default function DonateSuccess() {
                             icon="heroicons:home"
                             className="button-icon"
                         />
-                        Return to Home
+                        {t('Return to Home')}
                     </Link>
 
                     <Link to="/gift" className="view-button">
@@ -35,7 +37,7 @@ export default function DonateSuccess() {
                             icon="heroicons:gift"
                             className="button-icon"
                         />
-                        View Donation
+                        {t('View Donation')}
                     </Link>
                 </div>
             </div>

@@ -10,8 +10,9 @@ import defaultAvatar from '../../../../assets/Photos/avatar/default_avatar.jpg';
 import { AppContext } from '../../../../Contexts/AppContext';
 import { AuthContext } from '../../../../Contexts/AuthContext';
 import AvatarGroup from '../AvatarGroup/AvatarGroup';
-import './CompletedBooking.scss';
 import FormatDate from '../FormatDate/FormatDate';
+import ModalReport from '../ModalReport/ModalReport';
+import './CompletedBooking.scss';
 
 
 
@@ -33,9 +34,14 @@ const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
         try {
             const res = await getListAllBooking(role, currentUser?.accountId);
             if (res) {
-                setAllData(res.data) // set Data ne
-                const newBookingDates = res.data.map(booking => dayjs(booking.startTime).format('YYYY-MM-DD'))
-                onBookingDatesChange(newBookingDates)
+                setAllData(res.data)
+                const bookingDates = res.data
+                    .filter(booking =>
+                        booking.status === 2 &&
+                        dayjs(booking.startTime).isBefore(dayjs())
+                    )
+                    .map(booking => dayjs(booking.startTime).format('YYYY-MM-DD'));
+                onBookingDatesChange(bookingDates);
             }
         } catch (error) {
             console.log(error.error_code + ": " + error.message)
@@ -106,15 +112,18 @@ const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
                                             avatar={
                                                 <AvatarGroup studentGroup={item.studentGroups} />
                                             }
-                                            title={`Group ${item.id}`}
+                                            title={`${t('Group')} ${item.id}`}
 
                                         />
                                     </Col>
-                                    <Col>
-                                        <Flex justify='center' align='center'>
+                                    <Col flex={1}>
+                                        <Flex vertical justify='center' align='center' style={{ paddingRight: '2rem' }}>
                                             <Flex justify='center' align='center' gap={24} className="time-wrapper" >
                                                 {FormatDate(new Date(item.startTime), true)}
                                                 {FormatDate(new Date(item.endTime), false)}
+                                            </Flex>
+                                            <Flex justify='center' align='center' gap={24} style={{ marginTop: '1rem' }}>
+                                                <ModalReport />
                                             </Flex>
                                         </Flex>
                                     </Col>
@@ -150,11 +159,14 @@ const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
                                             description={item.mentor.email}
                                         />
                                     </Col >
-                                    <Col flex={1} >
-                                        <Flex justify='center' align='center'>
+                                    <Col flex={1}>
+                                        <Flex vertical justify='center' align='center' style={{ paddingRight: '2rem' }}>
                                             <Flex justify='center' align='center' gap={24} className="time-wrapper" >
                                                 {FormatDate(new Date(item.startTime), true)}
                                                 {FormatDate(new Date(item.endTime), false)}
+                                            </Flex>
+                                            <Flex justify='center' align='center' gap={24} style={{ marginTop: '1rem' }}>
+                                                <ModalReport />
                                             </Flex>
                                         </Flex>
                                     </Col>

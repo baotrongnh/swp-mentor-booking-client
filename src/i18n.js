@@ -17,6 +17,7 @@ const resources = {
                'logout': 'Logout',
                'pending booking': 'Pending bookings',
                'Gift': 'Gift',
+               'Donation history': 'Donation history',
 
                //button:
                'book': 'Book',
@@ -105,6 +106,43 @@ const resources = {
                "welcom back": 'Welcome Back!',
                "We are glad": 'We are glad to see you back.',
                "login": 'Log in with Google',
+
+               //Modal apply mentor:
+               'Skill Selector': 'Skill Selector',
+               'Become a Mentor': 'Become a Mentor',
+               'Apply': 'Apply',
+               'Add': 'Add',
+               'Your selected skills': 'Your selected skills',
+               'Remove': 'Remove',
+               'Level': 'Level',
+               'Agree to': 'Agree to',
+               'our terms': 'our terms',
+               'Select a level': 'Select a level',
+               'Select a skill': 'Select a skill',
+
+               //Donate
+               "//Donate": "//Donate",
+               "Payment Failed": "Payment Failed",
+               "Payment processing error": "Unfortunately, we encountered an issue processing your payment.",
+               "Return to Home": "Return to Home",
+               "Payment Successful": "Payment Successful!",
+               "Thank you message": "Thank you for your purchase. Your order has been processed successfully.",
+               "Order Details": "Order Details",
+               "Order Number": "Order Number",
+               "View Donation": "View Donation",
+
+               // For CommingBooking
+               "Cancel this booking?": "Cancel this booking?",
+               "Are you sure to cancel this booking?": "Are you sure to cancel this booking?",
+               "Yes": "Yes",
+               "No": "No",
+               "Add Member": "Add Member",
+
+               // For Group display
+               "Group": "Group",
+
+               // For Report Modal
+               "Report": "Report",
           }
      },
      vi: {
@@ -120,6 +158,10 @@ const resources = {
                'theme': 'Chủ đề',
                'language': 'Ngôn ngữ',
                'logout': 'Đăng xuất',
+               'pending booking': 'Đang chờ xác nhận',
+               'Gift': 'Quà tặng',
+               'Donation history': 'Lịch sử tặng quà',
+
                //button:
                'book': 'Đặt lịch',
                'view profile': 'Xem thông tin',
@@ -151,9 +193,9 @@ const resources = {
                'show more': 'Xem thêm',
                'show less': 'Thu gọn',
                'select date': 'Chọn ngày',
-               'name': 'Tên Đăng Nhập',
+               'name': 'Tên',
                'point': 'Điểm',
-               'edit-profile': 'Chỉnh sửa',
+               'edit-profile': 'Chỉnh sửa hồ sơ',
                'save': 'Lưu',
                'cancel': 'Hủy',
                'user profile': 'Trang Cá Nhân',
@@ -180,7 +222,7 @@ const resources = {
 
                //wallet:
                'Your balance': 'Số dư của bạn',
-               'Transition history': 'Lịch sử giao dịch',
+               'Transaction history': 'Lịch sử giao dịch',
 
                // New translations for Home.jsx
                "SWP Mentor Booking": "Đặt Lịch Mentor SWP",
@@ -204,9 +246,46 @@ const resources = {
                "Expand your professional network and open doors to new opportunities through your mentors.": "Mở rộng mạng lưới chuyên nghiệp và mở ra cánh cửa cho những cơ hội mới thông qua các mentor của bạn.",
 
                //Login page
-               "welcom back": 'Chào mừng trở lại!',
+               "welcome back": 'Chào mừng trở lại!',
                "We are glad": 'Chúng tôi rất vui khi được gặp lại bạn.',
                "login": 'Đăng nhập bằng Google',
+
+               //Modal apply mentor:
+               'Skill Selector': 'Chọn Kỹ Năng',
+               'Become a Mentor': 'Trở Thành Mentor',
+               'Apply': 'Đăng Ký',
+               'Add': 'Thêm',
+               'Your selected skills': 'Kỹ Năng Đã Chọn',
+               'Remove': 'Xóa',
+               'Level': 'Cấp Độ',
+               'Agree to': 'Đồng ý với',
+               'our terms': 'điều khoản của chúng tôi',
+               'Select a level': 'Chọn Cấp Độ',
+               'Select a skill': 'Chọn Kỹ Năng',
+
+               //Donate
+               "//Donate": "//Donate",
+               "Payment Failed": "Thanh Toán Thất Bại",
+               "Payment processing error": "Rất tiếc, chúng tôi gặp sự cố khi xử lý thanh toán của bạn.",
+               "Return to Home": "Trở Về Trang Chủ",
+               "Payment Successful": "Thanh Toán Thành Công!",
+               "Thank you message": "Cảm ơn bạn đã mua hàng. Đơn hàng của bạn đã được xử lý thành công.",
+               "Order Details": "Chi Tiết Đơn Hàng",
+               "Order Number": "Mã Đơn Hàng",
+               "View Donation": "Xem Quà Tặng",
+
+               // For CommingBooking
+               "Cancel this booking?": "Hủy lịch này?",
+               "Are you sure to cancel this booking?": "Bạn có chắc chắn muốn hủy lịch này không?",
+               "Yes": "Có",
+               "No": "Không",
+               "Add Member": "Thêm thành viên",
+
+               // For Group display
+               "Group": "Nhóm",
+
+               // For Report Modal
+               "Report": "Báo cáo",
           }
      }
 }

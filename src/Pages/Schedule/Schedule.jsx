@@ -21,6 +21,7 @@ function Schedule() {
 
      const handleBookingDate = useCallback((date) => {
           setBookingDates(date)
+          console.log(date)
      }, [])
 
      const handleDateSelected = (day) => {

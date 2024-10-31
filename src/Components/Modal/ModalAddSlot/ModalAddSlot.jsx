@@ -1,13 +1,14 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { DatePicker, Flex, Modal, TimePicker } from "antd"
 import PropTypes from "prop-types"
 import { useContext, useState } from "react"
-import { disabledDateInPast, disableNotThing, disableTime, getDateNow } from "../../../utils/validate"
-import { useMutation } from "@tanstack/react-query"
+import toast from "react-hot-toast"
 import { createSchedule } from "../../../apis/mentor"
 import { AuthContext } from "../../../Contexts/AuthContext"
-import toast from "react-hot-toast"
+import { disabledDateInPast, disableNotThing, disableTime, getDateNow } from "../../../utils/validate"
 
 export default function ModalAddSlot({ modalOpen, setModalOpen }) {
+     const queryClient = useQueryClient()
      const { currentUser } = useContext(AuthContext)
 
      const [dateCustom, setDateCustom] = useState({ date: '0000-00-00', time: '00:00:00' })
@@ -18,6 +19,7 @@ export default function ModalAddSlot({ modalOpen, setModalOpen }) {
           onSuccess: () => {
                toast.success('Slot created successfully!')
                setModalOpen(false)
+               queryClient.invalidateQueries(`available-slot-${currentUser.accountId}`)
           },
           onError: () => {
                toast.error('Something went wrong!')

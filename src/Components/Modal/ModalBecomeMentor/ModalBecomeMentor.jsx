@@ -1,157 +1,128 @@
-import { DownOutlined } from '@ant-design/icons'
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { Button, Checkbox, Flex, List, Modal, Select, Space, Tag, Typography } from 'antd'
 import PropTypes from 'prop-types'
 import { useContext, useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
+import { Link } from 'react-router-dom'
 import { loadAllSkills, registerBecomeMentor } from '../../../apis/mentor'
 import { AuthContext } from '../../../Contexts/AuthContext'
-import './ModalBecomeMentor.scss'
-import { Link } from 'react-router-dom'
-import toast from 'react-hot-toast'
-import { PlusOutlined, DeleteOutlined } from '@ant-design/icons';
+import { AppContext } from '../../../Contexts/AppContext'
 
 export default function ModalBecomeMentor({ modalOpen, setModalOpen }) {
-
+    const levels = [1, 2, 3, 4, 5]
     const { Option } = Select
     const { Title } = Typography
-    
-    const options = []
-    const [isValidate, setIsValidate] = useState(false)
     const { currentUser } = useContext(AuthContext)
-    const [listSkillSelect, setListSkillSelect] = useState([])
+    const { t } = useContext(AppContext)
+    const [selectedSkills, setSelectedSkills] = useState([])
+    const [selectedSkillsDisplay, setSelectedSkillsDisplay] = useState([])
+    const [currentSkill, setCurrentSkill] = useState()
+    const [currentLevel, setCurrentLevel] = useState()
+    const [isAgree, setIsAgree] = useState(false)
+    const [isValidate, setIsValidate] = useState(false)
+
     const { data: listSkill } = useQuery({ queryKey: ['list-skills'], queryFn: loadAllSkills })
+
     const mutation = useMutation({
-        mutationFn: ({ listSkillSelect, studentId }) => registerBecomeMentor(listSkillSelect, studentId),
-        onError: (error, variables) => {
-            console.log(variables)
+        mutationFn: ({ selectedSkills, studentId }) => registerBecomeMentor(selectedSkills, studentId),
+        onError: () => {
             toast.error('This account is already registered or an error occurred, please try again!')
         },
-        onSuccess: (data) => {
+        onSuccess: () => {
             toast.success('Successfully registered as a mentor')
             setModalOpen(false)
-            console.log(data)
         }
     })
-    const [isAgree, setIsAgree] = useState(false)
 
-    listSkill?.skills.forEach((skill) => {
-        options.push({
+    const optionsSelectSkill = listSkill?.skills
+        .filter((skill) => !selectedSkills.some(selected => skill.id == selected.skill))
+        .map((skill) => ({
             label: skill.name,
             value: skill.id
-        })
-    })
+        }))
+
+    const handleAddSkill = () => {
+        if (currentSkill && currentLevel) {
+            setSelectedSkills([...selectedSkills, { skillId: currentSkill.value, level: currentLevel }])
+            setSelectedSkillsDisplay([...selectedSkillsDisplay, { skill: currentSkill.label, level: currentLevel }])
+            setCurrentSkill()
+            setCurrentLevel()
+        }
+    }
+
+    const handleRemoveSkill = (index) => {
+        const updatedSkills = selectedSkills.filter((_, i) => i !== index)
+        const updatedSkillsDisplay = selectedSkillsDisplay.filter((_, i) => i !== index)
+        setSelectedSkills(updatedSkills)
+        setSelectedSkillsDisplay(updatedSkillsDisplay)
+    }
+
+    const getLevelColor = (level) => {
+        switch (level) {
+            case 2: return 'red'
+            case 3: return 'orange'
+            case 4: return 'blue'
+            case 5: return 'green'
+            default: return 'default'
+        }
+    }
 
     useEffect(() => {
-        if (listSkillSelect.length > 0 && isAgree) {
+        if (selectedSkills.length > 0 && isAgree) {
             setIsValidate(true)
         } else {
             setIsValidate(false)
         }
-    }, [listSkillSelect, isAgree])
-
-    const handleChange = (value) => {
-        const listSkill = []
-        value.map((skill) => {
-            listSkill.push({ skillId: skill, level: 5 })
-        })
-        setListSkillSelect(listSkill)
-    }
+    }, [selectedSkills, isAgree])
 
     const handleSend = () => {
         const studentId = currentUser.accountId
-        mutation.mutate({ listSkillSelect, studentId })
+        mutation.mutate({ selectedSkills, studentId })
     }
-
-    const suffix = (
-        <>
-            <span>
-                {listSkillSelect.length} / {5}
-            </span>
-            <DownOutlined />
-        </>
-    )
-
-    const [selectedSkills, setSelectedSkills] = useState([]);
-    const [currentSkill, setCurrentSkill] = useState('');
-    const [currentLevel, setCurrentLevel] = useState('');
-
-    console.log(selectedSkills);
-
-    const skills = [
-        'JavaScript', 'React', 'Node.js', 'Python', 'Java', 'C++',
-        'HTML', 'CSS', 'SQL', 'Git', 'Docker', 'AWS'
-    ];
-
-    const levels = ['1', '2', '3', '4', '5'];
-
-    const handleAddSkill = () => {
-        if (currentSkill && currentLevel) {
-            setSelectedSkills([...selectedSkills, { skill: currentSkill, level: currentLevel }]);
-            setCurrentSkill('');
-            setCurrentLevel('');
-        }
-    };
-
-    const handleRemoveSkill = (index) => {
-        const updatedSkills = selectedSkills.filter((_, i) => i !== index);
-        setSelectedSkills(updatedSkills);
-    };
-
-    const getLevelColor = (level) => {
-        switch (level) {
-            case '2': return 'blue';
-            case '3': return 'green';
-            case '4': return 'orange';
-            case '5': return 'red';
-            default: return 'default';
-        }
-    };
 
     return (
         <Modal
-            title="Become a Mentor"
+            title={t("Become a Mentor")}
             centered
             open={modalOpen}
             onOk={handleSend}
             onCancel={() => setModalOpen(false)}
-            okText='Apply'
+            okText={t('Apply')}
+            cancelText={t('cancel')}
             okButtonProps={{ disabled: !isValidate }}
             confirmLoading={mutation.isPending}
+            destroyOnClose
         >
-            <h1 style={{ fontWeight: '400', paddingTop: '10px' }}>Select your main skills</h1>
-            <Space direction="vertical" size="large" style={{ display: 'flex', maxWidth: 700, margin: '0 auto', padding: 20 }}>
-                <Title level={2}>Skill Selector</Title>
-                <Flex justify='center'>
-                    <Space>
-                        <Select
-                            style={{ width: 200 }}
-                            placeholder="Select a skill"
-                            value={currentSkill}
-                            onChange={setCurrentSkill}
-                        >
-                            {skills.map((skill) => (
-                                <Option key={skill} value={skill}>{skill}</Option>
-                            ))}
-                        </Select>
-                        <Select
-                            style={{ width: 100 }}
-                            placeholder="Select a level"
-                            value={currentLevel}
-                            onChange={setCurrentLevel}
-                        >
-                            {levels.map((level) => (
-                                <Option key={level} value={level}>{level}</Option>
-                            ))}
-                        </Select>
-                        <Button type="primary" icon={<PlusOutlined />} onClick={handleAddSkill}>
-                            Add
-                        </Button>
-                    </Space>
+            <Space direction="vertical" size="large" style={{ display: 'flex', maxWidth: 700, margin: '0 auto' }}>
+                <Title level={3}>{t('Skill Selector')}</Title>
+                <Flex justify='center' gap='small'>
+                    <Select
+                        style={{ width: '50%' }}
+                        placeholder={t('Select a skill')}
+                        value={currentSkill}
+                        onChange={(value, object) => setCurrentSkill(object)}
+                        options={optionsSelectSkill}
+                    >
+                    </Select>
+                    <Select
+                        style={{ width: '35%' }}
+                        placeholder={t('Select a level')}
+                        value={currentLevel}
+                        onChange={setCurrentLevel}
+                    >
+                        {levels.map((level) => (
+                            <Option key={level} value={level}>{level}</Option>
+                        ))}
+                    </Select>
+                    <Button type="primary" icon={<PlusOutlined />} onClick={handleAddSkill} disabled={!(currentLevel && currentSkill)}>
+                        {t('Add')}
+                    </Button>
                 </Flex>
                 <List
-                    header={<div>Selected Skills</div>}
+                    header={<div>{t('Your selected skills')}</div>}
                     bordered
-                    dataSource={selectedSkills}
+                    dataSource={selectedSkillsDisplay}
                     renderItem={(item, index) => (
                         <List.Item
                             actions={[
@@ -162,20 +133,20 @@ export default function ModalBecomeMentor({ modalOpen, setModalOpen }) {
                                     icon={<DeleteOutlined />}
                                     onClick={() => handleRemoveSkill(index)}
                                 >
-                                    Remove
+                                    {t('Remove')}
                                 </Button>
                             ]}
                         >
                             <Space>
                                 <span>{item.skill}</span>
-                                <Tag color={getLevelColor(item.level)}>Level: {item.level}</Tag>
+                                <Tag color={getLevelColor(item.level)}>{t('Level')}: {item.level}</Tag>
                             </Space>
                         </List.Item>
                     )}
                 />
             </Space>
-            <Checkbox onChange={(e) => setIsAgree(e.target.checked)} checked={isAgree} style={{ padding: '20px 0 0 0' }}>Agree
-                to <Link to='/terms-become-mentor'>our terms</Link></Checkbox>
+            <Checkbox onChange={(e) => setIsAgree(e.target.checked)} checked={isAgree} style={{ padding: '20px 0 0 0' }}>
+                {t('Agree to')} <Link to='/terms-become-mentor'>{t('our terms')}</Link></Checkbox>
         </Modal>
     )
 }

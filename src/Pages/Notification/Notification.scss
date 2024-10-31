@@ -1,0 +1,58 @@
+.notification-page {
+     min-height: 100vh;
+
+     .notifications-content {
+          padding: 20px;
+
+          @media (min-width: 768px) {
+               padding: 30px;
+          }
+
+          @media (min-width: 1024px) {
+               padding: 40px;
+          }
+
+          .notification-item {
+               border-radius: 8px;
+               margin-bottom: 16px;
+               padding: 16px;
+               transition: background-color 0.3s ease;
+
+               &.read {
+                    background-color: #f0f2f5;
+               }
+
+               &.unread {
+                    background-color: #e6f7ff;
+               }
+
+               .notification-avatar {
+                    &.read {
+                         background-color: #d9d9d9;
+                    }
+
+                    &.unread {
+                         background-color: #1890ff;
+                    }
+               }
+
+               .notification-title {
+                    .read-icon {
+                         color: #52c41a;
+                    }
+               }
+
+               .notification-description {
+                    .status-badge {
+                         &.read {
+                              opacity: 0.5;
+                         }
+
+                         &.unread {
+                              font-weight: bold;
+                         }
+                    }
+               }
+          }
+     }
+}

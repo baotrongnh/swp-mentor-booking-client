@@ -65,7 +65,7 @@ function MentorInfor({ setModalOpen, mentorInfor, setCurrentTab, isCurrentUser }
                                    {mentorInfor?.description || 'No description'}
                               </p>
 
-                              <a className={`read-more ${isShowMore ? 'show' : ''}`}>Read more</a>
+                              <a onClick={() => setCurrentTab('about')} className={`read-more ${isShowMore ? 'show' : ''}`}>Read more</a>
 
                               <div className="btn-block">
                                    {isCurrentUser

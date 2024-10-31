@@ -1,28 +1,38 @@
-import { Button, Card, Col, Row } from 'antd';
-import { useContext } from 'react';
+import { Button, Card, Col, Flex, Image, Row } from 'antd';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import HomeBackground from '../../assets/Photos/background/Home_Banner.png';
 import { AppContext } from '../../Contexts/AppContext';
 import './Home.scss';
+import { getToken } from '../../utils/storageUtils';
+import axiosClient from '../../apis/axiosClient';
+import avatarDefault from '../../assets/Photos/avatar/default_avatar_2.jpg'
+import { Icon } from '@iconify/react/dist/iconify.js';
 
-const { Meta } = Card;
 
 export default function Home() {
-     // const { filterMentor, t } = useContext(AppContext);
-     // const { data: listMentor, isLoading, isError } = useQuery({
-     //      queryKey: ['listMentor', filterMentor],
-     //      queryFn: () => searchMentor(filterMentor)
-     // })
      const { t } = useContext(AppContext)
-     // console.log(listMentor.mentors)
+     const [topMentor, setTopMentor] = useState([])
+
+     const fetchData = async () => {
+          const token = getToken()
+          const res = await axiosClient(token).get('/mentor/top-mentor')
+          try {
+               console.log(res)
+               setTopMentor(res.topMentors)
+          } catch (error) {
+               console.log("Error", error)
+          }
+     }
+
+     useEffect(() => {
+          fetchData()
+     }, [])
 
      const scrollToFirstContent = () => {
           document.getElementById('first-content').scrollIntoView({ behavior: 'smooth' })
      }
 
-     // const fetchMentorData = async () => {
-     //      const res = await getProfileMentor()
-     // }
 
 
      return (
@@ -40,57 +50,43 @@ export default function Home() {
                     <div className="first-content" id='first-content'>
                          <h2 className='title'>{t("See Our Best Mentor")}</h2>
                          <Row gutter={[24, 24]} align='middle' justify='center'>
-                              <Col xs={24} sm={12} md={8} className='home-mentor-card'>
-                                   <Card
-                                        hoverable
-                                        cover={<div className="card-cover">
-                                             <img
-                                                  alt="Young man with glasses"
-                                                  src="https://i.pinimg.com/736x/72/1d/95/721d957dcbc1ea47675146260c3b41d7.jpg"
-                                                  className='best-mentor-avatar'
-                                             />
-                                        </div>}
-                                   >
-                                        <Meta title="John Doe" description="johndoe123@fpt.edu.vn" />
-                                        <div className="view-btn">
-                                             <Link to={'browser-mentors'}><Button type='primary' className='best-mentor-btn'>{t("View Mentor")}</Button></Link>
-                                        </div>
-                                   </Card>
-                              </Col>
-                              <Col xs={24} sm={12} md={8} className='home-mentor-card'>
-                                   <Card
-                                        hoverable
-                                        cover={<div className="card-cover">
-                                             <img
-                                                  alt="Man with headphones"
-                                                  src="https://i.pinimg.com/564x/79/18/d5/7918d5b7be565863ee4471ab2ad6eb9a.jpg"
-                                                  className='best-mentor-avatar'
-                                             />
-                                        </div>}
-                                   >
-                                        <Meta title="Kim Hana" description="hana456@fpt.edu.vn" />
-                                        <div className="view-btn">
-                                             <Link to={'browser-mentors'}><Button type='primary' className='best-mentor-btn'>{t("View Mentor")}</Button></Link>
-                                        </div>
-                                   </Card>
-                              </Col>
-                              <Col xs={24} sm={12} md={8} className='home-mentor-card'>
-                                   <Card
-                                        hoverable
-                                        cover={<div className="card-cover">
-                                             <img
-                                                  alt="Woman with curly hair"
-                                                  src="https://i.pinimg.com/564x/b7/36/13/b73613c67987d6c705c143c6be2e518b.jpg"
-                                                  className='best-mentor-avatar'
-                                             />
-                                        </div>}
-                                   >
-                                        <Meta title="Reggin" description="reggin789@fpt.edu.vn" />
-                                        <div className="view-btn">
-                                             <Link to={'browser-mentors'}><Button type='primary' className='best-mentor-btn'>{t("View Mentor")}</Button></Link>
-                                        </div>
-                                   </Card>
-                              </Col>
+                              {topMentor.map((mentor, index) => (
+                                   <Col xs={24} sm={12} md={8} className='home-mentor-card' key={index}>
+                                        <Card
+                                             hoverable
+                                             cover={<div className="card-cover">
+                                                  <Image
+                                                       alt={mentor.fullName}
+                                                       src={mentor.imgPath}
+                                                       className='best-mentor-avatar'
+                                                       onError={(e) => e.target.src = avatarDefault}
+                                                  />
+                                             </div>}
+
+                                        >
+                                             <Flex vertical style={{ marginBottom: '3rem' }}>
+                                                  <Flex justify='space-between' align='center' style={{ minHeight: '4.5rem' }}>
+                                                       <Col span={18} style={{ paddingLeft: '0' }}>
+                                                            <Link to={`/mentor/profile/${mentor.accountId}`}><h2 className='top-mentor-name'>
+                                                                 {mentor.fullName}
+                                                            </h2>
+                                                            </Link>
+                                                       </Col>
+                                                       <Col span={6}>
+                                                            <Flex justify='center' align='center' gap={6}>
+                                                                 <span style={{ fontSize: '1.2rem', fontWeight: '600' }}>{mentor.averageRating}</span>
+                                                                 <Icon icon="noto:star" style={{ fontSize: '1.3rem' }} />
+                                                            </Flex>
+                                                       </Col>
+                                                  </Flex>
+                                                  <p style={{ fontSize: '1.1rem', margin: '0.5rem 0' }}>{mentor.email}</p>
+                                             </Flex>
+                                             <div className="view-btn">
+                                                  <Link to={`/mentor/profile/${mentor.accountId}`}><Button type='primary' className='best-mentor-btn'>{t("View Mentor")}</Button></Link>
+                                             </div>
+                                        </Card>
+                                   </Col>
+                              ))}
                          </Row>
                     </div>
 
