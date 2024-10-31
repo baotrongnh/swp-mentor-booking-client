@@ -38,6 +38,9 @@ function DonateProcess() {
         console.log(orderInfor)
         console.log(status)
 
+        console.log(orderInfor)
+        console.log(status)
+
         if (orderInfor && status) {
             fetchData(orderInfor, status)
         }

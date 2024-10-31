@@ -1,26 +1,26 @@
-import { Checkbox, Rate } from "antd";
-import PropTypes from "prop-types";
-import { useContext, useEffect } from "react";
-import { AppContext } from "../../../../Contexts/AppContext";
+import { Checkbox, Rate } from "antd"
+import PropTypes from "prop-types"
+import { useContext, useEffect } from "react"
+import { AppContext } from "../../../../Contexts/AppContext"
 
 function RatingSelect() {
-     const { filterMentor, setFilterMentor, t } = useContext(AppContext);
+     const { filterMentor, setFilterMentor, t } = useContext(AppContext)
 
      const handleChange = (e) => {
           if (e.target.checked) {
-               setFilterMentor({ ...filterMentor, star: e.target.id });
+               setFilterMentor({ ...filterMentor, star: e.target.id })
           } else {
-               setFilterMentor({ ...filterMentor, star: '' });
+               setFilterMentor({ ...filterMentor, star: '' })
           }
      }
 
      useEffect(() => {
           return () => {
-               setFilterMentor({ ...filterMentor, star: '' });
+               setFilterMentor({ ...filterMentor, star: '', page: 1 })
           }
-     }, []);
+     }, [])
 
-     const stars = [5, 4, 3, 2, 1];
+     const stars = [5, 4, 3, 2, 1]
 
      return (
           <div className="rating-select" style={{ marginTop: '10px' }}>
@@ -33,10 +33,10 @@ function RatingSelect() {
                     </div>
                ))}
           </div>
-     );
+     )
 }
 
-export default RatingSelect;
+export default RatingSelect
 
 RatingSelect.propTypes = {
      star: PropTypes.number

@@ -27,7 +27,7 @@ function MentorListPage() {
 
     const onChangeTime = (date, dateString) => {
         setTimeAntd(date)
-        setFilterMentor({...filterMentor, dates: dateString})
+        setFilterMentor({...filterMentor, dates: dateString, page: 1})
     }
 
     if (isError) return <PageError/>
