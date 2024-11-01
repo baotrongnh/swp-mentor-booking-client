@@ -14,12 +14,13 @@ export default function ModalAddGroup({ modalOpen, setModalOpen, bookingId }) {
 
      const mutation = useMutation({
           mutationFn: ({ bookingId, studentId, memberMails }) => addStudentToGroup(bookingId, studentId, memberMails),
-          onSuccess: () => {
+          onSuccess: (data) => {
+               console.log(data);
                toast.success('Add success!')
                setModalOpen(false)
           },
-          onError: () => {
-               toast.error('Something went wrong')
+          onError: (error) => {
+               toast.error(error.response.data.message)
           }
      })
 
@@ -41,6 +42,8 @@ export default function ModalAddGroup({ modalOpen, setModalOpen, bookingId }) {
                     onOk={handleAdd}
                     onCancel={() => setModalOpen(false)}
                     confirmLoading={mutation.isPending}
+                    okButtonProps={{ disabled: memberMails.length === 0 }}
+                    destroyOnClose
                >
                     <h1 style={{fontWeight: '400', padding: '5px 0'}}>Import group member email list</h1>
                     <Select

@@ -6,6 +6,11 @@ export const getNotifications = async (accountId) => {
      return axiosClient(token).get(`/notification/${accountId}`)
 }
 
+export const getNumberUnreadNotification = async (accountId) => {
+     const token = getToken()
+     return axiosClient(token).get(`/notification/unread-count/${accountId}`)
+}
+
 export const createComplaint = async (studentId, mentorId, content) => {
      const token = getToken()
      return axiosClient(token).post('/complaint/create', {

@@ -1,12 +1,12 @@
 import { getToken } from "../utils/storageUtils"
 import axiosClient from "./axiosClient"
 
-export const bookingMentor = async (mentorId, studentId, startTime) => {
+export const bookingMentor = async (mentorId, studentId, slotId) => {
      const token = getToken();
      return await axiosClient(token).post('/booking', {
           mentorId,
           studentId,
-          startTime
+          slotId
      })
 }
 
@@ -34,10 +34,10 @@ export const confirmBooking = async (bookingId) => {
 
 export const getHistoryTransaction = async (type, id) => {
      const token = getToken()
-     return await axiosClient(token).get(`/transaction/${type}/${id}`)
+     return await axiosClient(token).get(`/transaction/${id}`)
 }
 
-export const acceptBooking = async (type, bookingId, memberId) => {
+export const acceptInviteGroup = async (type, bookingId, memberId) => {
      const token = getToken()
      return await axiosClient(token).get(`group/${type}/${bookingId}/${memberId}`)
 }

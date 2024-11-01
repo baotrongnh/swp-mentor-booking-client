@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next'
 import { AppContext } from '../../../../Contexts/AppContext'
 import { AuthContext } from '../../../../Contexts/AuthContext'
 import { bookingMentor } from '../../../../apis/booking'
-import { getAvailableSlot } from '../../../../apis/mentor'
+import { deleteSchedule, getAvailableSlot } from '../../../../apis/mentor'
 import { formatDateToNormal } from '../../../../utils/format'
 import './Slots.scss'
 
@@ -19,7 +19,7 @@ export default function Slots({ setModalAddSlotsOpen, mentorId, isCurrentUser })
      const { t } = useTranslation()
 
      const mutation = useMutation({
-          mutationFn: ({ mentorId, studentId, startTime }) => bookingMentor(mentorId, studentId, startTime),
+          mutationFn: ({ mentorId, studentId, slotId }) => bookingMentor(mentorId, studentId, slotId),
           onError: (error) => {
                if (error.response.data.error_code === 1) {
                     toast.error(error.response.data.message)
@@ -35,6 +35,14 @@ export default function Slots({ setModalAddSlotsOpen, mentorId, isCurrentUser })
                }
           }
      })
+
+     const mutationDelete = useMutation({
+          mutationFn: (slotId) => deleteSchedule(slotId),
+          onSuccess: () => {
+               toast.success('Delete success!')
+               queryClient.invalidateQueries({ queryKey: [`available-slot-${mentorId}`, mentorId] })
+          },
+     })
      const { currentUser } = useContext(AuthContext)
      const { semesterData } = useContext(AppContext)
 
@@ -45,11 +53,11 @@ export default function Slots({ setModalAddSlotsOpen, mentorId, isCurrentUser })
      })
 
      const handleDelete = (id) => {
-          console.log(id);
+          mutationDelete.mutateAsync(id)
      }
 
-     const handleBook = (slotStart) => {
-          mutation.mutate({ mentorId, studentId: currentUser.accountId, startTime: slotStart })
+     const handleBook = (slotId) => {
+          mutation.mutate({ mentorId, studentId: currentUser.accountId, slotId })
      }
 
      if (isLoading) return <Skeleton />
@@ -58,7 +66,7 @@ export default function Slots({ setModalAddSlotsOpen, mentorId, isCurrentUser })
           <div className="time-slot-list">
                <Flex justify='space-between'>
                     <Title level={2}>{t('Available Time Slots')}</Title>
-                    {isCurrentUser && <Button onClick={() => setModalAddSlotsOpen(true)}>{t('Add new slot')}</Button>}
+                    {isCurrentUser && <Button type='primary' onClick={() => setModalAddSlotsOpen(true)}>+ {t('Add new slot')}</Button>}
                </Flex>
 
                <List
@@ -85,7 +93,7 @@ export default function Slots({ setModalAddSlotsOpen, mentorId, isCurrentUser })
                                              <Text>{formatDateToNormal(item.slotStart).time}</Text>
                                         </Space>
                                         {currentUser?.isMentor === 0
-                                             ? <Button type='primary' onClick={() => handleBook(item.slotStart)}>{t('Book')}: {semesterData.latestSemester.slotCost} <Icon icon="twemoji:coin" /></Button>
+                                             ? <Button loading={mutationDelete.isPending} type='primary' onClick={() => handleBook(item.id)}>{t('Book')}: {semesterData.latestSemester.slotCost} <Icon icon="twemoji:coin" /></Button>
                                              : <Button danger onClick={() => handleDelete(item.id)}>{t('Delete')}</Button>
                                         }
                                    </Space>

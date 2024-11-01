@@ -1,10 +1,13 @@
 import { LineChartOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons'
 import { Menu } from 'antd'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import logo from '../../assets/Photos/logo/logo.png'
 import './SidebarAdmin.scss'
 
 function SidebarAdmin() {
+     const location = useLocation()
+     console.log(location);
+
      const items = [
           {
                type: 'divider',
@@ -15,12 +18,8 @@ function SidebarAdmin() {
                icon: <LineChartOutlined />,
                children: [
                     {
-                         key: 'overview',
+                         key: '/admin/analytics/overview',
                          label: <Link to='/admin/analytics/overview'>Overview</Link>
-                    },
-                    {
-                         key: 'bookingAnalytics',
-                         label: <Link to='/admin/analytics/mentors'>Booking Analytics</Link>
                     }
                ]
           },
@@ -30,11 +29,11 @@ function SidebarAdmin() {
                icon: <UserOutlined />,
                children: [
                     {
-                         key: 'viewMentor',
+                         key: '/admin/mentor/all',
                          label: <Link to='/admin/mentor/all'>View All Mentor</Link>,
                     },
                     {
-                         key: 'pendingMentor',
+                         key: '/admin/pending-mentors',
                          label: <Link to='/admin/pending-mentors'>Pending Approval</Link>,
                     },
 
@@ -46,7 +45,7 @@ function SidebarAdmin() {
                icon: <UserOutlined />,
                children: [
                     {
-                         key: 'viewStudent',
+                         key: '/admin/student/all',
                          label: <Link to='/admin/student/all'>View All Students</Link>,
                     }
                ],
@@ -55,7 +54,7 @@ function SidebarAdmin() {
                type: 'divider',
           },
           {
-               key: 'systemMenu',
+               key: 'complaintMenu',
                label: 'Complaint',
                icon: <SettingOutlined />,
                children: [
@@ -75,15 +74,15 @@ function SidebarAdmin() {
                icon: <SettingOutlined />,
                children: [
                     {
-                         key: 'skillsAvailable',
+                         key: '/admin/skills',
                          label: <Link to='/admin/skills'>Skills Available</Link>,
                     },
                     {
-                         key: 'listItems',
+                         key: '/admin/items',
                          label: <Link to='/admin/items'>Items Donate</Link>,
                     },
                     {
-                         key: 'semester',
+                         key: '/admin/semester',
                          label: <Link to='/admin/semester'>Manager Semester</Link>,
                     },
                ],
@@ -103,8 +102,8 @@ function SidebarAdmin() {
 
                <Menu
                     onClick={onClick}
-                    defaultSelectedKeys={['overview']}
-                    defaultOpenKeys={['analyticsMenu']}
+                    defaultSelectedKeys={[location.pathname]}
+                    defaultOpenKeys={['analyticsMenu', 'mentorsMenu', 'complaintMenu', 'studentMenu', 'systemMenu']}
                     mode="inline"
                     items={items}
                />

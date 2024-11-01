@@ -43,37 +43,81 @@ export default function ModalAddSlot({ modalOpen, setModalOpen }) {
           setDateCustom({ ...dateCustom, time: timeString })
      }
 
+     const handleAfterClose = () => {
+          setDateCustom({ date: '0000-00-00', time: '00:00:00' })
+          setDisplayDate({ date: 'DD-MM-YYYY', time: '00:00' })
+     }
+
      return (
           <div>
                <Modal
-                    title="Add your schedule"
+                    title={<h2 style={{ margin: 0, color: '#1890ff' }}>Add Your Schedule</h2>}
                     centered
                     open={modalOpen}
-                    okText='Add'
+                    okText='Add Slot'
                     onOk={handleAdd}
+                    okButtonProps={{ disabled: dateCustom.date === '0000-00-00' || dateCustom.time === '00:00:00' }}
                     onCancel={() => setModalOpen(false)}
                     confirmLoading={mutation.isPending}
+                    width={400}
+                    styles={{
+                         body: {
+                              padding: '24px'
+                         }
+                    }}
+                    afterClose={handleAfterClose}
+                    destroyOnClose
                >
-                    <h1 className="title">Select Date & Time</h1>
+                    <div style={{ textAlign: 'center' }}>
+                         <h3 style={{
+                              marginBottom: 20,
+                              color: '#666',
+                              fontSize: '16px',
+                              fontWeight: 500
+                         }}>
+                              Select Date & Time
+                         </h3>
 
-                    <p className="time-view">Scheduled
-                         for <b>{displayDate.date}</b> at <b>{displayDate.time}</b></p>
+                         <p style={{
+                              marginBottom: 24,
+                              fontSize: '15px',
+                              color: '#333'
+                         }}>
+                              Scheduled for{' '}
+                              <span style={{ fontWeight: 600, color: '#1890ff' }}>
+                                   {displayDate.date}
+                              </span>{' '}
+                              at{' '}
+                              <span style={{ fontWeight: 600, color: '#1890ff' }}>
+                                   {displayDate.time}
+                              </span>
+                         </p>
 
-                    <Flex justify="center" gap='middle'>
-                         <DatePicker
-                              disabledDate={disabledDateInPast}
-                              format='DD-MM-YYYY'
-                              className='pick-date'
-                              onChange={handleDatePick}
-                         />
-                         <TimePicker
-                              className='pick-time'
-                              picker='time'
-                              onChange={handleTimePick}
-                              format='HH:mm'
-                              disabledTime={dateCustom.date === getDateNow() ? disableTime : disableNotThing}
-                         />
-                    </Flex>
+                         <Flex
+                              justify="center"
+                              gap='middle'
+                              style={{ marginTop: '16px' }}
+                         >
+                              <DatePicker
+                                   disabledDate={disabledDateInPast}
+                                   format='DD-MM-YYYY'
+                                   style={{ width: '160px' }}
+                                   onChange={handleDatePick}
+                                   placeholder="Select date"
+                                   allowClear={false}
+                              />
+                              <TimePicker
+                                   picker='time'
+                                   onChange={handleTimePick}
+                                   format='HH:mm'
+                                   style={{ width: '120px' }}
+                                   disabledTime={dateCustom.date === getDateNow() ? disableTime : disableNotThing}
+                                   placeholder="Select time"
+                                   allowClear={false}
+                                   needConfirm={false}
+                              />
+                         </Flex>
+                    </div>
                </Modal>
           </div>
      )

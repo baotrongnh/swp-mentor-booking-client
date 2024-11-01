@@ -13,6 +13,8 @@ import { deleteToken } from '../../utils/storageUtils'
 import { HeaderMentor } from "../index.js"
 import { ModalBecomeMentor } from '../Modal'
 import './Header.scss'
+import { useQuery } from '@tanstack/react-query'
+import { getNumberUnreadNotification } from '../../apis/other.js'
 
 function Header() {
     const { t, i18n } = useTranslation()
@@ -25,6 +27,8 @@ function Header() {
     const [openModalBeMentor, setOpenModalBeMentor] = useState(false)
     const [openDrawer, setOpenDrawer] = useState(false)
     const [openDropDownAccount, setOpenDropDownAccount] = useState(false)
+
+    const { data: dataUnreadNotification } = useQuery({ queryKey: ['number-unread-notification'], queryFn: () => getNumberUnreadNotification(currentUser.accountId) })
 
     const handleMenuAccountClick = (e) => {
         if (e.key !== '4' && e.key !== '5') {
@@ -207,7 +211,7 @@ function Header() {
         },
     ]
 
-    if (currentUser?.isMentor !== 0 && currentUser) return <HeaderMentor />
+    if (currentUser?.isMentor !== 0 && currentUser) return <HeaderMentor dataUnread={dataUnreadNotification} />
 
     return (
         <div className="header">
@@ -261,7 +265,7 @@ function Header() {
                                 </Dropdown>
 
                                 <NavLink to='/notification' className='navbar-link'>
-                                    <Badge size='small' count={7} showZero color="#faad14" >
+                                    <Badge size='small' count={dataUnreadNotification?.numberOfUnreadNotifications} showZero color="#faad14" >
                                         <Icon style={{ fontSize: '3rem' }} icon="material-symbols-light:notifications-outline" />
                                     </Badge>
                                 </NavLink>
