@@ -103,7 +103,6 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
                                             <Select
                                                 showSearch
                                                 placeholder={t('Select a slot')}
-                                                value={slotAvailableSelect}
                                                 filterOption={(input, option) =>
                                                     (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                                                 }
@@ -154,7 +153,7 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
                             confirmLoading={mutation.isPending}
                         >
                             <Button type="primary"
-                                disabled={currentUser?.point < semesterData?.latestSemester?.slotCost || !isValidate}
+                                disabled={currentUser?.point < semesterData?.latestSemester?.slotCost || !isValidate || listAvailableSlot?.slots.length === 0}
                             >
                                 {currentUser?.point >= semesterData?.latestSemester?.slotCost
                                     ? <>{t('book')}: {semesterData?.latestSemester?.slotCost} <Icon icon="twemoji:coin" /></>

@@ -125,5 +125,5 @@ export default function ModalAddSlot({ modalOpen, setModalOpen }) {
 
 ModalAddSlot.propTypes = {
      modalOpen: PropTypes.bool,
-     setModalOpen: PropTypes.func,
+     setModalOpen: PropTypes.func
 }

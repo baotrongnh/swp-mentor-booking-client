@@ -5,10 +5,7 @@ import { AppContext } from "../../../../Contexts/AppContext"
 import './CheckboxSkill.scss'
 
 function CheckboxSkill({ skillName, numberMentor, id }) {
-
      const { filterMentor, setFilterMentor } = useContext(AppContext)
-
-     console.log(filterMentor);
 
      const onChange = (e) => {
           if (e.target.checked) {
