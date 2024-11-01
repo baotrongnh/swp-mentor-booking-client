@@ -5,11 +5,13 @@ import { Link } from 'react-router-dom'
 import { AuthContext } from '../../Contexts/AuthContext'
 import { getListGift } from '../../apis/items'
 import { formatCurrencyVND } from '../../utils/format'
+import { useTranslation } from 'react-i18next';
 
 const Gift = () => {
      const { currentUser } = useContext(AuthContext)
      const [isMentor, setIsMentor] = useState(false)
      const [selectedGift, setSelectedGift] = useState(null)
+     const { t } = useTranslation();
 
      const { data: dataGift } = useQuery({
           queryKey: ['gift'], queryFn: () => getListGift(currentUser?.isMentor === 0 ? 'student' : 'mentor', currentUser?.accountId)
@@ -27,22 +29,22 @@ const Gift = () => {
 
      return (
           <div className='container'>
-               {!isMentor &&
+               {!isMentor && (
                     <Breadcrumb
                          style={{ padding: '20px 0' }}
                          items={[
                               {
-                                   title: <Link to='/'>Home</Link>,
+                                   title: <Link to='/'>{t('Home')}</Link>,
                               },
                               {
-                                   title: <Link to='/browser-mentors'>Browser mentors</Link>,
+                                   title: <Link to='/browser-mentors'>{t('Browse mentors')}</Link>,
                               },
                               {
-                                   title: isMentor ? 'Gift' : 'Donation history',
+                                   title: isMentor ? t('Gift') : t('Donation history'),
                               },
                          ]}
                     />
-               }
+               )}
                {dataGift?.donates.length === 0
                     ?
                     <div style={{ height: '100vh', width: '100vw', display: 'flex', justifyContent: 'center', alignItems: 'center' }}><Empty /></div>
@@ -62,7 +64,7 @@ const Gift = () => {
                               textTransform: 'uppercase',
                               letterSpacing: '2px',
                          }}>
-                              {isMentor ? 'Gifts Received from Donations' : 'History of sent gifts'}
+                              {isMentor ? t('Gifts Received from Donations') : t('History of sent gifts')}
                          </h1>
                          <p style={{
                               textAlign: 'center',
@@ -70,7 +72,7 @@ const Gift = () => {
                               marginBottom: '2rem',
                               fontSize: '1.2rem',
                          }}>
-                              Total Value: $0
+                              {t('Total Value')}: {formatCurrencyVND(0)}
                          </p>
                          <div style={{
                               display: 'flex',
@@ -86,7 +88,7 @@ const Gift = () => {
                               }}>
                                    {dataGift?.donates.map((gift) => (
                                         <li key={gift.id} style={{
-                                             backgroundColor: 'white',
+                                             backgroundColor: '#b8b8b83b',
                                              borderRadius: '10px',
                                              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
                                              overflow: 'hidden',
@@ -121,7 +123,6 @@ const Gift = () => {
                                                        {gift.item.name}
                                                   </h2>
                                                   <p style={{
-                                                       color: '#2c3e50',
                                                        fontSize: '1.8rem',
                                                        fontWeight: 'bold',
                                                        marginBottom: '0.5rem',
@@ -133,14 +134,22 @@ const Gift = () => {
                                                        fontSize: '1.3rem',
                                                        marginBottom: '0.5rem',
                                                   }}>
-                                                       {!isMentor ? <>Send: {gift?.createdAt}</> : <>Received: {gift.createdAt}</>}
+                                                       {!isMentor ? (
+                                                            <>{t('Send')}: {gift?.createdAt}</>
+                                                       ) : (
+                                                            <>{t('Received')}: {gift.createdAt}</>
+                                                       )}
                                                   </p>
                                                   <p style={{
                                                        color: '#3498db',
                                                        fontSize: '1.4rem',
                                                        fontStyle: 'italic',
                                                   }}>
-                                                       {!isMentor ? <>To: {gift?.mentor?.fullName}</> : <>From: {gift?.student.fullName}</>}
+                                                       {!isMentor ? (
+                                                            <>{t('To')}: {gift?.mentor?.fullName}</>
+                                                       ) : (
+                                                            <>{t('From')}: {gift?.student.fullName}</>
+                                                       )}
                                                   </p>
                                              </div>
                                         </li>
@@ -151,7 +160,7 @@ const Gift = () => {
                                    position: 'sticky',
                                    top: '2rem',
                                    alignSelf: 'flex-start',
-                                   backgroundColor: '#f8f9fa',
+                                   backgroundColor: '#b8b8b83b',
                                    borderRadius: '10px',
                                    padding: '1.5rem',
                                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
@@ -174,7 +183,6 @@ const Gift = () => {
                                                   marginBottom: '1rem',
                                              }} />
                                              <p style={{
-                                                  color: '#2c3e50',
                                                   fontSize: '1.75rem',
                                                   fontWeight: 'bold',
                                                   marginBottom: '0.5rem',
@@ -186,7 +194,11 @@ const Gift = () => {
                                                   fontSize: '1.3rem',
                                                   marginBottom: '0.5rem',
                                              }}>
-                                                  {!isMentor ? <>Send: {selectedGift.createdAt}</> : <>Received: {selectedGift.createdAt}</>}
+                                                  {!isMentor ? (
+                                                       <>{t('Send')}: {selectedGift.createdAt}</>
+                                                  ) : (
+                                                       <>{t('Received')}: {selectedGift.createdAt}</>
+                                                  )}
                                              </p>
                                              <p style={{
                                                   color: '#3498db',
@@ -194,23 +206,25 @@ const Gift = () => {
                                                   fontStyle: 'italic',
                                                   marginBottom: '1rem',
                                              }}>
-                                                  {!isMentor ? <>To: {selectedGift.mentor.fullName}</> : <>From: {selectedGift.student.fullName}</>}
+                                                  {!isMentor ? (
+                                                       <>{t('To')}: {selectedGift.mentor.fullName}</>
+                                                  ) : (
+                                                       <>{t('From')}: {selectedGift.student.fullName}</>
+                                                  )}
                                              </p>
                                              <p style={{
-                                                  color: '#34495e',
                                                   fontSize: '1.5rem',
                                                   lineHeight: '1.5',
                                              }}>
-                                                  No description
+                                                  {t('No description')}
                                              </p>
                                         </>
                                    ) : (
                                         <p style={{
-                                             color: '#7f8c8d',
-                                             fontSize: '1.2rem',
+                                             fontSize: '1.8rem',
                                              textAlign: 'center',
                                         }}>
-                                             Select a gift to view details
+                                             {t('Select a gift to view details')}
                                         </p>
                                    )}
                               </div>

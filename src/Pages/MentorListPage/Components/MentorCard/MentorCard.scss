@@ -69,13 +69,13 @@
           .description {
                text-align: justify;
                line-height: 1.5;
-               min-height: 100px;
-               max-height: 100px;
+               min-height: 75px;
+               max-height: 80px;
                overflow: hidden;
                text-overflow: ellipsis;
                display: -webkit-box;
                -webkit-box-orient: vertical;
-               -webkit-line-clamp: 4;
+               -webkit-line-clamp: 3;
           }
 
           .skill-tag-block {

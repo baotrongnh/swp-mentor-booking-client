@@ -6,6 +6,7 @@ import { AppContext } from "./Contexts/AppContext"
 import { AuthContext } from "./Contexts/AuthContext"
 import DefaultLayout from "./Layouts/DefaultLayout"
 import { adminRoutes, AdminRoutesAuth, privateRoutes, PrivateRoutesAuth, publicRoutes } from "./Routes"
+import ScrollToTop from "./hooks/useScrollToTop"
 
 function App() {
     const { isFetchData } = useContext(AuthContext)
@@ -26,8 +27,8 @@ function App() {
 
     return (
         <div className={`App ${theme}`}>
+            <ScrollToTop />
             <Toaster />
-
             <Routes>
                 {publicRoutes.map((route, index) => {
                     const Page = route.element

@@ -353,22 +353,36 @@ function Header() {
                 <hr />
 
                 <div className="navbar-mobile-block">
+                    <Link
+                        onClick={() => setOpenDrawer(false)}
+                        to='/browser-mentors'
+                        className='link-item'
+                    >
+                        {t('browser mentors')}
+                    </Link>
+
                     {currentUser
                         ?
                         <>
                             <Link
-                                onClick={() => {
-                                    setOpenDrawer(false)
-                                    setOpenModalBeMentor(true)
-                                }}
+                                onClick={() => setOpenDrawer(false)}
+                                to='/notification'
                                 className='link-item'
                             >
-                                {t('become a mentor')}
+                                {t('Notification')}
                             </Link>
 
                             <Link
                                 onClick={() => setOpenDrawer(false)}
-                                to='schedule'
+                                to='/schedule'
+                                className='link-item'
+                            >
+                                {t('schedule')}
+                            </Link>
+
+                            <Link
+                                onClick={() => setOpenDrawer(false)}
+                                to='/schedule'
                                 className='link-item'
                             >
                                 {t('schedule')}
@@ -392,14 +406,6 @@ function Header() {
                         </Link>
                     }
 
-                    <Link
-                        onClick={() => setOpenDrawer(false)}
-                        to='/browser-mentors'
-                        className='link-item'
-                    >
-                        {t('browser mentors')}
-                    </Link>
-
                     {currentUser &&
                         <>
                             <Link
@@ -418,7 +424,17 @@ function Header() {
                                 className='link-item'
                             >
                                 {t('Your profile')}
-                            </Link>
+                        </Link>
+                        
+                        <Link
+                            onClick={() => {
+                                setOpenDrawer(false)
+                                setOpenModalBeMentor(true)
+                            }}
+                            className='link-item'
+                        >
+                            {t('become a mentor')}
+                        </Link>
 
                             <Link className='link-item' style={{ color: 'red' }} onClick={handleLogout}>{t('logout')}</Link>
                         </>

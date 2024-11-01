@@ -37,22 +37,22 @@ function MentorProfile() {
 
     const items = [
         {
-            label: 'Slots',
+            label: t('Slots'),
             key: 'slots',
             icon: <FieldTimeOutlined />,
         },
         {
-            label: 'About',
+            label: t('About'),
             key: 'about',
             icon: <UserOutlined />,
         },
         {
-            label: 'Skills',
+            label: t('Skills'),
             key: 'skills',
             icon: <UnorderedListOutlined />,
         },
         {
-            label: 'Rating',
+            label: t('Rating'),
             key: 'rating',
             icon: <StarOutlined />,
         },

@@ -1,21 +1,24 @@
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { Col, Row } from 'antd';
-import './AboutMentor.scss';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
+import './AboutMentor.scss';
 
 function AboutMentor({ mentorInfor }) {
+     const { t } = useTranslation();
+
      return (
           <div className="about-mentor">
                <Row gutter={50}>
                     <Col md={13} className='description-block'>
-                         <h1 className='title'>About Me</h1>
+                         <h1 className='title'>{t('About Me')}</h1>
                          <p className='description'>
-                              {mentorInfor?.description || 'No description'}
+                              {mentorInfor?.description || t('No description')}
                          </p>
                     </Col>
 
                     <Col md={11} className='contact-block'>
-                         <h1 className='title'>Contact</h1>
+                         <h1 className='title'>{t('Contact')}</h1>
 
                          <div className="contact-item">
                               <Icon className='icon' icon="arcticons:fairemail" />

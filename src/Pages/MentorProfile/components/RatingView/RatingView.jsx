@@ -4,9 +4,11 @@ import PropTypes from 'prop-types';
 import { getFeedback } from '../../../../apis/mentor';
 import defaultAvatar from '../../../../assets/Photos/avatar/default_avatar.jpg';
 import './RatingView.scss';
+import { useTranslation } from 'react-i18next';
 
 function RatingView({ id, setModalRatingOpen, isCurrentUser }) {
      const { data, isLoading } = useQuery({ queryKey: [`rating-list-${id}`, id], queryFn: () => getFeedback(id) });
+     const { t } = useTranslation();
 
      if (isLoading) {
           return <Skeleton />
@@ -14,18 +16,20 @@ function RatingView({ id, setModalRatingOpen, isCurrentUser }) {
 
      return (
           <div className="rating-view">
-               <h1 className="title">Rating & reviews</h1>
+               <h1 className="title">{t('Rating & reviews')}</h1>
                <Row gutter={50}>
                     <Col md={12}>
                          <div className="overview">
                               <p className="number-rating">{data?.averageRating === 5 ? `${data?.averageRating}.0` : data?.averageRating}</p>
                               <Rate style={{ fontSize: '4rem' }} disabled defaultValue={0} value={data?.averageRating} allowHalf />
-                              <p className='total-rating'>{`(${data?.feedbacks.length} Reviews)`}</p>
+                              <p className='total-rating'>{`(${data?.feedbacks.length} ${t('Reviews')})`}</p>
                               {!isCurrentUser &&
                                    <div className="write-feedback">
-                                        <h1 className="title-write-feedback">Write your Review</h1>
-                                        <p className="description">Share your feedback and help create a better booking experience for everyone.</p>
-                                        <Button onClick={() => setModalRatingOpen(true)} type='primary' size='large'>Write a review</Button>
+                                        <h1 className="title-write-feedback">{t('Write your Review')}</h1>
+                                        <p className="description">{t('Share your feedback')}</p>
+                                        <Button onClick={() => setModalRatingOpen(true)} type='primary' size='large'>
+                                             {t('Write a review')}
+                                        </Button>
                                    </div>
                               }
                          </div>
