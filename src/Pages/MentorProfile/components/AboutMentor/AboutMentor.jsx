@@ -3,9 +3,10 @@ import { Col, Row } from 'antd';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import './AboutMentor.scss';
+import { DescriptionEditor } from '../../../../Components';
 
-function AboutMentor({ mentorInfor }) {
-     const { t } = useTranslation();
+function AboutMentor({ mentorInfor, isCurrentUser }) {
+     const { t } = useTranslation()
 
      return (
           <div className="about-mentor">
@@ -13,7 +14,12 @@ function AboutMentor({ mentorInfor }) {
                     <Col md={13} className='description-block'>
                          <h1 className='title'>{t('About Me')}</h1>
                          <p className='description'>
-                              {mentorInfor?.description || t('No description')}
+                              {isCurrentUser
+                                   ?
+                                   <DescriptionEditor defaultDescription={mentorInfor?.description} />
+                                   :
+                                   (mentorInfor?.description || t('No description'))
+                              }
                          </p>
                     </Col>
 
@@ -33,5 +39,6 @@ function AboutMentor({ mentorInfor }) {
 export default AboutMentor
 
 AboutMentor.propTypes = {
-     mentorInfor: PropTypes.object
+     mentorInfor: PropTypes.object,
+     isCurrentUser: PropTypes.bool
 }

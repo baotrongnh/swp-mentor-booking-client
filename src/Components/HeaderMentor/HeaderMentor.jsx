@@ -126,7 +126,7 @@ function HeaderMentor({ dataUnread }) {
                               <div className='btn-block'>
                                    <NavLink to='/gift' className='navbar-link'>{t('Gift')}</NavLink>
                                    <NavLink to='/schedule' className='navbar-link'>{t('schedule')}</NavLink>
-                                   <NavLink to='/manager-slot' className='navbar-link'>{t('Manager slot')}</NavLink>
+                                   <NavLink to={`/mentor/profile/${currentUser?.accountId}`} className='navbar-link'>{t('Manager slot')}</NavLink>
 
                                    <NavLink to='/notification' className='navbar-link'>
                                         <Badge size='small' count={dataUnread?.numberOfUnreadNotifications} showZero color="#faad14" >
@@ -225,7 +225,7 @@ function HeaderMentor({ dataUnread }) {
 
                          <Link
                               onClick={() => setOpenDrawer(false)}
-                              to='/student/profile'
+                              to={`/mentor/profile/${currentUser?.accountId}`}
                               className='link-item'
                          >
                               {t('Profile')}

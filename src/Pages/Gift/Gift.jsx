@@ -1,11 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
-import { Breadcrumb, Empty } from 'antd'
+import { Breadcrumb, Button, Empty, Flex } from 'antd'
 import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../../Contexts/AuthContext'
 import { getListGift } from '../../apis/items'
 import { formatCurrencyVND } from '../../utils/format'
 import { useTranslation } from 'react-i18next';
+import { getTotalDonation } from '../../apis/payment'
 
 const Gift = () => {
      const { currentUser } = useContext(AuthContext)
@@ -17,7 +18,10 @@ const Gift = () => {
           queryKey: ['gift'], queryFn: () => getListGift(currentUser?.isMentor === 0 ? 'student' : 'mentor', currentUser?.accountId)
      })
 
-     console.log(dataGift);
+     const { data: totalDonation } = useQuery({
+          queryKey: ['total-donation'],
+          queryFn: () => getTotalDonation(currentUser?.accountId)
+     })
 
      useEffect(() => {
           if (currentUser?.isMentor === 0) {
@@ -74,8 +78,10 @@ const Gift = () => {
                               marginBottom: '2rem',
                               fontSize: '1.2rem',
                          }}>
-                              {t('Total Value')}: {formatCurrencyVND(0)}
+                              {t('Total Value')}: {formatCurrencyVND(totalDonation.totalAmount)}
                          </p>
+
+                         <Flex justify='end'><Button style={{margin: '20px 0'}}>Withdraw all</Button></Flex>
                          <div style={{
                               display: 'flex',
                               justifyContent: 'space-between',

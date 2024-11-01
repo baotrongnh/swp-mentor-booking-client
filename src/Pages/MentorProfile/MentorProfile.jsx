@@ -67,7 +67,7 @@ function MentorProfile() {
     const renderContent = () => {
         switch (currentTab) {
             case 'about':
-                return <AboutMentor mentorInfor={mentorInfor?.mentor} />
+                return <AboutMentor isCurrentUser={isCurrentUser} mentorInfor={mentorInfor?.mentor} />
             case 'skills':
                 return <Skills id={id} />
             case 'rating':

@@ -37,7 +37,7 @@ export default function Notification() {
                     <div className="notifications-content">
                          <List
                               itemLayout="horizontal"
-                              dataSource={notificationData.notifications}
+                              dataSource={notificationData?.notifications}
                               renderItem={(item) => (
                                    <List.Item className={`notification-item ${item.read ? 'read' : 'unread'}`}>
                                         <List.Item.Meta

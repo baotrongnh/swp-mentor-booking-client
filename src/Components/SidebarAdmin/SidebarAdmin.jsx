@@ -1,6 +1,6 @@
 import { LineChartOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons'
-import { Menu } from 'antd'
-import { Link, useLocation } from 'react-router-dom'
+import { Button, Flex, Menu } from 'antd'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import logo from '../../assets/Photos/logo/logo.png'
 import './SidebarAdmin.scss'
 
@@ -93,6 +93,8 @@ function SidebarAdmin() {
           console.log('click ', e)
      }
 
+     const navigate = useNavigate()
+
      return (
           <div className="sidebar-admin">
 
@@ -107,6 +109,8 @@ function SidebarAdmin() {
                     mode="inline"
                     items={items}
                />
+
+               <Flex justify='center' style={{ padding: '20px' }}><Button onClick={() => navigate('/')} danger>Logout</Button></Flex>
           </div>
      )
 }

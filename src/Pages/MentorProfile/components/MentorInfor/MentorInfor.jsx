@@ -12,7 +12,7 @@ function MentorInfor({ setModalOpen, mentorInfor, setCurrentTab, isCurrentUser }
      const [width, setWidth] = useState(window.innerWidth)
      const [isShowMore, setIsShowMore] = useState(false)
      const { t } = useTranslation()
-     
+
 
      useEffect(() => {
           const handleResize = () => {
@@ -75,11 +75,7 @@ function MentorInfor({ setModalOpen, mentorInfor, setCurrentTab, isCurrentUser }
                               <a onClick={() => setCurrentTab('about')} className={`read-more ${isShowMore ? 'show' : ''}`}>{t('Read more')}</a>
 
                               <div className="btn-block">
-                                   {isCurrentUser ? (
-                                        <Button style={{ width: '40%' }} size="large">
-                                             {t('edit-profile')}
-                                        </Button>
-                                   ) : (
+                                   {!isCurrentUser && (
                                         <>
                                              <Button style={{ width: '40%' }} size="large" type="primary" onClick={handleOpenModal}>
                                                   {t('book now')}
