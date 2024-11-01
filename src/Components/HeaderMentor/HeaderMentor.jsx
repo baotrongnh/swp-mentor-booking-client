@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { Badge, Button, Col, Drawer, Dropdown, Flex, Row, Select, Switch } from 'antd'
+import PropTypes from 'prop-types'
 import { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, NavLink } from 'react-router-dom'
@@ -11,7 +12,7 @@ import { deleteToken } from '../../utils/storageUtils'
 import { ModalAddSlot } from '../Modal'
 import './HeaderMentor.scss'
 
-function HeaderMentor() {
+function HeaderMentor({ dataUnread }) {
      const { t, i18n } = useTranslation()
      const { setTheme, theme, defaultLanguage } = useContext(AppContext)
      const { currentUser, setCurrentUser } = useContext(AuthContext)
@@ -128,8 +129,8 @@ function HeaderMentor() {
                                    <NavLink to='/manager-slot' className='navbar-link'>{t('Manager slot')}</NavLink>
 
                                    <NavLink to='/notification' className='navbar-link'>
-                                        <Badge size='small' count={7} showZero color="#faad14" >
-                                             <Icon style={{fontSize: '3rem'}} icon="material-symbols-light:notifications-outline" />
+                                        <Badge size='small' count={dataUnread?.numberOfUnreadNotifications} showZero color="#faad14" >
+                                             <Icon style={{ fontSize: '3rem' }} icon="material-symbols-light:notifications-outline" />
                                         </Badge>
                                    </NavLink>
 
@@ -240,3 +241,7 @@ function HeaderMentor() {
 }
 
 export default HeaderMentor
+
+HeaderMentor.propTypes = {
+     dataUnread: PropTypes.object
+}

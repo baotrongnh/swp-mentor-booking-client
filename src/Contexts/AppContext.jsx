@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import PropTypes from 'prop-types'
-import {createContext, useState} from 'react'
-import {useTranslation} from 'react-i18next'
+import { createContext, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { getCurrentSemester } from '../apis/semester'
 
 export const AppContext = createContext({})

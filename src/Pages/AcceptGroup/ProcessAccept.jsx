@@ -2,14 +2,14 @@ import { useMutation } from "@tanstack/react-query"
 import { useEffect } from "react"
 import toast from "react-hot-toast"
 import { useNavigate, useParams } from "react-router-dom"
-import { acceptBooking } from "../../apis/booking"
+import { acceptInviteGroup } from "../../apis/booking"
 import PageNotFound from "../PageNotFound"
 
 export default function ProcessAccept() {
      const { type, bookingId, memberId } = useParams()
      const navigate = useNavigate()
      const mutation = useMutation({
-          mutationFn: ({ type, bookingId, memberId }) => acceptBooking(type, bookingId, memberId),
+          mutationFn: ({ type, bookingId, memberId }) => acceptInviteGroup(type, bookingId, memberId),
           onSuccess: () => {
                if (type === 'accept') {
                     navigate('/process-accept/success')

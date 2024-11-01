@@ -19,10 +19,10 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
     const queryClient = useQueryClient()
 
     const mutation = useMutation({
-        mutationFn: ({ mentorId, studentId, startTime }) => bookingMentor(mentorId, studentId, startTime),
+        mutationFn: ({ mentorId, studentId, slotId }) => bookingMentor(mentorId, studentId, slotId),
         onError: (error) => {
-            if (error.response.data.error_code === 1) {
-                toast.error('Please do not select a date in the past')
+            if (error) {
+                toast.error(error.response.data.message)
             } else {
                 toast.error('Something went wrong')
             }
@@ -46,7 +46,7 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
         mutation.mutate({
             mentorId: currentIdMentor,
             studentId: currentUser.accountId,
-            startTime: slotAvailableSelect,
+            slotId: slotAvailableSelect,
         })
         setModalOpen(false)
     }
@@ -85,6 +85,7 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
                 footer={false}
                 confirmLoading={mutation.isPending}
                 afterOpenChange={() => refetch()}
+                destroyOnClose
             >
                 <div className="inside-modal-book">
                     <div className="select-time-block">
@@ -109,7 +110,7 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
                                                 options={
                                                     listAvailableSlot?.slots.map((slot) => (
                                                         {
-                                                            value: slot.slotStart,
+                                                            value: slot.id,
                                                             label: (`${formatDateToNormal(slot.slotStart).date} (${formatDateToNormal(slot.slotStart).time})`),
                                                         }
                                                     ))

@@ -1,33 +1,41 @@
 import { CheckOutlined, CloseOutlined, UserOutlined } from '@ant-design/icons'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Avatar, Breadcrumb, Button, Empty, List, Typography } from 'antd'
-import { useContext, useState } from 'react'
-import './PendingAccept.scss'
+import { useContext } from 'react'
+import toast from 'react-hot-toast'
 import { Link } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
 import { AuthContext } from '../../Contexts/AuthContext'
+import { acceptInviteGroup } from '../../apis/booking'
 import { getListInviteGroup } from '../../apis/student'
+import './PendingAccept.scss'
 
 export default function PendingAccept() {
      const { Title, Text } = Typography
      const { currentUser } = useContext(AuthContext)
+     const queryClient = useQueryClient()
+
+     const mutation = useMutation({
+          mutationFn: ({ type, bookingId, memberId }) => acceptInviteGroup(type, bookingId, memberId),
+          onSuccess: () => {
+               queryClient.invalidateQueries({ queryKey: [`invite-list-${currentUser?.accountId}`] })
+               toast.success('Complete!')
+          },
+          onError: (error) => {
+               toast.error(error.response.data.message)
+          }
+     })
 
      const { data: listInviteData } = useQuery({ queryKey: [`invite-list-${currentUser?.accountId}`], queryFn: () => getListInviteGroup(currentUser?.accountId) })
 
-     console.log(listInviteData)
+     console.log(listInviteData?.pendingGroup)
 
-     const [invitations, setInvitations] = useState([
-          { id: 1, groupName: "React Developers", inviter: "John Doe", avatar: "https://xsgames.co/randomusers/avatar.php?g=male", timestamp: "2 hours ago" },
-          { id: 2, groupName: "UI/UX Designers", inviter: "Jane Smith", avatar: "https://xsgames.co/randomusers/avatar.php?g=female", timestamp: "5 hours ago" },
-          { id: 3, groupName: "Data Scientists", inviter: "Bob Johnson", avatar: "https://xsgames.co/randomusers/avatar.php?g=male", timestamp: "1 day ago" },
-          { id: 4, groupName: "Product Managers", inviter: "Alice Brown", avatar: "https://xsgames.co/randomusers/avatar.php?g=female", timestamp: "2 days ago" },
-     ])
 
-     const handleAccept = (id) => {
-          setInvitations(invitations.filter(item => item.id !== id))
+     const handleAccept = (bookingId) => {
+          mutation.mutateAsync({ type: 'accept', bookingId, memberId: currentUser?.accountId })
      }
 
-     const handleDeny = (id) => {
-          setInvitations(invitations.filter(item => item.id !== id))
+     const handleDeny = (bookingId) => {
+          mutation.mutateAsync({ type: 'reject', bookingId, memberId: currentUser?.accountId })
      }
 
      return (
@@ -49,30 +57,31 @@ export default function PendingAccept() {
                <div className="header">
                     <div className="header-content">
                          <Title level={2}>Group Invitations</Title>
-                         <Text className="invitation-count">{invitations.length} Pending</Text>
+                         <Text className="invitation-count">{listInviteData?.pendingGroup.length} Pending</Text>
                     </div>
                </div>
                <div className="content">
-                    {invitations.length > 0 ? (
+                    {listInviteData?.pendingGroup.length > 0 ? (
                          <List
                               className="invitation-list"
                               itemLayout="horizontal"
-                              dataSource={invitations}
+                              dataSource={listInviteData?.pendingGroup}
                               renderItem={(item) => (
                                    <List.Item className="invitation-item">
                                         <div className="item-main">
                                              <Avatar src={item.avatar} size={56} icon={<UserOutlined />} />
                                              <div className="item-info">
-                                                  <Text strong className="group-name">{item.groupName}</Text>
-                                                  <Text className="inviter">Invited by {item.inviter}</Text>
-                                                  <Text className="timestamp">{item.timestamp}</Text>
+                                                  <Text strong className="group-name">Invited by {item.student.fullName}</Text>
+                                                  <Text className="inviter"></Text>
+                                                  <Text className="timestamp">Mentor: {item.bookings.mentor.fullName}</Text>
+                                                  <Text className="timestamp">Booking time: {item.bookings.startTime}</Text>
                                              </div>
                                         </div>
                                         <div className="action-buttons">
                                              <Button
                                                   type="primary"
                                                   icon={<CheckOutlined />}
-                                                  onClick={() => handleAccept(item.id)}
+                                                  onClick={() => handleAccept(item.bookingId)}
                                                   className="accept-btn"
                                              >
                                                   Accept
@@ -80,7 +89,7 @@ export default function PendingAccept() {
                                              <Button
                                                   danger
                                                   icon={<CloseOutlined />}
-                                                  onClick={() => handleDeny(item.id)}
+                                                  onClick={() => handleDeny(item.bookingId)}
                                                   className="deny-btn"
                                              >
                                                   Deny

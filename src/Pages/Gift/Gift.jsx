@@ -17,6 +17,8 @@ const Gift = () => {
           queryKey: ['gift'], queryFn: () => getListGift(currentUser?.isMentor === 0 ? 'student' : 'mentor', currentUser?.accountId)
      })
 
+     console.log(dataGift);
+
      useEffect(() => {
           if (currentUser?.isMentor === 0) {
                setIsMentor(false)
@@ -47,7 +49,7 @@ const Gift = () => {
                )}
                {dataGift?.donates.length === 0
                     ?
-                    <div style={{ height: '100vh', width: '100vw', display: 'flex', justifyContent: 'center', alignItems: 'center' }}><Empty /></div>
+                    <div style={{ height: '100vh', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}><Empty /></div>
                     :
                     <div style={{
                          fontFamily: "'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
