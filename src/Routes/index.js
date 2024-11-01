@@ -9,6 +9,7 @@ import ProcessAccept from "../Pages/AcceptGroup/ProcessAccept"
 import Success from "../Pages/AcceptGroup/Success"
 import Reject from "../Pages/AcceptGroup/Reject"
 import DonateError from '../Pages/Donate/DonateError/DonateError'
+import ManagerReport from "../Pages/Admin"
 
 
 const publicRoutes = [
@@ -43,6 +44,7 @@ const adminRoutes = [
   { path: '/admin/items', element: ManagerItems, layout: AdminLayout },
   { path: '/admin/analytics/overview', element: OverviewChart, layout: AdminLayout },
   { path: '/admin/semester', element: ManagerSemester, layout: AdminLayout },
+  { path: '/admin/complaint', element: ManagerReport, layout: AdminLayout },
 ]
 
 export { adminRoutes, AdminRoutesAuth, privateRoutes, PrivateRoutesAuth, publicRoutes }

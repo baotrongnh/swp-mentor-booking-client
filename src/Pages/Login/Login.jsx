@@ -70,7 +70,7 @@ function Login() {
                         <form className='login-form'>
                             <img src={logo} alt="logo" className='logo' />
                             <div className="line"></div>
-                            <h1 className='title'>{t("welcom back")}</h1>
+                            <h1 className='title'>{t("welcome back")}</h1>
                             <p className='welcome-content'>{t("We are glad")}</p>
                             <a className="button-google" onClick={handleGoogleLogin}>
                                 <Icon className='icon-google' icon="logos:google-icon" />

@@ -234,7 +234,6 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
                     />
                 }
                 <ModalAddGroup modalOpen={modalOpen} setModalOpen={setModalOpen} bookingId={bookingId} />
-                <ModalAddGroup modalOpen={modalOpen} setModalOpen={setModalOpen} bookingId={bookingId} />
             </InfiniteScroll>
         </div>
     );

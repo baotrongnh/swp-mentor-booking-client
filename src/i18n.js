@@ -103,7 +103,7 @@ const resources = {
                "Expand your professional network and open doors to new opportunities through your mentors.": "Expand your professional network and open doors to new opportunities through your mentors.",
 
                //Login page
-               "welcom back": 'Welcome Back!',
+               "welcome back": 'Welcome Back!',
                "We are glad": 'We are glad to see you back.',
                "login": 'Log in with Google',
 
