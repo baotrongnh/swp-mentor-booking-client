@@ -11,7 +11,7 @@ export default function PendingAccept() {
      const { Title, Text } = Typography
      const { currentUser } = useContext(AuthContext)
 
-     const { data: listInviteData } = useQuery({ queryKey: `invite-list-${currentUser?.accountId}`, queryFn: () => getListInviteGroup(currentUser?.accountId) })
+     const { data: listInviteData } = useQuery({ queryKey: [`invite-list-${currentUser?.accountId}`], queryFn: () => getListInviteGroup(currentUser?.accountId) })
 
      console.log(listInviteData)
 

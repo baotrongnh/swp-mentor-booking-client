@@ -77,7 +77,7 @@ function MentorCard({ mentor, setModalOpen, setCurrentIdMentor }) {
                         }
                     </div>
 
-                    <p className="description"><Icon icon="material-symbols-light:description-outline" /> {mentor.description || t('No description')}</p>
+                    <p className="description"><Icon icon="material-symbols-light:description-outline" /> {mentor?.description || t('No description')}</p>
                 </Col>
             </Row>
 

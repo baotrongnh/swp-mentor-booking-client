@@ -10,8 +10,8 @@ import { Link } from 'react-router-dom'
 export default function Notification() {
      const { Text } = Typography
      const { currentUser } = useContext(AuthContext)
-     
-     const { data: notificationData } = useQuery({ queryKey: `notification-${currentUser.accountId}`, queryFn: () => getNotifications(currentUser?.accountId) })
+
+     const { data: notificationData } = useQuery({ queryKey: [`notification-${currentUser.accountId}`], queryFn: () => getNotifications(currentUser?.accountId) })
      console.log(notificationData)
 
      const [notifications] = useState([

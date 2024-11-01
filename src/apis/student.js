@@ -10,5 +10,5 @@ export const addStudentToGroup = async (bookingId, studentId, memberMails) => {
 
 export const getListInviteGroup = async (accountId) => {
      const token = getToken()
-     return await axiosClient(token).get(`/group/list-invite-group/${accountId}`)
+     return await axiosClient(token).get(`/list-invite-group/${accountId}`)
 }

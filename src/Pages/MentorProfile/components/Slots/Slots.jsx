@@ -38,8 +38,6 @@ export default function Slots({ setModalAddSlotsOpen, mentorId, isCurrentUser })
      const { currentUser } = useContext(AuthContext)
      const { semesterData } = useContext(AppContext)
 
-     console.log(semesterData.latestSemester.slotCost);
-
      const { data: listAvailableSlot, isLoading } = useQuery({
           queryKey: [`available-slot-${mentorId}`, mentorId],
           queryFn: () => getAvailableSlot(mentorId),
@@ -51,8 +49,6 @@ export default function Slots({ setModalAddSlotsOpen, mentorId, isCurrentUser })
      }
 
      const handleBook = (slotStart) => {
-          console.log(slotStart);
-          console.log(mentorId)
           mutation.mutate({ mentorId, studentId: currentUser.accountId, startTime: slotStart })
      }
 

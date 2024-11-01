@@ -56,6 +56,21 @@ function SidebarAdmin() {
           },
           {
                key: 'systemMenu',
+               label: 'Complaint',
+               icon: <SettingOutlined />,
+               children: [
+                    {
+                         key: '/admin/complaint/pending',
+                         label: <Link to='/admin/complaint/pending'>Pending</Link>,
+                    },
+                    {
+                         key: '/admin/complaint/resolved',
+                         label: <Link to='/admin/complaint/resolved'>Resolved</Link>,
+                    },
+               ],
+          },
+          {
+               key: 'systemMenu',
                label: 'System',
                icon: <SettingOutlined />,
                children: [
