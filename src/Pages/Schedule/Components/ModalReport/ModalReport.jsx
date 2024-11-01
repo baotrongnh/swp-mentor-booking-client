@@ -1,48 +1,43 @@
 import { Button, Form, Modal, Select } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { useState } from "react";
+import { getToken } from "../../../../utils/storageUtils";
+import axiosClient from "../../../../apis/axiosClient";
+import PropTypes from "prop-types";
 
-function ModalReport() {
+function ModalReport({ mentorId, studentId }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [form] = Form.useForm();
 
 
-    const selectList = [
-        {
-            value: '1',
-            label: 'Report 1',
-        },
-        {
-            value: '2',
-            label: 'Report 2',
-        },
-        {
-            value: '3',
-            label: 'Report 3',
-        },
-        {
-            value: '4',
-            label: 'Report 4',
-        },
-        {
-            value: '5',
-            label: 'Report 5',
-        },
-        {
-            value: '6',
-            label: 'Report 6',
-        },
-    ]
+    const negativeFeedbackOptions = [
+        { value: 'Not at all punctual', label: 'Not at all punctual' },
+        { value: 'Poor teaching skills', label: 'Poor teaching skills' },
+        { value: 'Not at all covered by syllabus', label: 'Not at all covered by syllabus' },
+        { value: 'Most queries left unanswered', label: 'Most queries left unanswered' },
+        { value: 'Dissatisfied with teaching quality', label: 'Dissatisfied with teaching quality' },
+    ];
 
     const showModal = () => {
         setIsModalOpen(true);
     };
-    const handleSubmitForm = (value) => {
+    const handleSubmitForm = async (value) => {
         console.log("Form value", value)
+        const token = getToken()
         if (value.select && value.description) {
+            const content = `${value.select}: ${value.description}`;
+            const res = await axiosClient(token).post('/complaint/create', {
+                studentId: studentId,
+                mentorId: mentorId,
+                content: content,
+            })
+            console.log(res)
+            form.resetFields()
             setIsModalOpen(false);
         }
     };
     const handleCancel = () => {
+        form.resetFields()
         setIsModalOpen(false);
     };
 
@@ -59,6 +54,7 @@ function ModalReport() {
                 footer={null}
             >
                 <Form
+                    form={form}
                     onFinish={handleSubmitForm}
                     autoComplete="off"
                     layout="vertical"
@@ -79,12 +75,13 @@ function ModalReport() {
                             style={{
                                 width: '100%',
                             }}
-                            placeholder="Search to Select"
+                            placeholder="Select"
                             optionFilterProp="label"
+
                             filterSort={(optionA, optionB) =>
                                 (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
                             }
-                            options={selectList}
+                            options={negativeFeedbackOptions}
                         />
                     </Form.Item>
                     <Form.Item
@@ -113,5 +110,10 @@ function ModalReport() {
         </>
     );
 };
+
+ModalReport.propTypes = {
+    mentorId: PropTypes.string.isRequired,
+    studentId: PropTypes.string.isRequired,
+}
 
 export default ModalReport

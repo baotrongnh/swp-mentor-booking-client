@@ -14,14 +14,12 @@ function Schedule() {
      const { t } = useContext(AppContext)
 
      const onClick = (e) => {
-          console.log('click ', e);
           setCurrentTab(e.key);
           setSelectedDate(null)
      };
 
      const handleBookingDate = useCallback((date) => {
           setBookingDates(date)
-          console.log(date)
      }, [])
 
      const handleDateSelected = (day) => {

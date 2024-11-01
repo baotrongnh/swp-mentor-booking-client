@@ -7,5 +7,7 @@ import ManagerItems from "./ManagerItems/ManagerItems"
 import OverviewChart from "./OverviewChart/OverviewChart"
 import ManagerSemester from './ManagerSemester/ManagerSemester'
 import ProcessAccept from "../AcceptGroup/ProcessAccept"
+import ManagerComplaintPending from "./ManagerComplaint/ManagerComplaintPending"
+import ManagerComplaintResolved from "./ManagerComplaint/ManagerComplaintResolved"
 
-export { ManagerMentor, ManagerStudent, LoginAdmin, Pending, ManagerSkills, ManagerItems, OverviewChart, ManagerSemester }
+export { ManagerMentor, ManagerStudent, LoginAdmin, Pending, ManagerSkills, ManagerItems, OverviewChart, ManagerSemester, ManagerComplaintPending, ManagerComplaintResolved }

@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js';
+import { useQueryClient } from '@tanstack/react-query';
 import { Button, Col, Divider, Flex, Image, List, Popconfirm, Row, Skeleton } from 'antd';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
@@ -30,7 +31,9 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
     const pageSize = 10;
     const { t } = useContext(AppContext)
     const role = currentUser?.isMentor === undefined ? 'mentor' : 'student'
+    const queryClient = useQueryClient()
 
+    
     const loadData = useCallback(async () => {
         if (loading) return;
         setLoading(true);
@@ -42,8 +45,7 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
                 // console.log('All data', res.data)
                 const bookingDates = res.data
                     .filter(booking =>
-                        (booking.status === 1 || booking.status === 2) &&
-                        dayjs(booking.startTime).isAfter(dayjs())
+                        booking.status === 1 && dayjs(booking.startTime).isAfter(dayjs())
                     )
                     .map(booking => dayjs(booking.startTime).format('YYYY-MM-DD'));
                 onBookingDatesChange(bookingDates);
@@ -59,14 +61,12 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
         loadData();
     }, [loadData]);
 
-    console.log(role)
 
     const loadMore = useCallback(() => {
         setPage(prevPage => prevPage + 1)
     })
 
     useEffect(() => {
-        hasMore ? console.log("Has more Data") : console.log("No more Data");
         if (allData.length <= 4) {
             setHasMore(false)
         }
@@ -75,7 +75,7 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
 
     useEffect(() => {
         let filterData = allData.filter(booking =>
-            (booking.status === 1 || booking.status === 2) && dayjs(booking.startTime).isAfter(dayjs())
+            booking.status === 1 && dayjs(booking.startTime).isAfter(dayjs())
         );
 
         if (selectedDate) {
@@ -94,15 +94,15 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
         }
     }, [loadData])
 
-    console.log(displayData)
 
-    const handleDeny = async (id) => {
+    const handleDeny = async (role, id) => {
         const token = getToken()
-        const res = await axiosClient(token).post('/booking/deny', {
-            bookingId: id
-        })
+        console.log(role)
+        const res = await axiosClient(token).get(`/booking/cancel/${role}/${id}`)
         try {
             if (res) {
+                queryClient.invalidateQueries({ queryKey: ['currentUser'] })
+                console.log(res)
                 toast.success('Success')
                 handleReload(true)
             }
@@ -110,7 +110,10 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
             console.log('Error: ', error)
             toast.error('Error')
         }
+
     }
+
+
 
     return (
         <div
@@ -153,7 +156,7 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
                                                     description={t("Are you sure to cancel this booking?")}
                                                     okText={t("Yes")}
                                                     cancelText={t("No")}
-                                                    onConfirm={() => handleDeny(item.id)}
+                                                    onConfirm={() => handleDeny(role, item.id)}
                                                 >
                                                     <Button
                                                         danger
@@ -217,7 +220,7 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
                                                     description={t("Are you sure to cancel this booking?")}
                                                     okText={t("Yes")}
                                                     cancelText={t("No")}
-                                                    onConfirm={() => handleDeny(item.id)}
+                                                    onConfirm={() => handleDeny(role, item.id)}
                                                 >
                                                     <Button
                                                         danger
@@ -233,7 +236,6 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
                         )}
                     />
                 }
-                <ModalAddGroup modalOpen={modalOpen} setModalOpen={setModalOpen} bookingId={bookingId} />
                 <ModalAddGroup modalOpen={modalOpen} setModalOpen={setModalOpen} bookingId={bookingId} />
             </InfiniteScroll>
         </div>

@@ -35,9 +35,10 @@ const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
             const res = await getListAllBooking(role, currentUser?.accountId);
             if (res) {
                 setAllData(res.data)
+                console.log(res.data)
                 const bookingDates = res.data
                     .filter(booking =>
-                        booking.status === 2 &&
+                        booking.status === 1 &&
                         dayjs(booking.startTime).isBefore(dayjs())
                     )
                     .map(booking => dayjs(booking.startTime).format('YYYY-MM-DD'));
@@ -72,7 +73,7 @@ const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
 
     useEffect(() => {
         let filterData = allData.filter(booking =>
-            booking.status === 2 && dayjs(booking.startTime).isBefore(dayjs())
+            booking.status === 1 && dayjs(booking.startTime).isBefore(dayjs())
         );
 
         if (selectedDate) {
@@ -122,9 +123,6 @@ const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
                                                 {FormatDate(new Date(item.startTime), true)}
                                                 {FormatDate(new Date(item.endTime), false)}
                                             </Flex>
-                                            <Flex justify='center' align='center' gap={24} style={{ marginTop: '1rem' }}>
-                                                <ModalReport />
-                                            </Flex>
                                         </Flex>
                                     </Col>
                                 </Row>
@@ -166,7 +164,7 @@ const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
                                                 {FormatDate(new Date(item.endTime), false)}
                                             </Flex>
                                             <Flex justify='center' align='center' gap={24} style={{ marginTop: '1rem' }}>
-                                                <ModalReport />
+                                                <ModalReport mentorId={item.mentorId} studentId={currentUser.accountId} />
                                             </Flex>
                                         </Flex>
                                     </Col>
