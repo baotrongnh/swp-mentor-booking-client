@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@canvasjs/react-charts": "^1.0.2",
+    "@hookform/resolvers": "^3.9.1",
     "@tanstack/react-query": "^5.59.0",
     "antd": "^5.20.5",
     "antd-style": "^3.7.1",
@@ -26,7 +27,8 @@
     "react-infinite-scroll-component": "^6.1.0",
     "react-router-dom": "^6.26.2",
     "react-type-animation": "^3.2.0",
-    "sass": "^1.78.0"
+    "sass": "^1.78.0",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

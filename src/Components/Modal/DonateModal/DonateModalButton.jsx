@@ -60,10 +60,6 @@ const DonateModalButton = ({ className, mentorId }) => {
     }, [loadData])
 
 
-    const formatNumber = (price) => {
-        return Intl.NumberFormat('de-DE').format(price)
-    }
-
     return (
         <div className='donate-modal-btn'>
             <Button
@@ -129,7 +125,7 @@ const DonateModalButton = ({ className, mentorId }) => {
                                     <h1 className='donate-item-title'>{item.name}</h1>
                                     <Flex align='center' justify='center'>
                                         <span className='donate-price'>
-                                            {formatNumber(item.price)} vnđ
+                                            {item.price}.000 vnđ
                                         </span>
                                     </Flex>
                                     <Button
