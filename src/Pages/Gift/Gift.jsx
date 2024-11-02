@@ -78,7 +78,7 @@ const Gift = () => {
                               marginBottom: '2rem',
                               fontSize: '1.2rem',
                          }}>
-                              {t('Total Value')}: {formatCurrencyVND(totalDonation.totalAmount)}
+                              {t('Total Value')}: {formatCurrencyVND(totalDonation?.totalAmount)}
                          </p>
 
                          <Flex justify='end'><Button style={{margin: '20px 0'}}>Withdraw all</Button></Flex>

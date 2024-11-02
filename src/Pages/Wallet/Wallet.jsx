@@ -18,7 +18,6 @@ export default function Wallet() {
         queryFn: () => getHistoryTransaction(currentUser.isMentor === 0 ? 'student' : 'mentor', currentUser?.accountId)
     })
 
-    console.log(transactionData);
     useEffect(() => {
         if (transactionData) {
             setList(transactionData)
@@ -86,7 +85,7 @@ export default function Wallet() {
                                     <List.Item actions={[<a key="list-loadmore-more">more</a>]}>
                                         <Skeleton avatar title={false} loading={item.loading} active>
                                             <List.Item.Meta
-                                                avatar={currentUser?.isMentor === 0 ? <Avatar src={item?.booking.mentor.imgPath} /> : ''}
+                                                avatar={currentUser?.isMentor === 0 ? <Avatar src={item?.booking?.mentor?.imgPath} /> : ''}
                                                 title={<Link>{item?.booking.mentor.fullName}</Link>}
                                                 description={returnType(item.type)}
                                             />

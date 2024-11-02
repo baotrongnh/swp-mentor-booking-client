@@ -4,9 +4,12 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import './AboutMentor.scss';
 import { DescriptionEditor } from '../../../../Components';
+import { useContext } from 'react';
+import { AuthContext } from '../../../../Contexts/AuthContext';
 
 function AboutMentor({ mentorInfor, isCurrentUser }) {
      const { t } = useTranslation()
+     const { currentUser } = useContext(AuthContext)
 
      return (
           <div className="about-mentor">
@@ -16,7 +19,7 @@ function AboutMentor({ mentorInfor, isCurrentUser }) {
                          <p className='description'>
                               {isCurrentUser
                                    ?
-                                   <DescriptionEditor defaultDescription={mentorInfor?.description} />
+                                   <DescriptionEditor accountId={currentUser.accountId} defaultDescription={mentorInfor?.description} />
                                    :
                                    (mentorInfor?.description || t('No description'))
                               }
