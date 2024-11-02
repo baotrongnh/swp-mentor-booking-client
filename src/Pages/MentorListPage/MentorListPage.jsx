@@ -99,7 +99,7 @@ function MentorListPage() {
                                             />
                                         </Col>
                                     ))
-                                    : <Empty/>
+                                    : <Flex justify='center' align='center' style={{width: '100%', height: '64vh'}}><Empty/></Flex>
                                 }
                             </Row>
                         }
