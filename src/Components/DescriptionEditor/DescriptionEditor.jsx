@@ -37,7 +37,7 @@ const DescriptionEditor = ({ defaultDescription, accountId }) => {
                     setIsEditing(false)
                }
           } else {
-               setIsEditing(true);
+               setIsEditing(true)
           }
      }
 
