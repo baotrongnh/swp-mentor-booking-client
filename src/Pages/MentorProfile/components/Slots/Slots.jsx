@@ -1,7 +1,7 @@
-import { CalendarOutlined, ClockCircleOutlined } from '@ant-design/icons'
+import { CalendarOutlined, ClockCircleOutlined, QuestionCircleOutlined } from '@ant-design/icons'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Button, Card, Flex, List, Skeleton, Space, Typography } from 'antd'
+import { Button, Card, Flex, List, Popconfirm, Skeleton, Space, Typography } from 'antd'
 import PropTypes from 'prop-types'
 import { useContext } from 'react'
 import toast from 'react-hot-toast'
@@ -43,6 +43,7 @@ export default function Slots({ setModalAddSlotsOpen, mentorId, isCurrentUser })
                queryClient.invalidateQueries({ queryKey: [`available-slot-${mentorId}`, mentorId] })
           },
      })
+
      const { currentUser } = useContext(AuthContext)
      const { semesterData } = useContext(AppContext)
 
@@ -93,8 +94,28 @@ export default function Slots({ setModalAddSlotsOpen, mentorId, isCurrentUser })
                                              <Text>{formatDateToNormal(item.slotStart).time}</Text>
                                         </Space>
                                         {currentUser?.isMentor === 0
-                                             ? <Button loading={mutationDelete.isPending} type='primary' onClick={() => handleBook(item.id)}>{t('Book')}: {semesterData.latestSemester.slotCost} <Icon icon="twemoji:coin" /></Button>
-                                             : <Button danger onClick={() => handleDelete(item.id)}>{t('Delete')}</Button>
+                                             ?
+                                             <Popconfirm
+                                                  title="Booking confirm"
+                                                  description="Are you sure you want to book this time?"
+                                                  onConfirm={() => handleBook(item.id)}
+                                                  okButtonProps={{
+                                                       loading: mutation.isPending,
+                                                  }}
+                                             >
+                                                  <Button loading={mutationDelete.isPending} type='primary'>
+                                                       {t('Book')}: {semesterData.latestSemester.slotCost} <Icon icon="twemoji:coin" />
+                                                  </Button>
+                                             </Popconfirm>
+                                             :
+                                             <Popconfirm
+                                                  title="Delete the slot"
+                                                  description="Are you sure to delete this slot?"
+                                                  icon={<QuestionCircleOutlined style={{ color: 'red', }} />}
+                                                  onConfirm={() => handleDelete(item.id)}
+                                             >
+                                                  <Button danger>{t('Delete')}</Button>
+                                             </Popconfirm>
                                         }
                                    </Space>
                               </Card>

@@ -1,20 +1,31 @@
-import {Icon} from "@iconify/react/dist/iconify.js"
-import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query"
-import {Button, Dropdown, Table, Tag} from "antd"
-import {useEffect, useState} from "react"
-import {getlistMentorPending, promoteMentor} from "../../../../../apis/admin"
-import {loadAllSkills} from "../../../../../apis/mentor"
-import {Loading} from "../../../../../Components"
+import { Icon } from "@iconify/react/dist/iconify.js"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { Button, Dropdown, Table, Tag } from "antd"
+import { useEffect, useState } from "react"
+import { getlistMentorPending, promoteMentor, rejectApplyMentor } from "../../../../../apis/admin"
+import { loadAllSkills } from "../../../../../apis/mentor"
+import { Loading } from "../../../../../Components"
 import toast from "react-hot-toast"
 
 function Pending() {
     const [selectedRowKeys, setSelectedRowKeys] = useState([])
     const queryClient = useQueryClient()
-    const {data: listSkills} = useQuery({queryKey: ['list-skills'], queryFn: loadAllSkills})
-    const {data: dataMentors, isLoading} = useQuery({queryKey: ['list-pending-admin'], queryFn: getlistMentorPending})
+    const { data: listSkills } = useQuery({ queryKey: ['list-skills'], queryFn: loadAllSkills })
+    const { data: dataMentors, isLoading } = useQuery({ queryKey: ['list-pending-admin'], queryFn: getlistMentorPending })
     const [dataSource, setDataSource] = useState([])
     const mutationAccept = useMutation({
         mutationFn: (mentorId) => promoteMentor(mentorId)
+    })
+
+    const mutationReject = useMutation({
+        mutationFn: (mentorId) => rejectApplyMentor(mentorId),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['list-pending-admin'] })
+            toast.success('Reject success')
+        },
+        onError: () => {
+            toast.error('Error')
+        }
     })
 
     useEffect(() => {
@@ -34,7 +45,7 @@ function Pending() {
     }, [dataMentors])
 
     const handleReject = async (mentor) => {
-        console.log(mentor)
+        mutationReject.mutateAsync(mentor.id)
     }
 
     const handleAccept = async (mentor) => {
@@ -52,14 +63,14 @@ function Pending() {
         {
             label: 'Accept',
             key: '0',
-            icon: <Icon icon="mdi:tick"/>,
+            icon: <Icon icon="mdi:tick" />,
             onClick: () => handleAccept(record)
         },
         {
             label: 'Reject',
             key: '3',
             danger: true,
-            icon: <Icon icon="dashicons:no"/>,
+            icon: <Icon icon="dashicons:no" />,
             onClick: () => handleReject(record)
         },
     ])
@@ -111,10 +122,10 @@ function Pending() {
             align: 'center',
             render: (text, record) => (
                 <Dropdown
-                    menu={{items: getDropDownItems(text, record)}}
+                    menu={{ items: getDropDownItems(text, record) }}
                     trigger={['click']}
                 >
-                    <Button type="text"><Icon icon="lsicon:more-outline"/></Button>
+                    <Button type="text"><Icon icon="lsicon:more-outline" /></Button>
                 </Dropdown>
             )
         }
@@ -131,13 +142,13 @@ function Pending() {
         onSelect: (record, seleted) => console.log(record, seleted)
     }
 
-    if (isLoading) return (<Loading/>)
+    if (isLoading) return (<Loading />)
 
     return (
         <div className="all-mentors">
             <Table
-                scroll={{y: '76vh'}}
-                pagination={{position: ['bottomCenter']}}
+                scroll={{ y: '76vh' }}
+                pagination={{ position: ['bottomCenter'] }}
                 rowSelection={rowSelection}
                 columns={columns}
                 dataSource={dataSource}

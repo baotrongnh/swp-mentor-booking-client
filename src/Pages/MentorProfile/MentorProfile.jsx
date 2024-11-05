@@ -11,6 +11,7 @@ import { getProfileMentor } from "../../apis/mentor"
 import PageError from '../PageError'
 import './MentorProfile.scss'
 import { AboutMentor, MentorInfor, RatingView, Skills, Slots } from "./components"
+import PageNotFound from '../PageNotFound'
 
 function MentorProfile() {
     const { currentUser } = useContext(AuthContext)
@@ -66,7 +67,7 @@ function MentorProfile() {
     const renderContent = () => {
         switch (currentTab) {
             case 'about':
-                return <AboutMentor mentorInfor={mentorInfor?.mentor} />
+                return <AboutMentor isCurrentUser={isCurrentUser} mentorInfor={mentorInfor?.mentor} />
             case 'skills':
                 return <Skills id={id} />
             case 'rating':
@@ -79,6 +80,8 @@ function MentorProfile() {
     if (isLoading) return <SkeletonLoading />
 
     if (isError) return <PageError action={refetch} />
+
+    if (!(currentUser?.isMentor === 0) && !isCurrentUser) return <PageNotFound />
 
     return (
         <div className="mentor-profile">

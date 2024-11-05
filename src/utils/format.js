@@ -12,5 +12,5 @@ export const formatDataToServer = (dateString) => {
 }
 
 export function formatCurrencyVND(amount) {
-    return `${amount.toLocaleString("vi-VN")} vnđ`;
+    return `${amount?.toLocaleString("vi-VN")} vnđ`;
 }

@@ -39,12 +39,6 @@ function AllMentor() {
 
     const getDropDownItems = (text, record) => ([
         {
-            label: 'Edit',
-            key: '0',
-            icon: <Icon icon="iconamoon:edit-bold"/>,
-            onClick: () => handleDisableMentor(record)
-        },
-        {
             label: 'Delete',
             key: '3',
             danger: true,

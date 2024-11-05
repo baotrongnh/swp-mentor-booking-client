@@ -39,12 +39,6 @@ function DisableMentor() {
 
      const getDropDownItems = (text, record) => ([
           {
-               label: 'Edit',
-               key: '0',
-               icon: <Icon icon="iconamoon:edit-bold" />,
-               onClick: () => handleActiveMentor(record)
-          },
-          {
                label: 'Restore',
                key: '3',
                icon: <Icon icon="weui:delete-outlined" />,

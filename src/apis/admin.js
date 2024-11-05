@@ -53,6 +53,13 @@ export const promoteMentor = async (accountId) => {
      }
 }
 
+export const rejectApplyMentor = async (mentorId) => {
+     const token = getTokenAdmin()
+     return await axiosClient(token).post('/admin/reject-application', {
+          mentorId
+     })
+}
+
 export const startNewSemester = async () => {
      const token = getTokenAdmin()
      return await axiosClient(token).post('/admin/start-semester')
