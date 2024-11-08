@@ -6,7 +6,6 @@ import './SidebarAdmin.scss'
 
 function SidebarAdmin() {
      const location = useLocation()
-     console.log(location);
 
      const items = [
           {
@@ -20,6 +19,10 @@ function SidebarAdmin() {
                     {
                          key: '/admin/analytics/overview',
                          label: <Link to='/admin/analytics/overview'>Overview</Link>
+                    },
+                    {
+                         key: '/admin/analytics/proportion',
+                         label: <Link to='/admin/analytics/proportion'>Proportion</Link>
                     }
                ]
           },
