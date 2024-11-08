@@ -23,9 +23,8 @@ function ModalRatingMentor({ mentorId, modalOpen, setModalOpen }) {
      })
 
      const handleOk = () => {
-          console.log(feedback);
           if (feedback.rating == '') {
-               toast.error('Error')
+               toast.error('Rating before submit!')
           } else {
                mutation.mutate(feedback)
                setModalOpen(false)

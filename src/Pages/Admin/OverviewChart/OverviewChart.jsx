@@ -34,7 +34,7 @@ export default function OverviewChart() {
 
      const options = {
           title: {
-               text: "Total User"
+               text: "Users"
           },
           animationEnabled: true,
           exportEnabled: true,
@@ -53,7 +53,7 @@ export default function OverviewChart() {
 
      const optionsSkills = {
           title: {
-               text: "Total User"
+               text: "Skills"
           },
           animationEnabled: true,
           exportEnabled: true,

@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { getCurrentSemester } from '../../../apis/semester'
 import { resetStudentPoint, setDefaultPoint, startNewSemester } from '../../../apis/admin'
@@ -6,19 +6,21 @@ import toast from 'react-hot-toast'
 import './ManagerSemester.scss'
 
 const ManagerSemester = () => {
+     const queryClient = useQueryClient()
+
      const { data: currentSemesterData } = useQuery({ queryKey: ['current-semester'], queryFn: getCurrentSemester })
      const mutationResetPoint = useMutation({
           mutationFn: resetStudentPoint,
           onSuccess: () => {
-               console.log('ok')
+               toast.success('Points reset!')
           }
      })
 
      const mutationStartNewSemester = useMutation({
           mutationFn: startNewSemester,
-          onSuccess: (value) => {
-               console.log(value)
-               toast.success(`New semester has started ()`)
+          onSuccess: () => {
+               queryClient.invalidateQueries({ queryKey: ['current-semester'] })
+               toast.success(`New semester has started`)
           },
           onError: () => {
                toast.error('An error occurred, please try again!')
@@ -27,8 +29,8 @@ const ManagerSemester = () => {
 
      const mutationSetDefaultPoint = useMutation({
           mutationFn: (newPoint) => setDefaultPoint(newPoint),
-          onSuccess: (value) => {
-               console.log(value)
+          onSuccess: () => {
+               toast.success('Default score set for new semester')
           }
      })
 
@@ -67,7 +69,7 @@ const ManagerSemester = () => {
                     <div className="semester-info-grid">
                          <div className="info-item">
                               <span className="label">Semester Name</span>
-                              <p className="value">{`${currentSemesterData?.latestSemester?.name} ${currentSemesterData?.latestSemester?.year}`}</p>
+                              <p className="value">{`${ currentSemesterData?.latestSemester?.name } ${ currentSemesterData?.latestSemester?.year }`}</p>
                          </div>
                          <div className="info-item">
                               <span className="label">Start Date</span>
@@ -107,7 +109,7 @@ const ManagerSemester = () => {
                                    <input
                                         type="number"
                                         value={defaultPointCustom}
-                                        onChange={(e) => setDefaultPointCustom(Number(e.target.value))}
+                                        onChange={(e) => setDefaultPointCustom(e.target.value)}
                                         className="point-input"
                                    />
                                    <button onClick={handleSetDefaultPoint} className="action-button">

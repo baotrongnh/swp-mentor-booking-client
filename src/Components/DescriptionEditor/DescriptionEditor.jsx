@@ -56,7 +56,7 @@ const DescriptionEditor = ({ defaultDescription, accountId }) => {
                     />
                ) : (
                     <div>
-                         {description.split('\n').map((line, index) => (
+                         {description?.split('\n').map((line, index) => (
                               <p key={index} style={{ margin: 0 }}>{line}</p>
                          ))}
                     </div>

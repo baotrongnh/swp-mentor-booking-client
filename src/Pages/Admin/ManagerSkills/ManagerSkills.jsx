@@ -1,17 +1,32 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { Button, Dropdown, Table } from "antd"
+import { Button, Dropdown, Input, Modal, Table } from "antd"
 import { useEffect, useState } from "react"
-import { disableMentor } from "../../../apis/admin"
 import { loadAllSkills } from "../../../apis/mentor"
 import { Loading } from "../../../Components"
+import { createSkillMentor } from "../../../apis/admin"
+import toast from "react-hot-toast"
 
 function ManagerSkills() {
      const [selectedRowKeys, setSelectedRowKeys] = useState([])
+     const [modalOpen, setModalOpen] = useState(false)
+     const [newSkillName, setNewSkillName] = useState('')
      const queryClient = useQueryClient()
+
      const { data: listSkills, isLoading } = useQuery({ queryKey: ['list-skills'], queryFn: loadAllSkills })
      const [dataSource, setDataSource] = useState([])
-     const mutation = useMutation({ mutationFn: (mentorId) => disableMentor(mentorId) })
+
+     const mutationAdd = useMutation({
+          mutationFn: (name) => createSkillMentor(name),
+          onSuccess: () => {
+               setModalOpen(false)
+               queryClient.invalidateQueries({ queryKey: ['list-skills'] })
+               toast.success('Add skill success!')
+          },
+          onError: (error) => {
+               console.log(error)
+          }
+     })
 
      useEffect(() => {
           if (listSkills) {
@@ -27,11 +42,32 @@ function ManagerSkills() {
           }
      }, [listSkills])
 
-     const handleDisableMentor = async (mentor) => {
-          const data = await mutation.mutateAsync(mentor.id)
-          if (data.error_code === 0) {
-               queryClient.invalidateQueries({ queryKey: ['list-mentors-admin'] })
+     const [editingKey, setEditingKey] = useState('')
+
+     const isEditing = (record) => record.key === editingKey
+
+     const handleNameChange = (value, record) => {
+          if (value === null || value === '') {
+               toast.error('Name cannot be empty!')
+               return
           }
+
+          if (value === record.name) {
+               toast.error('The new skill name must be different from the old skill name!')
+               return
+          }
+
+          console.log('Skill ID:', record.id)
+          console.log('New Value:', value)
+          setEditingKey('')
+     }
+
+     const handleDeleteSkill = async (skill) => {
+          console.log(skill)
+     }
+
+     const handleEditSkill = async (skill) => {
+          console.log(skill)
      }
 
      const getDropDownItems = (text, record) => ([
@@ -39,14 +75,14 @@ function ManagerSkills() {
                label: 'Edit',
                key: '0',
                icon: <Icon icon="iconamoon:edit-bold" />,
-               onClick: () => handleDisableMentor(record)
+               onClick: () => handleDeleteSkill(record)
           },
           {
                label: 'Delete',
                key: '3',
                danger: true,
                icon: <Icon icon="weui:delete-outlined" />,
-               onClick: () => handleDisableMentor(record)
+               onClick: () => handleEditSkill(record)
           },
      ])
 
@@ -59,10 +95,25 @@ function ManagerSkills() {
                title: 'Name',
                dataIndex: 'name',
                sorter: (a, b) => a.name.length - b.name.length,
-          },
-          {
-               title: 'Image',
-               dataIndex: 'image',
+               render: (name, record) => {
+                    const editable = isEditing(record);
+                    return editable ? (
+                         <Input
+                              defaultValue={name}
+                              onPressEnter={(e) => handleNameChange(e.target.value, record)}
+                              onBlur={(e) => handleNameChange(e.target.value, record)}
+                              min={0}
+                              autoFocus
+                         />
+                    ) : (
+                         <div
+                              style={{ cursor: 'text', padding: '5px' }}
+                              onClick={() => setEditingKey(record.key)}
+                         >
+                              {name}
+                         </div>
+                    );
+               }
           },
           {
                title: 'Number mentors',
@@ -96,11 +147,43 @@ function ManagerSkills() {
           onSelect: (record, seleted) => console.log(seleted)
      }
 
+     const handleAddSkill = () => {
+          if (newSkillName.trim()) {
+               mutationAdd.mutate(newSkillName.trim())
+               setNewSkillName('')
+          } else {
+               toast.error('Skill name cannot be empty!')
+          }
+     }
+
      if (isLoading) return (<Loading />)
 
      return (
           <div className="all-mentors">
-               <Button>+ Add skill</Button>
+               <Button onClick={() => setModalOpen(true)} type="primary" style={{ marginBottom: 16 }}>
+                    + Add skill
+               </Button>
+               
+               <Modal
+                    title="Add New Skill"
+                    open={modalOpen}
+                    onOk={handleAddSkill}
+                    onCancel={() => {
+                         setModalOpen(false)
+                         setNewSkillName('')
+                    }}
+                    okText="Add"
+                    confirmLoading={mutationAdd.isPending}
+                    centered
+               >
+                    <Input
+                         placeholder="Enter skill name"
+                         value={newSkillName}
+                         onChange={(e) => setNewSkillName(e.target.value)}
+                         style={{ marginTop: 16 }}
+                    />
+               </Modal>
+
                <Table
                     scroll={{ y: '76vh' }}
                     pagination={{ position: ['bottomCenter'] }}

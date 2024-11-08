@@ -1,40 +1,84 @@
-import {Icon} from "@iconify/react/dist/iconify.js"
-import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query"
-import {Button, Dropdown, Table, Tag} from "antd"
-import {useEffect, useState} from "react"
-import {disableMentor, getListMentor} from "../../../../../apis/admin"
-import {loadAllSkills} from "../../../../../apis/mentor"
-import {Loading} from "../../../../../Components"
+import { Icon } from "@iconify/react/dist/iconify.js"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { Button, Dropdown, Image, InputNumber, Table, Tag } from "antd"
+import Search from "antd/es/transfer/search"
+import { useEffect, useState } from "react"
+import toast from "react-hot-toast"
+import { disableMentor, getListMentor } from "../../../../../apis/admin"
+import { loadAllSkills } from "../../../../../apis/mentor"
+import { Loading } from "../../../../../Components"
 
 function AllMentor() {
     const [selectedRowKeys, setSelectedRowKeys] = useState([])
+    const [dataSearch, setDataSearch] = useState('')
     const queryClient = useQueryClient()
-    const {data: listSkills} = useQuery({queryKey: ['list-skills'], queryFn: loadAllSkills})
-    const {data: dataMentors, isLoading} = useQuery({queryKey: ['list-mentors-admin'], queryFn: getListMentor})
+    const { data: listSkills } = useQuery({ queryKey: ['list-skills'], queryFn: loadAllSkills })
+    const { data: dataMentors, isLoading } = useQuery({ queryKey: ['list-mentors-admin'], queryFn: getListMentor })
     const [dataSource, setDataSource] = useState([])
-    const mutation = useMutation({mutationFn: (mentorId) => disableMentor(mentorId)})
-    console.log(dataMentors)
+    const mutation = useMutation({
+        mutationFn: (mentorId) => disableMentor(mentorId),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['list-mentors-admin'] })
+            toast.success('Delete success!')
+        },
+        onError: (error) => {
+            console.log(error)
+        }
+    })
+
+    const [editingKey, setEditingKey] = useState('')
+
+    const isEditing = (record) => record.key === editingKey
+
+    const handlePointChange = (value, record) => {
+        console.log(typeof value);
+        if (value === null || value === '') {
+            toast.error('Point cannot be empty!')
+            return
+        }
+
+        if (value < 0) {
+            toast.error('Point cannot be negative!')
+            return
+        }
+
+        if (value === record.point) {
+            setEditingKey('')
+            toast.error('Nothing change')
+            return
+        }
+
+        if (!Number.isInteger(value)) {
+            toast.error('Point must be an integer!')
+            return
+        }
+
+        setEditingKey('')
+        console.log('Mentor ID:', record.id)
+        console.log('New Point Value:', value)
+    }
+
     useEffect(() => {
         if (dataMentors) {
             setDataSource(
-                dataMentors?.mentorList?.map((mentor) => ({
-                    key: mentor.accountId,
-                    id: mentor.accountId,
-                    name: mentor.fullName,
-                    email: mentor.email,
-                    point: mentor.point || 'null',
-                    rating: mentor.averageRating || '#',
-                    skills: mentor.skills?.map(skill => skill.name)
-                }))
+                dataMentors?.mentorList
+                    ?.filter(mentor => mentor.fullName.toLowerCase().includes(dataSearch.toLowerCase()))
+                    .map((mentor) => ({
+                        key: mentor.accountId,
+                        id: mentor.accountId,
+                        name: mentor.fullName,
+                        email: mentor.email,
+                        point: mentor.point,
+                        rating: mentor.averageRating || 'No data',
+                        skills: mentor.skills?.map(skill => `${skill.name} (level)`),
+                        image: mentor.imgPath
+                    }))
             )
         }
-    }, [dataMentors])
+    }, [dataMentors, dataSearch])
 
     const handleDisableMentor = async (mentor) => {
-        const data = await mutation.mutateAsync(mentor.id)
-        if (data?.error_code === 0) {
-            queryClient.invalidateQueries({queryKey: ['list-mentors-admin']})
-        }
+        mutation.mutateAsync(mentor.id)
     }
 
     const getDropDownItems = (text, record) => ([
@@ -42,12 +86,19 @@ function AllMentor() {
             label: 'Delete',
             key: '3',
             danger: true,
-            icon: <Icon icon="weui:delete-outlined"/>,
+            icon: <Icon icon="weui:delete-outlined" />,
             onClick: () => handleDisableMentor(record)
         },
     ])
 
     const columns = [
+        {
+            title: 'Image',
+            dataIndex: 'image',
+            render: (image) => (
+                <Image src={image} />
+            )
+        },
         {
             title: 'Name',
             dataIndex: 'name',
@@ -60,7 +111,28 @@ function AllMentor() {
             title: 'Point',
             dataIndex: 'point',
             align: 'center',
+            editable: true,
             sorter: (a, b) => a.point - b.point,
+            render: (point, record) => {
+                const editable = isEditing(record)
+
+                return editable ? (
+                    <InputNumber
+                        defaultValue={point}
+                        onPressEnter={(e) => handlePointChange(Number.parseInt(e.target.value), record)}
+                        onBlur={(e) => handlePointChange(Number.parseInt(e.target.value), record)}
+                        min={0}
+                        autoFocus
+                    />
+                ) : (
+                    <div
+                        style={{ cursor: 'text', padding: '5px' }}
+                        onClick={() => setEditingKey(record.key)}
+                    >
+                        {point}
+                    </div>
+                )
+            }
         },
         {
             title: 'Rating',
@@ -94,10 +166,10 @@ function AllMentor() {
             align: 'center',
             render: (text, record) => (
                 <Dropdown
-                    menu={{items: getDropDownItems(text, record)}}
+                    menu={{ items: getDropDownItems(text, record) }}
                     trigger={['click']}
                 >
-                    <Button type="text"><Icon icon="lsicon:more-outline"/></Button>
+                    <Button type="text"><Icon icon="lsicon:more-outline" /></Button>
                 </Dropdown>
             )
         }
@@ -114,16 +186,30 @@ function AllMentor() {
         onSelect: (record, seleted) => console.log(seleted)
     }
 
-    if (isLoading) return (<Loading/>)
+    const onSearch = (e) => {
+        setDataSearch(e.target.value)
+    }
+
+    if (isLoading) return (<Loading />)
 
     return (
         <div className="all-mentors">
+            <div style={{ margin: '10px 0', padding: '0 20px' }}>
+                <Search
+                    placeholder="Find mentors..."
+                    allowClear
+                    onSearch={onSearch}
+                    className='search-input'
+                    onChange={onSearch}
+                />
+            </div>
             <Table
-                scroll={{y: '76vh'}}
-                pagination={{position: ['bottomCenter']}}
+                scroll={{ y: '76vh' }}
+                pagination={{ position: ['bottomCenter'] }}
                 rowSelection={rowSelection}
                 columns={columns}
                 dataSource={dataSource}
+                bordered
             />
         </div>
     )
