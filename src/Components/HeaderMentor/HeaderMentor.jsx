@@ -64,7 +64,7 @@ function HeaderMentor({ dataUnread }) {
                key: '1',
           },
           {
-               label: <Flex onClick={() => setOpenModalAddSkill(true)} gap='small' align='center'>Add schedule</Flex>,
+               label: <Flex onClick={() => setOpenModalAddSkill(true)} gap='small' align='center'>{t('Add schedule')}</Flex>,
                key: '9',
           },
           { type: 'divider' },

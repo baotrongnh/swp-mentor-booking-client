@@ -231,7 +231,7 @@ function Header() {
 
                     <Col className='search-block' xs={24} sm={14} md={17} lg={7} xl={9}>
                         <Input.Search
-                            placeholder={t('find mentors')}
+                            placeholder={t('search placeholder')}
                             onSearch={onSearch}
                             style={{ width: '100%', }}
                             size='large'

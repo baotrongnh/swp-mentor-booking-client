@@ -26,8 +26,8 @@ export default function ModalBecomeMentor({ modalOpen, setModalOpen }) {
 
     const mutation = useMutation({
         mutationFn: ({ selectedSkills, studentId }) => registerBecomeMentor(selectedSkills, studentId),
-        onError: () => {
-            toast.error('This account is already registered or an error occurred, please try again!')
+        onError: (error) => {
+            toast.error(error.response.data.message)
         },
         onSuccess: () => {
             toast.success('Successfully registered as a mentor')
