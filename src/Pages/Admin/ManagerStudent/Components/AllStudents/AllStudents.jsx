@@ -95,7 +95,6 @@ function AllStudents() {
                 columns={columns}
                 dataSource={dataSource}
             />
-            <h1>hi</h1>
         </div>
     )
 }

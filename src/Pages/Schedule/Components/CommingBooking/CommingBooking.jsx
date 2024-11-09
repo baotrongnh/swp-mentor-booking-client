@@ -33,7 +33,7 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
     const role = currentUser?.isMentor === undefined ? 'mentor' : 'student'
     const queryClient = useQueryClient()
 
-    
+
     const loadData = useCallback(async () => {
         if (loading) return;
         setLoading(true);
@@ -113,7 +113,7 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
 
     }
 
-
+    console.log(displayData)
 
     return (
         <div

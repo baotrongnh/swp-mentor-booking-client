@@ -287,7 +287,7 @@ const resources = {
                "SWP Mentor Booking": "Đặt Lịch Mentor SWP",
                "Find Your Perfect Mentor": "Tìm Mentor Phù Hợp Với Bạn",
                "Connect with experienced professionals to guide your career": "Kết nối với các chuyên gia giàu kinh nghiệm để định hướng sự nghiệp của bạn",
-               "Get Started": "Bt Đầu",
+               "Get Started": "Bắt Đầu",
                "See Our Best Mentor": "Xem Mentor Xuất Sắc Của Chúng Tôi",
                "View Mentor": "Xem Mentor",
                "Why Use Our Mentor Booking System?": "Tại Sao Nên Sử Dụng Hệ Thống Đặt Lịch Mentor Của Chúng Tôi?",
