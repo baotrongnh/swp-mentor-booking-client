@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { Button, Dropdown, Input, Modal, Table } from "antd"
+import { Button, Dropdown, Flex, Input, Modal, Table } from "antd"
 import { useEffect, useState } from "react"
 import { loadAllSkills } from "../../../apis/mentor"
 import { Loading } from "../../../Components"
@@ -53,7 +53,7 @@ function ManagerSkills() {
           }
 
           if (value === record.name) {
-               toast.error('The new skill name must be different from the old skill name!')
+               setEditingKey('')
                return
           }
 
@@ -66,23 +66,13 @@ function ManagerSkills() {
           console.log(skill)
      }
 
-     const handleEditSkill = async (skill) => {
-          console.log(skill)
-     }
-
      const getDropDownItems = (text, record) => ([
-          {
-               label: 'Edit',
-               key: '0',
-               icon: <Icon icon="iconamoon:edit-bold" />,
-               onClick: () => handleDeleteSkill(record)
-          },
           {
                label: 'Delete',
                key: '3',
                danger: true,
                icon: <Icon icon="weui:delete-outlined" />,
-               onClick: () => handleEditSkill(record)
+               onClick: () => handleDeleteSkill(record)
           },
      ])
 
@@ -160,9 +150,11 @@ function ManagerSkills() {
 
      return (
           <div className="all-mentors">
-               <Button onClick={() => setModalOpen(true)} type="primary" style={{ marginBottom: 16 }}>
-                    + Add skill
-               </Button>
+               <Flex justify="end">
+                    <Button onClick={() => setModalOpen(true)} type="primary" style={{ margin: '10px 20px' }}>
+                         + Add skill
+                    </Button>
+               </Flex>
                
                <Modal
                     title="Add New Skill"

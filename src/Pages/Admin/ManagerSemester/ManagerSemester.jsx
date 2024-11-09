@@ -90,17 +90,7 @@ const ManagerSemester = () => {
                     </div>
                </div>
 
-               <div className="action-cards">
-                    <div className="action-card">
-                         <div className="card-content">
-                              <h3>Reset Student Points</h3>
-                              <p className="description">Reset all student points to their default value</p>
-                              <button onClick={resetStudentPoints} className="action-button">
-                                   Reset Points
-                              </button>
-                         </div>
-                    </div>
-
+               <div className='action-cards'>
                     <div className="action-card">
                          <div className="card-content">
                               <h3>Set Default Point</h3>
@@ -121,9 +111,39 @@ const ManagerSemester = () => {
 
                     <div className="action-card">
                          <div className="card-content">
+                              <h3>Set cost for a slot</h3>
+                              <p className="description">Set the default cost for booking</p>
+                              <div className="input-group">
+                                   <input
+                                        type="number"
+                                        value={defaultPointCustom}
+                                        onChange={(e) => setDefaultPointCustom(e.target.value)}
+                                        className="point-input"
+                                   />
+                                   <button onClick={handleSetDefaultPoint} className="action-button">
+                                        Set Default
+                                   </button>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+
+               <div className="action-cards">
+                    <div className="action-card">
+                         <div className="card-content">
+                              <h3>Reset Student Points</h3>
+                              <p className="description">Reset all student points to their default value</p>
+                              <button onClick={resetStudentPoints} className="action-button warning">
+                                   Reset Points
+                              </button>
+                         </div>
+                    </div>
+
+                    <div className="action-card">
+                         <div className="card-content">
                               <h3>Start New Semester</h3>
                               <p className="description">Initialize a new semester period</p>
-                              <button onClick={handleStartNewSemester} className="action-button warning">
+                              <button onClick={handleStartNewSemester} className="action-button">
                                    Start New Semester
                               </button>
                          </div>

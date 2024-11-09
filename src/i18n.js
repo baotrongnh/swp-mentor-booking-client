@@ -248,7 +248,6 @@ const resources = {
                "mentor": "Mentor",
                "booking time": "Booking time",
                "accept": "Accept",
-               "deny": "Deny",
                "no pending invitations": "No pending invitations",
                "complete": "Complete!"
           }
@@ -499,7 +498,6 @@ const resources = {
                "mentor": "Mentor",
                "booking time": "Thời gian đặt lịch",
                "accept": "Chấp nhận",
-               "deny": "Từ chối",
                "no pending invitations": "Không có lời mời nào",
                "complete": "Hoàn thành!"
           }

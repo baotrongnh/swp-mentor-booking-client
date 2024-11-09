@@ -3,6 +3,7 @@ import { Button, Flex, Menu } from 'antd'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import logo from '../../assets/Photos/logo/logo.png'
 import './SidebarAdmin.scss'
+import { Icon } from '@iconify/react/dist/iconify.js'
 
 function SidebarAdmin() {
      const location = useLocation()
@@ -59,7 +60,7 @@ function SidebarAdmin() {
           {
                key: 'complaintMenu',
                label: 'Complaint',
-               icon: <SettingOutlined />,
+               icon: <Icon icon="mdi:paper-edit-outline" />,
                children: [
                     {
                          key: '/admin/complaint/pending',
