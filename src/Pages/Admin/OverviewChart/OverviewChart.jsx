@@ -34,7 +34,7 @@ export default function OverviewChart() {
 
      const options = {
           title: {
-               text: "Total User"
+               text: "Users"
           },
           animationEnabled: true,
           exportEnabled: true,
@@ -53,7 +53,7 @@ export default function OverviewChart() {
 
      const optionsSkills = {
           title: {
-               text: "Total User"
+               text: "Skills"
           },
           animationEnabled: true,
           exportEnabled: true,
@@ -69,12 +69,15 @@ export default function OverviewChart() {
      }
 
      return (
-          <div className="overview-chart" style={{display: 'flex'}}>
-               <div style={{width: '50%'}}>
+          <div className="overview-chart" style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+               <div style={{width: '100%'}}>
                     <CanvasJSChart options={options} />
                </div>
 
-               <div style={{ width: '50%' }}>
+               <br />
+               <br />
+
+               <div style={{ width: '100%' }}>
                     <CanvasJSChart options={optionsSkills} />
                </div>
               

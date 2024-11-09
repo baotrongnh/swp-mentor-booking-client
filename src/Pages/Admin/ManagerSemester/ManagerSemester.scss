@@ -81,6 +81,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 25px;
+    margin-top: 20px;
 
     .action-card {
       background: white;
@@ -89,7 +90,6 @@
       transition: transform 0.2s ease, box-shadow 0.2s ease;
 
       &:hover {
-        transform: translateY(-4px);
         box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
       }
 

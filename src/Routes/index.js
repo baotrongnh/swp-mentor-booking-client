@@ -1,6 +1,6 @@
 import AdminLayout from "../Layouts/AdminLayout"
 import { Gift, Home, Login, MentorListPage, MentorProfile, Notification, PageNotFound, PendingAccept, Schedule, StudentProfile, Wallet } from "../Pages"
-import { LoginAdmin, ManagerItems, ManagerMentor, ManagerComplaintPending, ManagerComplaintResolved, ManagerSemester, ManagerSkills, ManagerStudent, OverviewChart, Pending } from "../Pages/Admin"
+import { LoginAdmin, ManagerItems, ManagerMentor, ManagerComplaintPending, ManagerComplaintResolved, ManagerSemester, ManagerSkills, ManagerStudent, OverviewChart, Pending, OverviewProportion } from "../Pages/Admin"
 import AdminRoutesAuth from './AdminRoutesAuth'
 import PrivateRoutesAuth from "./PrivateRoutesAuth"
 import DonateProcess from "../Pages/Donate/DonateProcess/DonateProcess"
@@ -42,9 +42,11 @@ const adminRoutes = [
   { path: '/admin/skills', element: ManagerSkills, layout: AdminLayout },
   { path: '/admin/items', element: ManagerItems, layout: AdminLayout },
   { path: '/admin/analytics/overview', element: OverviewChart, layout: AdminLayout },
+  { path: '/admin/analytics/Proportion', element: OverviewProportion, layout: AdminLayout },
   { path: '/admin/semester', element: ManagerSemester, layout: AdminLayout },
   { path: '/admin/complaint/pending', element: ManagerComplaintPending, layout: AdminLayout },
   { path: '/admin/complaint/resolved', element: ManagerComplaintResolved, layout: AdminLayout },
+
 ]
 
 export { adminRoutes, AdminRoutesAuth, privateRoutes, PrivateRoutesAuth, publicRoutes }

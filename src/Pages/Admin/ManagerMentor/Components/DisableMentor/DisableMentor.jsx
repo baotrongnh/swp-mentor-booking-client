@@ -5,36 +5,44 @@ import { useEffect, useState } from "react"
 import { activeMentor, getListDisableMentor } from "../../../../../apis/admin"
 import { loadAllSkills } from "../../../../../apis/mentor"
 import { Loading } from "../../../../../Components"
+import Search from "antd/es/transfer/search"
+import toast from "react-hot-toast"
 
 function DisableMentor() {
      const queryClient = useQueryClient()
+     const [dataSearch, setDataSearch] = useState('')
      const [selectedRowKeys, setSelectedRowKeys] = useState([])
      const { data: listSkills } = useQuery({ queryKey: ['list-skills'], queryFn: loadAllSkills })
      const { data: dataMentors, isLoading } = useQuery({ queryKey: ['list-mentors-disable-admin'], queryFn: getListDisableMentor })
      const [dataSource, setDataSource] = useState([])
-     const mutation = useMutation({ mutationFn: (mentorId) => activeMentor(mentorId) })
+     const mutation = useMutation({
+          mutationFn: (mentorId) => activeMentor(mentorId),
+          onSuccess: () => {
+               queryClient.invalidateQueries({ queryKey: ['list-mentors-disable-admin'] })
+               toast.success('Restore success!')
+          }
+     })
 
      useEffect(() => {
           if (dataMentors) {
                setDataSource(
-                    dataMentors?.mentors?.map((mentor) => ({
-                         key: mentor.accountId,
-                         id: mentor.accountId,
-                         name: mentor.fullName,
-                         email: mentor.email,
-                         point: mentor.point || 'null',
-                         rating: mentor.averageRating || '#',
-                         skills: ['ReactJS'],
-                    }))
+                    dataMentors.mentors
+                         ?.filter(mentor => mentor.fullName.toLowerCase().includes(dataSearch.toLowerCase()))
+                         .map((mentor) => ({
+                              key: mentor.accountId,
+                              id: mentor.accountId,
+                              name: mentor.fullName,
+                              email: mentor.email,
+                              point: mentor.point || 'null',
+                              rating: mentor.averageRating || '#',
+                              skills: ['ReactJS'],
+                         }))
                );
           }
      }, [dataMentors])
 
-     const handleActiveMentor = async (mentor) => {
-          const data = await mutation.mutateAsync(mentor.id)
-          if (data.error_code === 0) {
-               queryClient.invalidateQueries({ queryKey: ['list-mentors-disable-admin'] })
-          }
+     const handleActiveMentor = (mentor) => {
+          mutation.mutateAsync(mentor.id)
      }
 
      const getDropDownItems = (text, record) => ([
@@ -96,7 +104,7 @@ function DisableMentor() {
                          menu={{ items: getDropDownItems(text, record) }}
                          trigger={['click']}
                     >
-                         <Button type="text"><Icon icon="lsicon:more-outline" /></Button>
+                         <Button type="text" loading={mutation.isPending}><Icon icon="lsicon:more-outline" /></Button>
                     </Dropdown>
                )
           }
@@ -113,10 +121,24 @@ function DisableMentor() {
           onSelect: (record, seleted) => console.log(seleted)
      }
 
+     const onSearch = (e) => {
+          setDataSearch(e.target.value)
+     }
+
      if (isLoading) return (<Loading />)
 
      return (
           <div className="all-mentors">
+               <div style={{ margin: '10px 0', padding: '0 20px' }}>
+                    <Search
+                         placeholder="Find mentors..."
+                         allowClear
+                         onSearch={onSearch}
+                         className='search-input'
+                         onChange={onSearch}
+                    />
+               </div>
+
                <Table
                     scroll={{ y: '76vh' }}
                     pagination={{ position: ['bottomCenter'] }}

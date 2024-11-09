@@ -3,11 +3,13 @@ import { DatePicker, Flex, Modal, TimePicker } from "antd"
 import PropTypes from "prop-types"
 import { useContext, useState } from "react"
 import toast from "react-hot-toast"
+import { useTranslation } from 'react-i18next'
 import { createSchedule } from "../../../apis/mentor"
 import { AuthContext } from "../../../Contexts/AuthContext"
 import { disabledDateInPast, disableNotThing, disableTime, getDateNow } from "../../../utils/validate"
 
 export default function ModalAddSlot({ modalOpen, setModalOpen }) {
+     const { t } = useTranslation()
      const queryClient = useQueryClient()
      const { currentUser } = useContext(AuthContext)
 
@@ -17,12 +19,12 @@ export default function ModalAddSlot({ modalOpen, setModalOpen }) {
      const mutation = useMutation({
           mutationFn: ({ mentorId, slotStart, description }) => createSchedule(mentorId, description, slotStart),
           onSuccess: () => {
-               toast.success('Slot created successfully!')
+               toast.success(t('slot created success'))
                setModalOpen(false)
                queryClient.invalidateQueries(`available-slot-${currentUser.accountId}`)
           },
-          onError: () => {
-               toast.error('Something went wrong!')
+          onError: (error) => {
+               toast.error(error.response.data.message)
           }
      })
 
@@ -51,10 +53,10 @@ export default function ModalAddSlot({ modalOpen, setModalOpen }) {
      return (
           <div>
                <Modal
-                    title={<h2 style={{ margin: 0, color: '#1890ff' }}>Add Your Schedule</h2>}
+                    title={<h2 style={{ margin: 0, color: '#1890ff' }}>{t('add your schedule')}</h2>}
                     centered
                     open={modalOpen}
-                    okText='Add Slot'
+                    okText={t('add slot')}
                     onOk={handleAdd}
                     okButtonProps={{ disabled: dateCustom.date === '0000-00-00' || dateCustom.time === '00:00:00' }}
                     onCancel={() => setModalOpen(false)}
@@ -75,7 +77,7 @@ export default function ModalAddSlot({ modalOpen, setModalOpen }) {
                               fontSize: '16px',
                               fontWeight: 500
                          }}>
-                              Select Date & Time
+                              {t('select date and time')}
                          </h3>
 
                          <p style={{
@@ -83,11 +85,11 @@ export default function ModalAddSlot({ modalOpen, setModalOpen }) {
                               fontSize: '15px',
                               color: '#333'
                          }}>
-                              Scheduled for{' '}
+                              {t('scheduled for')}{' '}
                               <span style={{ fontWeight: 600, color: '#1890ff' }}>
                                    {displayDate.date}
                               </span>{' '}
-                              at{' '}
+                              {t('at')}{' '}
                               <span style={{ fontWeight: 600, color: '#1890ff' }}>
                                    {displayDate.time}
                               </span>
@@ -103,7 +105,7 @@ export default function ModalAddSlot({ modalOpen, setModalOpen }) {
                                    format='DD-MM-YYYY'
                                    style={{ width: '160px' }}
                                    onChange={handleDatePick}
-                                   placeholder="Select date"
+                                   placeholder={t('select date placeholder')}
                                    allowClear={false}
                               />
                               <TimePicker
@@ -112,7 +114,7 @@ export default function ModalAddSlot({ modalOpen, setModalOpen }) {
                                    format='HH:mm'
                                    style={{ width: '120px' }}
                                    disabledTime={dateCustom.date === getDateNow() ? disableTime : disableNotThing}
-                                   placeholder="Select time"
+                                   placeholder={t('select time placeholder')}
                                    allowClear={false}
                                    needConfirm={false}
                               />

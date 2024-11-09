@@ -86,6 +86,7 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
                 confirmLoading={mutation.isPending}
                 afterOpenChange={() => refetch()}
                 destroyOnClose
+                onClose={() => setSlotAvailableSelect()}
             >
                 <div className="inside-modal-book">
                     <div className="select-time-block">

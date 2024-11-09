@@ -1,13 +1,15 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { Button, Dropdown, Table, Tag } from "antd"
+import { Button, Dropdown, Image, Table, Tag } from "antd"
 import { useEffect, useState } from "react"
 import { getlistMentorPending, promoteMentor, rejectApplyMentor } from "../../../../../apis/admin"
 import { loadAllSkills } from "../../../../../apis/mentor"
 import { Loading } from "../../../../../Components"
 import toast from "react-hot-toast"
+import Search from "antd/es/transfer/search"
 
 function Pending() {
+    const [dataSearch, setDataSearch] = useState('')
     const [selectedRowKeys, setSelectedRowKeys] = useState([])
     const queryClient = useQueryClient()
     const { data: listSkills } = useQuery({ queryKey: ['list-skills'], queryFn: loadAllSkills })
@@ -16,6 +18,8 @@ function Pending() {
     const mutationAccept = useMutation({
         mutationFn: (mentorId) => promoteMentor(mentorId)
     })
+
+    console.log(dataMentors);
 
     const mutationReject = useMutation({
         mutationFn: (mentorId) => rejectApplyMentor(mentorId),
@@ -31,15 +35,18 @@ function Pending() {
     useEffect(() => {
         if (dataMentors) {
             setDataSource(
-                dataMentors?.applyingMentors?.map((mentor) => ({
-                    key: mentor.accountId,
-                    id: mentor.accountId,
-                    name: mentor.fullName,
-                    email: mentor.email,
-                    point: mentor.point || '0',
-                    rating: mentor.averageRating || 'No data',
-                    skills: mentor.skills.map(skill => skill.name),
-                }))
+                dataMentors?.applyingMentors
+                    ?.filter(mentor => mentor.fullName.toLowerCase().includes(dataSearch.toLowerCase()))
+                    .map((mentor) => ({
+                        key: mentor.accountId,
+                        id: mentor.accountId,
+                        name: mentor.fullName,
+                        email: mentor.email,
+                        point: mentor.point || '0',
+                        rating: mentor.averageRating || 'No data',
+                        skills: mentor.skills.map(skill => `${skill.name} (3)`),
+                        image: mentor.imgPath
+                    }))
             )
         }
     }, [dataMentors])
@@ -76,6 +83,13 @@ function Pending() {
     ])
 
     const columns = [
+        {
+            title: 'Image',
+            dataIndex: 'image',
+            render: (image) => (
+                <Image src={image} />
+            )
+        },
         {
             title: 'Name',
             dataIndex: 'name',
@@ -142,10 +156,21 @@ function Pending() {
         onSelect: (record, seleted) => console.log(record, seleted)
     }
 
+    const onSearch = (e) => {
+        setDataSearch(e.target.value)
+    }
+
     if (isLoading) return (<Loading />)
 
     return (
         <div className="all-mentors">
+            <Search
+                placeholder="Find mentors..."
+                allowClear
+                onSearch={onSearch}
+                className='search-input'
+                onChange={onSearch}
+            />
             <Table
                 scroll={{ y: '76vh' }}
                 pagination={{ position: ['bottomCenter'] }}

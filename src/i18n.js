@@ -18,6 +18,9 @@ const resources = {
                'pending booking': 'Pending bookings',
                'Gift': 'Gift',
                'Donation history': 'Donation history',
+               'Manager slot': 'Manager slots',
+               'Add schedule': 'Add schedule',
+               'Invitation Pending': 'Invitation Pending',
 
                //button:
                'book': 'Book',
@@ -202,6 +205,51 @@ const resources = {
                "Gifts Received from Donations": "Gifts Received from Donations",
                "History of sent gifts": "History of sent gifts",
                "Gift History": "Gift History",
+
+               // Modal Add Slot translations
+               "add your schedule": "Add Your Schedule",
+               "select date and time": "Select Date & Time",
+               "scheduled for": "Scheduled for",
+               "at": "at",
+               "add slot": "Add Slot",
+               "select date placeholder": "Select date",
+               "select time placeholder": "Select time",
+               "slot created success": "Slot created successfully!",
+
+               // Notification translations
+               "Notifications": "Notifications",
+               "Notification": "Notification",
+               "read": "Read",
+               "unread": "Unread",
+               "no notifications": "No notifications",
+               "mark as read": "Mark as read",
+               "mark all as read": "Mark all as read",
+               "clear all": "Clear all",
+               "notification settings": "Notification settings",
+               "notification time": "Notification time",
+
+               // Header translations
+               "search placeholder": "Search mentors by name...",
+               "your profile": "Your Profile",
+               "settings": "Settings",
+               "dark mode": "Dark Mode",
+               "light mode": "Light Mode",
+               "search": "Search",
+               "menu": "Menu",
+               "close": "Close",
+               "your balance": "Your Balance",
+               "coins": "coins",
+               "Login": "Login",
+
+               // PendingAccept translations
+               "group invitations": "Group Invitations",
+               "pending invitations": "Pending Invitations",
+               "invited by": "Invited by",
+               "mentor": "Mentor",
+               "booking time": "Booking time",
+               "accept": "Accept",
+               "no pending invitations": "No pending invitations",
+               "complete": "Complete!"
           }
      },
      vi: {
@@ -220,6 +268,9 @@ const resources = {
                'pending booking': 'Đang chờ xác nhận',
                'Gift': 'Quà tặng',
                'Donation history': 'Lịch sử tặng quà',
+               'Manager slot': 'Quản lý slots',
+               'Add schedule': 'Thêm lịch',
+               'Invitation Pending': 'Lời mời đang chờ',
 
                //button:
                'book': 'Đặt lịch',
@@ -404,6 +455,51 @@ const resources = {
                "Gifts Received from Donations": "Quà Tặng Nhận Được",
                "History of sent gifts": "Lịch Sử Quà Đã Tặng",
                "Gift History": "Lịch Sử Quà Tặng",
+
+               // Modal Add Slot translations
+               "add your schedule": "Thêm Lịch Của Bạn",
+               "select date and time": "Chọn Ngày & Giờ",
+               "scheduled for": "Lịch Đã Đặt",
+               "at": "Tại",
+               "add slot": "Thêm Lịch",
+               "select date placeholder": "Chọn ngày",
+               "select time placeholder": "Chọn giờ",
+               "slot created success": "Lịch Đã Đặt Thành Công!",
+
+               // Notification translations
+               "notifications": "Thông báo",
+               "Notification": "Thông báo",
+               "read": "Đã đọc",
+               "unread": "Chưa đọc",
+               "no notifications": "Không có thông báo",
+               "mark as read": "Đánh dấu đã đọc",
+               "mark all as read": "Đánh dấu tất cả đã đọc",
+               "clear all": "Xóa tất cả",
+               "notification settings": "Cài đặt thông báo",
+               "notification time": "Thời gian thông báo",
+
+               // Header translations
+               "search placeholder": "Tìm mentor theo tên...",
+               "your profile": "Hồ Sơ Của Bạn",
+               "settings": "Cài Đặt",
+               "dark mode": "Chế Độ Tối",
+               "light mode": "Chế Độ Sáng",
+               "search": "Tìm Kiếm",
+               "menu": "Menu",
+               "close": "Đóng",
+               "your balance": "Số Dư",
+               "coins": "xu",
+               "Login": "Đăng Nhập",
+
+               // PendingAccept translations
+               "group invitations": "Lời Mời Nhóm",
+               "pending invitations": "Lời Mời Đang Chờ",
+               "invited by": "Được mời bởi",
+               "mentor": "Mentor",
+               "booking time": "Thời gian đặt lịch",
+               "accept": "Chấp nhận",
+               "no pending invitations": "Không có lời mời nào",
+               "complete": "Hoàn thành!"
           }
      }
 }

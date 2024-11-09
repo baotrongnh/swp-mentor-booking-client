@@ -3,10 +3,10 @@ import { Button, Flex, Menu } from 'antd'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import logo from '../../assets/Photos/logo/logo.png'
 import './SidebarAdmin.scss'
+import { Icon } from '@iconify/react/dist/iconify.js'
 
 function SidebarAdmin() {
      const location = useLocation()
-     console.log(location);
 
      const items = [
           {
@@ -20,6 +20,10 @@ function SidebarAdmin() {
                     {
                          key: '/admin/analytics/overview',
                          label: <Link to='/admin/analytics/overview'>Overview</Link>
+                    },
+                    {
+                         key: '/admin/analytics/proportion',
+                         label: <Link to='/admin/analytics/proportion'>Proportion</Link>
                     }
                ]
           },
@@ -56,7 +60,7 @@ function SidebarAdmin() {
           {
                key: 'complaintMenu',
                label: 'Complaint',
-               icon: <SettingOutlined />,
+               icon: <Icon icon="mdi:paper-edit-outline" />,
                children: [
                     {
                          key: '/admin/complaint/pending',
