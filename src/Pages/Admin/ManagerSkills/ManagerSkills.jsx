@@ -2,10 +2,10 @@ import { Icon } from "@iconify/react/dist/iconify.js"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { Button, Dropdown, Flex, Input, Modal, Table } from "antd"
 import { useEffect, useState } from "react"
+import toast from "react-hot-toast"
+import { createSkillMentor, deleteSkill, updateSkill } from "../../../apis/admin"
 import { loadAllSkills } from "../../../apis/mentor"
 import { Loading } from "../../../Components"
-import { createSkillMentor } from "../../../apis/admin"
-import toast from "react-hot-toast"
 
 function ManagerSkills() {
      const [selectedRowKeys, setSelectedRowKeys] = useState([])
@@ -24,14 +24,36 @@ function ManagerSkills() {
                toast.success('Add skill success!')
           },
           onError: (error) => {
-               console.log(error)
+               toast.error(error.response.data.message)
+          }
+     })
+
+     const mutationUpdate = useMutation({
+          mutationFn: ({ id, name }) => updateSkill(id, name),
+          onSuccess: () => {
+               queryClient.invalidateQueries({ queryKey: ['list-skills'] })
+               toast.success('Successful change!')
+          },
+          onError: (error) => {
+               toast.error(error.response.data.message)
+          }
+     })
+
+     const mutationDelete = useMutation({
+          mutationFn: (id) => deleteSkill(id),
+          onSuccess: () => {
+               queryClient.invalidateQueries({ queryKey: ['list-skills'] })
+               toast.success('Delete successful!')
+          },
+          onError: (error) => {
+               toast.error(error.response.data.message)
           }
      })
 
      useEffect(() => {
           if (listSkills) {
                setDataSource(
-                    listSkills?.skills.map((skill) => ({
+                    listSkills?.skills.filter(skill => skill.status === 1).map((skill) => ({
                          key: skill.id,
                          id: skill.id,
                          name: skill.name,
@@ -57,13 +79,12 @@ function ManagerSkills() {
                return
           }
 
-          console.log('Skill ID:', record.id)
-          console.log('New Value:', value)
+          mutationUpdate.mutateAsync({ id: record.id, name: value })
           setEditingKey('')
      }
 
      const handleDeleteSkill = async (skill) => {
-          console.log(skill)
+          mutationDelete.mutateAsync(skill.id)
      }
 
      const getDropDownItems = (text, record) => ([
@@ -155,7 +176,7 @@ function ManagerSkills() {
                          + Add skill
                     </Button>
                </Flex>
-               
+
                <Modal
                     title="Add New Skill"
                     open={modalOpen}

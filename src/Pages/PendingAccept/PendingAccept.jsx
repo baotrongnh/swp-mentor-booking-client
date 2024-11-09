@@ -110,7 +110,6 @@ export default function PendingAccept() {
                     ) : (
                          <Empty
                               description={t('no pending invitations')}
-                              className="empty-state"
                          />
                     )}
                </div>

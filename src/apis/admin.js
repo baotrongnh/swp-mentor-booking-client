@@ -128,3 +128,13 @@ export const updateComplaintStatus = async ({ complaintId, status }) => {
           complaintId, status
      })
 }
+
+export const updateSkill = async (id, name) => {
+     const token = getTokenAdmin()
+     return await axiosClient(token).post('admin/update-skill', { id, name })
+}
+
+export const deleteSkill = async (id) => {
+     const token = getTokenAdmin()
+     return await axiosClient(token).post('admin/delete-skill', { id })
+}
