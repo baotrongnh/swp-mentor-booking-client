@@ -6,12 +6,17 @@ import axiosClient from "../../../apis/axiosClient"
 import { Loading } from "../../../Components"
 import { getToken } from "../../../utils/storageUtils"
 import ModalUpdate from "./Components/ModalUpdate/ModalUpdate"
+import ModalCreate from "./Components/ModalCreate/ModalCreate"
+import toast from "react-hot-toast"
+import Search from "antd/es/transfer/search"
 
 function ManagerItems() {
      const [selectedRowKeys, setSelectedRowKeys] = useState([])
      const [dataSource, setDataSource] = useState([])
      const [updateShow, setUpdateShow] = useState(false)
      const [initialData, setInitialData] = useState(null)
+     const [createShow, setCreateShow] = useState(false)
+     const [dataSearch, setDataSearch] = useState('')
      const token = getToken()
 
      const getListItem = async () => {
@@ -28,19 +33,37 @@ function ManagerItems() {
           return Number(formattedPrice.replace(/[.,]/g, ''))
      }
 
+     // useEffect(() => {
+     //      if (listItems) {
+     //           const formattedData = listItems?.items.map((item) => ({
+     //                key: item.id,
+     //                id: item.id,
+     //                img: item.imgPath,
+     //                name: item.name,
+     //                status: item.status,
+     //                price: formatNumber(item.price)
+     //           }))
+     //           setDataSource(formattedData)
+     //      }
+     // }, [listItems])
+
      useEffect(() => {
           if (listItems) {
-               const formattedData = listItems?.items.map((item) => ({
-                    key: item.id,
-                    id: item.id,
-                    img: item.imgPath,
-                    name: item.name,
-                    status: item.status,
-                    price: formatNumber(item.price)
-               }))
-               setDataSource(formattedData)
+               setDataSource(
+                    listItems?.items
+                         ?.filter(item => item.name.toLowerCase().includes(dataSearch.toLowerCase()))
+                         .map((item) => ({
+                              key: item.id,
+                              id: item.id,
+                              img: item.imgPath,
+                              name: item.name,
+                              status: item.status,
+                              price: formatNumber(item.price)
+                         }))
+               )
           }
-     }, [listItems])
+     }, [listItems, dataSearch])
+
 
      const getDropDownItems = (record) => ([
           {
@@ -54,6 +77,7 @@ function ManagerItems() {
                key: '3',
                danger: true,
                icon: <Icon icon="weui:delete-outlined" />,
+               onClick: () => handleMenuClick("3", record)
           }
      ]);
 
@@ -103,13 +127,14 @@ function ManagerItems() {
 
      const handleMenuClick = (key, record) => {
           if (key === "0") {
-               // Convert the formatted price back to a number for the form
                const formData = {
                     ...record,
                     price: parseNumber(record.price)
                }
                setInitialData(formData);
                setUpdateShow(true);
+          } else if (key === "3") {
+               toast.success("Delete " + record.name)
           }
      };
 
@@ -131,24 +156,63 @@ function ManagerItems() {
                })
                if (res) {
                     console.log(res)
+                    toast.success('Update Success')
                     await refetch()
                }
           } catch (error) {
-               console.log("Error", error)
+               const errorMessage = error.response?.data?.error || "An unexpected error occurred";
+               console.log("Error", error);
+               toast.error(errorMessage);
           } finally {
                setUpdateShow(false)
           }
      }
 
-     const onCancelUpdate = () => {
+     const handleSubmitCreate = async (values) => {
+          try {
+               const res = await axiosClient(token).post('/item/create', {
+                    name: values.name,
+                    price: values.price,
+                    imgPath: values.img
+               })
+               if (res) {
+                    console.log(res)
+                    toast.success('Create Success')
+                    await refetch()
+               }
+          } catch (e) {
+               const errorMessage = e.response?.data?.error || "An unexpected error occurred";
+               console.log("Error", e);
+               toast.error(errorMessage);
+          } finally {
+               setCreateShow(false)
+          }
+
+     }
+
+     const onCancelModal = () => {
           setUpdateShow(false)
+          setCreateShow(false)
+     }
+
+     const onSearch = (e) => {
+          setDataSearch(e.target.value)
      }
 
      if (isLoading) return (<Loading />)
 
      return (
           <div className="all-items">
-               <Button>+ Add Item</Button>
+               <Button onClick={() => setCreateShow(true)}>+ Add Item</Button>
+               <div style={{ margin: '10px 0', padding: '0 20px' }}>
+                    <Search
+                         placeholder="Find items..."
+                         allowClear
+                         onSearch={onSearch}
+                         className='search-input'
+                         onChange={onSearch}
+                    />
+               </div>
                <Table
                     scroll={{ y: '76vh' }}
                     pagination={{ position: ['bottomCenter'] }}
@@ -159,8 +223,13 @@ function ManagerItems() {
                <ModalUpdate
                     show={updateShow}
                     submit={handleSubmitUpdate}
-                    onCancel={onCancelUpdate}
+                    onCancel={onCancelModal}
                     initialData={initialData}
+               />
+               <ModalCreate
+                    show={createShow}
+                    onCancel={onCancelModal}
+                    submit={handleSubmitCreate}
                />
           </div>
      )
