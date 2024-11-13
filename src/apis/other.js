@@ -23,3 +23,10 @@ export const getStudentComplaint = async (studentId) => {
      return axiosClient(token).get(`/complaint/student/${studentId}`)
 }
 
+export const setReadForAllNotification = async (accountId) => {
+     const token = getToken()
+     return axiosClient(token).post('/notification/mark-all-as-read', {
+          accountId
+     })
+}
+

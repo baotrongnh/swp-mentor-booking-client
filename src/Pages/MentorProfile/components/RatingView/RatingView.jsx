@@ -1,14 +1,14 @@
-import { useQuery } from '@tanstack/react-query';
-import { Button, Col, Rate, Row, Skeleton } from 'antd';
-import PropTypes from 'prop-types';
-import { getFeedback } from '../../../../apis/mentor';
-import defaultAvatar from '../../../../assets/Photos/avatar/default_avatar.jpg';
-import './RatingView.scss';
-import { useTranslation } from 'react-i18next';
+import { useQuery } from '@tanstack/react-query'
+import { Col, Rate, Row, Skeleton } from 'antd'
+import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
+import { getFeedback } from '../../../../apis/mentor'
+import defaultAvatar from '../../../../assets/Photos/avatar/default_avatar.jpg'
+import './RatingView.scss'
 
-function RatingView({ id, setModalRatingOpen, isCurrentUser }) {
-     const { data, isLoading } = useQuery({ queryKey: [`rating-list-${id}`, id], queryFn: () => getFeedback(id) });
-     const { t } = useTranslation();
+function RatingView({ id }) {
+     const { data, isLoading } = useQuery({ queryKey: [`rating-list-${id}`, id], queryFn: () => getFeedback(id) })
+     const { t } = useTranslation()
 
      if (isLoading) {
           return <Skeleton />
@@ -23,15 +23,6 @@ function RatingView({ id, setModalRatingOpen, isCurrentUser }) {
                               <p className="number-rating">{data?.averageRating === 5 ? `${data?.averageRating}.0` : data?.averageRating}</p>
                               <Rate style={{ fontSize: '4rem' }} disabled defaultValue={0} value={data?.averageRating} allowHalf />
                               <p className='total-rating'>{`(${data?.feedbacks.length} ${t('Reviews')})`}</p>
-                              {!isCurrentUser &&
-                                   <div className="write-feedback">
-                                        <h1 className="title-write-feedback">{t('Write your Review')}</h1>
-                                        <p className="description">{t('Share your feedback')}</p>
-                                        <Button onClick={() => setModalRatingOpen(true)} type='primary' size='large'>
-                                             {t('Write a review')}
-                                        </Button>
-                                   </div>
-                              }
                          </div>
                     </Col>
 
@@ -72,10 +63,10 @@ function RatingView({ id, setModalRatingOpen, isCurrentUser }) {
                     </Col>
                </Row>
           </div>
-     );
+     )
 }
 
-export default RatingView;
+export default RatingView
 
 RatingView.propTypes = {
      id: PropTypes.any,

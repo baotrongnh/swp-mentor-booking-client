@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Avatar, Breadcrumb, Col, List, Row, Skeleton } from 'antd'
 import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -9,6 +9,7 @@ import { AuthContext } from '../../Contexts/AuthContext'
 import './Wallet.scss'
 
 export default function Wallet() {
+    const queryClient = useQueryClient()
     const { currentUser } = useContext(AuthContext)
     const { t } = useContext(AppContext)
     const [initLoading, setInitLoading] = useState(true)
@@ -17,6 +18,10 @@ export default function Wallet() {
         queryKey: [`transaction-${currentUser.accountId}`],
         queryFn: () => getHistoryTransaction(currentUser.isMentor === 0 ? 'student' : 'mentor', currentUser?.accountId)
     })
+
+    useEffect(() => {
+        queryClient.invalidateQueries({ queryKey: [`transaction-${currentUser.accountId}`] })
+    }, [])
 
     useEffect(() => {
         if (transactionData) {
@@ -82,7 +87,7 @@ export default function Wallet() {
                             dataSource={list}
                             renderItem={(item) => {
                                 return (
-                                    <List.Item actions={[<a key="list-loadmore-more">more</a>]}>
+                                    <List.Item>
                                         <Skeleton avatar title={false} loading={item.loading} active>
                                             <List.Item.Meta
                                                 avatar={currentUser?.isMentor === 0 ? <Avatar src={item?.booking?.mentor?.imgPath} /> : ''}
