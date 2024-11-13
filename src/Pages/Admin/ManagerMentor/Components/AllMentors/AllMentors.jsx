@@ -4,7 +4,7 @@ import { Button, Dropdown, Image, InputNumber, Table, Tag } from "antd"
 import Search from "antd/es/transfer/search"
 import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
-import { disableMentor, getListMentor } from "../../../../../apis/admin"
+import { disableMentor, editPoint, getListMentor } from "../../../../../apis/admin"
 import { loadAllSkills } from "../../../../../apis/mentor"
 import { Loading } from "../../../../../Components"
 
@@ -14,6 +14,7 @@ function AllMentor() {
     const queryClient = useQueryClient()
     const { data: listSkills } = useQuery({ queryKey: ['list-skills'], queryFn: loadAllSkills })
     const { data: dataMentors, isLoading } = useQuery({ queryKey: ['list-mentors-admin'], queryFn: getListMentor })
+    console.log(dataMentors);
     const [dataSource, setDataSource] = useState([])
     const mutation = useMutation({
         mutationFn: (mentorId) => disableMentor(mentorId),
@@ -22,7 +23,18 @@ function AllMentor() {
             toast.success('Delete success!')
         },
         onError: (error) => {
-            console.log(error)
+            toast.error(error.response.data.message)
+        }
+    })
+
+    const mutationEdit = useMutation({
+        mutationFn: ({accountType, id, point}) => editPoint(accountType, id, point),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['list-mentors-admin'] })
+            toast.success('Update point success!')
+        },
+        onError: (error) => {
+            toast.error(error.response.data.message)
         }
     })
 
@@ -54,8 +66,7 @@ function AllMentor() {
         }
 
         setEditingKey('')
-        console.log('Mentor ID:', record.id)
-        console.log('New Point Value:', value)
+        mutationEdit.mutateAsync({accountType: 'mentor', id: record.id, point: value})
     }
 
     useEffect(() => {
@@ -70,7 +81,7 @@ function AllMentor() {
                         email: mentor.email,
                         point: mentor.point,
                         rating: mentor.averageRating || 'No data',
-                        skills: mentor.skills?.map(skill => `${skill.name} (${skill.level})`),
+                        skills: mentor.skills?.map(skill => `${skill.name} (${skill.mentor_skill.level})`),
                         image: mentor.imgPath
                     }))
             )
@@ -190,7 +201,7 @@ function AllMentor() {
         setDataSearch(e.target.value)
     }
 
-    if (isLoading) return (<Loading />)
+    if (isLoading || mutationEdit.isPending) return (<Loading />)
 
     return (
         <div className="all-mentors">

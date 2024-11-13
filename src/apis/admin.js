@@ -143,3 +143,15 @@ export const getProportion = async () => {
      const token = getTokenAdmin()
      return await axiosClient(token).get('booking/report')
 }
+
+export const editPoint = async (accountType, id, point) => {
+     const token = getTokenAdmin()
+     return await axiosClient(token).post(`/admin/edit-${accountType}-point`, {
+          id, point
+     })
+}
+
+export const setDefaultCost = async (cost) => {
+     const token = getTokenAdmin()
+     return await axiosClient(token).post('/admin/edit-semester-cost', { cost })
+}

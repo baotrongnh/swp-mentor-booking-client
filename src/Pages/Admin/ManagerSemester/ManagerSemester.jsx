@@ -1,14 +1,16 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
-import { getCurrentSemester } from '../../../apis/semester'
-import { resetStudentPoint, setDefaultPoint, startNewSemester } from '../../../apis/admin'
 import toast from 'react-hot-toast'
+import { resetStudentPoint, setDefaultCost, setDefaultPoint, startNewSemester } from '../../../apis/admin'
+import { getCurrentSemester } from '../../../apis/semester'
+import { Loading } from '../../../Components'
 import './ManagerSemester.scss'
 
 const ManagerSemester = () => {
      const queryClient = useQueryClient()
 
-     const { data: currentSemesterData } = useQuery({ queryKey: ['current-semester'], queryFn: getCurrentSemester })
+     const { data: currentSemesterData, isLoading } = useQuery({ queryKey: ['current-semester'], queryFn: getCurrentSemester })
+
      const mutationResetPoint = useMutation({
           mutationFn: resetStudentPoint,
           onSuccess: () => {
@@ -34,11 +36,20 @@ const ManagerSemester = () => {
           }
      })
 
+     const mutationSetDefaultCost = useMutation({
+          mutationFn: (newPoint) => setDefaultCost(newPoint),
+          onSuccess: () => {
+               toast.success('Default cost set for new semester')
+          }
+     })
+
      const [defaultPointCustom, setDefaultPointCustom] = useState(0)
+     const [defaultCostCustom, setDefaultCostCustom] = useState(0)
 
      useEffect(() => {
           if (currentSemesterData) {
                setDefaultPointCustom(currentSemesterData?.latestSemester?.defaultPoint)
+               setDefaultCostCustom(currentSemesterData?.latestSemester?.slotCost)
           }
      }, [currentSemesterData])
 
@@ -50,9 +61,15 @@ const ManagerSemester = () => {
           mutationSetDefaultPoint.mutate(defaultPointCustom)
      }
 
+     const handleSetDefaultCost = () => {
+          mutationSetDefaultCost.mutate(defaultCostCustom)
+     }
+
      const handleStartNewSemester = () => {
           mutationStartNewSemester.mutateAsync()
      }
+
+     if (isLoading) return <Loading />
 
      return (
           <div className="semester-manager">
@@ -69,7 +86,7 @@ const ManagerSemester = () => {
                     <div className="semester-info-grid">
                          <div className="info-item">
                               <span className="label">Semester Name</span>
-                              <p className="value">{`${ currentSemesterData?.latestSemester?.name } ${ currentSemesterData?.latestSemester?.year }`}</p>
+                              <p className="value">{`${currentSemesterData?.latestSemester?.name} ${currentSemesterData?.latestSemester?.year}`}</p>
                          </div>
                          <div className="info-item">
                               <span className="label">Start Date</span>
@@ -116,11 +133,11 @@ const ManagerSemester = () => {
                               <div className="input-group">
                                    <input
                                         type="number"
-                                        value={defaultPointCustom}
-                                        onChange={(e) => setDefaultPointCustom(e.target.value)}
+                                        value={defaultCostCustom}
+                                        onChange={(e) => setDefaultCostCustom(e.target.value)}
                                         className="point-input"
                                    />
-                                   <button onClick={handleSetDefaultPoint} className="action-button">
+                                   <button onClick={handleSetDefaultCost} className="action-button">
                                         Set Default
                                    </button>
                               </div>

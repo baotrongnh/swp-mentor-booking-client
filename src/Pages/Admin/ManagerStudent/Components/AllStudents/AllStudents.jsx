@@ -1,17 +1,28 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button, Dropdown, Image, InputNumber, Table } from "antd";
 import { useEffect, useState } from "react";
-import { getListStudent } from "../../../../../apis/admin";
-import { Loading } from "../../../../../Components";
 import toast from "react-hot-toast";
+import { editPoint, getListStudent } from "../../../../../apis/admin";
+import { Loading } from "../../../../../Components";
 
 
 function AllStudents() {
+    const queryClient = useQueryClient()
     const [selectedRowKeys, setSelectedRowKeys] = useState([])
     const { data: dataStudents, isLoading } = useQuery({ queryKey: ['list-student-admin'], queryFn: getListStudent })
     const [dataSource, setDataSource] = useState([])
-    console.log(dataStudents)
+
+    const mutationEdit = useMutation({
+        mutationFn: ({ accountType, id, point }) => editPoint(accountType, id, point),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['list-student-admin'] })
+            toast.success('Update point success!')
+        },
+        onError: (error) => {
+            toast.error(error.response.data.message)
+        }
+    })
 
     useEffect(() => {
         if (dataStudents) {
@@ -56,8 +67,7 @@ function AllStudents() {
         }
 
         setEditingKey('')
-        console.log('Mentor ID:', record.id)
-        console.log('New Point Value:', value)
+        mutationEdit.mutateAsync({ accountType: 'student', id: record.id, point: value })
     }
 
 
