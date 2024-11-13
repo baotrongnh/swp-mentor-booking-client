@@ -27,7 +27,7 @@ const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
     const [page, setPage] = useState(1)
     const pageSize = 10;
     const { t } = useContext(AppContext)
-    const role = currentUser?.isMentor === undefined ? 'mentor' : 'student'
+    const role = currentUser?.isMentor === 0 ? 'student' : 'mentor'
     const [openRating, setOpenRating] = useState(false)
     const [fetchData, setFetchData] = useState(false)
 
@@ -90,7 +90,7 @@ const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
     }, [allData, selectedDate, page, pageSize])
 
 
-    console.log(displayData)
+    // console.log(displayData)
 
     // console.log("Current user", currentUser)
 

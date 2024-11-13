@@ -28,7 +28,7 @@ const DenyBooking = ({ selectedDate, onBookingDatesChange }) => {
     const [bookingId] = useState(null)
     const pageSize = 10;
     const { t } = useContext(AppContext)
-    const role = currentUser?.isMentor === undefined ? 'mentor' : 'student'
+    const role = currentUser?.isMentor === 0 ? 'student' : 'mentor'
 
     const loadData = useCallback(async () => {
         if (loading) return;
@@ -79,14 +79,14 @@ const DenyBooking = ({ selectedDate, onBookingDatesChange }) => {
 
 
     useEffect(() => {
-        
+
         if (allData.length <= 4) {
             setHasMore(false)
         }
     }, [hasMore, allData.length])
 
 
-    
+
     return (
         <div
             className='all-booking'
