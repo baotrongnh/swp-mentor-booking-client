@@ -151,7 +151,6 @@ function ManagerComplaintPending() {
 
     return (
         <div className="all-complaint-pending">
-            <Button>+ Add Item</Button>
             <Table
                 scroll={{ y: '76vh' }}
                 pagination={{ position: ['bottomCenter'] }}

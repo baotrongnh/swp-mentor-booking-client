@@ -76,7 +76,6 @@ function StudentProfile() {
                     <EditProfile visible={isEditing} onClose={handleClose} />
                     <ModalBecomeMentor modalOpen={openModalBeMentor} setModalOpen={setOpenModalBeMentor} />
 
-
                 </div>
             </div>
 

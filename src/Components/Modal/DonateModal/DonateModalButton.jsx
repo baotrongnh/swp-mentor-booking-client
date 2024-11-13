@@ -60,10 +60,6 @@ const DonateModalButton = ({ className, mentorId }) => {
     }, [loadData])
 
 
-    const formatNumber = (price) => {
-        return Intl.NumberFormat('de-DE').format(price)
-    }
-
     return (
         <div className='donate-modal-btn'>
             <Button
@@ -86,7 +82,7 @@ const DonateModalButton = ({ className, mentorId }) => {
                 footer={null}
             >
                 <InfiniteScroll
-                    dataLength={data.length}
+                    dataLength={data?.length}
                     hasMore={hasMore}
                     loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
                     endMessage={<Divider plain>That is all</Divider>}
@@ -97,7 +93,7 @@ const DonateModalButton = ({ className, mentorId }) => {
                         align='middle'
                         justify='center'
                     >
-                        {data.map((item, index) => (
+                        {data?.map((item, index) => (
                             <Col
                                 key={index}
                                 xs={24}
@@ -111,30 +107,31 @@ const DonateModalButton = ({ className, mentorId }) => {
                                     hoverable
                                     cover={
                                         <Image
-                                            alt={item.name}
-                                            src={item.imgPath}
+                                            alt={item?.name}
+                                            src={item?.imgPath}
                                             preview={false}
                                             style={{
                                                 height: '200px',
                                                 objectFit: 'cover',
                                                 borderRadius: '10px 10px 0 0',
                                                 border: '0.1px solid gray',
-                                                borderBottom: 'none'
+                                                borderBottom: 'none',
+                                                padding: '1rem'
                                             }}
                                             onError={(e) => e.target.src = defaultAvatar}
                                         />}
                                     className='donate-card'
                                     style={{ border: '0.1px solid gray' }}
                                 >
-                                    <h1 className='donate-item-title'>{item.name}</h1>
+                                    <h1 className='donate-item-title'>{item?.name}</h1>
                                     <Flex align='center' justify='center'>
                                         <span className='donate-price'>
-                                            {formatNumber(item.price)} vnđ
+                                            {new Intl.NumberFormat('vi-VN').format(item?.price)} vnđ
                                         </span>
                                     </Flex>
                                     <Button
                                         type="primary"
-                                        onClick={() => handleDonate(mentorId, item.id, currentUser.currentUser.accountId)}
+                                        onClick={() => handleDonate(mentorId, item?.id, currentUser.currentUser.accountId)}
                                         className={`donate-button ${className}`}
                                         style={{
                                             width: '100%',

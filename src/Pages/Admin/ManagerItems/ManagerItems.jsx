@@ -5,51 +5,81 @@ import { useEffect, useState } from "react"
 import axiosClient from "../../../apis/axiosClient"
 import { Loading } from "../../../Components"
 import { getToken } from "../../../utils/storageUtils"
+import ModalUpdate from "./Components/ModalUpdate/ModalUpdate"
+import ModalCreate from "./Components/ModalCreate/ModalCreate"
+import toast from "react-hot-toast"
+import Search from "antd/es/transfer/search"
 
 function ManagerItems() {
      const [selectedRowKeys, setSelectedRowKeys] = useState([])
      const [dataSource, setDataSource] = useState([])
+     const [updateShow, setUpdateShow] = useState(false)
+     const [initialData, setInitialData] = useState(null)
+     const [createShow, setCreateShow] = useState(false)
+     const [dataSearch, setDataSearch] = useState('')
+     const token = getToken()
 
      const getListItem = async () => {
-          const token = getToken()
-          return axiosClient(token).get('/item/all/')
+          return axiosClient(token).get('/item/all')
      }
 
-     const { data: listItems, isLoading } = useQuery({ queryKey: ['list-items'], queryFn: getListItem })
-
+     const { data: listItems, isLoading, refetch } = useQuery({ queryKey: ['list-items'], queryFn: getListItem })
 
      const formatNumber = (price) => {
           return Intl.NumberFormat('de-DE').format(price)
      }
 
+     const parseNumber = (formattedPrice) => {
+          return Number(formattedPrice.replace(/[.,]/g, ''))
+     }
+
+     // useEffect(() => {
+     //      if (listItems) {
+     //           const formattedData = listItems?.items.map((item) => ({
+     //                key: item.id,
+     //                id: item.id,
+     //                img: item.imgPath,
+     //                name: item.name,
+     //                status: item.status,
+     //                price: formatNumber(item.price)
+     //           }))
+     //           setDataSource(formattedData)
+     //      }
+     // }, [listItems])
+
      useEffect(() => {
           if (listItems) {
                setDataSource(
-                    listItems?.items.map((item) => ({
-                         key: item.id,
-                         id: item.id,
-                         name: item.name,
-                         price: formatNumber(item.price)
-                    }))
+                    listItems?.items
+                         ?.filter(item => item.name.toLowerCase().includes(dataSearch.toLowerCase()))
+                         .map((item) => ({
+                              key: item.id,
+                              id: item.id,
+                              img: item.imgPath,
+                              name: item.name,
+                              status: item.status,
+                              price: formatNumber(item.price)
+                         }))
                )
           }
-     }, [listItems])
+     }, [listItems, dataSearch])
 
 
-     const getDropDownItems = () => ([
+     const getDropDownItems = (record) => ([
           {
                label: 'Edit',
                key: '0',
                icon: <Icon icon="iconamoon:edit-bold" />,
+               onClick: () => handleMenuClick("0", record)
           },
           {
                label: 'Delete',
                key: '3',
                danger: true,
                icon: <Icon icon="weui:delete-outlined" />,
-
-          },
-     ])
+               onClick: () => handleMenuClick("3", record)
+          }
+     ]);
 
      const columns = [
           {
@@ -57,15 +87,24 @@ function ManagerItems() {
                dataIndex: 'id',
           },
           {
+               title: 'Image',
+               dataIndex: 'img',
+               render: (imgPath) => (
+                    <img
+                         src={imgPath}
+                         alt="Item Image"
+                         style={{ width: 50, height: 50, objectFit: 'cover' }}
+                    />
+               ),
+          },
+          {
                title: 'Name',
                dataIndex: 'name',
-               sorter: (a, b) => a.name.length - b.name.length,
           },
           {
                title: 'Price',
                dataIndex: 'price',
                align: 'center',
-               sorter: (a, b) => a.mentorCount - b.mentorCount,
           },
           {
                title: '',
@@ -73,37 +112,142 @@ function ManagerItems() {
                align: 'center',
                render: (text, record) => (
                     <Dropdown
-                         menu={{ items: getDropDownItems(text, record) }}
+                         menu={{ items: getDropDownItems(record) }}
                          trigger={['click']}
                     >
                          <Button type="text"><Icon icon="lsicon:more-outline" /></Button>
                     </Dropdown>
                )
           }
-     ]
+     ];
 
      const onSelectChange = (newSelectedRowKeys) => {
           setSelectedRowKeys(newSelectedRowKeys);
      }
 
+     const handleMenuClick = (key, record) => {
+          if (key === "0") {
+               const formData = {
+                    ...record,
+                    price: parseNumber(record.price)
+               }
+               setInitialData(formData);
+               setUpdateShow(true);
+          } else if (key === "3") {
+               handleDelete(record.id)
+          }
+     };
+
      const rowSelection = {
           selectedRowKeys,
           onChange: onSelectChange,
           align: 'center',
-          onSelect: (record, seleted) => console.log(seleted)
+          onSelect: (record, selected) => console.log(selected)
+     }
+
+     const handleSubmitUpdate = async (values) => {
+          try {
+               const res = await axiosClient(token).post('/item/update', {
+                    id: values.id,
+                    name: values.name,
+                    price: values.price,
+                    imgPath: values.img,
+                    status: values.status
+               })
+               if (res) {
+                    console.log(res)
+                    toast.success('Update Success')
+                    await refetch()
+               }
+          } catch (error) {
+               const errorMessage = error.response?.data?.error || "An unexpected error occurred";
+               console.log("Error", error);
+               toast.error(errorMessage);
+          } finally {
+               setUpdateShow(false)
+          }
+     }
+
+     const handleSubmitCreate = async (values) => {
+          try {
+               const res = await axiosClient(token).post('/item/create', {
+                    name: values.name,
+                    price: values.price,
+                    imgPath: values.img
+               })
+               if (res) {
+                    console.log(res)
+                    toast.success('Create Success')
+                    await refetch()
+               }
+          } catch (e) {
+               const errorMessage = e.response?.data?.error || "An unexpected error occurred";
+               console.log("Error", e);
+               toast.error(errorMessage);
+          } finally {
+               setCreateShow(false)
+          }
+
+     }
+
+     const onCancelModal = () => {
+          setUpdateShow(false)
+          setCreateShow(false)
+     }
+
+     const handleDelete = async (id) => {
+          try {
+               console.log(id)
+               const res = await axiosClient(token).post('/item/delete', {
+                    id: id
+               })
+               if (res) {
+                    console.log(res)
+                    toast.success('Delete Success')
+                    await refetch()
+               }
+          } catch (e) {
+               const errorMessage = e.response?.data?.error || "An unexpected error occurred";
+               console.log("Error", e);
+               toast.error(errorMessage);
+          }
+     }
+
+     const onSearch = (e) => {
+          setDataSearch(e.target.value)
      }
 
      if (isLoading) return (<Loading />)
 
      return (
           <div className="all-items">
-               <Button>+ Add Item</Button>
+               <Button onClick={() => setCreateShow(true)}>+ Add Item</Button>
+               <div style={{ margin: '10px 0', padding: '0 20px' }}>
+                    <Search
+                         placeholder="Find items..."
+                         allowClear
+                         onSearch={onSearch}
+                         className='search-input'
+                         onChange={onSearch}
+                    />
+               </div>
                <Table
                     scroll={{ y: '76vh' }}
                     pagination={{ position: ['bottomCenter'] }}
                     rowSelection={rowSelection}
                     columns={columns}
                     dataSource={dataSource}
+               />
+               <ModalUpdate
+                    show={updateShow}
+                    submit={handleSubmitUpdate}
+                    onCancel={onCancelModal}
+                    initialData={initialData}
+               />
+               <ModalCreate
+                    show={createShow}
+                    onCancel={onCancelModal}
+                    submit={handleSubmitCreate}
                />
           </div>
      )

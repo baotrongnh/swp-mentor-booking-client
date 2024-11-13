@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import { Button, Table } from "antd"
+import { Table } from "antd"
 import { useEffect, useState } from "react"
 import axiosClient from "../../../apis/axiosClient"
 import { Loading } from "../../../Components"
@@ -90,6 +90,7 @@ function ManagerComplaintResolved() {
         {
             title: 'Status',
             dataIndex: 'status',
+            align: 'center'
 
         },
     ]
@@ -109,7 +110,6 @@ function ManagerComplaintResolved() {
 
     return (
         <div className="all-complaint-pending">
-            <Button>+ Add Item</Button>
             <Table
                 scroll={{ y: '76vh' }}
                 pagination={{ position: ['bottomCenter'] }}
