@@ -1,13 +1,20 @@
-import CanvasJSReact from '@canvasjs/react-charts'
 import { useQuery } from '@tanstack/react-query'
 import { getTotalUser } from '../../../apis/admin'
 import { loadAllSkills } from '../../../apis/mentor'
 
+import { useEffect, useState } from 'react'
+
 export default function OverviewChart() {
-     const CanvasJSChart = CanvasJSReact.CanvasJSChart
+     const [CanvasJSChart, setCanvasJSChart] = useState(null)
+
+     useEffect(() => {
+          import('@canvasjs/react-charts').then((module) => {
+               setCanvasJSChart(module.CanvasJSChart)
+          })
+     }, [])
+     
      const { data: dataUser } = useQuery({ queryKey: ['data-user'], queryFn: getTotalUser })
      const { data: dataSkills } = useQuery({ queryKey: ['data-skills'], queryFn: loadAllSkills })
-     console.log(dataSkills);
 
      const dataUserChart = ([
           {

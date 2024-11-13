@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { AuthContext } from '../../Contexts/AuthContext'
 import { getListGift } from '../../apis/items'
 import { formatCurrencyVND } from '../../utils/format'
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next'
 import { getTotalDonation, withdraw } from '../../apis/payment'
 import toast from 'react-hot-toast'
 
