@@ -103,7 +103,7 @@ export default function Slots({ setModalAddSlotsOpen, mentorId, isCurrentUser })
                                                        loading: mutation.isPending,
                                                   }}
                                              >
-                                                  <Button loading={mutationDelete.isPending} type='primary'>
+                                                  <Button loading={mutationDelete.isPending} type='primary' disabled={semesterData.latestSemester.slotCost > currentUser.point}>
                                                        {t('Book')}: {semesterData.latestSemester.slotCost} <Icon icon="twemoji:coin" />
                                                   </Button>
                                              </Popconfirm>

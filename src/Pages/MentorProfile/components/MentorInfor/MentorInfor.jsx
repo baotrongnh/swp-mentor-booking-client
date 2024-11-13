@@ -7,12 +7,11 @@ import DonateModalButton from '../../../../Components/Modal/DonateModal/DonateMo
 import './MentorInfor.scss'
 
 function MentorInfor({ setModalOpen, mentorInfor, setCurrentTab, isCurrentUser }) {
-     const skills = ['ReactJS', 'NodeJS']
+     const skills = mentorInfor?.skills.map(skill => skill.name)
      const descriptionRef = useRef(null)
      const [width, setWidth] = useState(window.innerWidth)
      const [isShowMore, setIsShowMore] = useState(false)
      const { t } = useTranslation()
-
 
      useEffect(() => {
           const handleResize = () => {
