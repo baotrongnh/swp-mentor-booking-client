@@ -38,3 +38,8 @@ export const rejectCheckout = async (mentorId) => {
     const token = getTokenAdmin()
     return await axiosClient(token).get(`admin/reject-checkout/${mentorId}`)
 }
+
+export const getCheckoutHistory = async (id) => {
+    const token = getToken()
+    return await axiosClient(token).get(`/checkout/${id}`)
+}

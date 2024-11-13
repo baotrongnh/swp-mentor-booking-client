@@ -62,7 +62,8 @@ function ManagerWithdraw() {
                label: 'Accept',
                key: '3',
                icon: <Icon icon="weui:delete-outlined" />,
-               onClick: () => handleAccept(record)
+               onClick: () => handleAccept(record),
+               render: () => <Button loading={mutationAccept.isPending}><Icon icon="weui:delete-outlined" /> Accept</Button>
           },
           {
                label: 'Reject',

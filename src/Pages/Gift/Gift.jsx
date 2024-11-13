@@ -65,13 +65,16 @@ const Gift = () => {
                )}
                {dataGift?.donates.length === 0
                     ?
-                    <div style={{ height: '100vh', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}><Empty /></div>
+                    <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}><Empty /></div>
                     :
                     <div style={{
                          fontFamily: "'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
                          minHeight: '100vh',
                          padding: '2rem',
                          boxSizing: 'border-box',
+                         backgroundColor: '#f9f9f9',
+                         borderRadius: '10px',
+                         boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
                     }}>
                          <h1 style={{
                               color: '#3498db',
@@ -93,7 +96,7 @@ const Gift = () => {
                               {t('Total Value')}: {formatCurrencyVND(totalDonation?.totalAmount)}
                          </p>
 
-                         <Flex justify='end'><Button style={{ margin: '20px 0' }} onClick={handleWithdraw}>Withdraw all</Button></Flex>
+                         {isMentor && <Flex justify='end'><Button style={{ margin: '20px 0' }} onClick={handleWithdraw}>Withdraw all</Button></Flex>}
                          <div style={{
                               display: 'flex',
                               justifyContent: 'space-between',
@@ -108,7 +111,7 @@ const Gift = () => {
                               }}>
                                    {dataGift?.donates.map((gift) => (
                                         <li key={gift.id} style={{
-                                             backgroundColor: '#b8b8b83b',
+                                             backgroundColor: '#ffffff',
                                              borderRadius: '10px',
                                              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
                                              overflow: 'hidden',
@@ -132,6 +135,7 @@ const Gift = () => {
                                                   width: '150px',
                                                   height: '150px',
                                                   objectFit: 'cover',
+                                                  borderRadius: '10px 0 0 10px',
                                              }} />
                                              <div style={{ padding: '1.5rem', flexGrow: 1 }}>
                                                   <h2 style={{
@@ -180,7 +184,7 @@ const Gift = () => {
                                    position: 'sticky',
                                    top: '2rem',
                                    alignSelf: 'flex-start',
-                                   backgroundColor: '#b8b8b83b',
+                                   backgroundColor: '#ffffff',
                                    borderRadius: '10px',
                                    padding: '1.5rem',
                                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',

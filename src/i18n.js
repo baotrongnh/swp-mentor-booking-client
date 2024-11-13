@@ -18,9 +18,10 @@ const resources = {
                'pending booking': 'Pending bookings',
                'Gift': 'Gift',
                'Donation history': 'Donation history',
-               'Manager slot': 'Manager slots',
+               'Manager slot': 'Manage slots',
                'Add schedule': 'Add schedule',
                'Invitation Pending': 'Invitation Pending',
+               'History withdraw': 'History withdraw',
 
                //button:
                'book': 'Book',
@@ -271,6 +272,7 @@ const resources = {
                'Manager slot': 'Quản lý slots',
                'Add schedule': 'Thêm lịch',
                'Invitation Pending': 'Lời mời đang chờ',
+               'History withdraw': 'Lịch sử rút tiền',
 
                //button:
                'book': 'Đặt lịch',

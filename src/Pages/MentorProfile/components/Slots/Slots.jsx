@@ -70,6 +70,8 @@ export default function Slots({ setModalAddSlotsOpen, mentorId, isCurrentUser })
                     {isCurrentUser && <Button type='primary' onClick={() => setModalAddSlotsOpen(true)}>+ {t('Add new slot')}</Button>}
                </Flex>
 
+               <p style={{ padding: '10px 0' }}>Time for a slot: <span style={{ fontWeight: '600' }}>{semesterData?.latestSemester.slotDuration} minutes</span> </p>
+
                <List
                     grid={{
                          gutter: 16,

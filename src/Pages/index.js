@@ -10,5 +10,6 @@ import PageError from "./PageError"
 import Gift from "./Gift/Gift"
 import Notification from "./Notification/Notification"
 import PendingAccept from "./PendingAccept/PendingAccept"
+import HistoryCheckout from "./HistoryCheckout/HistoryCheckout"
 
-export { Login, Notification, MentorListPage, MentorProfile, StudentProfile, PageNotFound, Schedule, Wallet, Home, PageError, Gift, PendingAccept }
+export { Login, Notification, MentorListPage, MentorProfile, StudentProfile, PageNotFound, Schedule, Wallet, Home, PageError, Gift, PendingAccept, HistoryCheckout }

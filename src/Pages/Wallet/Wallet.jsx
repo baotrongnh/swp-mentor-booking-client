@@ -11,7 +11,7 @@ import './Wallet.scss'
 export default function Wallet() {
     const queryClient = useQueryClient()
     const { currentUser } = useContext(AuthContext)
-    const { t } = useContext(AppContext)
+    const { t, semesterData } = useContext(AppContext)
     const [initLoading, setInitLoading] = useState(true)
     const [list, setList] = useState([])
     const { data: transactionData } = useQuery({
@@ -66,13 +66,9 @@ export default function Wallet() {
                             <h1 className="title">{t('Your balance')}:</h1>
                             <div className="number-balance-block">
                                 <Icon className='icon' icon="twemoji:coin" />
-                                <p className='number'>{currentUser?.point}</p>
+                                <p className='number'>{currentUser?.point} <span style={{ fontSize: '3.5rem', fontWeight: '400' }}>/ {semesterData?.latestSemester.defaultPoint}</span></p>
                             </div>
                         </div>
-                    </Col>
-
-                    <Col md={9}>
-
                     </Col>
                 </Row>
 

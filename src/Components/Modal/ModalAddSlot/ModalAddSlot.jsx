@@ -7,11 +7,13 @@ import { useTranslation } from 'react-i18next'
 import { createSchedule } from "../../../apis/mentor"
 import { AuthContext } from "../../../Contexts/AuthContext"
 import { disabledDateInPast, disableNotThing, disableTime, getDateNow } from "../../../utils/validate"
+import { AppContext } from "../../../Contexts/AppContext"
 
 export default function ModalAddSlot({ modalOpen, setModalOpen }) {
      const { t } = useTranslation()
      const queryClient = useQueryClient()
      const { currentUser } = useContext(AuthContext)
+     const { semesterData } = useContext(AppContext)
 
      const [dateCustom, setDateCustom] = useState({ date: '0000-00-00', time: '00:00:00' })
      const [displayDate, setDisplayDate] = useState({ date: 'DD-MM-YYYY', time: '00:00' })
@@ -79,6 +81,8 @@ export default function ModalAddSlot({ modalOpen, setModalOpen }) {
                          }}>
                               {t('select date and time')}
                          </h3>
+
+                         <span>Time for a slot: <span style={{fontWeight: '600'}}>{semesterData?.latestSemester.slotDuration} minutes</span> </span>
 
                          <p style={{
                               marginBottom: 24,

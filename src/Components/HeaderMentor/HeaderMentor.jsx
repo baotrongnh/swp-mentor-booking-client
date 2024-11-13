@@ -110,7 +110,7 @@ function HeaderMentor({ dataUnread }) {
           <div className="header-mentor">
                <div className="container">
                     <Row className='header-block'>
-                         <Col className='logo-block' xs={12} sm={12} md={12} lg={12}>
+                         <Col className='logo-block' xs={12} sm={12} md={12} lg={8}>
                               <Link to='/'>
                                    <img className='logo-img' src={logo} alt="" />
                               </Link>
@@ -122,11 +122,12 @@ function HeaderMentor({ dataUnread }) {
                               </Button>
                          </Col>
 
-                         <Col xs={0} md={0} lg={12}>
+                         <Col xs={0} md={0} lg={16}>
                               <div className='btn-block'>
                                    <NavLink to='/gift' className='navbar-link'>{t('Gift')}</NavLink>
                                    <NavLink to='/schedule' className='navbar-link'>{t('schedule')}</NavLink>
                                    <NavLink to={`/mentor/profile/${currentUser?.accountId}`} className='navbar-link'>{t('Manager slot')}</NavLink>
+                                   <NavLink to={`/history-withdraw`} className='navbar-link'>{t('History withdraw')}</NavLink>
 
                                    <NavLink to='/notification' className='navbar-link'>
                                         <Badge size='small' count={dataUnread?.numberOfUnreadNotifications} showZero color="#faad14" >

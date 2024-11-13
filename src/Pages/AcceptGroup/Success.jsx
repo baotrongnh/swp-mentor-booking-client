@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 const stylesAccept = {
      body: {
@@ -107,7 +108,7 @@ export default function Success() {
           <div>
                <div style={stylesAccept.body}>
                     <header style={stylesAccept.header}>
-                         <h1 style={stylesAccept.headerTitle}>TeamConnect Notifications</h1>
+                         <h1 style={stylesAccept.headerTitle}>Join Group Notifications</h1>
                     </header>
 
                     <main style={stylesAccept.main}>
@@ -120,15 +121,11 @@ export default function Success() {
                               <h2 style={stylesAccept.title}>Invitation Accepted</h2>
 
                               <p style={stylesAccept.message}>
-                                   You have successfully accepted the invitation to join the group:
+                                   You have successfully accepted the invitation to join the group!
                               </p>
-                              <h3 style={stylesAccept.groupName}>Awesome Team</h3>
 
                               <div style={stylesAccept.detailsBox}>
                                    <h4 style={stylesAccept.detailsTitle}>Acceptance Details:</h4>
-                                   <p style={stylesAccept.detailsText}><strong>Group:</strong> Awesome Team</p>
-                                   <p style={stylesAccept.detailsText}><strong>Inviter:</strong> John Doe</p>
-                                   <p style={stylesAccept.detailsText}><strong>Accepted on:</strong> {new Date().toLocaleString()}</p>
                                    <p style={stylesAccept.detailsText}><strong>Status:</strong> Member</p>
                               </div>
 
@@ -137,20 +134,22 @@ export default function Success() {
                                    We recommend introducing yourself to other members and exploring the group&apos;s content.
                               </p>
 
-                              <button
-                                   style={stylesAccept.button}
-                                   onMouseEnter={(e) => e.target.style.backgroundColor = '#2980b9'}
-                                   onMouseLeave={(e) => e.target.style.backgroundColor = '#3498db'}
-                                   onClick={() => console.log('Navigating to group page...')}
-                              >
-                                   Go to Group Page
-                              </button>
+                              <Link to='/schedule'>
+                                   <button
+                                        style={stylesAccept.button}
+                                        onMouseEnter={(e) => e.target.style.backgroundColor = '#2980b9'}
+                                        onMouseLeave={(e) => e.target.style.backgroundColor = '#3498db'}
+                                        onClick={() => console.log('Navigating to group page...')}
+                                   >
+                                        View Schedule
+                                   </button>
+                              </Link>
                          </div>
                     </main>
 
                     <footer style={stylesAccept.footer}>
                          <p>&copy; 2024 TeamConnect. All rights reserved.</p>
-                         <p>If you have any questions, please contact <a href="mailto:support@teamconnect.com" style={stylesAccept.link}>support@teamconnect.com</a></p>
+                         <p>If you have any questions, please contact <a href="fptmentor@gmail.com" style={stylesAccept.link}>fptmentor@gmail.com</a></p>
                     </footer>
                </div>
           </div>

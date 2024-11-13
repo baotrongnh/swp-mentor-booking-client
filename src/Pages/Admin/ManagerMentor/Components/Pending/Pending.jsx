@@ -19,8 +19,6 @@ function Pending() {
         mutationFn: (mentorId) => promoteMentor(mentorId)
     })
 
-    console.log(dataMentors);
-
     const mutationReject = useMutation({
         mutationFn: (mentorId) => rejectApplyMentor(mentorId),
         onSuccess: () => {
@@ -31,6 +29,8 @@ function Pending() {
             toast.error('Error')
         }
     })
+
+    console.log(dataMentors);
 
     useEffect(() => {
         if (dataMentors) {
@@ -44,7 +44,7 @@ function Pending() {
                         email: mentor.email,
                         point: mentor.point || '0',
                         rating: mentor.averageRating || 'No data',
-                        skills: mentor.skills.map(skill => `${skill.name} (3)`),
+                        skills: mentor.skills.map(skill => `${skill.name} (${skill.mentor_skill.level})`),
                         image: mentor.imgPath
                     }))
             )

@@ -69,7 +69,7 @@ const ManagerSemester = () => {
           mutationStartNewSemester.mutateAsync()
      }
 
-     if (isLoading) return <Loading />
+     if (isLoading || mutationResetPoint.isPending || mutationSetDefaultCost.isPending || mutationSetDefaultPoint.isPending || mutationStartNewSemester.isPending) return <Loading />
 
      return (
           <div className="semester-manager">

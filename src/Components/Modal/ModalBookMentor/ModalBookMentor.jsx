@@ -101,6 +101,7 @@ function ModalBookMentor({ modalOpen, setModalOpen, currentIdMentor }) {
                                             <h1 style={{ fontWeight: '600' }} className="title">
                                                 {t('Available time')}  <Tooltip title="Available times will be automatically confirmed!"><Icon icon="f7:question-circle" /></Tooltip>
                                             </h1>
+                                            <span>Time for a slot: <span style={{ fontWeight: '600' }}>{semesterData?.latestSemester.slotDuration} minutes</span> </span>
                                             <Select
                                                 showSearch
                                                 placeholder={t('Select a slot')}
