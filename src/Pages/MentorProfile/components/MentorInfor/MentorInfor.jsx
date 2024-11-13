@@ -78,7 +78,7 @@ function MentorInfor({ setModalOpen, mentorInfor, setCurrentTab, isCurrentUser }
                                              <Button style={{ width: '40%' }} size="large" type="primary" onClick={handleOpenModal}>
                                                   {t('book now')}
                                              </Button>
-                                             {/* <DonateModalButton mentorId={mentorInfor.accountId} /> */}
+                                             <DonateModalButton mentorId={mentorInfor.accountId} />
                                         </>
                                    )}
                               </div>
