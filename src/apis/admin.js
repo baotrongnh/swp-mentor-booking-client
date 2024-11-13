@@ -138,3 +138,8 @@ export const deleteSkill = async (id) => {
      const token = getTokenAdmin()
      return await axiosClient(token).post('admin/delete-skill', { id })
 }
+
+export const getProportion = async () => {
+     const token = getTokenAdmin()
+     return await axiosClient(token).get('booking/report')
+}

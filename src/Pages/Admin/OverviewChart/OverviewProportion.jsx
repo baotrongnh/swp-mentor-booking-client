@@ -1,17 +1,15 @@
 import { useQuery } from '@tanstack/react-query'
 import { Card, Col, Row, Statistic } from 'antd'
 import { Loading } from '../../../Components'
+import { getProportion } from '../../../apis/admin'
 
 export default function OverviewProportion() {
-     const { data: stats, isLoading } = useQuery({
+     const { data: dataReport, isLoading } = useQuery({
           queryKey: ['booking-stats'],
-          queryFn: () => ({
-               cancellation: '30',
-               studentComplaints: '20',
-               mentorComplaints: '0',
-               repeatBookings: '2'
-          })
+          queryFn: getProportion
      })
+
+     console.log(dataReport);
 
      if (isLoading) return <Loading />
 
@@ -22,12 +20,12 @@ export default function OverviewProportion() {
                          <Card bordered={false} style={{ height: '100%' }}>
                               <Statistic
                                    title="Booking Cancellation Rate"
-                                   value={stats.cancellation}
+                                   value={dataReport.cancelledRate}
                                    suffix="%"
                                    valueStyle={{ color: '#cf1322' }}
                               />
                               <div style={{ fontSize: '12px', color: 'rgba(0,0,0,0.45)', marginTop: '8px' }}>
-                                   {3} out of {30} bookings
+                                   {dataReport.cancelled} out of {dataReport.total} bookings
                               </div>
                          </Card>
                     </Col>
@@ -36,12 +34,12 @@ export default function OverviewProportion() {
                          <Card bordered={false} style={{ height: '100%' }}>
                               <Statistic
                                    title="Student Complaint Rate"
-                                   value={stats.studentComplaints}
+                                   value={dataReport.complaintRate}
                                    suffix="%"
                                    valueStyle={{ color: '#faad14' }}
                               />
                               <div style={{ fontSize: '12px', color: 'rgba(0,0,0,0.45)', marginTop: '8px' }}>
-                                   {stats.studentComplaints} complaints from students
+                                   {dataReport.complaint} complaints from students
                               </div>
                          </Card>
                     </Col>
@@ -50,12 +48,12 @@ export default function OverviewProportion() {
                          <Card bordered={false} style={{ height: '100%' }}>
                               <Statistic
                                    title="Mentor Complaint Rate"
-                                   value={stats.mentorComplaints}
+                                   value={0}
                                    suffix="%"
                                    valueStyle={{ color: '#faad14' }}
                               />
                               <div style={{ fontSize: '12px', color: 'rgba(0,0,0,0.45)', marginTop: '8px' }}>
-                                   {stats.mentorComplaints} complaints from mentors
+                                   {0} complaints from mentors
                               </div>
                          </Card>
                     </Col>
@@ -64,12 +62,12 @@ export default function OverviewProportion() {
                          <Card bordered={false}>
                               <Statistic
                                    title="Repeat Booking Rate"
-                                   value={stats.repeatBookings}
+                                   value={dataReport.starStudentRate}
                                    suffix="%"
                                    valueStyle={{ color: '#3f8600' }}
                               />
                               <div style={{ fontSize: '12px', color: 'rgba(0,0,0,0.45)', marginTop: '8px' }}>
-                                   {stats.repeatBookings} students booked 2+ times
+                                   {dataReport.starStudent} students booked 2+ times
                               </div>
                          </Card>
                     </Col>

@@ -70,7 +70,7 @@ function AllMentor() {
                         email: mentor.email,
                         point: mentor.point,
                         rating: mentor.averageRating || 'No data',
-                        skills: mentor.skills?.map(skill => `${skill.name} (level)`),
+                        skills: mentor.skills?.map(skill => `${skill.name} (${skill.level})`),
                         image: mentor.imgPath
                     }))
             )
