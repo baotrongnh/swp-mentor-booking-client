@@ -53,7 +53,7 @@ export default function Home() {
                     </div>
                </div>
                <div className="container">
-                    {currentUser.isMentor === 0 &&
+                    {currentUser?.isMentor === 0 &&
                          <div className="first-content" id='first-content'>
                               {topMentor?.length !== 0 ?
                                    <h2 className='title'>{t("See Our Best Mentor")}</h2>
