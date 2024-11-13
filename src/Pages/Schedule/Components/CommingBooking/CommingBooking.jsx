@@ -16,7 +16,9 @@ import { AuthContext } from '../../../../Contexts/AuthContext';
 import { getToken } from '../../../../utils/storageUtils';
 import AvatarGroup from '../AvatarGroup/AvatarGroup';
 import FormatDate from '../FormatDate/FormatDate';
+
 import './CommingBooking.scss';
+import ModalViewDetailGroup from '../../../../Components/Modal/ModalViewDetailGroup/ModalViewDetailGroup';
 
 
 const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
@@ -145,6 +147,7 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
                                                 <AvatarGroup studentGroup={item?.studentGroups} />
                                             }
                                             title={`${t('Group')} ${item?.id}`}
+                                            description={<ModalViewDetailGroup id={item?.id} />}
                                         />
                                     </Col>
                                     <Col flex={1}>
@@ -198,7 +201,12 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
                                                     onError={(e) => e.target.src = defaultAvatar}
                                                 />}
                                             title={<Link to={`/mentor/profile/${item?.mentorId}`}>{item?.mentor.fullName}</Link>}
-                                            description={item?.mentor.email}
+                                            description={<>
+                                                {item?.mentor.email}
+                                                <br />
+                                                <ModalViewDetailGroup id={item?.id} />
+                                            </>}
+
                                         />
                                     </Col>
                                     <Col flex={1}>
@@ -207,30 +215,32 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
                                                 {FormatDate(new Date(item?.startTime), true)}
                                                 {FormatDate(new Date(item?.endTime), false)}
                                             </Flex>
-                                            <Flex justify='center' align='center' gap={24} style={{ marginTop: '1rem' }}>
-                                                <Button
-                                                    type="primary"
-                                                    variant="outlined"
-                                                    style={{ width: '14rem' }}
-                                                    onClick={() => {
-                                                        setModalOpen(true)
-                                                        setBookigId(item?.id)
-                                                    }}
-                                                >{t('Add Member')}</Button>
-                                                <Popconfirm
-                                                    title={t("Cancel this booking?")}
-                                                    description={t("Are you sure to cancel this booking?")}
-                                                    okText={t("Yes")}
-                                                    cancelText={t("No")}
-                                                    onConfirm={() => handleDeny(role, item?.id)}
-                                                >
+                                            {item?.studentGroups[0].role === 1 &&
+                                                <Flex justify='center' align='center' gap={24} style={{ marginTop: '1rem' }}>
                                                     <Button
-                                                        danger
-                                                        style={{ width: '12rem' }}
-                                                    >{t('Cancel')}
-                                                    </Button>
-                                                </Popconfirm>
-                                            </Flex>
+                                                        type="primary"
+                                                        variant="outlined"
+                                                        style={{ width: '14rem' }}
+                                                        onClick={() => {
+                                                            setModalOpen(true)
+                                                            setBookigId(item?.id)
+                                                        }}
+                                                    >{t('Add Member')}</Button>
+                                                    <Popconfirm
+                                                        title={t("Cancel this booking?")}
+                                                        description={t("Are you sure to cancel this booking?")}
+                                                        okText={t("Yes")}
+                                                        cancelText={t("No")}
+                                                        onConfirm={() => handleDeny(role, item?.id)}
+                                                    >
+                                                        <Button
+                                                            danger
+                                                            style={{ width: '12rem' }}
+                                                        >{t('Cancel')}
+                                                        </Button>
+                                                    </Popconfirm>
+                                                </Flex>
+                                            }
                                         </Flex>
                                     </Col>
                                 </Row>

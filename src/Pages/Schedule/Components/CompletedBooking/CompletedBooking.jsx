@@ -13,6 +13,7 @@ import AvatarGroup from '../AvatarGroup/AvatarGroup';
 import FormatDate from '../FormatDate/FormatDate';
 import ModalReport from '../ModalReport/ModalReport';
 import './CompletedBooking.scss';
+import ModalViewDetailGroup from '../../../../Components/Modal/ModalViewDetailGroup/ModalViewDetailGroup';
 
 
 
@@ -113,6 +114,7 @@ const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
                                                 <AvatarGroup studentGroup={item.studentGroups} />
                                             }
                                             title={`${t('Group')} ${item.id}`}
+                                            description={<ModalViewDetailGroup id={item?.id} />}
 
                                         />
                                     </Col>
@@ -153,7 +155,11 @@ const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
                                                     onError={(e) => e.target.src = defaultAvatar}
                                                 />}
                                             title={<Link to={`/mentor/profile/${item.mentorId}`}>{item.mentor.fullName}</Link>}
-                                            description={item.mentor.email}
+                                            description={<>
+                                                {item?.mentor.email}
+                                                <br />
+                                                <ModalViewDetailGroup id={item?.id} />
+                                            </>}
                                         />
                                     </Col >
                                     <Col flex={1}>
@@ -162,11 +168,11 @@ const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
                                                 {FormatDate(new Date(item.startTime), true)}
                                                 {FormatDate(new Date(item.endTime), false)}
                                             </Flex>
-                                            {item?.studentGroups[0].role === 1 &&
-                                                <Flex justify='center' align='center' gap={24} style={{ marginTop: '1rem' }}>
-                                                    <ModalReport mentorId={item.mentorId} studentId={currentUser.accountId} />
-                                                </Flex>
-                                            }
+
+                                            <Flex justify='center' align='center' gap={24} style={{ marginTop: '1rem' }}>
+                                                <ModalReport mentorId={item.mentorId} studentId={currentUser.accountId} />
+                                            </Flex>
+
                                         </Flex>
                                     </Col>
                                 </Row>
