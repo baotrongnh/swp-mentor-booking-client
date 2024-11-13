@@ -32,7 +32,7 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
     const [page, setPage] = useState(1)
     const pageSize = 10;
     const { t } = useContext(AppContext)
-    const role = currentUser?.isMentor === undefined ? 'mentor' : 'student'
+    const role = currentUser?.isMentor === 0 ? 'student' : 'mentor'
     const queryClient = useQueryClient()
 
 
@@ -103,12 +103,12 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
 
     const handleDeny = async (role, id) => {
         const token = getToken()
-        
+
         const res = await axiosClient(token).get(`/booking/cancel/${role}/${id}`)
         try {
             if (res) {
                 queryClient.invalidateQueries({ queryKey: ['currentUser'] })
-               
+
                 toast.success('Success')
                 handleReload(true)
             }
@@ -118,7 +118,8 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
         }
     }
 
-   
+    // console.log(currentUser)
+    // console.log(displayData)
 
     return (
         <div
