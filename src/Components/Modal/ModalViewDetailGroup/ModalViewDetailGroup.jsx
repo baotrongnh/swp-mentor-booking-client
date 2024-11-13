@@ -25,7 +25,6 @@ function ModalViewDetailGroup(id) {
         try {
             const res = await axiosClient(token).get(`/group/get?bookingId=${id.id}`)
             if (res) {
-                console.log(res.group)
                 const sortData = res.group.sort((item1, item2) => item2.role - item1.role)
                 setData(sortData)
             }
@@ -91,7 +90,7 @@ function ModalViewDetailGroup(id) {
                             />
                         </List.Item>
                     )}
-                />,
+                />
             </Modal>
         </>
     )

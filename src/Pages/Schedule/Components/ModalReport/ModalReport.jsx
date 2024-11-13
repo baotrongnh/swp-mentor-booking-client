@@ -49,7 +49,7 @@ function ModalReport({ mentorId, studentId }) {
 
     return (
         <>
-            <Flex justify='center' align='center' style={{ paddingLeft: '23rem' }}>
+            <Flex justify='center' align='center' >
                 <Button type="default" danger onClick={showModal} style={{ width: '12rem', fontSize: '1.5rem' }}>
                     {t('Report')}
                 </Button>

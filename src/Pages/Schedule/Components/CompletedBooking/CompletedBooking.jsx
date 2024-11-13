@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js';
-import { Col, Divider, Flex, Image, List, Row, Skeleton } from 'antd';
+import { Button, Col, Divider, Flex, Image, List, Row, Skeleton } from 'antd';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import { useCallback, useContext, useEffect, useState } from 'react';
@@ -14,12 +14,13 @@ import FormatDate from '../FormatDate/FormatDate';
 import ModalReport from '../ModalReport/ModalReport';
 import './CompletedBooking.scss';
 import ModalViewDetailGroup from '../../../../Components/Modal/ModalViewDetailGroup/ModalViewDetailGroup';
+import { ModalRatingMentor } from '../../../../Components/Modal';
 
 
 
 const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
     const [loading, setLoading] = useState(false);
-    const [allData, setAllData] = useState([]);
+    const [allData, setAllData] = useState(null);
     const [displayData, setDisplayData] = useState([]);
     const { currentUser } = useContext(AuthContext)
     const [hasMore, setHasMore] = useState(true)
@@ -27,6 +28,8 @@ const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
     const pageSize = 10;
     const { t } = useContext(AppContext)
     const role = currentUser?.isMentor === undefined ? 'mentor' : 'student'
+    const [openRating, setOpenRating] = useState(false)
+    const [fetchData, setFetchData] = useState(false)
 
     const loadData = useCallback(async () => {
         if (loading) return;
@@ -36,12 +39,13 @@ const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
             const res = await getListAllBooking(role, currentUser?.accountId);
             if (res && Array.isArray(res.data)) {
                 setAllData(res.data)
-                console.log(res.data)
+
                 const bookingDates = res.data
                     .filter(booking =>
                         booking.status === 1 && dayjs(booking.startTime).isBefore(dayjs())
                     )
                     .map(booking => dayjs(booking.startTime).format('YYYY-MM-DD'));
+
                 onBookingDatesChange(bookingDates);
             } else {
                 console.error("Expected an array but got:", res.data);
@@ -66,7 +70,7 @@ const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
         if (Array.isArray(allData) && allData.length <= 4) {
             setHasMore(false)
         }
-    }, [hasMore, allData.length])
+    }, [hasMore, allData?.length])
 
 
     useEffect(() => {
@@ -85,6 +89,20 @@ const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
         }
     }, [allData, selectedDate, page, pageSize])
 
+
+    console.log(displayData)
+
+    // console.log("Current user", currentUser)
+
+    // const currentStudentGroup = displayData?.studentGroups?.find(item => item.studentId === currentUser.accountId);
+
+    // console.log("Current Student Group", currentStudentGroup);
+
+    useEffect(() => {
+        if (fetchData) {
+            loadData().then(() => setFetchData(false));
+        }
+    }, [fetchData])
 
     return (
         <div
@@ -165,14 +183,23 @@ const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
                                     <Col flex={1}>
                                         <Flex vertical justify='center' align='center' style={{ paddingRight: '2rem' }}>
                                             <Flex justify='center' align='center' gap={24} className="time-wrapper" >
-                                                {FormatDate(new Date(item.startTime), true)}
-                                                {FormatDate(new Date(item.endTime), false)}
+                                                {FormatDate(new Date(item?.startTime), true)}
+                                                {FormatDate(new Date(item?.endTime), false)}
                                             </Flex>
 
                                             <Flex justify='center' align='center' gap={24} style={{ marginTop: '1rem' }}>
-                                                <ModalReport mentorId={item.mentorId} studentId={currentUser.accountId} />
+                                                {item.isFeedback === false &&
+                                                    <Button
+                                                        type='primary'
+                                                        onClick={() => setOpenRating(true)}
+                                                        style={{ width: '12rem', fontSize: '1.5rem' }}
+                                                    >
+                                                        Rating
+                                                    </Button>
+                                                }
+                                                <ModalReport mentorId={item?.mentorId} studentId={currentUser?.accountId} />
                                             </Flex>
-
+                                            <ModalRatingMentor mentorId={item?.mentorId} modalOpen={openRating} setModalOpen={setOpenRating} fetchdata={setFetchData} />
                                         </Flex>
                                     </Col>
                                 </Row>
@@ -180,6 +207,7 @@ const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
                         )}
                     />
                 }
+
             </InfiniteScroll>
         </div>
     );

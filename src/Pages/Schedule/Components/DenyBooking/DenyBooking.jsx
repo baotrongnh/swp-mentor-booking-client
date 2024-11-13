@@ -79,18 +79,14 @@ const DenyBooking = ({ selectedDate, onBookingDatesChange }) => {
 
 
     useEffect(() => {
-        if (hasMore) {
-            console.log('Has more Data')
-        } else {
-            console.log('No more Data')
-        }
+        
         if (allData.length <= 4) {
             setHasMore(false)
         }
     }, [hasMore, allData.length])
 
 
-    console.log(displayData)
+    
     return (
         <div
             className='all-booking'

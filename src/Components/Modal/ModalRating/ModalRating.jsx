@@ -7,7 +7,7 @@ import toast from "react-hot-toast"
 import { ratingMentor } from "../../../apis/mentor"
 import { AuthContext } from "../../../Contexts/AuthContext"
 
-function ModalRatingMentor({ mentorId, modalOpen, setModalOpen }) {
+function ModalRatingMentor({ mentorId, modalOpen, setModalOpen, fetchdata }) {
      const queryClient = useQueryClient()
      const { currentUser } = useContext(AuthContext)
      const [feedback, setFeedback] = useState({ studentId: currentUser?.accountId, mentorId, rating: '', text: '' })
@@ -16,6 +16,7 @@ function ModalRatingMentor({ mentorId, modalOpen, setModalOpen }) {
           onSuccess: () => {
                queryClient.invalidateQueries([`rating-list-${mentorId}`])
                toast.success('Thanks for your review!')
+               fetchdata(true)
           },
           onError: (error) => {
                toast.error(error.response.data.message)
@@ -77,5 +78,6 @@ ModalRatingMentor.propTypes = {
      studentId: PropTypes.any,
      mentorId: PropTypes.any,
      modalOpen: PropTypes.any,
-     setModalOpen: PropTypes.any
+     setModalOpen: PropTypes.any,
+     fetchdata: PropTypes.any
 }

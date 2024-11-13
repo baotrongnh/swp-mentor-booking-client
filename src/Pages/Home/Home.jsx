@@ -34,7 +34,7 @@ export default function Home() {
      const scrollToFirstContent = () => {
           if (currentUser?.isMentor === 0) {
                document.getElementById('first-content').scrollIntoView({ behavior: 'smooth' })
-          } else if (currentUser?.isMentor === undefined) {
+          } else if (currentUser?.isMentor === undefined || currentUser?.isMentor === 1) {
                document.getElementById('second-content').scrollIntoView({ behavior: 'smooth' })
           }
      }

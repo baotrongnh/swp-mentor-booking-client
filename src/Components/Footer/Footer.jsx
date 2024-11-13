@@ -16,17 +16,17 @@ function Footer() {
                               <div className="links-wrapper">
                                    <div className="link-item">
                                         <h6>
-                                             <Link to="/about">{t("about us")}</Link>
+                                             <Link to="/">{t("about us")}</Link>
                                         </h6>
                                    </div>
                                    <div className="link-item">
                                         <h6>
-                                             <Link to="/help">{t("help")}</Link>
+                                             <Link to="/">{t("help")}</Link>
                                         </h6>
                                    </div>
                                    <div className="link-item">
                                         <h6>
-                                             <Link to="/contact">{t("contact")}</Link>
+                                             <Link to="/">{t("contact")}</Link>
                                         </h6>
                                    </div>
                               </div>

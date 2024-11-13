@@ -76,7 +76,7 @@ const resources = {
                "month": "Month",
                "year": "Year",
                "end list": "You have reached the end of your bookings!",
-               "deny": "Booking Denied",
+               "deny": "Booking Canceled",
                "start": 'Start',
                "end": 'End',
 

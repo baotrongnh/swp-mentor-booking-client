@@ -103,12 +103,12 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
 
     const handleDeny = async (role, id) => {
         const token = getToken()
-        console.log(role)
+        
         const res = await axiosClient(token).get(`/booking/cancel/${role}/${id}`)
         try {
             if (res) {
                 queryClient.invalidateQueries({ queryKey: ['currentUser'] })
-                console.log(res)
+               
                 toast.success('Success')
                 handleReload(true)
             }
@@ -118,7 +118,7 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
         }
     }
 
-    console.log(displayData)
+   
 
     return (
         <div
