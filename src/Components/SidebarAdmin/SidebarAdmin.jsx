@@ -40,6 +40,11 @@ function SidebarAdmin() {
                          key: '/admin/pending-mentors',
                          label: <Link to='/admin/pending-mentors'>Pending Approval</Link>,
                     },
+                    {
+                         key: '/admin/withdraw',
+                         label: <Link to='/admin/withdraw'>Withdraw Pending</Link>,
+                    },
+                    
 
                ],
           },

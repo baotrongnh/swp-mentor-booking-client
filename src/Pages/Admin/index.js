@@ -10,5 +10,5 @@ import ProcessAccept from "../AcceptGroup/ProcessAccept"
 import ManagerComplaintPending from "./ManagerComplaint/ManagerComplaintPending"
 import ManagerComplaintResolved from "./ManagerComplaint/ManagerComplaintResolved"
 import OverviewProportion from "./OverviewChart/OverviewProportion"
-
-export { OverviewProportion, ManagerMentor, ManagerStudent, LoginAdmin, Pending, ManagerSkills, ManagerItems, OverviewChart, ManagerSemester, ManagerComplaintPending, ManagerComplaintResolved, ProcessAccept }
+import ManagerWithdraw from "./ManagerWithdraw/ManagerWithdraw"
+export { ManagerWithdraw, OverviewProportion, ManagerMentor, ManagerStudent, LoginAdmin, Pending, ManagerSkills, ManagerItems, OverviewChart, ManagerSemester, ManagerComplaintPending, ManagerComplaintResolved, ProcessAccept }

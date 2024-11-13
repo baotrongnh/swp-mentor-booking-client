@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Breadcrumb, Button, Empty, Flex } from 'antd'
 import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -6,13 +6,23 @@ import { AuthContext } from '../../Contexts/AuthContext'
 import { getListGift } from '../../apis/items'
 import { formatCurrencyVND } from '../../utils/format'
 import { useTranslation } from 'react-i18next';
-import { getTotalDonation } from '../../apis/payment'
+import { getTotalDonation, withdraw } from '../../apis/payment'
+import toast from 'react-hot-toast'
 
 const Gift = () => {
      const { currentUser } = useContext(AuthContext)
      const [isMentor, setIsMentor] = useState(false)
      const [selectedGift, setSelectedGift] = useState(null)
-     const { t } = useTranslation();
+     const { t } = useTranslation()
+     const queryClient = useQueryClient()
+
+     const mutation = useMutation({
+          mutationFn: (mentorId) => withdraw(mentorId),
+          onSuccess: () => {
+               toast.success('Transaction successful, withdrawal is waiting for approval')
+               queryClient.invalidateQueries({ queryKey: ['gift'] })
+          }
+     })
 
      const { data: dataGift } = useQuery({
           queryKey: ['gift'], queryFn: () => getListGift(currentUser?.isMentor === 0 ? 'student' : 'mentor', currentUser?.accountId)
@@ -31,7 +41,9 @@ const Gift = () => {
           }
      }, [currentUser])
 
-     console.log(isMentor);
+     const handleWithdraw = () => {
+          mutation.mutateAsync(currentUser?.accountId)
+     }
 
      return (
           <div className='container'>
@@ -81,7 +93,7 @@ const Gift = () => {
                               {t('Total Value')}: {formatCurrencyVND(totalDonation?.totalAmount)}
                          </p>
 
-                         <Flex justify='end'><Button style={{margin: '20px 0'}}>Withdraw all</Button></Flex>
+                         <Flex justify='end'><Button style={{ margin: '20px 0' }} onClick={handleWithdraw}>Withdraw all</Button></Flex>
                          <div style={{
                               display: 'flex',
                               justifyContent: 'space-between',
