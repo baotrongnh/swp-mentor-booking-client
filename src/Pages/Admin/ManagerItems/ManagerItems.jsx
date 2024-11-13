@@ -134,7 +134,7 @@ function ManagerItems() {
                setInitialData(formData);
                setUpdateShow(true);
           } else if (key === "3") {
-               toast.success("Delete " + record.name)
+               handleDelete(record.id)
           }
      };
 
@@ -193,6 +193,24 @@ function ManagerItems() {
      const onCancelModal = () => {
           setUpdateShow(false)
           setCreateShow(false)
+     }
+
+     const handleDelete = async (id) => {
+          try {
+               console.log(id)
+               const res = await axiosClient(token).post('/item/delete', {
+                    id: id
+               })
+               if (res) {
+                    console.log(res)
+                    toast.success('Delete Success')
+                    await refetch()
+               }
+          } catch (e) {
+               const errorMessage = e.response?.data?.error || "An unexpected error occurred";
+               console.log("Error", e);
+               toast.error(errorMessage);
+          }
      }
 
      const onSearch = (e) => {
