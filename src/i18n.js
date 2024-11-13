@@ -145,7 +145,7 @@ const resources = {
                "Group": "Group",
 
                // For Report Modal
-               "Report": "Report",
+               "Report": "Complaint",
 
                // MentorCard translations
                "Booked": "Booked",
@@ -395,7 +395,7 @@ const resources = {
                "Group": "Nhóm",
 
                // For Report Modal
-               "Report": "Báo cáo",
+               "Report": "Khiếu nại",
 
                // MentorCard translations
                "Booked": "Đã đặt",

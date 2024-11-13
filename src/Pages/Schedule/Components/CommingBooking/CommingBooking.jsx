@@ -40,15 +40,17 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
 
         try {
             const res = await getListAllBooking(role, currentUser?.accountId);
-            if (res) {
-                setAllData(res.data) // set Data ne
-                // console.log('All data', res.data)
+            if (res && Array.isArray(res.data)) {
+                setAllData(res.data);
                 const bookingDates = res.data
                     .filter(booking =>
-                        booking.status === 1 && dayjs(booking.startTime).isAfter(dayjs())
+                        booking.status === 1 && dayjs(booking?.startTime).isAfter(dayjs())
                     )
                     .map(booking => dayjs(booking.startTime).format('YYYY-MM-DD'));
                 onBookingDatesChange(bookingDates);
+            } else {
+                console.error("Expected an array but got:", res.data);
+                setAllData([]);
             }
         } catch (error) {
             console.log(error.error_code + ": " + error.message)
@@ -67,24 +69,26 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
     })
 
     useEffect(() => {
-        if (allData.length <= 4) {
+        if (Array.isArray(allData) && allData.length <= 4) {
             setHasMore(false)
         }
     }, [hasMore, allData.length])
 
 
     useEffect(() => {
-        let filterData = allData.filter(booking =>
-            booking.status === 1 && dayjs(booking.startTime).isAfter(dayjs())
-        );
+        if (Array.isArray(allData)) {
+            let filterData = allData?.filter(booking =>
+                booking.status === 1 && dayjs(booking.startTime).isAfter(dayjs())
+            );
 
-        if (selectedDate) {
-            filterData = filterData.filter(booking => dayjs(booking.startTime).isSame(selectedDate, 'day'))
+            if (selectedDate) {
+                filterData = filterData.filter(booking => dayjs(booking.startTime).isSame(selectedDate, 'day'))
+            }
+            const startIndex = (page - 1) * pageSize;
+            const endIndex = startIndex + pageSize;
+            setDisplayData(filterData.slice(0, endIndex))
+            setHasMore(filterData.length > endIndex)
         }
-        const startIndex = (page - 1) * pageSize;
-        const endIndex = startIndex + pageSize;
-        setDisplayData(filterData.slice(0, endIndex))
-        setHasMore(filterData.length > endIndex)
     }, [allData, selectedDate, page, pageSize])
 
 
@@ -110,7 +114,6 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
             console.log('Error: ', error)
             toast.error('Error')
         }
-
     }
 
     console.log(displayData)
@@ -121,7 +124,7 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
             id="scrollableDiv"
         >
             <InfiniteScroll
-                dataLength={displayData.length}
+                dataLength={displayData?.length}
                 next={loadMore}
                 hasMore={hasMore}
                 loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
@@ -133,22 +136,22 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
                         dataSource={displayData}
                         renderItem={(item) => (
                             <List.Item
-                                key={item.id}
+                                key={item?.id}
                                 className="list-item">
                                 <Row align='middle' justify='center' style={{ width: '100%' }}>
                                     <Col flex={6}>
                                         <List.Item.Meta
                                             avatar={
-                                                <AvatarGroup studentGroup={item.studentGroups} />
+                                                <AvatarGroup studentGroup={item?.studentGroups} />
                                             }
-                                            title={`${t('Group')} ${item.id}`}
+                                            title={`${t('Group')} ${item?.id}`}
                                         />
                                     </Col>
                                     <Col flex={1}>
                                         <Flex vertical justify='center' align='center' style={{ paddingRight: '2rem' }}>
                                             <Flex justify='center' align='center' gap={24} className="time-wrapper" >
-                                                {FormatDate(new Date(item.startTime), true)}
-                                                {FormatDate(new Date(item.endTime), false)}
+                                                {FormatDate(new Date(item?.startTime), true)}
+                                                {FormatDate(new Date(item?.endTime), false)}
                                             </Flex>
                                             <Flex justify='center' align='center' gap={24} style={{ marginTop: '1rem' }}>
                                                 <Popconfirm
@@ -156,7 +159,7 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
                                                     description={t("Are you sure to cancel this booking?")}
                                                     okText={t("Yes")}
                                                     cancelText={t("No")}
-                                                    onConfirm={() => handleDeny(role, item.id)}
+                                                    onConfirm={() => handleDeny(role, item?.id)}
                                                 >
                                                     <Button
                                                         danger
@@ -172,13 +175,12 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
 
                         )}
                     />
-
                     :
                     <List
                         dataSource={displayData}
                         renderItem={(item) => (
                             <List.Item
-                                key={item.id}
+                                key={item?.id}
                                 className="list-item">
                                 <Row align='middle' justify='center' style={{ width: '100%' }}>
                                     <Col flex={6}>
@@ -186,24 +188,24 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
                                             avatar={
                                                 <Image
                                                     className="avatar-img"
-                                                    src={item.mentor.imgPath}
+                                                    src={item?.mentor.imgPath}
                                                     alt='Avatar image'
                                                     preview={{
                                                         minScale: '10',
-                                                        src: item.mentor.imgPath || defaultAvatar,
+                                                        src: item?.mentor.imgPath || defaultAvatar,
                                                         mask: <div className="preview-mask"><Icon icon="weui:eyes-on-outlined" style={{ width: '3rem', height: '3rem' }} /></div>
                                                     }}
                                                     onError={(e) => e.target.src = defaultAvatar}
                                                 />}
-                                            title={<Link to={`/mentor/profile/${item.mentorId}`}>{item.mentor.fullName}</Link>}
-                                            description={item.mentor.email}
+                                            title={<Link to={`/mentor/profile/${item?.mentorId}`}>{item?.mentor.fullName}</Link>}
+                                            description={item?.mentor.email}
                                         />
                                     </Col>
                                     <Col flex={1}>
                                         <Flex vertical justify='center' align='center' style={{ paddingRight: '2rem' }}>
                                             <Flex justify='center' align='center' gap={24} className="time-wrapper" >
-                                                {FormatDate(new Date(item.startTime), true)}
-                                                {FormatDate(new Date(item.endTime), false)}
+                                                {FormatDate(new Date(item?.startTime), true)}
+                                                {FormatDate(new Date(item?.endTime), false)}
                                             </Flex>
                                             <Flex justify='center' align='center' gap={24} style={{ marginTop: '1rem' }}>
                                                 <Button
@@ -212,7 +214,7 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
                                                     style={{ width: '14rem' }}
                                                     onClick={() => {
                                                         setModalOpen(true)
-                                                        setBookigId(item.id)
+                                                        setBookigId(item?.id)
                                                     }}
                                                 >{t('Add Member')}</Button>
                                                 <Popconfirm
@@ -220,7 +222,7 @@ const CommingBooking = ({ selectedDate, onBookingDatesChange }) => {
                                                     description={t("Are you sure to cancel this booking?")}
                                                     okText={t("Yes")}
                                                     cancelText={t("No")}
-                                                    onConfirm={() => handleDeny(role, item.id)}
+                                                    onConfirm={() => handleDeny(role, item?.id)}
                                                 >
                                                     <Button
                                                         danger

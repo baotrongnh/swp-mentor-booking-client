@@ -33,16 +33,18 @@ const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
 
         try {
             const res = await getListAllBooking(role, currentUser?.accountId);
-            if (res) {
+            if (res && Array.isArray(res.data)) {
                 setAllData(res.data)
                 console.log(res.data)
                 const bookingDates = res.data
                     .filter(booking =>
-                        booking.status === 1 &&
-                        dayjs(booking.startTime).isBefore(dayjs())
+                        booking.status === 1 && dayjs(booking.startTime).isBefore(dayjs())
                     )
                     .map(booking => dayjs(booking.startTime).format('YYYY-MM-DD'));
                 onBookingDatesChange(bookingDates);
+            } else {
+                console.error("Expected an array but got:", res.data);
+                setAllData([]);
             }
         } catch (error) {
             console.log(error.error_code + ": " + error.message)
@@ -60,29 +62,26 @@ const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
     })
 
     useEffect(() => {
-        if (hasMore) {
-            console.log("Has more Data");
-        } else {
-            console.log("No more Data");
-        }
-        if (allData.length <= 4) {
+        if (Array.isArray(allData) && allData.length <= 4) {
             setHasMore(false)
         }
     }, [hasMore, allData.length])
 
 
     useEffect(() => {
-        let filterData = allData.filter(booking =>
-            booking.status === 1 && dayjs(booking.startTime).isBefore(dayjs())
-        );
+        if (Array.isArray(allData)) {
+            let filterData = allData?.filter(booking =>
+                booking.status === 1 && dayjs(booking.startTime).isBefore(dayjs())
+            );
 
-        if (selectedDate) {
-            filterData = filterData.filter(booking => dayjs(booking.startTime).isSame(selectedDate, 'day'))
+            if (selectedDate) {
+                filterData = filterData.filter(booking => dayjs(booking.startTime).isSame(selectedDate, 'day'))
+            }
+            const startIndex = (page - 1) * pageSize;
+            const endIndex = startIndex + pageSize;
+            setDisplayData(filterData.slice(0, endIndex))
+            setHasMore(filterData.length > endIndex)
         }
-        const startIndex = (page - 1) * pageSize;
-        const endIndex = startIndex + pageSize;
-        setDisplayData(filterData.slice(0, endIndex))
-        setHasMore(filterData.length > endIndex)
     }, [allData, selectedDate, page, pageSize])
 
 
@@ -92,7 +91,7 @@ const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
             id="scrollableDiv"
         >
             <InfiniteScroll
-                dataLength={displayData.length}
+                dataLength={displayData?.length}
                 next={loadMore}
                 hasMore={hasMore}
                 loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
@@ -163,9 +162,11 @@ const CompletedBooking = ({ selectedDate, onBookingDatesChange }) => {
                                                 {FormatDate(new Date(item.startTime), true)}
                                                 {FormatDate(new Date(item.endTime), false)}
                                             </Flex>
-                                            <Flex justify='center' align='center' gap={24} style={{ marginTop: '1rem' }}>
-                                                <ModalReport mentorId={item.mentorId} studentId={currentUser.accountId} />
-                                            </Flex>
+                                            {item?.studentGroups[0].role === 1 &&
+                                                <Flex justify='center' align='center' gap={24} style={{ marginTop: '1rem' }}>
+                                                    <ModalReport mentorId={item.mentorId} studentId={currentUser.accountId} />
+                                                </Flex>
+                                            }
                                         </Flex>
                                     </Col>
                                 </Row>

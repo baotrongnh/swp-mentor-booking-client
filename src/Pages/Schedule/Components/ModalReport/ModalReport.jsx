@@ -1,28 +1,31 @@
-import { Button, Form, Modal, Select } from "antd";
+import { Button, Flex, Form, Modal, Select } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { getToken } from "../../../../utils/storageUtils";
 import axiosClient from "../../../../apis/axiosClient";
 import PropTypes from "prop-types";
+import { AppContext } from "../../../../Contexts/AppContext";
+import toast from "react-hot-toast";
 
 function ModalReport({ mentorId, studentId }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [form] = Form.useForm();
+    const { t } = useContext(AppContext)
 
 
     const negativeFeedbackOptions = [
-        { value: 'Not at all punctual', label: 'Not at all punctual' },
-        { value: 'Poor teaching skills', label: 'Poor teaching skills' },
-        { value: 'Not at all covered by syllabus', label: 'Not at all covered by syllabus' },
-        { value: 'Most queries left unanswered', label: 'Most queries left unanswered' },
-        { value: 'Dissatisfied with teaching quality', label: 'Dissatisfied with teaching quality' },
+        { value: 'Mentor was unresponsive to booking requests', label: 'Mentor was unresponsive to booking requests' },
+        { value: 'Session started late', label: 'Session started late' },
+        { value: 'Mentor lacked subject knowledge', label: 'Mentor lacked subject knowledge' },
+        { value: 'Mentor did not address my queries', label: 'Mentor did not address my queries' },
+        { value: 'Poor communication during session', label: 'Poor communication during session' },
+        { value: 'Other', label: 'Other (please specify) ' },
     ];
 
     const showModal = () => {
         setIsModalOpen(true);
     };
     const handleSubmitForm = async (value) => {
-        console.log("Form value", value)
         const token = getToken()
         if (value.select && value.description) {
             const content = `${value.select}: ${value.description}`;
@@ -31,6 +34,9 @@ function ModalReport({ mentorId, studentId }) {
                 mentorId: mentorId,
                 content: content,
             })
+            if (res) {
+                toast.success('Success')
+            }
             console.log(res)
             form.resetFields()
             setIsModalOpen(false);
@@ -43,9 +49,11 @@ function ModalReport({ mentorId, studentId }) {
 
     return (
         <>
-            <Button type="default" danger onClick={showModal} style={{ width: '12rem' }}>
-                Report
-            </Button>
+            <Flex justify='center' align='center' style={{ paddingLeft: '23rem' }}>
+                <Button type="default" danger onClick={showModal} style={{ width: '12rem', fontSize: '1.5rem' }}>
+                    {t('Report')}
+                </Button>
+            </Flex>
             <Modal
                 centered
                 title="Report Booking"
@@ -78,9 +86,7 @@ function ModalReport({ mentorId, studentId }) {
                             placeholder="Select"
                             optionFilterProp="label"
 
-                            filterSort={(optionA, optionB) =>
-                                (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
-                            }
+
                             options={negativeFeedbackOptions}
                         />
                     </Form.Item>

@@ -8,11 +8,13 @@ import { getToken } from '../../utils/storageUtils';
 import axiosClient from '../../apis/axiosClient';
 import avatarDefault from '../../assets/Photos/avatar/default_avatar_2.jpg'
 import { Icon } from '@iconify/react/dist/iconify.js';
+import { AuthContext } from '../../Contexts/AuthContext';
 
 
 export default function Home() {
      const { t } = useContext(AppContext)
      const [topMentor, setTopMentor] = useState([])
+     const { currentUser } = useContext(AuthContext)
 
      const fetchData = async () => {
           const token = getToken()
@@ -30,10 +32,14 @@ export default function Home() {
      }, [])
 
      const scrollToFirstContent = () => {
-          document.getElementById('first-content').scrollIntoView({ behavior: 'smooth' })
+          if (currentUser?.isMentor === 0) {
+               document.getElementById('first-content').scrollIntoView({ behavior: 'smooth' })
+          } else if (currentUser?.isMentor === undefined) {
+               document.getElementById('second-content').scrollIntoView({ behavior: 'smooth' })
+          }
      }
 
-
+     console.log(topMentor)
 
      return (
           <div className="home-page">
@@ -47,49 +53,54 @@ export default function Home() {
                     </div>
                </div>
                <div className="container">
-                    <div className="first-content" id='first-content'>
-                         <h2 className='title'>{t("See Our Best Mentor")}</h2>
-                         <Row gutter={[24, 24]} align='middle' justify='center'>
-                              {topMentor.map((mentor, index) => (
-                                   <Col xs={24} sm={12} md={8} className='home-mentor-card' key={index}>
-                                        <Card
-                                             hoverable
-                                             cover={<div className="card-cover">
-                                                  <Image
-                                                       alt={mentor.fullName}
-                                                       src={mentor.imgPath}
-                                                       className='best-mentor-avatar'
-                                                       onError={(e) => e.target.src = avatarDefault}
-                                                  />
-                                             </div>}
+                    {currentUser.isMentor === 0 &&
+                         <div className="first-content" id='first-content'>
+                              {topMentor?.length !== 0 ?
+                                   <h2 className='title'>{t("See Our Best Mentor")}</h2>
+                                   :
+                                   <h2></h2>
+                              }
+                              <Row gutter={[24, 24]} align='middle' justify='center'>
+                                   {topMentor?.map((mentor, index) => (
+                                        <Col xs={24} sm={12} md={8} className='home-mentor-card' key={index}>
+                                             <Card
+                                                  hoverable
+                                                  cover={<div className="card-cover">
+                                                       <Image
+                                                            alt={mentor?.fullName}
+                                                            src={mentor?.imgPath}
+                                                            className='best-mentor-avatar'
+                                                            onError={(e) => e.target.src = avatarDefault}
+                                                       />
+                                                  </div>}
 
-                                        >
-                                             <Flex vertical style={{ marginBottom: '3rem' }}>
-                                                  <Flex justify='space-between' align='center' style={{ minHeight: '4.5rem' }}>
-                                                       <Col span={18} style={{ paddingLeft: '0' }}>
-                                                            <Link to={`/mentor/profile/${mentor.accountId}`}><h2 className='top-mentor-name'>
-                                                                 {mentor.fullName}
-                                                            </h2>
-                                                            </Link>
-                                                       </Col>
-                                                       <Col span={6}>
-                                                            <Flex justify='center' align='center' gap={6}>
-                                                                 <span style={{ fontSize: '1.2rem', fontWeight: '600' }}>{mentor.averageRating}</span>
-                                                                 <Icon icon="noto:star" style={{ fontSize: '1.3rem' }} />
-                                                            </Flex>
-                                                       </Col>
+                                             >
+                                                  <Flex vertical style={{ marginBottom: '3rem' }}>
+                                                       <Flex justify='space-between' align='center' style={{ minHeight: '4.5rem' }}>
+                                                            <Col span={18} style={{ paddingLeft: '0' }}>
+                                                                 <Link to={`/mentor/profile/${mentor?.accountId}`}><h2 className='top-mentor-name'>
+                                                                      {mentor?.fullName}
+                                                                 </h2>
+                                                                 </Link>
+                                                            </Col>
+                                                            <Col span={6}>
+                                                                 <Flex justify='center' align='center' gap={6}>
+                                                                      <span style={{ fontSize: '1.2rem', fontWeight: '600' }}>{mentor?.averageRating}</span>
+                                                                      <Icon icon="noto:star" style={{ fontSize: '1.3rem' }} />
+                                                                 </Flex>
+                                                            </Col>
+                                                       </Flex>
+                                                       <p style={{ fontSize: '1.1rem', margin: '0.5rem 0' }}>{mentor?.email}</p>
                                                   </Flex>
-                                                  <p style={{ fontSize: '1.1rem', margin: '0.5rem 0' }}>{mentor.email}</p>
-                                             </Flex>
-                                             <div className="view-btn">
-                                                  <Link to={`/mentor/profile/${mentor.accountId}`}><Button type='primary' className='best-mentor-btn'>{t("View Mentor")}</Button></Link>
-                                             </div>
-                                        </Card>
-                                   </Col>
-                              ))}
-                         </Row>
-                    </div>
-
+                                                  <div className="view-btn">
+                                                       <Link to={`/mentor/profile/${mentor?.accountId}`}><Button type='primary' className='best-mentor-btn'>{t("View Mentor")}</Button></Link>
+                                                  </div>
+                                             </Card>
+                                        </Col>
+                                   ))}
+                              </Row>
+                         </div>
+                    }
                     <div className="second-content" id='second-content'>
                          <h2 className='title'>{t("Why Use Our Mentor Booking System?")}</h2>
                          <Row gutter={[24, 24]} align='middle' justify='center'>

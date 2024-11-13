@@ -10,6 +10,7 @@
     --shadow: rgba(128, 128, 128, 0.156);
     --completed-bg: #dfffeb;
     --deny-bg: #ff0000;
+    --time-wrapper: rgba(0, 0, 0, 0.02);
   }
 
   &.dark-theme {
@@ -23,6 +24,7 @@
     --shadow: rgba(27, 27, 27, 0.384);
     --completed-bg: #022b10;
     --deny-bg: rgb(255, 49, 49);
+    --time-wrapper: rgba(255, 255, 255, 0.02);
   }
 }
 
@@ -36,28 +38,27 @@ $border: var(--border);
 $shadow: var(--shadow);
 $completed-bg: var(--completed-bg);
 $deny-bg: var(--deny-bg);
+$time-wrapper-bg: var(--time-wrapper) //$text-secondary:
+  //$text-muted:
+  //$text-light:
+  //$text-dark
+  //$text-error
 
-//$text-secondary:
-//$text-muted:
-//$text-light:
-//$text-dark
-//$text-error
+  //$border-primary
+  //$border-decondary
+  //$border-light
+  //$border-dark
+  //$border-muted
 
-//$border-primary
-//$border-decondary
-//$border-light
-//$border-dark
-//$border-muted
+  //$accent-secondary
+  //$accent-hover
+  //$accent-active
+  //$highlight
 
-//$accent-secondary
-//$accent-hover
-//$accent-active
-//$highlight
-
-// $text-color: var(--text-color);
-// $text-muted-color: grey;
-// $error-color: red;
-// $success-color: green;
-// $warning-color: yellow;
-// $active-color: grey;
-// $hover-color: grey;
+  // $text-color: var(--text-color);
+  // $text-muted-color: grey;
+  // $error-color: red;
+  // $success-color: green;
+  // $warning-color: yellow;
+  // $active-color: grey;
+  // $hover-color: grey;
