@@ -35,8 +35,10 @@ export default function ModalBecomeMentor({ modalOpen, setModalOpen }) {
         }
     })
 
+    console.log(selectedSkills);
+
     const optionsSelectSkill = listSkill?.skills
-        .filter((skill) => !selectedSkills.some(selected => skill.id == selected.skill))
+        .filter((skill) => !selectedSkills.some(selected => skill.id == selected.skillId))
         .map((skill) => ({
             label: skill.name,
             value: skill.id
